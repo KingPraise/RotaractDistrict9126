@@ -123,7 +123,7 @@ export default function Navbar() {
 
             {/* Join a Club Pill Button with Diagonal Arrow Badge */}
             <Link
-              href="/join"
+              href="/clubs"
               className="bg-[#981132] hover:bg-[#A70C43] active:scale-95 text-white text-[12.5px] font-bold pl-4 pr-2 py-2 rounded-full inline-flex items-center gap-2 shadow-md transition-all duration-200 hover:scale-105 group"
             >
               <span>Join a Club</span>
@@ -188,7 +188,7 @@ export default function Navbar() {
                 Sign In to Member Portal
               </Link>
               <Link
-                href="/join"
+                href="/clubs"
                 onClick={() => setIsMobileOpen(false)}
                 className="bg-[#981132] text-white text-center text-xs font-bold py-2.5 rounded-full"
               >
