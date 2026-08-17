@@ -5,7 +5,7 @@ import Link from 'next/link';
 
 export default function Footer() {
   return (
-    <footer style={{ background: 'rgb(152, 17, 50)', position: 'relative', overflow: 'hidden' }}>
+    <footer style={{ background: 'rgba(37, 34, 35, 1)', position: 'relative', overflow: 'hidden' }}>
       
       {/* Top Gradient Border */}
       <div 
@@ -30,7 +30,7 @@ export default function Footer() {
             <img 
               src="/images/rotary-wheel.png" 
               alt="Rotaract District 9126 logo" 
-              className="h-[76px] sm:h-[92px] w-auto max-h-[96px] object-contain shrink-0 transition-transform duration-300 group-hover:scale-105 filter drop-shadow-xl brightness-105" 
+              className="h-[120px] sm:h-[140px] w-auto max-h-[140px] object-contain shrink-0 transition-transform duration-300 group-hover:scale-105 filter drop-shadow-xl brightness-105" 
             />
           </Link>
 

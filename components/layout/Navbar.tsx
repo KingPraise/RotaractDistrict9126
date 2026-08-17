@@ -55,7 +55,7 @@ export default function Navbar() {
   return (
     <>
       <header
-        className="fixed top-0 left-0 right-0 z-[2000] w-full h-[76px] px-4 sm:px-8 lg:px-10 bg-white/[0.97] backdrop-blur-[20px] border-b border-black/[0.09] shadow-[0_2px_16px_rgba(0,0,0,0.07)] flex items-center"
+        className="fixed top-0 left-0 right-0 z-[2000] w-full h-[110px] px-4 sm:px-8 lg:px-10 bg-white/[0.97] backdrop-blur-[20px] border-b border-black/[0.09] shadow-[0_2px_16px_rgba(0,0,0,0.07)] flex items-center"
       >
         <div className="max-w-[1364px] mx-auto w-full h-full flex items-center justify-between">
           
@@ -64,7 +64,7 @@ export default function Navbar() {
             <img
               src="/images/rotaract-logo.png"
               alt="Rotaract District 9126 Logo"
-              className="h-[52px] sm:h-[62px] w-auto max-h-[64px] object-contain transition-transform duration-300 group-hover:scale-105 filter drop-shadow-md"
+              className="h-[100px] sm:h-[110px] w-auto max-h-[120px] object-contain transition-transform duration-300 group-hover:scale-105 filter drop-shadow-md"
             />
           </Link>
 
