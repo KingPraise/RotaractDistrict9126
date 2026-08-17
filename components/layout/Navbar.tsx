@@ -115,7 +115,7 @@ export default function Navbar() {
 
             {/* Sign In Link */}
             <Link
-              href="/portal/dashboard"
+              href="/login"
               className="text-[13.5px] font-medium text-[#6B7280] hover:text-[#1C1C1E] transition-colors"
             >
               Sign In
@@ -138,16 +138,16 @@ export default function Navbar() {
             <button
               onClick={() => setIsSearchOpen(true)}
               className="p-2 rounded-lg text-[#374151] hover:bg-black/5"
-              aria-label="Search"
+              aria-label="Open Search"
             >
               <Search className="h-5 w-5" />
             </button>
             <button
               onClick={() => setIsMobileOpen(!isMobileOpen)}
               className="p-2 rounded-lg text-[#374151] hover:bg-black/5"
-              aria-label="Toggle Navigation"
+              aria-label="Toggle menu"
             >
-              {isMobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+              {isMobileOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </button>
           </div>
         </div>
@@ -158,9 +158,9 @@ export default function Navbar() {
           style={{ scaleX }}
         />
 
-        {/* Mobile Drawer */}
+        {/* Mobile Dropdown */}
         {isMobileOpen && (
-          <div className="md:hidden absolute top-[76px] left-0 right-0 bg-white border-b border-black/10 px-6 py-5 shadow-xl space-y-4">
+          <div className="md:hidden absolute top-[110px] left-0 right-0 bg-white/95 backdrop-blur-xl border-b border-black/10 px-6 py-4 shadow-xl space-y-4">
             <div className="flex flex-col space-y-3">
               {NAV_LINKS.map((link) => (
                 <Link
@@ -181,7 +181,7 @@ export default function Navbar() {
 
             <div className="pt-3 border-t border-black/10 flex flex-col gap-3">
               <Link
-                href="/portal/dashboard"
+                href="/login"
                 onClick={() => setIsMobileOpen(false)}
                 className="text-sm font-medium text-[#6B7280]"
               >
