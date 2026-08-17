@@ -12,7 +12,7 @@ export default function Footer() {
         style={{ 
           height: '1px', 
           width: '100%', 
-          background: 'linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25) 30%, rgba(255, 255, 255, 0.25) 70%, transparent)' 
+          background: 'linear-gradient(90deg, transparent, rgba(11, 10, 10, 0.04) 30%, rgba(255, 255, 255, 0.25) 70%, transparent)' 
         }} 
       />
       
