@@ -11,7 +11,7 @@ const NAV_LINKS = [
   { label: 'About', href: '/about' },
   { label: 'Clubs', href: '/clubs' },
   { label: 'Projects', href: '/projects' },
-  { label: 'Blog', href: '/heritage' },
+  { label: 'Blog', href: '/blog' },
 ];
 
 export default function Navbar() {
@@ -35,6 +35,8 @@ export default function Navbar() {
       setActiveLink('Clubs');
     } else if (pathname === '/projects') {
       setActiveLink('Projects');
+    } else if (pathname === '/blog') {
+      setActiveLink('Blog');
     } else if (pathname === '/heritage') {
       setActiveLink('About');
     } else if (pathname === '/') {
