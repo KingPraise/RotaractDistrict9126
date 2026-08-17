@@ -80,15 +80,15 @@ export default function CTASection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.3 }}
-          className="flex flex-col sm:flex-row gap-4 justify-center"
+          className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center w-full max-w-md mx-auto sm:max-w-none"
         >
           
           {/* Primary Button */}
-          <Link href="/clubs">
+          <Link href="/clubs" className="w-full sm:w-auto">
             <button 
-              className="inline-flex items-center gap-2 font-sans whitespace-nowrap transition-all duration-200 hover:scale-105 active:scale-95 group"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 font-sans whitespace-nowrap transition-all duration-200 hover:scale-105 active:scale-95 group"
               style={{ 
-                padding: '10px 12px 10px 26px', 
+                padding: '12px 14px 12px 26px', 
                 borderRadius: '999px', 
                 background: 'white', 
                 fontSize: '15px', 
@@ -116,9 +116,9 @@ export default function CTASection() {
           </Link>
 
           {/* Secondary Button */}
-          <Link href="/projects">
+          <Link href="/projects" className="w-full sm:w-auto">
             <button 
-              className="flex items-center justify-center gap-2 px-8 py-4 rounded-xl font-semibold transition-all duration-200 hover:bg-white/15 hover:scale-105 active:scale-95 font-sans"
+              className="w-full sm:w-auto flex items-center justify-center gap-2 px-8 py-3.5 sm:py-4 rounded-xl font-semibold transition-all duration-200 hover:bg-white/15 hover:scale-105 active:scale-95 font-sans"
               style={{ 
                 fontSize: '1rem', 
                 color: 'rgba(255, 255, 255, 0.85)', 

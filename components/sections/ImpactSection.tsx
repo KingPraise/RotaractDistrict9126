@@ -82,8 +82,8 @@ export default function ImpactSection() {
 
       {/* Carousel Container */}
       <div 
-        className="flex gap-5 px-6 lg:px-10 overflow-x-auto pb-8 relative z-10 snap-x snap-mandatory"
-        style={{ scrollbarWidth: 'none' }}
+        className="flex gap-4 sm:gap-5 px-4 sm:px-6 lg:px-10 overflow-x-auto pb-8 relative z-10 snap-x snap-mandatory"
+        style={{ scrollbarWidth: 'none', WebkitOverflowScrolling: 'touch' }}
       >
         {cards.map((card, idx) => (
           <motion.div 

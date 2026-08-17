@@ -512,8 +512,20 @@ export default function ProjectsPage() {
                       {p.year}
                     </div>
 
+                    {/* Default Mobile & Desktop Info (fades out on hover) */}
+                    <div className="absolute left-0 right-0 bottom-0 p-4 sm:p-5 font-sans group-hover:opacity-0 transition-opacity duration-300 pointer-events-none">
+                      <p className="text-[10px] text-white/70 mb-0.5 truncate font-sans">{p.club}</p>
+                      <h3 className="font-bold text-white text-sm sm:text-base leading-tight drop-shadow-sm mb-1">
+                        {p.title}
+                      </h3>
+                      <p className="flex items-center gap-1 text-white/70 text-[11px]">
+                        <MapPin className="text-[#D91B5C] shrink-0" size={10}/>
+                        {p.location}
+                      </p>
+                    </div>
+
                     {/* Sliding Bottom Drawer on Hover */}
-                    <div className="absolute left-0 right-0 bottom-0 transform translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out bg-[#080C14]/90 backdrop-blur-md border-t border-white/10 p-5 font-sans">
+                    <div className="absolute left-0 right-0 bottom-0 transform translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out bg-[#080C14]/95 backdrop-blur-md border-t border-white/10 p-5 font-sans">
                       <p className="text-[10px] text-white/50 mb-1 truncate font-sans">{p.club}</p>
                       <h3 className="font-black text-white leading-tight mb-1 text-[clamp(0.95rem,2vw,1.15rem)] font-sans">
                         {p.title}
