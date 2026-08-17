@@ -278,7 +278,7 @@ export default function AboutPage() {
       <Navbar />
       
       {/* ================= HERO HEADER WITH HAND-DRAWN ACCENT & AMBIENT GLOW ================= */}
-      <section className="relative pt-[120px] pb-20 overflow-hidden bg-[#0C101A] text-white">
+      <section className="relative pt-[140px] sm:pt-[160px] pb-20 overflow-hidden bg-[#0C101A] text-white">
         <div 
           className="absolute inset-0 pointer-events-none"
           style={{ background: 'radial-gradient(70% 60% at 50% 0%, rgba(217, 27, 92, 0.28) 0%, transparent 75%)' }}

@@ -213,7 +213,7 @@ export default function BlogPage() {
     <div className="min-h-screen bg-[#F8F5F2] text-[#111111]" style={{ fontFamily: 'Inter, sans-serif' }}>
       <Navbar />
 
-      <main className="min-h-screen pt-[100px] pb-20">
+      <main className="min-h-screen pt-[140px] sm:pt-[160px] pb-20">
         
         {/* HEADER & SEARCH */}
         <section className="px-6 lg:px-10 pb-8 max-w-7xl mx-auto">

@@ -222,7 +222,7 @@ export default function ProjectsPage() {
       <main className="max-w-7xl mx-auto px-6 lg:px-10 pb-24">
         
         {/* HERO SPOTLIGHT HEADER */}
-        <div className="relative pt-[100px] pb-12 text-center overflow-hidden">
+        <div className="relative pt-[140px] sm:pt-[160px] pb-14 text-center overflow-hidden">
           {/* Radial Top Glow */}
           <div 
             className="absolute inset-0 pointer-events-none" 

@@ -199,7 +199,7 @@ function JoinContent() {
   };
 
   return (
-    <main className="flex-1 max-w-6xl w-full mx-auto px-4 sm:px-6 py-12 md:py-20">
+    <main className="flex-1 max-w-6xl w-full mx-auto px-4 sm:px-6 pt-[140px] sm:pt-[160px] pb-16 md:pb-24">
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
         
         {/* Left Column: Value Proposition */}
