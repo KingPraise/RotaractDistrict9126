@@ -55,6 +55,12 @@ body {
   to   { transform: scale(1.12); }
 }
 
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
 .animate-hero-kenburns {
   animation: heroKenBurns 18s ease-in-out infinite;
 }
