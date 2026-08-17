@@ -116,10 +116,9 @@ function AuthForm({ initialMode = 'login' }: AuthContainerProps) {
         Back to site
       </Link>
 
-      {/* Brand Emblem Lockup */}
-      {/* Brand Logo (Enlarged to match Navbar, No Text Tagline) */}
+      {/* Brand Logo (Enlarged to 90px, No Text Tagline) */}
       <div 
-        className="relative z-10 flex flex-col items-center mb-7"
+        className="relative z-10 flex flex-col items-center mb-6"
         style={{ animation: '0.6s ease 0s 1 normal both running authEntrance' }}
       >
         <Link href="/" className="hover:opacity-90 transition-opacity">
@@ -127,7 +126,7 @@ function AuthForm({ initialMode = 'login' }: AuthContainerProps) {
             src="/images/rotaract-logo.png" 
             onError={(e) => { e.currentTarget.src = '/images/rotary-wheel.png'; }}
             alt="Rotaract District 9126 logo" 
-            className="h-[56px] sm:h-[66px] w-auto object-contain drop-shadow-sm"
+            className="h-[76px] sm:h-[90px] w-auto object-contain drop-shadow-sm"
           />
         </Link>
       </div>
