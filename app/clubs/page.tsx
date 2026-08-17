@@ -175,17 +175,17 @@ export default function ClubsPage() {
                         : 'bg-white/80 backdrop-blur-[20px] border border-black/[0.07] shadow-[0_2px_12px_rgba(0,0,0,0.06)] hover:bg-white hover:shadow-[0_4px_16px_rgba(0,0,0,0.08)]'
                     }`}
                   >
-                    {/* Top Row: Avatar & Title */}
+                    {/* Top Row: Rotaract Logo & Title */}
                     <div className="flex items-start gap-3 mb-3">
                       <div className="relative shrink-0">
-                        <div className="w-[46px] h-[46px] rounded-full p-[2px] bg-gradient-to-tr from-[#D91B5C] to-[#A855F7] shrink-0">
+                        <div className="w-[46px] h-[46px] rounded-full p-[2px] bg-gradient-to-tr from-[#D91B5C] to-[#D4A520] shrink-0 shadow-sm flex items-center justify-center bg-white">
                           <img
-                            src={club.presidentAvatar || "https://images.unsplash.com/photo-1573497491765-dccce02b29df?w=80&h=80&fit=crop&auto=format"}
-                            alt={club.president || club.name}
-                            className="w-full h-full rounded-full object-cover"
+                            src="/images/rotaract-logo.png"
+                            alt="Rotaract District 9126"
+                            className="w-full h-full rounded-full object-contain p-1.5"
                           />
                         </div>
-                        <div className="absolute bottom-0.5 right-0.5 w-[11px] h-[11px] rounded-full bg-green-500 border-2 border-white" />
+                        <div className="absolute bottom-0 right-0 w-[11px] h-[11px] rounded-full bg-emerald-500 border-2 border-white" />
                       </div>
 
                       <div className="flex-1 min-w-0">
