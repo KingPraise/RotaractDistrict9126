@@ -93,7 +93,7 @@ export default function WhoWeAreSection() {
         </div>
 
         {/* Bottom Image Collage Grid */}
-        <div className="grid grid-cols-3 gap-3 lg:gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 lg:gap-6">
           {images.map((src, idx) => (
             <motion.div 
               key={idx}
@@ -101,17 +101,18 @@ export default function WhoWeAreSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-40px' }}
               transition={{ duration: 0.5, delay: idx * 0.12, ease: 'easeOut' }}
-              className="relative overflow-hidden rounded-xl aspect-[4/3] group cursor-pointer shadow-lg hover:shadow-2xl transition-all duration-300"
+              whileHover={{ y: -6, scale: 1.02 }}
+              className="relative overflow-hidden rounded-2xl aspect-[4/3] group cursor-pointer shadow-lg hover:shadow-2xl border border-black/5 hover:border-[#D91B5C]/30 transition-all duration-300"
             >
               <img 
                 src={src} 
                 alt="District Impact" 
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
               />
               {/* Bottom Vignette for Images */}
               <div 
-                className="absolute inset-0" 
-                style={{ background: 'linear-gradient(transparent 50%, rgba(8, 12, 20, 0.65) 100%)' }}
+                className="absolute inset-0 transition-opacity duration-300 group-hover:opacity-80" 
+                style={{ background: 'linear-gradient(transparent 40%, rgba(8, 12, 20, 0.75) 100%)' }}
               />
             </motion.div>
           ))}

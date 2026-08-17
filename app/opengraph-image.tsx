@@ -16,7 +16,7 @@ export default async function Image() {
     (
       <div
         style={{
-          background: 'linear-gradient(135deg, #0A0E1A 0%, #15050C 50%, #200510 100%)',
+          background: 'linear-gradient(135deg, #070A12 0%, #12040A 45%, #1C050E 100%)',
           width: '100%',
           height: '100%',
           display: 'flex',
@@ -24,7 +24,7 @@ export default async function Image() {
           alignItems: 'center',
           justifyContent: 'space-between',
           position: 'relative',
-          padding: '48px 52px',
+          padding: '48px 56px',
           fontFamily: 'sans-serif',
         }}
       >
@@ -44,22 +44,22 @@ export default async function Image() {
         <div
           style={{
             position: 'absolute',
-            top: '-20%',
-            left: '10%',
-            width: '600px',
-            height: '600px',
-            background: 'radial-gradient(circle, rgba(152, 17, 50, 0.25) 0%, transparent 70%)',
+            top: '-15%',
+            left: '5%',
+            width: '650px',
+            height: '650px',
+            background: 'radial-gradient(circle, rgba(217, 27, 92, 0.22) 0%, transparent 70%)',
             pointerEvents: 'none',
           }}
         />
 
-        {/* ================= LEFT SIDE: BRAND LOGO, HEADLINE & METRICS ================= */}
+        {/* ================= LEFT COLUMN: ROTARACT LOGO, HEADLINE & STATS ================= */}
         <div
           style={{
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'center',
-            width: '54%',
+            width: '53%',
             height: '100%',
             zIndex: 10,
           }}
@@ -69,23 +69,23 @@ export default async function Image() {
             style={{
               display: 'flex',
               alignItems: 'center',
-              gap: '16px',
-              marginBottom: '20px',
+              gap: '18px',
+              marginBottom: '22px',
             }}
           >
-            {/* Official Rotaract Logo on the Left */}
+            {/* Official Rotaract Logo on Left */}
             <img
               src={logoSrc}
               alt="Rotaract Logo"
               style={{
-                width: '76px',
-                height: '76px',
+                width: '90px',
+                height: '90px',
                 objectFit: 'contain',
-                filter: 'drop-shadow(0 4px 12px rgba(0,0,0,0.5))',
+                filter: 'drop-shadow(0 6px 16px rgba(0,0,0,0.6))',
               }}
             />
 
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
               <div
                 style={{
                   display: 'flex',
@@ -95,12 +95,12 @@ export default async function Image() {
               >
                 <div
                   style={{
-                    padding: '4px 12px',
+                    padding: '5px 14px',
                     borderRadius: '999px',
-                    background: 'rgba(217, 27, 92, 0.25)',
-                    border: '1px solid rgba(217, 27, 92, 0.5)',
+                    background: 'rgba(217, 27, 92, 0.28)',
+                    border: '1px solid rgba(217, 27, 92, 0.6)',
                     color: '#FF4D8D',
-                    fontSize: '12px',
+                    fontSize: '13px',
                     fontWeight: 800,
                     letterSpacing: '0.15em',
                     textTransform: 'uppercase',
@@ -110,12 +110,12 @@ export default async function Image() {
                 </div>
                 <div
                   style={{
-                    padding: '4px 12px',
+                    padding: '5px 14px',
                     borderRadius: '999px',
-                    background: 'rgba(212, 165, 32, 0.25)',
-                    border: '1px solid rgba(212, 165, 32, 0.5)',
+                    background: 'rgba(212, 165, 32, 0.28)',
+                    border: '1px solid rgba(212, 165, 32, 0.6)',
                     color: '#D4A520',
-                    fontSize: '12px',
+                    fontSize: '13px',
                     fontWeight: 800,
                     letterSpacing: '0.15em',
                     textTransform: 'uppercase',
@@ -126,8 +126,9 @@ export default async function Image() {
               </div>
               <span
                 style={{
-                  color: 'rgba(255, 255, 255, 0.6)',
+                  color: 'rgba(255, 255, 255, 0.65)',
                   fontSize: '13px',
+                  fontWeight: 600,
                   letterSpacing: '0.08em',
                   textTransform: 'uppercase',
                 }}
@@ -140,10 +141,10 @@ export default async function Image() {
           {/* Main Headline */}
           <h1
             style={{
-              fontSize: '46px',
+              fontSize: '48px',
               fontWeight: 900,
               color: '#FFFFFF',
-              lineHeight: 1.08,
+              lineHeight: 1.05,
               margin: '0 0 14px 0',
               letterSpacing: '-0.02em',
             }}
@@ -156,7 +157,7 @@ export default async function Image() {
           <p
             style={{
               fontSize: '18px',
-              color: 'rgba(255, 255, 255, 0.75)',
+              color: 'rgba(255, 255, 255, 0.78)',
               lineHeight: 1.4,
               margin: '0 0 24px 0',
             }}
@@ -164,7 +165,7 @@ export default async function Image() {
             Uniting 77 Chartered Clubs & 700+ Young Leaders across Oyo, Osun, Ondo, Ekiti, Kwara, Kogi & Niger.
           </p>
 
-          {/* 3 Metric Pills */}
+          {/* 3 Metric Badges */}
           <div
             style={{
               display: 'flex',
@@ -177,13 +178,13 @@ export default async function Image() {
                 flexDirection: 'column',
                 alignItems: 'center',
                 background: 'rgba(255, 255, 255, 0.08)',
-                border: '1px solid rgba(255, 255, 255, 0.15)',
-                borderRadius: '12px',
-                padding: '8px 18px',
+                border: '1px solid rgba(255, 255, 255, 0.16)',
+                borderRadius: '14px',
+                padding: '8px 20px',
               }}
             >
-              <span style={{ fontSize: '24px', fontWeight: 900, color: '#D4A520', lineHeight: 1 }}>77</span>
-              <span style={{ fontSize: '11px', color: 'rgba(255, 255, 255, 0.7)', textTransform: 'uppercase', letterSpacing: '0.1em', marginTop: '3px' }}>
+              <span style={{ fontSize: '26px', fontWeight: 900, color: '#D4A520', lineHeight: 1 }}>77</span>
+              <span style={{ fontSize: '11px', color: 'rgba(255, 255, 255, 0.75)', textTransform: 'uppercase', letterSpacing: '0.1em', marginTop: '3px' }}>
                 Clubs
               </span>
             </div>
@@ -194,13 +195,13 @@ export default async function Image() {
                 flexDirection: 'column',
                 alignItems: 'center',
                 background: 'rgba(255, 255, 255, 0.08)',
-                border: '1px solid rgba(255, 255, 255, 0.15)',
-                borderRadius: '12px',
-                padding: '8px 18px',
+                border: '1px solid rgba(255, 255, 255, 0.16)',
+                borderRadius: '14px',
+                padding: '8px 20px',
               }}
             >
-              <span style={{ fontSize: '24px', fontWeight: 900, color: '#D4A520', lineHeight: 1 }}>700+</span>
-              <span style={{ fontSize: '11px', color: 'rgba(255, 255, 255, 0.7)', textTransform: 'uppercase', letterSpacing: '0.1em', marginTop: '3px' }}>
+              <span style={{ fontSize: '26px', fontWeight: 900, color: '#D4A520', lineHeight: 1 }}>700+</span>
+              <span style={{ fontSize: '11px', color: 'rgba(255, 255, 255, 0.75)', textTransform: 'uppercase', letterSpacing: '0.1em', marginTop: '3px' }}>
                 Leaders
               </span>
             </div>
@@ -211,30 +212,30 @@ export default async function Image() {
                 flexDirection: 'column',
                 alignItems: 'center',
                 background: 'rgba(255, 255, 255, 0.08)',
-                border: '1px solid rgba(255, 255, 255, 0.15)',
-                borderRadius: '12px',
-                padding: '8px 18px',
+                border: '1px solid rgba(255, 255, 255, 0.16)',
+                borderRadius: '14px',
+                padding: '8px 20px',
               }}
             >
-              <span style={{ fontSize: '24px', fontWeight: 900, color: '#D4A520', lineHeight: 1 }}>50K+</span>
-              <span style={{ fontSize: '11px', color: 'rgba(255, 255, 255, 0.7)', textTransform: 'uppercase', letterSpacing: '0.1em', marginTop: '3px' }}>
+              <span style={{ fontSize: '26px', fontWeight: 900, color: '#D4A520', lineHeight: 1 }}>50K+</span>
+              <span style={{ fontSize: '11px', color: 'rgba(255, 255, 255, 0.75)', textTransform: 'uppercase', letterSpacing: '0.1em', marginTop: '3px' }}>
                 Impacted
               </span>
             </div>
           </div>
         </div>
 
-        {/* ================= RIGHT SIDE: FEATURED IMAGE CARD ================= */}
+        {/* ================= RIGHT COLUMN: FEATURED ACTION IMAGE CARD ================= */}
         <div
           style={{
             display: 'flex',
-            width: '42%',
+            width: '43%',
             height: '100%',
             position: 'relative',
-            borderRadius: '20px',
+            borderRadius: '22px',
             overflow: 'hidden',
-            border: '2px solid rgba(217, 27, 92, 0.35)',
-            boxShadow: '0 20px 50px rgba(0, 0, 0, 0.6), 0 0 40px rgba(152, 17, 50, 0.3)',
+            border: '2px solid rgba(217, 27, 92, 0.45)',
+            boxShadow: '0 24px 60px rgba(0, 0, 0, 0.65), 0 0 50px rgba(152, 17, 50, 0.35)',
           }}
         >
           <img
@@ -252,7 +253,7 @@ export default async function Image() {
             style={{
               position: 'absolute',
               inset: 0,
-              background: 'linear-gradient(to top, rgba(10, 14, 26, 0.85) 0%, rgba(10, 14, 26, 0.2) 50%, transparent 100%)',
+              background: 'linear-gradient(to top, rgba(7, 10, 18, 0.88) 0%, rgba(7, 10, 18, 0.25) 50%, transparent 100%)',
             }}
           />
 
@@ -266,16 +267,16 @@ export default async function Image() {
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'space-between',
-              padding: '8px 14px',
-              borderRadius: '12px',
-              background: 'rgba(10, 14, 26, 0.85)',
-              border: '1px solid rgba(255, 255, 255, 0.15)',
+              padding: '10px 16px',
+              borderRadius: '14px',
+              background: 'rgba(7, 10, 18, 0.88)',
+              border: '1px solid rgba(255, 255, 255, 0.2)',
             }}
           >
             <span
               style={{
                 color: '#FFFFFF',
-                fontSize: '12px',
+                fontSize: '13px',
                 fontWeight: 700,
                 letterSpacing: '0.04em',
               }}
@@ -291,7 +292,7 @@ export default async function Image() {
                 letterSpacing: '0.1em',
               }}
             >
-              7 States
+              7 States · Nigeria
             </span>
           </div>
         </div>
