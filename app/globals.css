@@ -235,3 +235,26 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: #a89888;
 }
+
+/* ─── Custom Leaflet Map Overrides ─── */
+.leaflet-container {
+  background: #e8e8e8 !important;
+  font-family: Inter, sans-serif !important;
+}
+
+.custom-map-popup .leaflet-popup-content-wrapper {
+  background: transparent !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  border-radius: 14px !important;
+}
+
+.custom-map-popup .leaflet-popup-content {
+  margin: 0 !important;
+  line-height: 1 !important;
+}
+
+.custom-map-popup .leaflet-popup-tip-container {
+  display: none !important;
+}
+

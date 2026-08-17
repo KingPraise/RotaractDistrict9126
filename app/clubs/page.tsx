@@ -50,6 +50,14 @@ export default function ClubsPage() {
     });
   }, [searchQuery, selectedType, selectedState]);
 
+  const handleSelectClub = (id: string) => {
+    setActiveClubId(id);
+    const el = document.getElementById(`club-card-${id}`);
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+  };
+
   return (
     <>
       <Navbar />
@@ -154,8 +162,9 @@ export default function ClubsPage() {
                 return (
                   <div
                     key={clubId}
+                    id={`club-card-${clubId}`}
                     onClick={() => {
-                      setActiveClubId(clubId);
+                      handleSelectClub(clubId);
                       if (window.innerWidth < 1024) {
                         setMobileView('map');
                       }
@@ -247,7 +256,7 @@ export default function ClubsPage() {
               <ClubMap
                 clubs={filteredClubs}
                 activeClubId={activeClubId}
-                onSelectClub={(id) => setActiveClubId(id)}
+                onSelectClub={handleSelectClub}
               />
             </div>
 
