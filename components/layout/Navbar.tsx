@@ -55,16 +55,16 @@ export default function Navbar() {
   return (
     <>
       <header
-        className="fixed top-0 left-0 right-0 z-[2000] w-full h-[68px] px-4 sm:px-8 lg:px-10 bg-white/[0.97] backdrop-blur-[20px] border-b border-black/[0.09] shadow-[0_1px_12px_rgba(0,0,0,0.06)]"
+        className="fixed top-0 left-0 right-0 z-[2000] w-full h-[76px] px-4 sm:px-8 lg:px-10 bg-white/[0.97] backdrop-blur-[20px] border-b border-black/[0.09] shadow-[0_2px_16px_rgba(0,0,0,0.07)] flex items-center"
       >
-        <div className="max-w-[1364px] mx-auto h-full flex items-center justify-between">
+        <div className="max-w-[1364px] mx-auto w-full h-full flex items-center justify-between">
           
-          {/* Brand Lockup (Left) - Prominently Sized Image Alone */}
-          <Link href="/" className="flex items-center group py-1">
+          {/* Brand Lockup (Left) - Large, Highly Visible Logo Image */}
+          <Link href="/" className="flex items-center group py-1 shrink-0">
             <img
               src="/images/rotaract-logo.png"
               alt="Rotaract District 9126 Logo"
-              className="h-12 sm:h-14 w-auto max-h-[54px] object-contain transition-transform duration-300 group-hover:scale-105 filter drop-shadow-sm"
+              className="h-[52px] sm:h-[62px] w-auto max-h-[64px] object-contain transition-transform duration-300 group-hover:scale-105 filter drop-shadow-md"
             />
           </Link>
 
@@ -77,7 +77,7 @@ export default function Navbar() {
                   key={link.label}
                   href={link.href}
                   onClick={() => setActiveLink(link.label)}
-                  className={`relative py-4 text-[13.5px] font-medium transition-colors duration-200 ${
+                  className={`relative py-4 text-[14px] font-medium transition-colors duration-200 ${
                     isActive ? 'text-[#981132] font-bold' : 'text-[#374151] hover:text-[#981132]'
                   }`}
                 >
@@ -85,7 +85,7 @@ export default function Navbar() {
                   {isActive && (
                     <motion.span
                       layoutId="activeNavPill"
-                      className="absolute bottom-1 left-0 right-0 h-[2.5px] bg-[#981132] rounded-full"
+                      className="absolute bottom-0 left-0 right-0 h-[2.5px] bg-[#981132] rounded-full"
                       transition={{ type: 'spring', stiffness: 380, damping: 30 }}
                     />
                   )}
@@ -99,12 +99,12 @@ export default function Navbar() {
             {/* Search Trigger Button */}
             <button
               onClick={() => setIsSearchOpen(true)}
-              className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-black/[0.04] hover:bg-black/[0.08] text-xs text-[#6B7280] border border-black/[0.06] transition-all hover:scale-105"
+              className="inline-flex items-center gap-2 px-3.5 py-2 rounded-full bg-black/[0.04] hover:bg-black/[0.08] text-xs text-[#6B7280] border border-black/[0.06] transition-all hover:scale-105"
               title="Search (Ctrl + K)"
             >
               <Search className="h-3.5 w-3.5" />
-              <span className="text-[11px] font-medium">Search</span>
-              <kbd className="text-[10px] font-mono bg-white px-1.5 py-0.2 rounded text-slate-500 border border-black/10">
+              <span className="text-[11.5px] font-medium">Search</span>
+              <kbd className="text-[10px] font-mono bg-white px-1.5 py-0.5 rounded text-slate-500 border border-black/10">
                 ⌘K
               </kbd>
             </button>
@@ -120,7 +120,7 @@ export default function Navbar() {
             {/* Join a Club Pill Button with Diagonal Arrow Badge */}
             <Link
               href="/join"
-              className="bg-[#981132] hover:bg-[#A70C43] active:scale-95 text-white text-[12px] font-bold pl-4 pr-2 py-2 rounded-full inline-flex items-center gap-2 shadow-sm transition-all duration-200 hover:scale-105 group"
+              className="bg-[#981132] hover:bg-[#A70C43] active:scale-95 text-white text-[12.5px] font-bold pl-4 pr-2 py-2 rounded-full inline-flex items-center gap-2 shadow-md transition-all duration-200 hover:scale-105 group"
             >
               <span>Join a Club</span>
               <span className="flex h-[24px] w-[24px] items-center justify-center rounded-full bg-black/35 border border-white/15 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
@@ -156,7 +156,7 @@ export default function Navbar() {
 
         {/* Mobile Drawer */}
         {isMobileOpen && (
-          <div className="md:hidden absolute top-[68px] left-0 right-0 bg-white border-b border-black/10 px-6 py-5 shadow-xl space-y-4">
+          <div className="md:hidden absolute top-[76px] left-0 right-0 bg-white border-b border-black/10 px-6 py-5 shadow-xl space-y-4">
             <div className="flex flex-col space-y-3">
               {NAV_LINKS.map((link) => (
                 <Link

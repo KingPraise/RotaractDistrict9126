@@ -39,7 +39,7 @@ export default function ClubsPage() {
   return (
     <>
       <Navbar />
-      <div className="h-screen overflow-hidden flex flex-col pt-[68px]" style={{ fontFamily: 'Inter, sans-serif', background: 'rgb(248, 245, 244)', color: 'rgb(17, 17, 17)' }}>
+      <div className="h-screen overflow-hidden flex flex-col pt-[76px]" style={{ fontFamily: 'Inter, sans-serif', background: 'rgb(248, 245, 244)', color: 'rgb(17, 17, 17)' }}>
         
         {/* Desktop & Mobile Split Container */}
         <div className="flex-1 flex overflow-hidden relative">
