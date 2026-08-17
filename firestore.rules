@@ -1,0 +1,108 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // --- HELPER FUNCTIONS ---
+
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    function getUserData() {
+      return get(/databases/$(database)/documents/users/$(request.auth.uid)).data;
+    }
+
+    function isDistrictAdmin() {
+      return isAuthenticated() && getUserData().role == 'district_admin';
+    }
+
+    function isClubPresident(clubId) {
+      return isAuthenticated() && (
+        getUserData().role == 'president' && getUserData().clubId == clubId
+      );
+    }
+
+    // --- USERS COLLECTION (`users/{userId}`) ---
+    match /users/{userId} {
+      // Any authenticated user can view member profiles
+      allow read: if isAuthenticated();
+
+      // Users can create their own account document upon initial sign-up
+      allow create: if isOwner(userId);
+
+      // Members can update their personal info (name, phone, occupation, avatar)
+      // Only District Admins or Club Presidents can alter duesStatus or role
+      allow update: if isAuthenticated() && (
+        isDistrictAdmin() ||
+        (
+          isOwner(userId) &&
+          !request.resource.data.diff(resource.data).affectedKeys().hasAny(['role', 'duesStatus', 'rotaryId', 'clubId'])
+        ) ||
+        (
+          getUserData().role == 'president' &&
+          getUserData().clubId == resource.data.clubId &&
+          !request.resource.data.diff(resource.data).affectedKeys().hasAny(['role', 'rotaryId', 'clubId'])
+        )
+      );
+
+      // Only District Admins can remove user accounts
+      allow delete: if isDistrictAdmin();
+    }
+
+    // --- CLUBS COLLECTION (`clubs/{clubId}`) ---
+    match /clubs/{clubId} {
+      // Public directory & map finder access
+      allow read: if true;
+
+      // Only District Admins or assigned Club Presidents can update club details
+      allow create, delete: if isDistrictAdmin();
+      allow update: if isDistrictAdmin() || isClubPresident(clubId);
+    }
+
+    // --- PROSPECTS COLLECTION (`prospects/{prospectId}`) ---
+    match /prospects/{prospectId} {
+      // Public prospective member lead capture
+      allow create: if true;
+
+      // Only District Admins or the assigned Club President can read and update pipeline status
+      allow read: if isAuthenticated() && (
+        isDistrictAdmin() ||
+        (getUserData().role == 'president' && getUserData().clubId == resource.data.assignedClubId)
+      );
+
+      allow update: if isAuthenticated() && (
+        isDistrictAdmin() ||
+        (getUserData().role == 'president' && getUserData().clubId == resource.data.assignedClubId)
+      );
+
+      allow delete: if isDistrictAdmin();
+    }
+
+    // --- PROJECTS COLLECTION (`projects/{projectId}`) ---
+    match /projects/{projectId} {
+      // Public community impact archive
+      allow read: if true;
+
+      // Club Presidents & District Admins can publish projects
+      allow create: if isAuthenticated() && (
+        isDistrictAdmin() ||
+        (getUserData().role == 'president' && getUserData().clubId == request.resource.data.clubId)
+      );
+
+      allow update: if isAuthenticated() && (
+        isDistrictAdmin() ||
+        (getUserData().role == 'president' && getUserData().clubId == resource.data.clubId)
+      );
+
+      allow delete: if isDistrictAdmin() || (
+        isAuthenticated() &&
+        getUserData().role == 'president' &&
+        getUserData().clubId == resource.data.clubId
+      );
+    }
+  }
+}
