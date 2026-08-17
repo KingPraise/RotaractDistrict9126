@@ -375,7 +375,8 @@ function JoinContent() {
                     onChange={(e) => {
                       const selectedId = e.target.value;
                       setFormData({ ...formData, assignedClubId: selectedId });
-                      const currentClubs = CLUBS_BY_STATE[formData.preferredState] || [];
+                      const stateKey = formData.preferredState;
+                      const currentClubs = stateKey ? CLUBS_BY_STATE[stateKey] || [] : [];
                       const clubObj = currentClubs.find((c) => c.id === selectedId);
                       if (clubObj) setMatchedClubName(clubObj.name);
                     }}
