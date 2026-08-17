@@ -13,6 +13,7 @@ import {
   ShieldCheck, 
   CheckCircle2 
 } from 'lucide-react';
+import { signInWithEmail, signUpWithEmail, sendPasswordReset } from '@/lib/services/auth-service';
 
 interface AuthContainerProps {
   initialMode?: 'login' | 'register' | 'forgot';
@@ -51,7 +52,7 @@ function AuthForm({ initialMode = 'login' }: AuthContainerProps) {
     }
   }, [searchParams]);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
     setSuccessMessage('');
@@ -62,10 +63,14 @@ function AuthForm({ initialMode = 'login' }: AuthContainerProps) {
         return;
       }
       setIsLoading(true);
-      setTimeout(() => {
-        setIsLoading(false);
-        setSuccessMessage('A reset link has been sent to your email address.');
-      }, 800);
+      const res = await sendPasswordReset(email);
+      setIsLoading(false);
+
+      if (res.success) {
+        setSuccessMessage(res.message || 'A reset link has been dispatched to your email address.');
+      } else {
+        setError(res.error || 'Failed to send password reset email.');
+      }
       return;
     }
 
@@ -74,7 +79,25 @@ function AuthForm({ initialMode = 'login' }: AuthContainerProps) {
         setError('Please fill in all fields.');
         return;
       }
-    } else {
+
+      setIsLoading(true);
+      const res = await signInWithEmail(email, password);
+      setIsLoading(false);
+
+      if (res.success && res.user) {
+        setSuccessMessage('Sign in successful! Redirecting...');
+        if (res.user.role === 'club_president' || res.user.role === 'district_admin') {
+          router.push('/portal/president');
+        } else {
+          router.push('/portal/dashboard');
+        }
+      } else {
+        setError(res.error || 'Failed to sign in.');
+      }
+      return;
+    }
+
+    if (mode === 'register') {
       if (!firstName || !lastName || !email || !password || !confirmPassword) {
         setError('Please fill in all fields.');
         return;
@@ -87,13 +110,18 @@ function AuthForm({ initialMode = 'login' }: AuthContainerProps) {
         setError('Password must be at least 8 characters.');
         return;
       }
-    }
 
-    setIsLoading(true);
-    setTimeout(() => {
+      setIsLoading(true);
+      const res = await signUpWithEmail(email, password, { firstName, lastName, role: 'member' });
       setIsLoading(false);
-      router.push('/portal/dashboard');
-    }, 800);
+
+      if (res.success) {
+        setSuccessMessage('Account registered successfully! Redirecting...');
+        router.push('/portal/dashboard');
+      } else {
+        setError(res.error || 'Registration failed.');
+      }
+    }
   };
 
   return (

@@ -159,11 +159,40 @@ const categoryBadgeStyles: Record<string, { bg: string; text: string }> = {
   Announcements: { bg: 'rgba(5, 150, 105, 0.1)', text: 'rgb(5, 150, 105)' }
 };
 
+import { subscribeNewsletter } from '@/lib/services/newsletter-service';
+
 export default function BlogPage() {
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
+  const [newsletterEmail, setNewsletterEmail] = useState('');
+  const [isSubscribing, setIsSubscribing] = useState(false);
+  const [newsletterStatus, setNewsletterStatus] = useState<{ success: boolean; message: string } | null>(null);
 
   const categories = ['All', 'Impact Reports', 'Events', 'Community Stories', 'District News', 'Announcements'];
+
+  const handleNewsletterSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newsletterEmail) return;
+
+    setIsSubscribing(true);
+    setNewsletterStatus(null);
+
+    const result = await subscribeNewsletter(newsletterEmail);
+    setIsSubscribing(false);
+
+    if (result.success) {
+      setNewsletterStatus({
+        success: true,
+        message: result.message || 'Thank you for subscribing!',
+      });
+      setNewsletterEmail('');
+    } else {
+      setNewsletterStatus({
+        success: false,
+        message: result.error || 'Failed to subscribe. Please try again.',
+      });
+    }
+  };
 
   const filteredPosts = useMemo(() => {
     return blogPosts.filter((post) => {
@@ -500,18 +529,33 @@ export default function BlogPage() {
                 Get the latest impact reports, club spotlights, and district news delivered to your inbox every fortnight.
               </p>
 
-              <form onSubmit={(e) => e.preventDefault()} className="flex flex-col sm:flex-row gap-3">
+              {newsletterStatus && (
+                <div
+                  className={`p-3 rounded-xl mb-4 text-xs font-semibold ${
+                    newsletterStatus.success
+                      ? 'bg-emerald-500/20 text-emerald-200 border border-emerald-400/30'
+                      : 'bg-black/30 text-rose-200 border border-rose-400/30'
+                  }`}
+                >
+                  {newsletterStatus.message}
+                </div>
+              )}
+
+              <form onSubmit={handleNewsletterSubmit} className="flex flex-col sm:flex-row gap-3">
                 <input 
                   type="email" 
                   placeholder="your@email.com"
-                  className="flex-1 px-4 py-3 rounded-xl outline-none text-sm bg-white/15 border border-white/30 text-white placeholder-white/50 font-sans"
+                  value={newsletterEmail}
+                  onChange={(e) => setNewsletterEmail(e.target.value)}
+                  className="flex-1 px-4 py-3 rounded-xl outline-none text-sm bg-white/15 border border-white/30 text-white placeholder-white/50 font-sans focus:border-white"
                   required
                 />
                 <button 
                   type="submit"
-                  className="px-6 py-3 rounded-xl text-sm font-bold bg-white text-[#981132] whitespace-nowrap transition-transform hover:scale-105 active:scale-95 font-sans"
+                  disabled={isSubscribing}
+                  className="px-6 py-3 rounded-xl text-sm font-bold bg-white text-[#981132] whitespace-nowrap transition-transform hover:scale-105 active:scale-95 font-sans disabled:opacity-50"
                 >
-                  Subscribe
+                  {isSubscribing ? 'Subscribing...' : 'Subscribe'}
                 </button>
               </form>
             </div>

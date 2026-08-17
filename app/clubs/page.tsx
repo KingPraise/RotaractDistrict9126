@@ -2,9 +2,23 @@
 
 import React, { useState, useMemo } from 'react';
 import Link from 'next/link';
-import { Search, MapPin, Clock, Users, ChevronDown, CheckCircle2, List, Map as MapIcon } from 'lucide-react';
+import dynamic from 'next/dynamic';
+import { Search, MapPin, Clock, Users, List, Map as MapIcon } from 'lucide-react';
 import Navbar from '@/components/layout/Navbar';
 import { clubsData } from '@/lib/clubs-data';
+
+// Dynamic import for Leaflet map component to prevent SSR window/document errors
+const ClubMap = dynamic(() => import('@/components/clubs/ClubMap'), {
+  ssr: false,
+  loading: () => (
+    <div className="w-full h-full min-h-[450px] flex flex-col items-center justify-center bg-[#F8F5F2] text-gray-400 gap-3">
+      <div className="w-8 h-8 rounded-full border-2 border-[#981132] border-t-transparent animate-spin" />
+      <span className="text-xs font-semibold uppercase tracking-widest text-[#981132] font-sans">
+        Loading Interactive Map…
+      </span>
+    </div>
+  ),
+});
 
 export default function ClubsPage() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -98,157 +112,180 @@ export default function ClubsPage() {
               </div>
 
               {/* State Filter Selector & Counter */}
-              <div className="flex items-center justify-between gap-2 mt-3">
-                <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-1">
-                  {states.map((st) => (
+              <div>
+                <div className="flex items-center justify-between mb-1.5">
+                  <span className="text-[8.5px] font-bold text-gray-500 uppercase tracking-[0.15em] font-sans">
+                    State Territory
+                  </span>
+                  <span className="text-[10px] font-bold text-[#981132] font-sans">
+                    {filteredClubs.length} {filteredClubs.length === 1 ? 'Club' : 'Clubs'} Found
+                  </span>
+                </div>
+                <div className="flex gap-1.5 overflow-x-auto pb-1 scrollbar-none">
+                  {states.map((state) => (
                     <button
-                      key={st}
-                      onClick={() => setSelectedState(st)}
-                      className={`px-2.5 py-0.5 rounded-full text-[9.5px] font-sans shrink-0 transition-all ${
-                        selectedState === st
-                          ? 'bg-[#1C1C1E] text-white font-semibold'
-                          : 'bg-black/5 text-gray-700 hover:bg-black/10'
+                      key={state}
+                      onClick={() => setSelectedState(state)}
+                      className={`px-3 py-1 rounded-full text-[10px] font-sans whitespace-nowrap transition-all cursor-pointer shrink-0 ${
+                        selectedState === state
+                          ? 'bg-[#1C1C1E] text-white font-bold'
+                          : 'bg-black/[0.04] text-[#1C1C1E] font-medium hover:bg-black/[0.08]'
                       }`}
                     >
-                      {st}
+                      {state}
                     </button>
                   ))}
                 </div>
-                <span className="text-[10.5px] font-sans text-gray-500 shrink-0 font-medium">
-                  {filteredClubs.length} clubs
-                </span>
               </div>
             </div>
 
             {/* Scrollable Club Cards List */}
-            <div className="flex-1 overflow-y-auto px-4 py-4 space-y-3.5 scrollbar-thin">
-              {filteredClubs.map((club) => (
-                <div
-                  key={club.id || club.rotaryId}
-                  onClick={() => setActiveClubId(club.id || club.rotaryId)}
-                  className={`relative rounded-[18px] p-[18px_18px_16px] cursor-pointer transition-all duration-200 ${
-                    activeClubId === (club.id || club.rotaryId)
-                      ? 'bg-white shadow-[0_4px_20px_rgba(152,17,50,0.15)] border border-[#981132]/30 scale-[1.01]'
-                      : 'bg-white/80 backdrop-blur-[20px] border border-black/[0.07] shadow-[0_2px_12px_rgba(0,0,0,0.06)] hover:bg-white hover:shadow-[0_4px_16px_rgba(0,0,0,0.08)]'
-                  }`}
-                >
-                  {/* Top Row: Avatar & Title */}
-                  <div className="flex items-start gap-3 mb-3">
-                    <div className="relative shrink-0">
-                      <div className="w-[46px] h-[46px] rounded-full p-[2px] bg-gradient-to-tr from-[#D91B5C] to-[#A855F7] shrink-0">
-                        <img
-                          src={club.presidentAvatar || "https://images.unsplash.com/photo-1573497491765-dccce02b29df?w=80&h=80&fit=crop&auto=format"}
-                          alt={club.president || club.name}
-                          className="w-full h-full rounded-full object-cover"
-                        />
-                      </div>
-                      <div className="absolute bottom-0.5 right-0.5 w-[11px] h-[11px] rounded-full bg-green-500 border-2 border-white" />
-                    </div>
-
-                    <div className="flex-1 min-w-0">
-                      <div className="text-[14.5px] font-bold text-[#1C1C1E] leading-tight truncate font-sans">
-                        {club.name}
-                      </div>
-                      <div className="text-[11.5px] text-gray-500 mt-0.5 truncate font-sans">
-                        {club.president ? `Pres. ${club.president}` : `ID: ${club.rotaryId || 'District 9126'}`}
-                      </div>
-                    </div>
-
-                    <div className="flex flex-col items-end gap-1 shrink-0">
-                      <div className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-black/[0.04] border border-black/[0.07]">
-                        <MapPin className="text-gray-500" size={9}/>
-                        <span className="text-[10px] font-sans text-gray-700">{club.state}</span>
-                      </div>
-                      <div className="px-2 py-0.5 rounded-full bg-[#981132]/10 border border-[#981132]/20">
-                        <span className="text-[9px] font-bold text-[#981132] tracking-wider uppercase font-sans">
-                          {club.type || 'COMMUNITY'}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Metadata Badges */}
-                  <div className="flex gap-1.5 flex-wrap mb-3.5">
-                    <div className="flex items-center gap-1 px-2 py-1 rounded-full bg-black/[0.04] border border-black/[0.07]">
-                      <MapPin className="text-gray-500" size={9}/>
-                      <span className="text-[10px] text-gray-700 font-sans">{club.city || club.state}</span>
-                    </div>
-                    <div className="flex items-center gap-1 px-2 py-1 rounded-full bg-black/[0.04] border border-black/[0.07]">
-                      <Clock className="text-gray-500" size={9}/>
-                      <span className="text-[10px] text-gray-700 font-sans">{club.meetingSchedule || 'Weekly Meeting'}</span>
-                    </div>
-                    <div className="flex items-center gap-1 px-2 py-1 rounded-full bg-black/[0.04] border border-black/[0.07]">
-                      <Users className="text-gray-500" size={9}/>
-                      <span className="text-[10px] text-gray-700 font-sans">{club.memberCount || '30+'} members</span>
-                    </div>
-                  </div>
-
-                  {/* Express Interest Action Button */}
-                  <Link
-                    href={`/join?club=${encodeURIComponent(club.name)}`}
-                    className="w-full flex items-center justify-center gap-2 py-2 px-4 rounded-full bg-[#981132] hover:bg-[#A70C43] text-white text-[13.5px] font-bold tracking-wide shadow-[0_4px_20px_rgba(152,17,50,0.32)] transition-all font-sans group hover:scale-[1.01]"
-                  >
-                    Express Interest
-                    <span className="w-[26px] h-[26px] rounded-full bg-black/35 backdrop-blur-sm border border-white/15 inline-flex items-center justify-center shrink-0 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
-                      <svg width="11" height="11" viewBox="0 0 12 12" fill="none">
-                        <path d="M2.5 9.5L9.5 2.5M9.5 2.5H4.5M9.5 2.5V7.5" stroke="white" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
-                      </svg>
-                    </span>
-                  </Link>
+            <div className="flex-1 overflow-y-auto p-4 space-y-3">
+              {filteredClubs.length === 0 && (
+                <div className="text-center py-12 text-gray-400 font-sans text-xs">
+                  No clubs match your criteria. Try adjusting your search query or filters.
                 </div>
-              ))}
+              )}
+
+              {filteredClubs.map((club) => {
+                const clubId = club.id || club.rotaryId || club.name;
+                const isSelected = activeClubId === clubId;
+
+                return (
+                  <div
+                    key={clubId}
+                    onClick={() => {
+                      setActiveClubId(clubId);
+                      if (window.innerWidth < 1024) {
+                        setMobileView('map');
+                      }
+                    }}
+                    className={`relative rounded-[18px] p-[18px_18px_16px] cursor-pointer transition-all duration-200 ${
+                      isSelected
+                        ? 'bg-white shadow-[0_4px_20px_rgba(152,17,50,0.22)] border-2 border-[#981132] scale-[1.01]'
+                        : 'bg-white/80 backdrop-blur-[20px] border border-black/[0.07] shadow-[0_2px_12px_rgba(0,0,0,0.06)] hover:bg-white hover:shadow-[0_4px_16px_rgba(0,0,0,0.08)]'
+                    }`}
+                  >
+                    {/* Top Row: Avatar & Title */}
+                    <div className="flex items-start gap-3 mb-3">
+                      <div className="relative shrink-0">
+                        <div className="w-[46px] h-[46px] rounded-full p-[2px] bg-gradient-to-tr from-[#D91B5C] to-[#A855F7] shrink-0">
+                          <img
+                            src={club.presidentAvatar || "https://images.unsplash.com/photo-1573497491765-dccce02b29df?w=80&h=80&fit=crop&auto=format"}
+                            alt={club.president || club.name}
+                            className="w-full h-full rounded-full object-cover"
+                          />
+                        </div>
+                        <div className="absolute bottom-0.5 right-0.5 w-[11px] h-[11px] rounded-full bg-green-500 border-2 border-white" />
+                      </div>
+
+                      <div className="flex-1 min-w-0">
+                        <div className="text-[14.5px] font-bold text-[#1C1C1E] leading-tight truncate font-sans">
+                          {club.name}
+                        </div>
+                        <div className="text-[11.5px] text-gray-500 mt-0.5 truncate font-sans">
+                          {club.president ? `Pres. ${club.president}` : `ID: ${club.rotaryId || 'District 9126'}`}
+                        </div>
+                      </div>
+
+                      <div className="flex flex-col items-end gap-1 shrink-0">
+                        <div className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-black/[0.04] border border-black/[0.07]">
+                          <MapPin className="text-gray-500" size={9}/>
+                          <span className="text-[10px] font-sans text-gray-700">{club.state}</span>
+                        </div>
+                        <div className="px-2 py-0.5 rounded-full bg-[#981132]/10 border border-[#981132]/20">
+                          <span className="text-[9px] font-bold text-[#981132] tracking-wider uppercase font-sans">
+                            {club.type || 'COMMUNITY'}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Metadata Badges */}
+                    <div className="flex gap-1.5 flex-wrap mb-3.5">
+                      <div className="flex items-center gap-1 px-2 py-1 rounded-full bg-black/[0.04] border border-black/[0.07]">
+                        <MapPin className="text-gray-500" size={9}/>
+                        <span className="text-[10px] text-gray-700 font-sans">{club.city || club.state}</span>
+                      </div>
+                      <div className="flex items-center gap-1 px-2 py-1 rounded-full bg-black/[0.04] border border-black/[0.07]">
+                        <Clock className="text-gray-500" size={9}/>
+                        <span className="text-[10px] text-gray-700 font-sans">{club.meetingSchedule || 'Weekly Meeting'}</span>
+                      </div>
+                      <div className="flex items-center gap-1 px-2 py-1 rounded-full bg-black/[0.04] border border-black/[0.07]">
+                        <Users className="text-gray-500" size={9}/>
+                        <span className="text-[10px] text-gray-700 font-sans">{club.memberCount || '30+'} members</span>
+                      </div>
+                    </div>
+
+                    {/* Express Interest Action Button */}
+                    <Link
+                      href={`/join?club=${encodeURIComponent(club.name)}`}
+                      onClick={(e) => e.stopPropagation()}
+                      className="w-full flex items-center justify-center gap-2 py-2 px-4 rounded-full bg-[#981132] hover:bg-[#A70C43] text-white text-[13.5px] font-bold tracking-wide shadow-[0_4px_20px_rgba(152,17,50,0.32)] transition-all font-sans group hover:scale-[1.01]"
+                    >
+                      Express Interest
+                      <span className="w-[26px] h-[26px] rounded-full bg-black/35 backdrop-blur-sm border border-white/15 inline-flex items-center justify-center shrink-0 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
+                        <svg width="11" height="11" viewBox="0 0 12 12" fill="none">
+                          <path d="M2.5 9.5L9.5 2.5M9.5 2.5H4.5M9.5 2.5V7.5" stroke="white" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
+                        </svg>
+                      </span>
+                    </Link>
+                  </div>
+                );
+              })}
             </div>
           </div>
 
-          {/* RIGHT COLUMN: Interactive Map Canvas (63% width on desktop) */}
+          {/* RIGHT COLUMN: Interactive Leaflet Map Canvas (63% width on desktop) */}
           <div 
-            className={`flex-1 relative overflow-hidden bg-[#E8E8E8] ${
-              mobileView === 'list' ? 'hidden lg:block' : 'block'
+            className={`flex-1 relative overflow-hidden bg-[#F0ECE9] p-3 lg:p-4 flex flex-col ${
+              mobileView === 'list' ? 'hidden lg:flex' : 'flex'
             }`}
           >
-            {/* Embedded Interactive Map View */}
-            <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2024286.994460592!2d3.5!3d8.0!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x10378b9ecb9e28bf%3A0x8898132ec51c360c!2sOyo%20State!5e0!3m2!1sen!2sng!4v1700000000000!5m2!1sen!2sng"
-              className="w-full h-full border-0 filter contrast-[1.05] saturate-[0.95]"
-              loading="lazy"
-              allowFullScreen
-            />
+            {/* Functional Leaflet Map */}
+            <div className="relative w-full h-full flex-1 rounded-2xl overflow-hidden shadow-inner">
+              <ClubMap
+                clubs={filteredClubs}
+                activeClubId={activeClubId}
+                onSelectClub={(id) => setActiveClubId(id)}
+              />
+            </div>
 
             {/* Floating Top-Right Legend Box */}
-            <div className="absolute top-3 right-3 z-20 rounded-2xl bg-white/90 backdrop-blur-md border border-black/10 p-3 shadow-lg min-w-[130px] pointer-events-none">
+            <div className="absolute top-6 right-7 z-[400] rounded-2xl bg-white/95 backdrop-blur-md border border-black/10 p-3 shadow-lg min-w-[130px] pointer-events-none">
               <div className="text-[8px] font-bold tracking-[0.2em] uppercase text-gray-500 mb-2 border-b border-black/[0.06] pb-1 font-sans">
                 Club Type
               </div>
               <div className="space-y-1.5 text-[9.5px] font-sans text-gray-700">
                 <div className="flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-[#981132]" />
+                  <span className="w-2.5 h-2.5 rounded-full bg-[#981132]" />
                   Professional
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-[#8B3A7A]" />
+                  <span className="w-2.5 h-2.5 rounded-full bg-[#8B3A7A]" />
                   Campus
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-[#A70C43]" />
+                  <span className="w-2.5 h-2.5 rounded-full bg-[#A70C43]" />
                   Community
                 </div>
               </div>
             </div>
 
             {/* Floating Bottom-Left State Region Badge */}
-            <div className="absolute bottom-6 left-4 z-20 px-3 py-1.5 rounded-xl bg-white/90 backdrop-blur-md border border-black/10 shadow-md flex items-center gap-2 pointer-events-none">
+            <div className="absolute bottom-7 left-7 z-[400] px-3 py-1.5 rounded-xl bg-white/95 backdrop-blur-md border border-black/10 shadow-md flex items-center gap-2 pointer-events-none">
               <span className="w-1.5 h-1.5 rounded-full bg-[#981132] animate-pulse" />
               <span className="text-[9px] font-bold uppercase tracking-widest text-[#1C1C1E] font-sans">
-                D9126 · 7 STATES ACTIVE
+                D9126 · 7 STATES ACTIVE · {filteredClubs.length} LOCATIONS
               </span>
             </div>
           </div>
 
           {/* Mobile View Toggle Switch (List vs Map) */}
-          <div className="lg:hidden absolute bottom-4 left-1/2 -translate-x-1/2 z-30 flex rounded-full bg-white/95 backdrop-blur-md border border-black/10 shadow-xl overflow-hidden p-1">
+          <div className="lg:hidden absolute bottom-4 left-1/2 -translate-x-1/2 z-[500] flex rounded-full bg-white/95 backdrop-blur-md border border-black/10 shadow-xl overflow-hidden p-1">
             <button
               onClick={() => setMobileView('list')}
-              className={`flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-semibold font-sans transition-all ${
+              className={`flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-semibold font-sans transition-all cursor-pointer ${
                 mobileView === 'list' ? 'bg-[#981132] text-white shadow-sm' : 'text-gray-700'
               }`}
             >
@@ -256,7 +293,7 @@ export default function ClubsPage() {
             </button>
             <button
               onClick={() => setMobileView('map')}
-              className={`flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-semibold font-sans transition-all ${
+              className={`flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-semibold font-sans transition-all cursor-pointer ${
                 mobileView === 'map' ? 'bg-[#981132] text-white shadow-sm' : 'text-gray-700'
               }`}
             >
