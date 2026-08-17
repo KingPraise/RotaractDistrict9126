@@ -107,18 +107,16 @@ export default function LeadershipSection() {
               className="group"
             >
               <div 
-                className="transition-all duration-300 group-hover:-translate-y-2 group-hover:shadow-[0_12px_32px_rgba(0,0,0,0.5)]"
+                className="transition-all duration-300 group-hover:-translate-y-2 group-hover:shadow-[0_12px_32px_rgba(0,0,0,0.5)] rounded-2xl flex flex-col h-full"
                 style={{ 
-                  borderRadius: '16px', 
-                  overflow: 'hidden', 
-                  background: 'rgba(15, 22, 36, 0.9)', 
-                  border: '1px solid rgba(255, 255, 255, 0.07)', 
+                  background: 'rgba(15, 22, 36, 0.95)', 
+                  border: '1px solid rgba(255, 255, 255, 0.1)', 
                   boxShadow: 'rgba(0, 0, 0, 0.35) 0px 4px 24px' 
                 }}
               >
                 
-                {/* Image Container */}
-                <div style={{ aspectRatio: '3/4', overflow: 'hidden', position: 'relative' }}>
+                {/* Image Container with rounded top and overflow hidden */}
+                <div style={{ aspectRatio: '3/4', overflow: 'hidden', position: 'relative' }} className="rounded-t-2xl">
                   <img 
                     src={leader.image} 
                     onError={(e) => { e.currentTarget.src = leader.fallbackImage; }}
@@ -132,20 +130,18 @@ export default function LeadershipSection() {
                 </div>
 
                 {/* Text Content */}
-                <div style={{ padding: '12px 14px 14px' }}>
+                <div style={{ padding: '12px 14px 14px' }} className="flex flex-col justify-between flex-1">
                   <div 
-                    className="font-sans whitespace-nowrap overflow-hidden text-ellipsis" 
-                    style={{ fontSize: '0.8rem', fontWeight: 700, color: 'rgba(236, 238, 245, 0.92)', marginBottom: '3px', lineHeight: 1.3 }}
+                    className="font-sans text-[13px] font-bold text-white mb-1 leading-snug" 
                   >
                     {leader.name}
                   </div>
                   <div 
-                    className="font-sans" 
-                    style={{ fontSize: '0.68rem', color: 'rgb(217, 27, 92)', fontWeight: 600, letterSpacing: '0.04em', lineHeight: 1.4 }}
+                    className="font-sans text-[11px] text-[#D91B5C] font-semibold tracking-wide leading-snug" 
                   >
                     {leader.tooltip ? (
                       <RotaryTooltip term={leader.tooltip}>
-                        <span className="border-b border-dotted border-[#D91B5C]/50 cursor-help">{leader.role}</span>
+                        <span>{leader.role}</span>
                       </RotaryTooltip>
                     ) : (
                       leader.role

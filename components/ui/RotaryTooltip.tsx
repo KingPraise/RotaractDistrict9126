@@ -1,7 +1,8 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Info } from 'lucide-react';
 
 export const ROTARY_ACRONYMS: Record<string, { term: string; definition: string; category?: string }> = {
   DRR: {
@@ -55,7 +56,8 @@ interface RotaryTooltipProps {
 
 export default function RotaryTooltip({ acronym, term, children, className = '' }: RotaryTooltipProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const rawKey = acronym || term || '';
+  const containerRef = useRef<HTMLSpanElement>(null);
+  const rawKey = (acronym || term || '').trim();
   const targetKey = rawKey.toUpperCase();
   const info = ROTARY_ACRONYMS[targetKey] || {
     term: rawKey,
@@ -63,20 +65,37 @@ export default function RotaryTooltip({ acronym, term, children, className = '' 
     category: 'Rotary Standard',
   };
 
+  // Close on outside click
+  useEffect(() => {
+    const handleOutsideClick = (e: MouseEvent) => {
+      if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
+        setIsOpen(false);
+      }
+    };
+    if (isOpen) {
+      document.addEventListener('mousedown', handleOutsideClick);
+    }
+    return () => document.removeEventListener('mousedown', handleOutsideClick);
+  }, [isOpen]);
+
   return (
     <span
-      className={`relative inline-block ${className}`}
+      ref={containerRef}
+      className={`relative inline-flex items-center gap-1 cursor-pointer ${className}`}
       onMouseEnter={() => setIsOpen(true)}
       onMouseLeave={() => setIsOpen(false)}
-      onFocus={() => setIsOpen(true)}
-      onBlur={() => setIsOpen(false)}
+      onClick={(e) => {
+        e.stopPropagation();
+        setIsOpen((prev) => !prev);
+      }}
       tabIndex={0}
-      role="tooltip"
+      role="button"
       aria-label={`${rawKey}: ${info.term}`}
     >
-      <span className="border-b border-dotted border-current cursor-help hover:text-[#D91B5C] transition-colors">
+      <span className="border-b border-dotted border-current hover:text-[#D91B5C] transition-colors leading-tight">
         {children || rawKey}
       </span>
+      <Info size={11} className="opacity-60 hover:opacity-100 transition-opacity text-[#D91B5C] shrink-0" />
 
       <AnimatePresence>
         {isOpen && (
@@ -84,24 +103,25 @@ export default function RotaryTooltip({ acronym, term, children, className = '' 
             initial={{ opacity: 0, y: 6, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 4, scale: 0.95 }}
-            transition={{ duration: 0.18, ease: 'easeOut' }}
-            className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-64 sm:w-72 p-3.5 rounded-2xl bg-[#0F1624] border border-white/20 text-white shadow-2xl backdrop-blur-xl z-50 text-left pointer-events-none"
+            transition={{ duration: 0.16, ease: 'easeOut' }}
+            className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2.5 w-60 sm:w-68 p-3 rounded-xl bg-[#0A0E1A]/98 border border-white/20 text-white shadow-2xl backdrop-blur-2xl z-[9999] text-left pointer-events-auto"
             style={{
-              boxShadow: '0 20px 40px -10px rgba(0, 0, 0, 0.7), 0 0 15px rgba(217, 27, 92, 0.25)',
+              boxShadow: '0 20px 40px rgba(0, 0, 0, 0.8), 0 0 20px rgba(217, 27, 92, 0.3)',
             }}
           >
+            {/* Downward Caret Arrow */}
+            <div className="absolute -bottom-1.5 left-1/2 -translate-x-1/2 w-3 h-3 bg-[#0A0E1A] border-r border-b border-white/20 rotate-45" />
+
             <div className="flex items-center justify-between gap-2 mb-1.5">
-              <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full bg-[#D91B5C]/20 text-[#FF4D8D] border border-[#D91B5C]/30">
-                {info.category || 'Rotary Acronym'}
+              <span className="text-[9px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full bg-[#D91B5C]/25 text-[#FF4D8D] border border-[#D91B5C]/40">
+                {info.category || 'Rotary Title'}
               </span>
               <span className="text-[10px] font-mono text-[#D4A520] font-bold">{rawKey}</span>
             </div>
 
-            <div className="font-bold text-xs text-white leading-tight mb-1">{info.term}</div>
-            <p className="text-[11px] text-slate-300 leading-snug font-normal">{info.definition}</p>
+            <div className="font-bold text-xs text-white leading-snug mb-1">{info.term}</div>
 
-            {/* Triangle pointer */}
-            <div className="absolute top-full left-1/2 -translate-x-1/2 w-0 h-0 border-x-[6px] border-x-transparent border-t-[6px] border-t-[#0F1624]" />
+            <p className="text-[11px] text-slate-300 leading-relaxed font-normal">{info.definition}</p>
           </motion.div>
         )}
       </AnimatePresence>
@@ -109,31 +129,20 @@ export default function RotaryTooltip({ acronym, term, children, className = '' 
   );
 }
 
-/**
- * Helper component to automatically parse and wrap recognized Rotary acronyms inside text strings.
- */
-export function FormatRotaryText({ text, className = '' }: { text: string; className?: string }) {
-  const regex = /\b(IPDRR|DRR|PHF\+1|PHF|PP|CB|DISCON|FEIPA)\b/g;
-  const parts = [];
-  let lastIndex = 0;
-  let match;
-
-  while ((match = regex.exec(text)) !== null) {
-    if (match.index > lastIndex) {
-      parts.push(text.substring(lastIndex, match.index));
-    }
-    const token = match[0];
-    parts.push(
-      <RotaryTooltip key={match.index} acronym={token}>
-        {token}
-      </RotaryTooltip>
-    );
-    lastIndex = regex.lastIndex;
-  }
-
-  if (lastIndex < text.length) {
-    parts.push(text.substring(lastIndex));
-  }
-
-  return <span className={className}>{parts}</span>;
+export function FormatRotaryText({ text }: { text: string }) {
+  const parts = text.split(/\b(DRR|IPDRR|PHF\+1|PHF|PP|DISCON|FEIPA)\b/g);
+  return (
+    <>
+      {parts.map((part, index) => {
+        if (ROTARY_ACRONYMS[part]) {
+          return (
+            <RotaryTooltip key={index} acronym={part}>
+              {part}
+            </RotaryTooltip>
+          );
+        }
+        return part;
+      })}
+    </>
+  );
 }

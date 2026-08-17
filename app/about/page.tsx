@@ -3,8 +3,10 @@
 import React, { useState } from 'react';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
-import { Shield, Sparkles, Award, History, Users, Globe } from 'lucide-react';
+import { Shield, Sparkles, Award, History, Users, Globe, ArrowUpRight, CheckCircle2 } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 import RotaryTooltip from '@/components/ui/RotaryTooltip';
+import CountUp from '@/components/ui/CountUp';
 
 const pastLeaders = [
   {
@@ -111,50 +113,85 @@ export default function AboutPage() {
     <div className="min-h-screen bg-[#F8F5F2] text-[#111111]" style={{ fontFamily: 'Inter, sans-serif' }}>
       <Navbar />
       
-      {/* HERO HEADER */}
-      <section className="relative pt-[120px] pb-16 overflow-hidden bg-[#111111] text-white">
+      {/* HERO HEADER WITH AMBIENT PARTICLES & GLOW */}
+      <section className="relative pt-[120px] pb-20 overflow-hidden bg-[#0C101A] text-white">
         <div 
           className="absolute inset-0 pointer-events-none"
-          style={{ background: 'radial-gradient(70% 55% at 50% 0%, rgba(217, 27, 92, 0.22) 0%, transparent 70%)' }}
+          style={{ background: 'radial-gradient(70% 60% at 50% 0%, rgba(217, 27, 92, 0.28) 0%, transparent 75%)' }}
         />
         
+        {/* Subtle grid lines background */}
+        <div className="absolute inset-0 pointer-events-none opacity-10 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:24px_24px]" />
+
         <div className="max-w-7xl mx-auto px-6 lg:px-10 relative z-10 text-center">
-          <div className="flex items-center justify-center gap-3 mb-4">
-            <span className="text-xs font-bold tracking-[0.3em] uppercase text-[#D91B5C]">
+          
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="flex items-center justify-center gap-3 mb-4"
+          >
+            <span className="text-xs font-bold tracking-[0.35em] uppercase text-[#FF4D8D]">
               About District 9126
             </span>
-            <div className="h-px w-12 bg-gradient-to-r from-[#D91B5C] to-transparent" />
-          </div>
+            <div className="h-px w-12 bg-gradient-to-r from-[#FF4D8D] to-transparent" />
+          </motion.div>
 
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-black tracking-tight leading-none mb-6">
-            Our Heritage. <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#F87171] to-[#D91B5C]">Our Leadership.</span>
-          </h1>
+          <motion.h1 
+            initial={{ opacity: 0, y: 25 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.1 }}
+            className="text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight leading-none mb-6"
+          >
+            Our Heritage.{' '}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#F87171] via-[#FF4D8D] to-[#D4A520]">
+              Our Leadership.
+            </span>
+          </motion.h1>
 
-          <p className="max-w-2xl mx-auto text-slate-300 text-base md:text-lg leading-relaxed">
-            Uniting 77 chartered clubs and thousands of servant leaders across Ondo, Ekiti, Osun, Oyo, Kogi, Niger, and Kwara states.
-          </p>
+          <motion.p 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="max-w-2xl mx-auto text-slate-300 text-base md:text-lg leading-relaxed mb-10"
+          >
+            Uniting 77 chartered clubs and over 700 young changemakers across Ondo, Ekiti, Osun, Oyo, Kogi, Niger, and Kwara states.
+          </motion.p>
 
-          {/* Quick Navigation Tabs */}
-          <div className="flex items-center justify-center gap-2 mt-8 flex-wrap">
+          {/* Quick Navigation Tabs with LayoutId Spring Animation */}
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+            className="inline-flex items-center p-1.5 rounded-full bg-white/10 backdrop-blur-xl border border-white/15 shadow-2xl flex-wrap justify-center gap-1"
+          >
             {[
               { id: 'overview', label: 'Overview' },
               { id: 'history', label: '9125 → 9126 Transition' },
               { id: 'team', label: 'Current Team' },
               { id: 'past-leaders', label: 'DRR Lineage' }
-            ].map((tab) => (
-              <button
-                key={tab.id}
-                onClick={() => setActiveTab(tab.id as any)}
-                className={`px-5 py-2.5 rounded-full text-xs font-bold tracking-wide transition-all ${
-                  activeTab === tab.id
-                    ? 'bg-[#981132] text-white shadow-lg shadow-[#981132]/40'
-                    : 'bg-white/10 hover:bg-white/20 text-white/80 border border-white/15'
-                }`}
-              >
-                {tab.label}
-              </button>
-            ))}
-          </div>
+            ].map((tab) => {
+              const isActive = activeTab === tab.id;
+              return (
+                <button
+                  key={tab.id}
+                  onClick={() => setActiveTab(tab.id as any)}
+                  className={`relative px-5 py-2.5 rounded-full text-xs font-bold tracking-wide transition-all z-10 ${
+                    isActive ? 'text-white' : 'text-slate-300 hover:text-white'
+                  }`}
+                >
+                  {isActive && (
+                    <motion.span
+                      layoutId="aboutActiveTabPill"
+                      className="absolute inset-0 rounded-full bg-[#981132] shadow-lg shadow-[#981132]/50 -z-10"
+                      transition={{ type: 'spring', stiffness: 400, damping: 30 }}
+                    />
+                  )}
+                  {tab.label}
+                </button>
+              );
+            })}
+          </motion.div>
         </div>
       </section>
 
@@ -163,17 +200,23 @@ export default function AboutPage() {
         <section className="py-20 max-w-7xl mx-auto px-6 lg:px-10 border-b border-black/[0.06]">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             
-            <div className="lg:col-span-6">
+            <motion.div 
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: '-60px' }}
+              transition={{ duration: 0.7 }}
+              className="lg:col-span-6"
+            >
               <div className="flex items-center gap-3 mb-3">
                 <span className="text-[11px] font-bold tracking-[0.25em] uppercase text-[#981132]">
                   The Evolution
                 </span>
                 <div className="h-px w-12 bg-[#981132]" />
               </div>
-              <h2 className="text-3xl md:text-4xl font-black tracking-tight text-[#1C1C1E] leading-tight mb-6">
+              <h2 className="text-3xl md:text-4xl font-black tracking-tight text-[#1C1C1E] leading-tight mb-6 font-sans">
                 From District 9125 to the Birth of 9126
               </h2>
-              <div className="space-y-4 text-slate-700 leading-relaxed text-sm md:text-base">
+              <div className="space-y-4 text-slate-700 leading-relaxed text-sm md:text-base font-sans">
                 <p>
                   For over 15 years, Rotaract clubs across South-West and North-Central Nigeria operated under the historic banner of <strong>Rotary District 9125</strong>. As our grassroots impact, club count, and community commitments expanded, Rotary International initiated the redistricting process to optimize administrative efficiency and empower localized leadership.
                 </p>
@@ -184,40 +227,38 @@ export default function AboutPage() {
                   Today, District 9126 stands as an autonomous powerhouse of community development, educational support, water sanitation, and youthful innovation.
                 </p>
               </div>
-            </div>
+            </motion.div>
 
+            {/* 4 Animated Metric Cards with CountUp */}
             <div className="lg:col-span-6 grid grid-cols-2 gap-4">
-              <div className="p-6 rounded-2xl bg-white border border-black/[0.08] shadow-sm flex flex-col justify-between">
-                <History className="text-[#981132] mb-4" size={28} />
-                <div>
-                  <div className="text-2xl font-black text-[#1C1C1E] mb-1">15+ Years</div>
-                  <div className="text-xs text-gray-500 font-medium">Foundational Legacy under District 9125</div>
-                </div>
-              </div>
-
-              <div className="p-6 rounded-2xl bg-white border border-black/[0.08] shadow-sm flex flex-col justify-between">
-                <Globe className="text-[#981132] mb-4" size={28} />
-                <div>
-                  <div className="text-2xl font-black text-[#1C1C1E] mb-1">7 States</div>
-                  <div className="text-xs text-gray-500 font-medium">Constituent Regional Territory</div>
-                </div>
-              </div>
-
-              <div className="p-6 rounded-2xl bg-white border border-black/[0.08] shadow-sm flex flex-col justify-between">
-                <Shield className="text-[#981132] mb-4" size={28} />
-                <div>
-                  <div className="text-2xl font-black text-[#1C1C1E] mb-1">77 Clubs</div>
-                  <div className="text-xs text-gray-500 font-medium">Active Campus & Community Units</div>
-                </div>
-              </div>
-
-              <div className="p-6 rounded-2xl bg-white border border-black/[0.08] shadow-sm flex flex-col justify-between">
-                <Sparkles className="text-[#981132] mb-4" size={28} />
-                <div>
-                  <div className="text-2xl font-black text-[#1C1C1E] mb-1">50K+</div>
-                  <div className="text-xs text-gray-500 font-medium">Documented Community Beneficiaries</div>
-                </div>
-              </div>
+              {[
+                { icon: History, value: 15, suffix: '+ Years', label: 'Foundational Legacy under District 9125' },
+                { icon: Globe, value: 7, suffix: ' States', label: 'Constituent Regional Territory' },
+                { icon: Shield, value: 77, suffix: ' Clubs', label: 'Active Campus & Community Units' },
+                { icon: Sparkles, value: 50000, suffix: '+', label: 'Documented Community Beneficiaries' }
+              ].map((card, idx) => {
+                const Icon = card.icon;
+                return (
+                  <motion.div 
+                    key={idx}
+                    initial={{ opacity: 0, y: 25 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: idx * 0.1 }}
+                    className="p-6 rounded-2xl bg-white border border-black/[0.08] shadow-sm hover:shadow-xl transition-all duration-300 group hover:-translate-y-1"
+                  >
+                    <div className="w-10 h-10 rounded-xl bg-[#981132]/10 flex items-center justify-center mb-4 text-[#981132] transition-transform group-hover:scale-110">
+                      <Icon size={22} />
+                    </div>
+                    <div>
+                      <div className="text-2xl sm:text-3xl font-black text-[#1C1C1E] mb-1 font-sans">
+                        <CountUp end={card.value} suffix={card.suffix} duration={2000} />
+                      </div>
+                      <div className="text-xs text-gray-500 font-medium leading-relaxed font-sans">{card.label}</div>
+                    </div>
+                  </motion.div>
+                );
+              })}
             </div>
 
           </div>
@@ -227,50 +268,73 @@ export default function AboutPage() {
       {/* SECTION: CURRENT EXECUTIVE COUNCIL */}
       {(activeTab === 'overview' || activeTab === 'team') && (
         <section className="py-20 max-w-7xl mx-auto px-6 lg:px-10 border-b border-black/[0.06]">
-          <div className="text-center mb-14">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-14"
+          >
             <span className="text-[10px] font-bold tracking-[0.3em] uppercase text-[#981132]">
               Executive Council 2026/2027
             </span>
-            <h2 className="text-3xl md:text-5xl font-black tracking-tight text-[#1C1C1E] mt-2 mb-3">
+            <h2 className="text-3xl md:text-5xl font-black tracking-tight text-[#1C1C1E] mt-2 mb-3 font-sans">
               The Sitting Leadership Team
             </h2>
-            <p className="max-w-xl mx-auto text-gray-600 text-sm md:text-base">
+            <p className="max-w-xl mx-auto text-gray-600 text-sm md:text-base font-sans">
               The executive board coordinating the strategy, service programs, and member support across all 77 clubs.
             </p>
-          </div>
+          </motion.div>
 
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-5">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 sm:gap-5">
             {currentTeam.map((member, idx) => (
-              <div key={idx} className="group">
-                <div className="rounded-2xl overflow-hidden bg-[#0F1624] border border-white/10 shadow-lg transition-transform duration-200 group-hover:-translate-y-1">
-                  <div className="aspect-[3/4] relative overflow-hidden">
+              <motion.div 
+                key={idx}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: idx * 0.08 }}
+                className="group relative"
+              >
+                {/* Outer Card WITHOUT overflow-hidden so tooltips can float freely */}
+                <div className="rounded-2xl bg-[#0F1624] border border-white/10 shadow-lg hover:shadow-2xl transition-all duration-300 group-hover:-translate-y-2 flex flex-col h-full">
+                  
+                  {/* Image Container with overflow-hidden */}
+                  <div className="aspect-[3/4] relative overflow-hidden rounded-t-2xl">
                     <img 
                       src={member.image} 
                       onError={(e) => { e.currentTarget.src = member.fallbackImage; }}
                       alt={member.name}
-                      className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                      className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-110" 
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#080C14] via-transparent to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#0F1624] via-transparent to-transparent opacity-90" />
                   </div>
-                  <div className="p-3.5">
-                    <div className="text-[13px] font-bold text-white leading-tight truncate">
-                      {member.name}
+
+                  {/* Card Body */}
+                  <div className="p-3.5 flex flex-col justify-between flex-1">
+                    <div>
+                      <div className="text-[13px] font-bold text-white leading-snug font-sans group-hover:text-[#FF4D8D] transition-colors mb-1">
+                        {member.name}
+                      </div>
+                      
+                      <div className="text-[11px] text-[#D91B5C] font-semibold tracking-wide font-sans">
+                        {member.tooltip ? (
+                          <RotaryTooltip term={member.tooltip}>
+                            <span>{member.role}</span>
+                          </RotaryTooltip>
+                        ) : (
+                          member.role
+                        )}
+                      </div>
                     </div>
-                    <div className="text-[10px] text-[#D91B5C] font-semibold tracking-wide mt-1">
-                      {member.tooltip ? (
-                        <RotaryTooltip term={member.tooltip}>
-                          <span className="border-b border-dotted border-[#D91B5C]/60 cursor-help">{member.role}</span>
-                        </RotaryTooltip>
-                      ) : (
-                        member.role
-                      )}
-                    </div>
-                    <div className="text-[9px] text-white/40 uppercase tracking-wider mt-1">
+
+                    <div className="text-[9.5px] text-white/45 uppercase tracking-wider mt-2.5 pt-2 border-t border-white/10 font-sans">
                       {member.dept}
                     </div>
                   </div>
+
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
         </section>
@@ -279,36 +343,46 @@ export default function AboutPage() {
       {/* SECTION: DRR LINEAGE & PAST LEADERS TIMELINE */}
       {(activeTab === 'overview' || activeTab === 'past-leaders') && (
         <section className="py-20 max-w-7xl mx-auto px-6 lg:px-10">
-          <div className="text-center mb-14">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-14"
+          >
             <span className="text-[10px] font-bold tracking-[0.3em] uppercase text-[#981132]">
               Leadership Succession
             </span>
-            <h2 className="text-3xl md:text-5xl font-black tracking-tight text-[#1C1C1E] mt-2 mb-3">
+            <h2 className="text-3xl md:text-5xl font-black tracking-tight text-[#1C1C1E] mt-2 mb-3 font-sans">
               Hall of Past & Sitting Leaders
             </h2>
-            <p className="max-w-xl mx-auto text-gray-600 text-sm md:text-base">
+            <p className="max-w-xl mx-auto text-gray-600 text-sm md:text-base font-sans">
               Chronological lineage of District Rotaract Representatives steering the transition and expansion of our movement.
             </p>
-          </div>
+          </motion.div>
 
           <div className="space-y-6 max-w-4xl mx-auto">
             {pastLeaders.map((leader, idx) => (
-              <div 
+              <motion.div 
                 key={idx}
-                className="p-6 md:p-8 rounded-2xl bg-white border border-black/[0.08] shadow-sm flex flex-col md:flex-row items-center md:items-start gap-6 hover:shadow-md transition-shadow"
+                initial={{ opacity: 0, y: 25 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: idx * 0.1 }}
+                className="p-6 md:p-8 rounded-2xl bg-white border border-black/[0.08] shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col md:flex-row items-center md:items-start gap-6 group hover:-translate-y-1"
               >
-                <div className="w-24 h-24 md:w-28 md:h-28 rounded-2xl overflow-hidden shrink-0 border border-black/10">
+                <div className="w-24 h-24 md:w-28 md:h-28 rounded-2xl overflow-hidden shrink-0 border border-black/10 shadow-md">
                   <img 
                     src={leader.image} 
                     onError={(e) => { e.currentTarget.src = leader.fallbackImage; }}
                     alt={leader.name}
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
                 </div>
 
                 <div className="flex-1 text-center md:text-left">
                   <div className="flex items-center justify-center md:justify-start gap-2 mb-1 flex-wrap">
-                    <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-[#981132]/10 text-[#981132]">
+                    <span className="px-3 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-[#981132]/10 text-[#981132]">
                       {leader.badge}
                     </span>
                     <span className="text-xs font-semibold text-gray-500">
@@ -316,22 +390,22 @@ export default function AboutPage() {
                     </span>
                   </div>
 
-                  <h3 className="text-xl font-black text-[#1C1C1E] mt-1">
+                  <h3 className="text-xl font-black text-[#1C1C1E] mt-1 font-sans">
                     {leader.name}
                   </h3>
-                  <div className="text-xs font-semibold text-[#D91B5C] mb-2">
+                  <div className="text-xs font-semibold text-[#D91B5C] mb-2 font-sans">
                     {leader.title} · <span className="text-gray-500">{leader.credentials}</span>
                   </div>
 
-                  <p className="text-sm text-gray-600 leading-relaxed mb-3">
+                  <p className="text-sm text-gray-600 leading-relaxed mb-3 font-sans">
                     {leader.roleNote}
                   </p>
 
                   <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-gray-100 text-[11px] font-medium text-gray-700 italic">
-                    <Award className="text-[#981132]" size={12} /> Theme: "{leader.theme}"
+                    <Award className="text-[#981132]" size={14} /> Theme: "{leader.theme}"
                   </div>
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
         </section>
