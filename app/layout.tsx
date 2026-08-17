@@ -3,7 +3,6 @@ import { Inter } from 'next/font/google';
 import './globals.css';
 import JsonLd from '@/components/seo/JsonLd';
 import AwwwardsPreloader from '@/components/ui/AwwwardsPreloader';
-import PageTransitionCurtain from '@/components/ui/PageTransitionCurtain';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -124,9 +123,7 @@ export default function RootLayout({
       </head>
       <body className="min-h-screen font-sans antialiased bg-[#F8F5F2] text-[#1C1C1E]">
         <AwwwardsPreloader />
-        <PageTransitionCurtain>
-          {children}
-        </PageTransitionCurtain>
+        {children}
       </body>
     </html>
   );
