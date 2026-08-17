@@ -2,7 +2,6 @@
 
 import React, { useState, useMemo } from 'react';
 import Link from 'next/link';
-import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Search, 
   MapPin, 
@@ -12,6 +11,7 @@ import {
   Droplets, 
   BookOpen, 
   Leaf, 
+  ChevronRight, 
   ArrowLeft, 
   ArrowRight,
   SlidersHorizontal,
@@ -241,22 +241,12 @@ export default function ProjectsPage() {
           </div>
 
           <div className="relative z-10">
-            <motion.div
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#981132]/10 border border-[#981132]/20 text-[#981132] text-xs font-semibold mb-4"
-            >
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#981132]/10 border border-[#981132]/20 text-[#981132] text-xs font-semibold mb-4">
               <Globe2 className="h-3.5 w-3.5" />
               <span>District Impact Showcase</span>
-            </motion.div>
+            </div>
 
-            <motion.h1 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              className="font-black tracking-tighter mb-4 font-sans leading-[1]"
-            >
+            <h1 className="font-black tracking-tighter mb-4 font-sans leading-[1]">
               <span className="block text-[clamp(2.8rem,7vw,6rem)] leading-[0.95] text-[#111111]">
                 Project
               </span>
@@ -266,15 +256,10 @@ export default function ProjectsPage() {
               >
                 Spotlight
               </span>
-            </motion.h1>
-            <motion.p 
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="max-w-xl mx-auto text-black/60 leading-relaxed px-4 text-[clamp(0.95rem,1.5vw,1.1rem)] font-sans"
-            >
+            </h1>
+            <p className="max-w-xl mx-auto text-black/60 leading-relaxed px-4 text-[clamp(0.95rem,1.5vw,1.1rem)] font-sans">
               Every photo tells a story of real change. Explore the documented legacy of District 9126 — from boreholes to blockchains, from classrooms to clinics.
-            </motion.p>
+            </p>
           </div>
         </div>
 
@@ -326,9 +311,7 @@ export default function ProjectsPage() {
                     className="absolute w-full max-w-3xl cursor-pointer select-none transition-all duration-700 ease-out"
                     style={{ transform, zIndex, opacity }}
                   >
-                    <motion.div 
-                      whileHover={{ scale: isCenter ? 1.02 : 0.85 }}
-                      transition={{ duration: 0.3 }}
+                    <div 
                       className="relative rounded-2xl overflow-hidden shadow-2xl"
                       style={{ 
                         border: isCenter ? '1px solid rgba(217, 27, 92, 0.35)' : '1px solid rgba(0, 0, 0, 0.08)',
@@ -379,7 +362,7 @@ export default function ProjectsPage() {
                           </Link>
                         </div>
                       </div>
-                    </motion.div>
+                    </div>
                   </div>
                 );
               })}
@@ -423,13 +406,7 @@ export default function ProjectsPage() {
         </section>
 
         {/* 4-METRIC IMPACT RIBBON */}
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="grid grid-cols-2 lg:grid-cols-4 gap-px overflow-hidden rounded-2xl bg-white shadow-md border border-black/[0.06] mb-12"
-        >
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-px overflow-hidden rounded-2xl bg-white shadow-md border border-black/[0.06] mb-12">
           <div className="flex flex-col items-center gap-2 px-6 py-7 hover:bg-gray-50 transition-colors border-r border-black/[0.06]">
             <Zap className="text-[#D91B5C] opacity-80 shrink-0" size={18}/>
             <span className="font-sans font-black text-3xl text-[#D4A520] leading-none">180+</span>
@@ -461,7 +438,7 @@ export default function ProjectsPage() {
               States Reached
             </span>
           </div>
-        </motion.div>
+        </div>
 
         {/* ALL IMPACT PROJECTS MASONRY FEED */}
         <section>
@@ -492,115 +469,108 @@ export default function ProjectsPage() {
               </span>
             </div>
 
-            {/* Category Filter Pills with Spring Animation */}
+            {/* Category Filter Pills */}
             <div className="flex items-center gap-2 flex-wrap font-sans">
-              {categories.map((cat) => {
-                const isActive = selectedCategory === cat;
-                return (
-                  <button
-                    key={cat}
-                    onClick={() => setSelectedCategory(cat)}
-                    className={`relative shrink-0 px-3.5 py-1.5 rounded-lg font-semibold uppercase tracking-wider text-[10.5px] transition-all cursor-pointer ${
-                      isActive
-                        ? 'text-white font-bold'
-                        : 'bg-white/80 border border-black/10 text-gray-700 hover:bg-white'
-                    }`}
-                  >
-                    {isActive && (
-                      <motion.span
-                        layoutId="projectActiveCategoryPill"
-                        className="absolute inset-0 rounded-lg bg-gradient-to-r from-[#D91B5C] to-[#A70C43] shadow-[0_0_16px_rgba(217,27,92,0.35)] -z-10"
-                        transition={{ type: 'spring', stiffness: 450, damping: 32 }}
-                      />
-                    )}
-                    {cat}
-                  </button>
-                );
-              })}
+              {categories.map((cat) => (
+                <button
+                  key={cat}
+                  onClick={() => setSelectedCategory(cat)}
+                  className={`shrink-0 px-3 py-1 rounded-lg font-semibold uppercase tracking-wider text-[10.5px] transition-all cursor-pointer ${
+                    selectedCategory === cat
+                      ? 'bg-gradient-to-r from-[#D91B5C] to-[#A70C43] text-white shadow-[0_0_16px_rgba(217,27,92,0.35)] font-bold'
+                      : 'bg-white/80 border border-black/10 text-gray-700 hover:bg-white'
+                  }`}
+                >
+                  {cat}
+                </button>
+              ))}
             </div>
           </div>
 
-          {/* CSS Masonry Columns with Animated Cards */}
-          <motion.div 
-            layout
-            className="columns-1 sm:columns-2 lg:columns-3 gap-5" 
-            style={{ columnFill: 'balance' }}
-          >
-            <AnimatePresence>
-              {filteredProjects.map((p, idx) => {
-                const theme = categoryColors[p.category] || categoryColors.Healthcare;
+          {/* CSS Masonry Columns with Original Sliding Drawer Hover Effect */}
+          <div className="columns-1 sm:columns-2 lg:columns-3 gap-5" style={{ columnFill: 'balance' }}>
+            {filteredProjects.map((p) => {
+              const theme = categoryColors[p.category] || categoryColors.Healthcare;
 
-                return (
-                  <motion.div 
-                    layout
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, scale: 0.95 }}
-                    transition={{ duration: 0.4, delay: idx * 0.05 }}
-                    key={p.id} 
-                    className="break-inside-avoid mb-5"
+              return (
+                <div key={p.id} className="break-inside-avoid mb-5">
+                  <div 
+                    className={`relative overflow-hidden rounded-2xl cursor-pointer group shadow-lg ${p.height}`}
+                    style={{ border: '1px solid rgba(0, 0, 0, 0.08)' }}
                   >
-                    <motion.div 
-                      whileHover={{ y: -4 }}
-                      transition={{ duration: 0.2 }}
-                      className={`relative overflow-hidden rounded-2xl cursor-pointer group shadow-lg ${p.height}`}
-                      style={{ border: '1px solid rgba(0, 0, 0, 0.08)' }}
+                    <img 
+                      src={p.image} 
+                      alt={p.title} 
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    />
+
+                    {/* Gradient Overlay */}
+                    <div className="absolute inset-0 pointer-events-none bg-gradient-to-t from-[#080C14]/85 via-[#080C14]/15 to-transparent" />
+
+                    {/* Category Pill Tag (Top-Left) */}
+                    <div 
+                      className="absolute top-4 left-4 px-2 py-0.5 rounded text-[9px] font-bold tracking-widest uppercase backdrop-blur-md"
+                      style={{ background: theme.bg, borderColor: theme.border, color: theme.text, borderWidth: '1px' }}
                     >
-                      <img 
-                        src={p.image} 
-                        alt={p.title} 
-                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                      />
+                      {p.category}
+                    </div>
 
-                      {/* Gradient Overlay */}
-                      <div className="absolute inset-0 pointer-events-none bg-gradient-to-t from-[#080C14]/85 via-[#080C14]/15 to-transparent" />
+                    {/* Year Tag (Top-Right) */}
+                    <div className="absolute top-4 right-4 px-2 py-0.5 rounded text-[9px] text-white/70 bg-black/50 backdrop-blur-sm font-sans">
+                      {p.year}
+                    </div>
 
-                      {/* Category Badge (Top Right) */}
-                      <div className="absolute top-3.5 right-3.5 z-10">
-                        <span 
-                          className="px-2.5 py-1 rounded-full text-[9px] font-black uppercase tracking-wider backdrop-blur-md shadow-sm font-sans"
-                          style={{ background: theme.bg, border: `1px solid ${theme.border}`, color: theme.text }}
+                    {/* Default Mobile & Desktop Info (fades out on hover) */}
+                    <div className="absolute left-0 right-0 bottom-0 p-4 sm:p-5 font-sans group-hover:opacity-0 transition-opacity duration-300 pointer-events-none">
+                      <p className="text-[10px] text-white/70 mb-0.5 truncate font-sans">{p.club}</p>
+                      <h3 className="font-bold text-white text-sm sm:text-base leading-tight drop-shadow-sm mb-1">
+                        {p.title}
+                      </h3>
+                      <p className="flex items-center gap-1 text-white/70 text-[11px]">
+                        <MapPin className="text-[#D91B5C] shrink-0" size={10}/>
+                        {p.location}
+                      </p>
+                    </div>
+
+                    {/* Sliding Bottom Drawer on Hover */}
+                    <div className="absolute left-0 right-0 bottom-0 transform translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out bg-[#080C14]/95 backdrop-blur-md border-t border-white/10 p-5 font-sans">
+                      <p className="text-[10px] text-white/50 mb-1 truncate font-sans">{p.club}</p>
+                      <h3 className="font-black text-white leading-tight mb-1 text-[clamp(0.95rem,2vw,1.15rem)] font-sans">
+                        {p.title}
+                      </h3>
+                      <p className="flex items-center gap-1 text-white/60 text-xs mb-3 font-sans">
+                        <MapPin className="text-[#D91B5C] shrink-0" size={10}/>
+                        {p.location}
+                      </p>
+
+                      {/* Stat Metrics Row */}
+                      <div className="flex flex-wrap gap-x-4 gap-y-2">
+                        {p.stats.map((s, sIdx) => (
+                          <div key={sIdx} className="flex items-center gap-1.5 font-sans">
+                            {renderIcon(s.icon, theme.text)}
+                            <span className="font-black text-white text-sm">{s.value}</span>
+                            <span className="text-white/50 text-[11px] leading-none">{s.label}</span>
+                          </div>
+                        ))}
+                      </div>
+
+                      {/* Full Report Link */}
+                      <div className="flex items-center justify-between mt-3 pt-3 border-t border-white/10">
+                        <span className="text-[10px] text-white/40 font-sans">D9126 Project</span>
+                        <Link 
+                          href="/#impact" 
+                          className="flex items-center gap-1 text-xs font-bold transition-colors hover:text-white"
+                          style={{ color: theme.text }}
                         >
-                          {p.category}
-                        </span>
+                          Full Report <ChevronRight size={13}/>
+                        </Link>
                       </div>
-
-                      {/* Hover / Bottom Metadata */}
-                      <div className="absolute bottom-0 left-0 right-0 p-5 flex flex-col gap-2 z-10">
-                        <div className="flex items-center gap-2 text-white/70 text-[11px] font-sans">
-                          <MapPin size={11} className="text-[#D91B5C]"/>
-                          <span>{p.location}</span>
-                          <span className="ml-auto text-white/50 text-[10px]">{p.year}</span>
-                        </div>
-
-                        <h3 className="font-bold text-white text-base leading-snug font-sans group-hover:text-[#FFC72C] transition-colors">
-                          {p.title}
-                        </h3>
-
-                        <div className="text-[11px] text-white/60 font-sans truncate">
-                          {p.club}
-                        </div>
-
-                        {/* Stat Pills */}
-                        <div className="flex items-center gap-2 pt-1 flex-wrap font-sans">
-                          {p.stats.map((s, sIdx) => (
-                            <div 
-                              key={sIdx}
-                              className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-white/10 backdrop-blur-md text-white/80 text-[10px] border border-white/10 font-sans"
-                            >
-                              {renderIcon(s.icon, '#FF4D8D')}
-                              <span className="font-bold">{s.value}</span>
-                              <span className="text-white/50">{s.label}</span>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    </motion.div>
-                  </motion.div>
-                );
-              })}
-            </AnimatePresence>
-          </motion.div>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
         </section>
 
       </main>
