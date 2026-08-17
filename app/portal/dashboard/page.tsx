@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
+import { motion } from 'framer-motion';
 import { User } from '@/types';
 import { ShieldCheck, CheckCircle2, Clock, Download, Share2, Award, QrCode, User as UserIcon, Building2, MapPin } from 'lucide-react';
 import { FormatRotaryText } from '@/components/ui/RotaryTooltip';
@@ -40,7 +41,12 @@ export default function MemberDashboard() {
 
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 pt-[130px] sm:pt-[150px] pb-12">
         {/* Welcome Header */}
-        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-8">
+        <motion.div 
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-8"
+        >
           <div>
             <span className="text-xs font-bold uppercase tracking-widest text-[#D91B5C]">
               Member Portal & Credential Hub
@@ -74,12 +80,21 @@ export default function MemberDashboard() {
               )}
             </span>
           </div>
-        </div>
+        </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           {/* Digital ID Card Preview (Figma Frame 5:7980) */}
-          <div className="lg:col-span-6 flex flex-col items-center">
-            <div className="w-full max-w-md bg-gradient-to-br from-[#1E1B4B] via-[#0F1624] to-[#312E81] rounded-[24px] p-6 sm:p-8 border border-white/20 shadow-[0_20px_50px_rgba(0,0,0,0.6)] relative overflow-hidden">
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="lg:col-span-6 flex flex-col items-center"
+          >
+            <motion.div 
+              whileHover={{ y: -4, rotateY: 2 }}
+              transition={{ duration: 0.3 }}
+              className="w-full max-w-md bg-gradient-to-br from-[#1E1B4B] via-[#0F1624] to-[#312E81] rounded-[24px] p-6 sm:p-8 border border-white/20 shadow-[0_20px_50px_rgba(0,0,0,0.6)] relative overflow-hidden"
+            >
               {/* Background Glow */}
               <div className="absolute top-0 right-0 h-40 w-40 bg-[#D91B5C]/25 rounded-full blur-2xl pointer-events-none" />
               <div className="absolute bottom-0 left-0 h-32 w-32 bg-[#4338CA]/30 rounded-full blur-2xl pointer-events-none" />
@@ -121,121 +136,121 @@ export default function MemberDashboard() {
                 </div>
               </div>
 
-              {/* QR Code & Verification Data */}
-              <div className="glass-panel rounded-[18px] p-4 flex items-center justify-between gap-4 border border-white/10 bg-white/[0.05] relative z-10">
-                <div className="space-y-1 text-xs">
+              {/* Verified QR + Rotary ID Details */}
+              <div className="flex items-center justify-between bg-black/40 rounded-2xl p-4 border border-white/10 relative z-10">
+                <div>
                   <div className="text-[10px] uppercase font-bold text-slate-400">Rotary Member ID</div>
-                  <div className="font-mono text-sm font-black text-white tracking-wider">{member.rotaryId}</div>
-                  <div className="text-[10px] text-slate-400 pt-1">Session 2026/2027</div>
-                  <div className="inline-block text-[10px] font-bold text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-md mt-1">
-                    ✓ Cleared for District Events
+                  <div className="text-sm font-mono font-bold text-white tracking-widest">{member.rotaryId}</div>
+
+                  <div className="mt-2 text-[10px] uppercase font-bold text-slate-400">Verification Seal</div>
+                  <div className="text-xs font-semibold text-emerald-400 flex items-center gap-1">
+                    <ShieldCheck className="h-3.5 w-3.5" />
+                    <span>District Active · 2026/2027</span>
                   </div>
                 </div>
 
                 {qrCodeUrl ? (
-                  <img
-                    src={qrCodeUrl}
-                    alt="Verified Member QR Code"
-                    className="h-24 w-24 rounded-xl border border-white/20 p-1 bg-white shrink-0"
-                  />
+                  <div className="p-1.5 bg-white rounded-xl shadow-md shrink-0">
+                    <img src={qrCodeUrl} alt="Verified Member QR Code" className="h-16 w-16 object-contain" />
+                  </div>
                 ) : (
-                  <div className="h-24 w-24 rounded-xl bg-white/5 flex items-center justify-center">
-                    <QrCode className="h-8 w-8 text-slate-500 animate-pulse" />
+                  <div className="h-16 w-16 bg-white/10 rounded-xl flex items-center justify-center">
+                    <QrCode className="h-8 w-8 text-slate-500" />
                   </div>
                 )}
               </div>
 
-              {/* Footer Stamp */}
-              <div className="mt-4 pt-3 border-t border-white/10 text-center relative z-10">
-                <span className="text-[10px] text-slate-400 font-medium tracking-wide">
-                  Official Rotary International Youth Program Credential
-                </span>
+              {/* Security Strip */}
+              <div className="mt-4 pt-3 border-t border-white/10 flex items-center justify-between text-[9px] text-slate-500 relative z-10">
+                <span>AUTHENTICATED VIA ROTARY INTERNATIONAL D9126</span>
+                <span className="font-mono">TLS 1.3 · VERIFIED</span>
               </div>
-            </div>
+            </motion.div>
 
-            {/* Actions */}
-            <div className="mt-6 flex flex-wrap gap-3">
-              <button
-                onClick={() => window.print()}
-                className="px-5 py-2.5 rounded-xl bg-white/10 hover:bg-white/15 text-white font-semibold text-xs flex items-center gap-2 transition border border-white/10"
+            {/* Quick Actions */}
+            <div className="flex items-center gap-3 mt-6 w-full max-w-md">
+              <motion.button 
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className="flex-1 py-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white font-semibold text-xs flex items-center justify-center gap-2 transition"
               >
-                <Download className="h-4 w-4" />
-                <span>Save / Print Digital ID</span>
-              </button>
-              <button
-                onClick={() => navigator.clipboard.writeText(window.location.href)}
-                className="px-5 py-2.5 rounded-xl bg-[#D91B5C] hover:bg-[#A70C43] text-white font-semibold text-xs flex items-center gap-2 transition shadow-md shadow-[#D91B5C]/30"
+                <Download className="h-3.5 w-3.5" />
+                <span>Save ID Card</span>
+              </motion.button>
+              <motion.button 
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className="flex-1 py-3 rounded-xl bg-[#D91B5C]/15 hover:bg-[#D91B5C]/25 border border-[#D91B5C]/30 text-rose-300 font-semibold text-xs flex items-center justify-center gap-2 transition"
               >
-                <Share2 className="h-4 w-4" />
-                <span>Share Credential Link</span>
-              </button>
+                <Share2 className="h-3.5 w-3.5" />
+                <span>Share Credential</span>
+              </motion.button>
             </div>
-          </div>
+          </motion.div>
 
-          {/* Member Privileges & Dues Status Overview */}
-          <div className="lg:col-span-6 space-y-6">
-            <div className="glass-panel rounded-3xl p-6 sm:p-8 border border-white/15 bg-white/[0.02]">
-              <h3 className="text-lg font-bold text-white mb-4">Membership Credentials & Benefits</h3>
+          {/* Membership Details & Rotary Toolkit */}
+          <motion.div 
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="lg:col-span-6 space-y-6"
+          >
+            {/* Status Card */}
+            <div className="glass-panel rounded-3xl p-6 sm:p-8 border border-white/10">
+              <h2 className="text-base font-bold text-white mb-4">Membership Credentials & Dues</h2>
 
-              <div className="space-y-4">
-                <div className="p-4 rounded-2xl bg-white/5 border border-white/10 flex items-start gap-3">
-                  <ShieldCheck className="h-5 w-5 text-emerald-400 shrink-0 mt-0.5" />
-                  <div>
-                    <h4 className="text-sm font-bold text-white">
-                      <FormatRotaryText text="District Conference (DISCON 2026) Access" />
-                    </h4>
-                    <p className="text-xs text-slate-400 mt-0.5">
-                      Your dues clearance grants you direct entry pass privileges to the annual District 9126 Conference.
-                    </p>
-                  </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="p-4 rounded-2xl bg-white/5 border border-white/10">
+                  <div className="text-xs text-slate-400">Club Association</div>
+                  <div className="text-sm font-bold text-white mt-1">RC Ibadan Ring Road</div>
+                  <div className="text-[11px] text-slate-500 mt-0.5">Chartered 2012 · Zone 3</div>
                 </div>
 
-                <div className="p-4 rounded-2xl bg-white/5 border border-white/10 flex items-start gap-3">
-                  <Award className="h-5 w-5 text-[#D4A520] shrink-0 mt-0.5" />
-                  <div>
-                    <h4 className="text-sm font-bold text-white">Voting & Nomination Eligibility</h4>
-                    <p className="text-xs text-slate-400 mt-0.5">
-                      Active dues status qualifies you to vote and hold district executive committee appointments under the <FormatRotaryText text="DRR" />.
-                    </p>
-                  </div>
+                <div className="p-4 rounded-2xl bg-white/5 border border-white/10">
+                  <div className="text-xs text-slate-400">Annual District Dues</div>
+                  <div className="text-sm font-bold text-emerald-400 mt-1">₦5,000 (Paid & Verified)</div>
+                  <div className="text-[11px] text-slate-500 mt-0.5">Valid through June 30, 2027</div>
                 </div>
 
-                <div className="p-4 rounded-2xl bg-white/5 border border-white/10 flex items-start gap-3">
-                  <UserIcon className="h-5 w-5 text-[#D91B5C] shrink-0 mt-0.5" />
-                  <div>
-                    <h4 className="text-sm font-bold text-white">Rotary International Directory Sync</h4>
-                    <p className="text-xs text-slate-400 mt-0.5">
-                      Your profile and rotary ID <code className="text-[#D4A520] font-mono">{member.rotaryId}</code> are synchronized with the official Rotary database.
-                    </p>
+                <div className="p-4 rounded-2xl bg-white/5 border border-white/10">
+                  <div className="text-xs text-slate-400">Rotary Designation</div>
+                  <div className="text-sm font-bold text-[#D4A520] mt-1">
+                    <FormatRotaryText text="Active Rtr. & PHF Contributor" />
                   </div>
+                  <div className="text-[11px] text-slate-500 mt-0.5">District Committee Member</div>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-white/5 border border-white/10">
+                  <div className="text-xs text-slate-400">Leadership Access</div>
+                  <div className="text-sm font-bold text-white mt-1">General Member</div>
+                  <div className="text-[11px] text-slate-500 mt-0.5">Verified District Portal User</div>
                 </div>
               </div>
             </div>
 
-            {/* Quick Dues Breakdown */}
-            <div className="glass-panel rounded-3xl p-6 sm:p-8 border border-white/15 bg-white/[0.02]">
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="text-base font-bold text-white">Annual District Assessment</h3>
-                <span className="text-xs font-semibold text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-full">
-                  Fully Settled
-                </span>
-              </div>
+            {/* Rotary Acronyms & Toolkit Guide */}
+            <div className="glass-panel rounded-3xl p-6 sm:p-8 border border-white/10">
+              <h3 className="text-sm font-bold text-white mb-2">Rotary Acronym Quick Guide</h3>
+              <p className="text-xs text-slate-400 mb-4">
+                Hover over highlighted terms across the site for instant rotary definitions.
+              </p>
+
               <div className="space-y-2 text-xs text-slate-300">
-                <div className="flex justify-between py-2 border-b border-white/5">
-                  <span className="text-slate-400">District Capitation Fee</span>
-                  <span className="font-semibold text-white">₦5,000.00</span>
+                <div className="flex items-center justify-between p-2.5 rounded-xl bg-white/5">
+                  <span className="font-semibold text-white"><FormatRotaryText text="DRR" /></span>
+                  <span className="text-slate-400">District Rotaract Representative</span>
                 </div>
-                <div className="flex justify-between py-2 border-b border-white/5">
-                  <span className="text-slate-400">Rotaract Africa / Multi-District Dues</span>
-                  <span className="font-semibold text-white">₦2,500.00</span>
+                <div className="flex items-center justify-between p-2.5 rounded-xl bg-white/5">
+                  <span className="font-semibold text-white"><FormatRotaryText text="AG" /></span>
+                  <span className="text-slate-400">Assistant Governor</span>
                 </div>
-                <div className="flex justify-between py-2 font-bold text-white">
-                  <span>Total Cleared</span>
-                  <span className="text-[#D4A520]">₦7,500.00</span>
+                <div className="flex items-center justify-between p-2.5 rounded-xl bg-white/5">
+                  <span className="font-semibold text-white"><FormatRotaryText text="PHF" /></span>
+                  <span className="text-slate-400">Paul Harris Fellow</span>
                 </div>
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
       </main>
 

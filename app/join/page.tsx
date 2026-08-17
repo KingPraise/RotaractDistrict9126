@@ -4,6 +4,7 @@ import React, { useState, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
+import { motion } from 'framer-motion';
 import { submitProspectLead } from '@/actions/prospects';
 import { DistrictState, ProspectInput } from '@/types';
 import { Sparkles, Send, CheckCircle2, AlertCircle, HeartHandshake, Users, ShieldCheck, ArrowRight, Building2 } from 'lucide-react';
@@ -203,7 +204,12 @@ function JoinContent() {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
         
         {/* Left Column: Value Proposition */}
-        <div className="lg:col-span-5 space-y-6">
+        <motion.div 
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.6 }}
+          className="lg:col-span-5 space-y-6"
+        >
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#D91B5C]/10 border border-[#D91B5C]/20 text-[#D91B5C] text-xs font-semibold">
             <Sparkles className="h-3.5 w-3.5" />
             <span>Membership Intake 2026/2027</span>
@@ -221,7 +227,12 @@ function JoinContent() {
           </p>
 
           <div className="space-y-4 pt-4">
-            <div className="flex items-start gap-3">
+            <motion.div 
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+              className="flex items-start gap-3"
+            >
               <div className="h-8 w-8 rounded-xl bg-white/5 flex items-center justify-center text-[#D91B5C] shrink-0">
                 <Users className="h-4 w-4" />
               </div>
@@ -229,9 +240,14 @@ function JoinContent() {
                 <h4 className="text-sm font-bold text-white">7 Constituent States Network</h4>
                 <p className="text-xs text-slate-400 mt-0.5">Lifelong professional connections across South-West and North-Central zones.</p>
               </div>
-            </div>
+            </motion.div>
 
-            <div className="flex items-start gap-3">
+            <motion.div 
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+              className="flex items-start gap-3"
+            >
               <div className="h-8 w-8 rounded-xl bg-white/5 flex items-center justify-center text-[#D4A520] shrink-0">
                 <HeartHandshake className="h-4 w-4" />
               </div>
@@ -239,9 +255,14 @@ function JoinContent() {
                 <h4 className="text-sm font-bold text-white">Grassroots Humanitarian Service</h4>
                 <p className="text-xs text-slate-400 mt-0.5">Direct involvement in water, health, and education community projects.</p>
               </div>
-            </div>
+            </motion.div>
 
-            <div className="flex items-start gap-3">
+            <motion.div 
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4 }}
+              className="flex items-start gap-3"
+            >
               <div className="h-8 w-8 rounded-xl bg-white/5 flex items-center justify-center text-emerald-400 shrink-0">
                 <ShieldCheck className="h-4 w-4" />
               </div>
@@ -249,12 +270,17 @@ function JoinContent() {
                 <h4 className="text-sm font-bold text-white">Digital Rotary Credentialing</h4>
                 <p className="text-xs text-slate-400 mt-0.5">Official digital identity cards with dynamic QR verification.</p>
               </div>
-            </div>
+            </motion.div>
           </div>
-        </div>
+        </motion.div>
 
         {/* Right Column: Lead Capture Form */}
-        <div className="lg:col-span-7">
+        <motion.div 
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.6, delay: 0.1 }}
+          className="lg:col-span-7"
+        >
           <div className="glass-panel rounded-3xl p-6 sm:p-10 shadow-2xl border border-white/15 relative overflow-hidden">
             <div className="absolute -top-24 -right-24 h-48 w-48 bg-[#D91B5C]/20 rounded-full blur-3xl pointer-events-none" />
 
@@ -272,7 +298,9 @@ function JoinContent() {
             </div>
 
             {submitResult && (
-              <div
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
                 className={`p-4 rounded-2xl mb-6 text-xs flex items-start gap-3 ${
                   submitResult.success
                     ? 'bg-emerald-500/10 border border-emerald-500/30 text-emerald-300'
@@ -297,7 +325,7 @@ function JoinContent() {
                     </Link>
                   )}
                 </div>
-              </div>
+              </motion.div>
             )}
 
             <form onSubmit={handleSubmit} className="space-y-4">
@@ -311,7 +339,7 @@ function JoinContent() {
                   placeholder="e.g. Oluwaseun Adeleke"
                   value={formData.fullName}
                   onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
-                  className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-[#D91B5C] focus:ring-1 focus:ring-[#D91B5C]"
+                  className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-[#D91B5C] focus:ring-1 focus:ring-[#D91B5C] transition-all"
                 />
               </div>
 
@@ -326,7 +354,7 @@ function JoinContent() {
                     placeholder="e.g. name@example.com"
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-[#D91B5C] focus:ring-1 focus:ring-[#D91B5C]"
+                    className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-[#D91B5C] focus:ring-1 focus:ring-[#D91B5C] transition-all"
                   />
                 </div>
 
@@ -340,7 +368,7 @@ function JoinContent() {
                     placeholder="e.g. +234 801 234 5678"
                     value={formData.phone}
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                    className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-[#D91B5C] focus:ring-1 focus:ring-[#D91B5C]"
+                    className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-[#D91B5C] focus:ring-1 focus:ring-[#D91B5C] transition-all"
                   />
                 </div>
               </div>
@@ -353,7 +381,7 @@ function JoinContent() {
                   <select
                     value={formData.preferredState}
                     onChange={(e) => handleStateChange(e.target.value as DistrictState)}
-                    className="w-full px-4 py-3 rounded-xl bg-[#0F1420] border border-white/10 text-xs text-white focus:outline-none focus:border-[#D91B5C]"
+                    className="w-full px-4 py-3 rounded-xl bg-[#0F1420] border border-white/10 text-xs text-white focus:outline-none focus:border-[#D91B5C] transition-all"
                   >
                     <option value="Oyo">Oyo State (South-West)</option>
                     <option value="Osun">Osun State (South-West)</option>
@@ -380,7 +408,7 @@ function JoinContent() {
                       const clubObj = currentClubs.find((c) => c.id === selectedId);
                       if (clubObj) setMatchedClubName(clubObj.name);
                     }}
-                    className="w-full px-4 py-3 rounded-xl bg-[#0F1420] border border-white/10 text-xs text-white focus:outline-none focus:border-[#D91B5C]"
+                    className="w-full px-4 py-3 rounded-xl bg-[#0F1420] border border-white/10 text-xs text-white focus:outline-none focus:border-[#D91B5C] transition-all"
                   >
                     {formData.preferredState &&
                       CLUBS_BY_STATE[formData.preferredState]?.map((club) => (
@@ -401,14 +429,16 @@ function JoinContent() {
                   placeholder="Tell us about your background, occupation, or what inspired you to join..."
                   value={formData.notes}
                   onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
-                  className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-[#D91B5C] focus:ring-1 focus:ring-[#D91B5C] resize-none"
+                  className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-[#D91B5C] focus:ring-1 focus:ring-[#D91B5C] resize-none transition-all"
                 />
               </div>
 
-              <button
+              <motion.button
+                whileHover={{ scale: 1.01 }}
+                whileTap={{ scale: 0.98 }}
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full mt-2 py-3.5 rounded-xl bg-gradient-to-r from-[#D91B5C] to-[#A70C43] hover:brightness-110 active:scale-[0.99] text-white font-bold text-xs sm:text-sm shadow-lg shadow-[#D91B5C]/30 flex items-center justify-center gap-2 transition disabled:opacity-50 cursor-pointer"
+                className="w-full mt-2 py-3.5 rounded-xl bg-gradient-to-r from-[#D91B5C] to-[#A70C43] hover:brightness-110 text-white font-bold text-xs sm:text-sm shadow-lg shadow-[#D91B5C]/30 flex items-center justify-center gap-2 transition disabled:opacity-50 cursor-pointer"
               >
                 {isSubmitting ? (
                   <span>Submitting Application...</span>
@@ -418,10 +448,10 @@ function JoinContent() {
                     <span>Submit Membership Interest</span>
                   </>
                 )}
-              </button>
+              </motion.button>
             </form>
           </div>
-        </div>
+        </motion.div>
       </div>
     </main>
   );

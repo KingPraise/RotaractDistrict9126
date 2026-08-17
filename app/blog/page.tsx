@@ -3,7 +3,9 @@
 import React, { useState, useMemo } from 'react';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
-import { Search, ArrowRight } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Search, ArrowRight, Sparkles, BookOpen } from 'lucide-react';
+import { subscribeNewsletter } from '@/lib/services/newsletter-service';
 
 interface BlogPost {
   id: string;
@@ -49,54 +51,54 @@ const blogPosts: BlogPost[] = [
       image: 'https://images.unsplash.com/photo-1573497491765-dccce02b29df?w=80&h=80&fit=crop&auto=format'
     },
     image: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=1200&h=800&fit=crop&auto=format',
-    tags: ['#Summit', '#Leadership']
+    tags: ['#Leadership', '#Summit2026']
   },
   {
     id: '3',
-    title: '10,000 Trees in 10 Weeks: The Green Ibadan Initiative Crosses Its Midpoint',
-    excerpt: 'What started as an ambitious pledge by six clubs in April has become a district-wide movement, with over 22 clubs now participating in weekend planting drives across the seven states.',
-    category: 'Impact Reports',
-    date: 'Jul 8, 2026',
+    title: 'How One Borehole Transformed a Village of 3,000 in Rural Kwara State',
+    excerpt: 'Access to clean potable water reduced waterborne illness rates by 70% in under six months, according to independent data from the local primary health centre.',
+    category: 'Community Stories',
+    date: 'Jul 05, 2026',
     readTime: '5 min read',
     author: {
-      name: 'Yetunde Balogun',
-      image: 'https://images.unsplash.com/photo-1573497161161-c3e73707e25c?w=80&h=80&fit=crop&auto=format'
+      name: 'Bayo Alabi',
+      image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=80&h=80&fit=crop&auto=format'
     },
-    image: 'https://images.unsplash.com/photo-1598335624134-5bceb5de202d?w=1200&h=800&fit=crop&auto=format',
-    tags: ['#Environment', '#GreenIbadan']
+    image: 'https://images.unsplash.com/photo-1611502029437-54521b5e6ada?w=1200&h=800&fit=crop&auto=format',
+    tags: ['#WASH', '#KwaraState']
   },
   {
     id: '4',
-    title: 'From Iwo Road to Agodi: How One Club Rebuilt a Primary School Library',
-    excerpt: 'The Rotaract Club of Ibadan Iwo Road spent eight months fundraising, sourcing books, and training teachers — a story of persistence that district leaders are calling a model for replication.',
-    category: 'Community Stories',
-    date: 'Jul 3, 2026',
-    readTime: '7 min read',
-    author: {
-      name: 'Kayode Faleye',
-      image: 'https://images.unsplash.com/photo-1631824925667-28632e135463?w=80&h=80&fit=crop&auto=format'
-    },
-    image: 'https://images.unsplash.com/photo-1632215861513-130b66fe97f4?w=1200&h=800&fit=crop&auto=format',
-    tags: ['#Education', '#Literacy']
-  },
-  {
-    id: '5',
-    title: 'Meet the Class of 2026: 47 New Rotaractors Inducted Across Seven Clubs',
-    excerpt: 'Clubs across Oyo, Osun, and Kwara welcome new members into the global Rotary family during simultaneous mid-year induction ceremonies.',
+    title: '70 New Members Inducted Across 12 Campus Clubs in Unprecedented Orientation Drive',
+    excerpt: 'Universities and polytechnics across District 9126 witnessed record turnout as student leaders joined the global Rotary family during the annual New Member Induction Month.',
     category: 'District News',
     date: 'Jun 28, 2026',
     readTime: '3 min read',
     author: {
-      name: 'Gbemisola Awoyemi',
-      image: 'https://images.unsplash.com/photo-1697063882499-f7fca7d2d713?w=80&h=80&fit=crop&auto=format'
+      name: 'Amaka Eze',
+      image: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=80&h=80&fit=crop&auto=format'
     },
-    image: 'https://images.unsplash.com/photo-1652664845183-c6083bc286fc?w=1200&h=800&fit=crop&auto=format',
-    tags: ['#Induction', '#Membership']
+    image: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=1200&h=800&fit=crop&auto=format',
+    tags: ['#Induction', '#CampusClubs']
+  },
+  {
+    id: '5',
+    title: 'District 9126 Restores and Re-stocks Central Community Library with 2,000 Books',
+    excerpt: 'A 10-week joint project between four clubs delivered freshly painted learning spaces, high-speed internet access points, and modern reference materials for secondary students.',
+    category: 'Community Stories',
+    date: 'Jun 25, 2026',
+    readTime: '4 min read',
+    author: {
+      name: 'Kunle Adeleke',
+      image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&h=80&fit=crop&auto=format'
+    },
+    image: 'https://images.unsplash.com/photo-1521587760476-6c12a4b040da?w=1200&h=800&fit=crop&auto=format',
+    tags: ['#Education', '#Library']
   },
   {
     id: '6',
-    title: 'Health Screening Camp in Ogbomoso Reaches 680 Residents in a Single Weekend',
-    excerpt: 'Comprehensive hypertension, blood glucose, and dental screenings provided free to rural families in partnership with university teaching hospitals.',
+    title: 'Free Cataract Surgeries Restores Sight to 80 Elderly Residents in Ogbomoso',
+    excerpt: 'In partnership with specialist ophthalmologists, Rotaract volunteers coordinated pre-screenings, transportation, and post-operative care for beneficiaries across three local governments.',
     category: 'Impact Reports',
     date: 'Jun 22, 2026',
     readTime: '4 min read',
@@ -138,32 +140,22 @@ const blogPosts: BlogPost[] = [
   {
     id: '9',
     title: 'Rotaract Mental Health Week 2026 Generates 20,000 Impressions Across Social Media',
-    excerpt: 'Webinars, support spaces, and daily mental well-being guides break stigmas and connect students to professional counselling hotlines.',
-    category: 'District News',
-    date: 'Jun 9, 2026',
-    readTime: '4 min read',
+    excerpt: 'Workshops, live Q&A sessions with clinical psychologists, and peer-support circles provided accessible wellness toolkits to hundreds of young Nigerians.',
+    category: 'Events',
+    date: 'Jun 08, 2026',
+    readTime: '3 min read',
     author: {
-      name: 'Omotola Idowu',
-      image: 'https://images.unsplash.com/photo-1659422440915-d516c6dc932e?w=80&h=80&fit=crop&auto=format'
+      name: 'Zainab Bello',
+      image: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=80&h=80&fit=crop&auto=format'
     },
-    image: 'https://images.unsplash.com/photo-1627931539006-d5c4677e05ea?w=1200&h=800&fit=crop&auto=format',
-    tags: ['#MentalHealth', '#Advocacy']
+    image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=1200&h=800&fit=crop&auto=format',
+    tags: ['#MentalHealth', '#Wellness']
   }
 ];
 
-const categoryBadgeStyles: Record<string, { bg: string; text: string }> = {
-  'Impact Reports': { bg: 'rgba(152, 17, 50, 0.1)', text: 'rgb(152, 17, 50)' },
-  Events: { bg: 'rgba(37, 99, 235, 0.1)', text: 'rgb(29, 78, 216)' },
-  'Community Stories': { bg: 'rgba(109, 40, 217, 0.1)', text: 'rgb(109, 40, 217)' },
-  'District News': { bg: 'rgba(152, 17, 50, 0.1)', text: 'rgb(152, 17, 50)' },
-  Announcements: { bg: 'rgba(5, 150, 105, 0.1)', text: 'rgb(5, 150, 105)' }
-};
-
-import { subscribeNewsletter } from '@/lib/services/newsletter-service';
-
 export default function BlogPage() {
-  const [selectedCategory, setSelectedCategory] = useState('All');
-  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState<string>('All');
+  const [searchQuery, setSearchQuery] = useState<string>('');
   const [newsletterEmail, setNewsletterEmail] = useState('');
   const [isSubscribing, setIsSubscribing] = useState(false);
   const [newsletterStatus, setNewsletterStatus] = useState<{ success: boolean; message: string } | null>(null);
@@ -219,7 +211,12 @@ export default function BlogPage() {
         <section className="px-6 lg:px-10 pb-8 max-w-7xl mx-auto">
           <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
             
-            <div className="flex flex-col gap-3">
+            <motion.div 
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className="flex flex-col gap-3"
+            >
               <div className="flex items-center gap-2">
                 <div 
                   className="w-1 h-8 rounded-full" 
@@ -241,10 +238,15 @@ export default function BlogPage() {
                   News Hub
                 </span>
               </h1>
-            </div>
+            </motion.div>
 
             {/* Search Input */}
-            <div className="relative max-w-xs w-full">
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.96 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+              className="relative max-w-xs w-full"
+            >
               <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400" size={14} />
               <input
                 type="text"
@@ -253,27 +255,37 @@ export default function BlogPage() {
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full pl-9 pr-4 py-3 rounded-xl text-sm bg-white border border-black/10 text-[#1C1C1E] placeholder-gray-400 outline-none focus:border-[#981132] transition-colors font-sans"
               />
-            </div>
+            </motion.div>
 
           </div>
         </section>
 
-        {/* CATEGORY FILTER PILLS */}
+        {/* CATEGORY FILTER PILLS WITH SPRING ANIMATION */}
         <section className="px-6 lg:px-10 pb-8 max-w-7xl mx-auto">
           <div className="flex items-center gap-2 overflow-x-auto pb-1" style={{ scrollbarWidth: 'none' }}>
-            {categories.map((cat) => (
-              <button
-                key={cat}
-                onClick={() => setSelectedCategory(cat)}
-                className={`shrink-0 px-4 py-2 rounded-lg font-semibold whitespace-nowrap uppercase tracking-wider text-xs transition-all font-sans ${
-                  selectedCategory === cat
-                    ? 'bg-gradient-to-r from-[#D91B5C] to-[#A70C43] text-white shadow-[0_0_16px_rgba(217,27,92,0.35)]'
-                    : 'bg-white/80 border border-black/10 text-gray-700 hover:bg-white'
-                }`}
-              >
-                {cat}
-              </button>
-            ))}
+            {categories.map((cat) => {
+              const isActive = selectedCategory === cat;
+              return (
+                <button
+                  key={cat}
+                  onClick={() => setSelectedCategory(cat)}
+                  className={`relative shrink-0 px-4 py-2 rounded-lg font-semibold whitespace-nowrap uppercase tracking-wider text-xs transition-all font-sans cursor-pointer ${
+                    isActive
+                      ? 'text-white font-bold'
+                      : 'bg-white/80 border border-black/10 text-gray-700 hover:bg-white'
+                  }`}
+                >
+                  {isActive && (
+                    <motion.span
+                      layoutId="blogActiveCategoryPill"
+                      className="absolute inset-0 rounded-lg bg-gradient-to-r from-[#D91B5C] to-[#A70C43] shadow-[0_0_16px_rgba(217,27,92,0.35)] -z-10"
+                      transition={{ type: 'spring', stiffness: 450, damping: 32 }}
+                    />
+                  )}
+                  {cat}
+                </button>
+              );
+            })}
 
             <div className="shrink-0 h-6 w-px bg-black/10 mx-1" />
             <span className="shrink-0 text-[10px] text-gray-500 font-medium font-sans">
@@ -285,7 +297,11 @@ export default function BlogPage() {
         <div className="px-6 lg:px-10 max-w-7xl mx-auto flex flex-col gap-12 pb-20">
           
           {/* STATS SUMMARY BAR */}
-          <div 
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
             className="grid grid-cols-2 lg:grid-cols-4 gap-px rounded-2xl overflow-hidden bg-white border border-black/[0.08] shadow-sm"
           >
             <div className="flex flex-col items-center justify-center gap-1 px-6 py-7 border-r border-black/[0.07]">
@@ -315,251 +331,271 @@ export default function BlogPage() {
                 Categories
               </span>
             </div>
-          </div>
+          </motion.div>
 
-          {/* FEATURED EDITORIAL HERO STORY */}
-          {selectedCategory === 'All' && !searchQuery && (
-            <article className="relative w-full rounded-2xl overflow-hidden cursor-pointer bg-[#0A111E] shadow-xl border border-white/10 group">
-              <div className="flex flex-col lg:flex-row h-full min-h-[480px]">
-                
-                {/* Image Section */}
-                <div className="relative overflow-hidden lg:w-[60%] h-64 lg:h-auto shrink-0">
-                  <img 
-                    src={featuredPost.image} 
+          {/* EDITORIAL HERO STORY */}
+          {featuredPost && (
+            <motion.section
+              initial={{ opacity: 0, y: 25 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="relative overflow-hidden rounded-3xl bg-white border border-black/[0.08] shadow-lg cursor-pointer group"
+            >
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-0">
+                {/* Visual Cover */}
+                <div className="lg:col-span-7 relative min-h-[340px] lg:min-h-[460px] overflow-hidden">
+                  <img
+                    src={featuredPost.image}
                     alt={featuredPost.title}
-                    className="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-105"
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-tr from-[#080C14]/40 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent lg:hidden" />
                 </div>
 
-                {/* Content Section */}
-                <div 
-                  className="flex flex-col justify-between p-7 lg:p-10 flex-1"
-                  style={{ background: 'linear-gradient(135deg, rgb(10, 17, 30) 0%, rgb(8, 12, 20) 100%)' }}
-                >
-                  <div className="flex flex-col gap-5">
-                    <span 
-                      className="inline-block px-2.5 py-0.5 rounded-md text-[10px] font-semibold tracking-wider uppercase self-start font-sans"
-                      style={{ background: categoryBadgeStyles[featuredPost.category]?.bg, color: categoryBadgeStyles[featuredPost.category]?.text }}
-                    >
-                      {featuredPost.category}
-                    </span>
+                {/* Narrative Details */}
+                <div className="lg:col-span-5 p-8 lg:p-12 flex flex-col justify-between bg-white z-10">
+                  <div className="flex flex-col gap-4">
+                    <div className="flex items-center gap-3">
+                      <span className="px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-[#981132]/10 text-[#981132] border border-[#981132]/20 font-sans">
+                        {featuredPost.category}
+                      </span>
+                      <span className="text-xs text-gray-400 font-sans">{featuredPost.date}</span>
+                      <span className="text-xs text-gray-400 font-sans">· {featuredPost.readTime}</span>
+                    </div>
 
-                    <h2 className="text-white font-extrabold text-xl lg:text-2xl leading-tight tracking-tight font-sans">
+                    <h2 className="text-2xl lg:text-3xl font-extrabold text-[#111111] leading-tight font-sans group-hover:text-[#981132] transition-colors">
                       {featuredPost.title}
                     </h2>
 
-                    <p className="text-slate-300 text-sm leading-relaxed font-sans">
+                    <p className="text-sm text-gray-600 leading-relaxed font-sans">
                       {featuredPost.excerpt}
                     </p>
 
-                    <div className="flex flex-wrap gap-1.5">
-                      {featuredPost.tags.map((tag, idx) => (
-                        <span 
-                          key={idx}
-                          className="px-2 py-0.5 rounded text-[9px] uppercase tracking-wide bg-white/5 text-white/40 font-mono"
-                        >
+                    <div className="flex gap-2 flex-wrap pt-2">
+                      {featuredPost.tags.map((tag) => (
+                        <span key={tag} className="text-xs text-gray-400 font-sans font-medium">
                           {tag}
                         </span>
                       ))}
                     </div>
                   </div>
 
-                  {/* Author & Read Time Footer */}
-                  <div className="flex items-center justify-between mt-8 pt-6 border-t border-white/10">
+                  <div className="flex items-center justify-between pt-8 border-t border-black/[0.06] mt-6">
                     <div className="flex items-center gap-3">
-                      <img 
-                        src={featuredPost.author.image} 
+                      <img
+                        src={featuredPost.author.image}
                         alt={featuredPost.author.name}
-                        className="w-7 h-7 rounded-full object-cover shrink-0 border border-[#981132]/30"
+                        className="w-10 h-10 rounded-full object-cover border-2 border-white shadow-sm"
                       />
-                      <div className="flex flex-col leading-none gap-0.5">
-                        <span className="text-[11px] font-semibold text-[#D91B5C] font-sans">
+                      <div className="flex flex-col">
+                        <span className="text-xs font-bold text-[#111111] font-sans">
                           {featuredPost.author.name}
                         </span>
-                        <div className="flex items-center gap-1.5 text-[10px] text-gray-400 font-sans">
-                          <span>{featuredPost.date}</span>
-                          <span>·</span>
-                          <span>{featuredPost.readTime}</span>
-                        </div>
+                        <span className="text-[10px] text-gray-400 font-sans">Author</span>
                       </div>
                     </div>
 
-                    <div className="flex items-center gap-1.5 text-[#D91B5C] font-bold text-xs group-hover:translate-x-1 transition-transform font-sans">
-                      <span>Read Story</span>
-                      <ArrowRight size={14} />
+                    <div className="w-10 h-10 rounded-full bg-[#981132] text-white flex items-center justify-center shadow-md transition-transform group-hover:translate-x-1">
+                      <ArrowRight size={16} />
                     </div>
                   </div>
-
                 </div>
-
               </div>
-            </article>
+            </motion.section>
           )}
 
           {/* 2-COLUMN HIGHLIGHT GRID */}
           {secondaryPosts.length > 0 && (
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              {secondaryPosts.map((post) => (
-                <article 
-                  key={post.id} 
-                  className="relative flex flex-col rounded-2xl overflow-hidden cursor-pointer group bg-white border border-black/[0.08] shadow-sm hover:shadow-md transition-shadow"
+            <section className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {secondaryPosts.map((post, idx) => (
+                <motion.article
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: idx * 0.1 }}
+                  whileHover={{ y: -4 }}
+                  key={post.id}
+                  className="rounded-2xl overflow-hidden bg-white border border-black/[0.08] shadow-md flex flex-col justify-between group cursor-pointer"
                 >
-                  <div className="relative overflow-hidden shrink-0 pb-[58%]">
-                    <img 
-                      src={post.image} 
-                      alt={post.title}
-                      className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                    />
-                    <div className="absolute bottom-3 left-4">
-                      <span 
-                        className="inline-block px-2.5 py-0.5 rounded-md text-[10px] font-semibold tracking-wider uppercase backdrop-blur-md font-sans"
-                        style={{ background: categoryBadgeStyles[post.category]?.bg, color: categoryBadgeStyles[post.category]?.text }}
-                      >
-                        {post.category}
-                      </span>
-                    </div>
-                  </div>
-
-                  <div className="flex flex-col flex-1 p-5 gap-3">
-                    <div className="flex items-center gap-2 text-[10px] text-gray-500 font-sans">
-                      <span className="text-[#981132] font-semibold">{post.date}</span>
-                      <span>·</span>
-                      <span>{post.readTime}</span>
-                    </div>
-
-                    <h3 className="font-bold text-base text-[#111111] leading-snug group-hover:text-[#981132] transition-colors font-sans">
-                      {post.title}
-                    </h3>
-
-                    <p className="text-gray-600 text-xs leading-relaxed line-clamp-2 font-sans">
-                      {post.excerpt}
-                    </p>
-
-                    <div className="flex items-center justify-between mt-auto pt-3 border-t border-black/[0.07]">
-                      <div className="flex items-center gap-2">
-                        <img 
-                          src={post.author.image} 
-                          alt={post.author.name}
-                          className="w-6 h-6 rounded-full object-cover border border-[#981132]/30"
-                        />
-                        <span className="text-[10px] text-gray-700 font-medium font-sans">
-                          {post.author.name}
+                  <div>
+                    <div className="relative h-60 overflow-hidden">
+                      <img
+                        src={post.image}
+                        alt={post.title}
+                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                      />
+                      <div className="absolute top-4 left-4">
+                        <span className="px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-white/90 backdrop-blur-md text-[#981132] shadow-sm font-sans">
+                          {post.category}
                         </span>
                       </div>
-                      <ArrowRight className="text-gray-400 group-hover:text-[#981132] transition-all" size={13} />
+                    </div>
+
+                    <div className="p-7 flex flex-col gap-3">
+                      <div className="flex items-center gap-2 text-xs text-gray-400 font-sans">
+                        <span>{post.date}</span>
+                        <span>·</span>
+                        <span>{post.readTime}</span>
+                      </div>
+
+                      <h3 className="text-xl font-bold text-[#111111] leading-snug font-sans group-hover:text-[#981132] transition-colors">
+                        {post.title}
+                      </h3>
+
+                      <p className="text-xs text-gray-600 leading-relaxed font-sans line-clamp-2">
+                        {post.excerpt}
+                      </p>
                     </div>
                   </div>
-                </article>
-              ))}
-            </div>
-          )}
 
-          {/* DIVIDER */}
-          <div className="flex items-center gap-4">
-            <div className="h-px flex-1 bg-black/[0.08]" />
-            <span className="text-[10px] tracking-[0.2em] uppercase text-[#D91B5C] font-semibold font-sans">
-              More Stories
-            </span>
-            <div className="h-px flex-1 bg-black/[0.08]" />
-          </div>
-
-          {/* 3-COLUMN MASONRY GRID */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {remainingPosts.map((post) => (
-              <article 
-                key={post.id} 
-                className="relative flex flex-col rounded-2xl overflow-hidden cursor-pointer group bg-white border border-black/[0.08] shadow-sm hover:shadow-md transition-shadow"
-              >
-                <div className="relative overflow-hidden shrink-0 pb-[58%]">
-                  <img 
-                    src={post.image} 
-                    alt={post.title}
-                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                  />
-                  <div className="absolute bottom-3 left-4">
-                    <span 
-                      className="inline-block px-2.5 py-0.5 rounded-md text-[10px] font-semibold tracking-wider uppercase backdrop-blur-md font-sans"
-                      style={{ background: categoryBadgeStyles[post.category]?.bg, color: categoryBadgeStyles[post.category]?.text }}
-                    >
-                      {post.category}
-                    </span>
-                  </div>
-                </div>
-
-                <div className="flex flex-col flex-1 p-5 gap-3">
-                  <div className="flex items-center gap-2 text-[10px] text-gray-500 font-sans">
-                    <span className="text-[#981132] font-semibold">{post.date}</span>
-                    <span>·</span>
-                    <span>{post.readTime}</span>
-                  </div>
-
-                  <h3 className="font-bold text-sm text-[#111111] leading-snug group-hover:text-[#981132] transition-colors font-sans">
-                    {post.title}
-                  </h3>
-
-                  <div className="flex items-center justify-between mt-auto pt-3 border-t border-black/[0.07]">
-                    <div className="flex items-center gap-2">
-                      <img 
-                        src={post.author.image} 
+                  <div className="px-7 pb-7 pt-3 flex items-center justify-between border-t border-black/[0.05]">
+                    <div className="flex items-center gap-2.5">
+                      <img
+                        src={post.author.image}
                         alt={post.author.name}
-                        className="w-6 h-6 rounded-full object-cover border border-[#981132]/30"
+                        className="w-8 h-8 rounded-full object-cover"
                       />
-                      <span className="text-[10px] text-gray-700 font-medium font-sans">
+                      <span className="text-xs font-semibold text-gray-800 font-sans">
                         {post.author.name}
                       </span>
                     </div>
-                    <ArrowRight className="text-gray-400 group-hover:text-[#981132] transition-all" size={13} />
-                  </div>
-                </div>
-              </article>
-            ))}
-          </div>
 
-          {/* NEWSLETTER SUBSCRIPTION CTA */}
-          <div 
-            className="relative rounded-2xl overflow-hidden px-8 py-12 text-center text-white"
-            style={{ background: 'rgb(152, 17, 50)' }}
+                    <span className="text-xs font-bold text-[#981132] group-hover:translate-x-1 transition-transform inline-flex items-center gap-1 font-sans">
+                      Read Story <ArrowRight size={12} />
+                    </span>
+                  </div>
+                </motion.article>
+              ))}
+            </section>
+          )}
+
+          {/* 3-COLUMN MASONRY STORY GRID */}
+          {remainingPosts.length > 0 && (
+            <section>
+              <div className="flex items-center gap-3 mb-6">
+                <span className="text-[10px] tracking-[0.3em] uppercase text-[#D91B5C] font-sans font-semibold">
+                  Latest Dispatches
+                </span>
+                <div className="h-px flex-1 max-w-16 bg-gradient-to-r from-[#D91B5C] to-transparent" />
+              </div>
+
+              <motion.div 
+                layout
+                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+              >
+                <AnimatePresence>
+                  {remainingPosts.map((post, idx) => (
+                    <motion.article
+                      layout
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, scale: 0.95 }}
+                      transition={{ duration: 0.4, delay: idx * 0.05 }}
+                      whileHover={{ y: -4 }}
+                      key={post.id}
+                      className="rounded-2xl overflow-hidden bg-white border border-black/[0.08] shadow-sm hover:shadow-md transition-all flex flex-col justify-between group cursor-pointer"
+                    >
+                      <div>
+                        <div className="relative h-48 overflow-hidden">
+                          <img
+                            src={post.image}
+                            alt={post.title}
+                            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                          />
+                          <div className="absolute top-3 left-3">
+                            <span className="px-2.5 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-wider bg-white/90 backdrop-blur-md text-[#981132] font-sans">
+                              {post.category}
+                            </span>
+                          </div>
+                        </div>
+
+                        <div className="p-6 flex flex-col gap-2.5">
+                          <div className="flex items-center gap-2 text-[11px] text-gray-400 font-sans">
+                            <span>{post.date}</span>
+                            <span>·</span>
+                            <span>{post.readTime}</span>
+                          </div>
+
+                          <h4 className="text-base font-bold text-[#111111] leading-snug font-sans group-hover:text-[#981132] transition-colors">
+                            {post.title}
+                          </h4>
+
+                          <p className="text-xs text-gray-500 leading-relaxed font-sans line-clamp-3">
+                            {post.excerpt}
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="px-6 pb-6 pt-3 flex items-center justify-between border-t border-black/[0.05]">
+                        <div className="flex items-center gap-2">
+                          <img
+                            src={post.author.image}
+                            alt={post.author.name}
+                            className="w-7 h-7 rounded-full object-cover"
+                          />
+                          <span className="text-[11px] font-medium text-gray-700 font-sans">
+                            {post.author.name}
+                          </span>
+                        </div>
+
+                        <ArrowRight size={14} className="text-gray-400 group-hover:text-[#981132] group-hover:translate-x-1 transition-all" />
+                      </div>
+                    </motion.article>
+                  ))}
+                </AnimatePresence>
+              </motion.div>
+            </section>
+          )}
+
+          {/* FORTNIGHTLY NEWSLETTER CTA */}
+          <motion.section 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="rounded-3xl p-8 lg:p-12 bg-gradient-to-r from-[#981132] via-[#A70C43] to-[#8B3A7A] text-white relative overflow-hidden shadow-xl"
           >
-            <div className="relative max-w-md mx-auto">
-              <h3 className="text-2xl font-black mb-2 font-sans">
-                Stay in the Loop
+            <div className="max-w-2xl relative z-10 flex flex-col gap-4">
+              <span className="text-[10px] tracking-[0.3em] uppercase font-bold text-rose-200 font-sans">
+                Stay In The Loop
+              </span>
+
+              <h3 className="text-2xl lg:text-3xl font-black font-sans leading-tight">
+                Subscribe to the District 9126 Fortnightly Impact Digest
               </h3>
-              <p className="text-xs text-white/80 mb-6 leading-relaxed font-sans">
-                Get the latest impact reports, club spotlights, and district news delivered to your inbox every fortnight.
+
+              <p className="text-xs sm:text-sm text-white/80 leading-relaxed font-sans">
+                Get project milestones, president spotlights, training registrations, and district events delivered directly to your inbox every two weeks.
               </p>
 
-              {newsletterStatus && (
-                <div
-                  className={`p-3 rounded-xl mb-4 text-xs font-semibold ${
-                    newsletterStatus.success
-                      ? 'bg-emerald-500/20 text-emerald-200 border border-emerald-400/30'
-                      : 'bg-black/30 text-rose-200 border border-rose-400/30'
-                  }`}
-                >
-                  {newsletterStatus.message}
-                </div>
-              )}
-
-              <form onSubmit={handleNewsletterSubmit} className="flex flex-col sm:flex-row gap-3">
-                <input 
-                  type="email" 
-                  placeholder="your@email.com"
+              <form onSubmit={handleNewsletterSubmit} className="flex flex-col sm:flex-row gap-3 pt-2">
+                <input
+                  type="email"
+                  placeholder="Enter your email address..."
+                  required
                   value={newsletterEmail}
                   onChange={(e) => setNewsletterEmail(e.target.value)}
-                  className="flex-1 px-4 py-3 rounded-xl outline-none text-sm bg-white/15 border border-white/30 text-white placeholder-white/50 font-sans focus:border-white"
-                  required
+                  className="flex-1 px-5 py-3 rounded-full bg-white/15 border border-white/25 text-white placeholder-white/60 text-xs sm:text-sm outline-none focus:bg-white/20 focus:border-white transition-all font-sans"
                 />
-                <button 
+                <button
                   type="submit"
                   disabled={isSubscribing}
-                  className="px-6 py-3 rounded-xl text-sm font-bold bg-white text-[#981132] whitespace-nowrap transition-transform hover:scale-105 active:scale-95 font-sans disabled:opacity-50"
+                  className="px-7 py-3 rounded-full bg-white text-[#981132] hover:bg-slate-100 font-bold text-xs sm:text-sm transition-all shadow-md active:scale-95 font-sans cursor-pointer disabled:opacity-75"
                 >
-                  {isSubscribing ? 'Subscribing...' : 'Subscribe'}
+                  {isSubscribing ? 'Subscribing...' : 'Subscribe Free'}
                 </button>
               </form>
+
+              {newsletterStatus && (
+                <p className={`text-xs mt-2 font-sans ${newsletterStatus.success ? 'text-green-200 font-semibold' : 'text-rose-200'}`}>
+                  {newsletterStatus.message}
+                </p>
+              )}
             </div>
-          </div>
+
+            <div className="absolute -right-10 -bottom-10 w-64 h-64 bg-white/10 rounded-full blur-2xl pointer-events-none" />
+          </motion.section>
 
         </div>
       </main>
