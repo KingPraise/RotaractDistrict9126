@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import { 
@@ -16,7 +16,14 @@ import {
   ArrowRight, 
   BookOpen,
   Milestone,
-  Building2
+  Building2,
+  Search,
+  Mail,
+  Phone,
+  ArrowUpRight,
+  X,
+  ExternalLink,
+  ChevronRight
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import RotaryTooltip from '@/components/ui/RotaryTooltip';
@@ -108,54 +115,91 @@ const pastLeaders = [
   }
 ];
 
-const currentTeam = [
+interface LeaderMember {
+  id: string;
+  name: string;
+  role: string;
+  tooltip: string | null;
+  image: string;
+  fallbackImage: string;
+  dept: string;
+  email: string;
+  phone: string;
+  bio: string;
+}
+
+const currentTeam: LeaderMember[] = [
   {
+    id: 'drr',
     name: 'Rtr. PP Adaramoye Iyanuoluwa',
     role: 'District Rotaract Representative',
     tooltip: 'DRR',
     image: '/images/leaders/drr-adaramoye-iyanuoluwa.jpg',
     fallbackImage: 'https://images.unsplash.com/photo-1644152993066-9b9ee687930d?w=480&h=580&fit=crop&auto=format',
-    dept: 'Executive Office'
+    dept: 'Executive Office',
+    email: 'drr@rotaractdistrict9126.com.ng',
+    phone: '+234 800 912 6001',
+    bio: 'Presiding District Rotaract Representative for the 2026/2027 Rotary Year. Steering digital transformation, member verified credentials, and flagship maternal & child health outreach across 7 states.'
   },
   {
+    id: 'ipdrr',
     name: 'Rtr. PP Oyewumi Kamaldeen',
     role: 'Immediate Past DRR',
     tooltip: 'IPDRR',
     image: '/images/leaders/drr-oyewumi-kamaldeen.jpg',
     fallbackImage: 'https://images.unsplash.com/photo-1533108344127-a586d2b02479?w=480&h=580&fit=crop&auto=format',
-    dept: 'Advisory Council'
+    dept: 'Advisory Council',
+    email: 'ipdrr@rotaractdistrict9126.com.ng',
+    phone: '+234 800 912 6002',
+    bio: 'Inaugural DRR who established the sovereign structures of District 9126 during the 2024/2025 chartering era. Advises on executive alignment, governance, and institutional continuity.'
   },
   {
+    id: 'sec',
     name: 'Rtr. PP Faleye Ifeoluwa',
     role: 'District Secretary',
     tooltip: 'PP',
     image: '/images/leaders/leader-secretary-faleye.jpg',
     fallbackImage: 'https://images.unsplash.com/photo-1629145810320-aec9e63dd798?w=480&h=580&fit=crop&auto=format',
-    dept: 'Secretariat'
+    dept: 'Secretariat',
+    email: 'secretary@rotaractdistrict9126.com.ng',
+    phone: '+234 800 912 6003',
+    bio: 'Manages the district secretariat, official records, administrative correspondence, and inter-club communication across all 77 chartered clubs.'
   },
   {
+    id: 'treasurer',
     name: 'Rtr. PP Odufuwa Omotoke',
     role: 'District Treasurer',
     tooltip: 'PP',
     image: '/images/leaders/leader-treasurer-odufuwa.jpg',
     fallbackImage: 'https://images.unsplash.com/photo-1650490323009-96fc950a959c?w=480&h=580&fit=crop&auto=format',
-    dept: 'Finance & Accounts'
+    dept: 'Finance & Accounts',
+    email: 'treasury@rotaractdistrict9126.com.ng',
+    phone: '+234 800 912 6004',
+    bio: 'Directs the district fiscal strategy, automated club dues reconciliations, project budgets, and transparent audit reports.'
   },
   {
+    id: 'service',
     name: 'Rtr. Chukwuemeka Obi',
     role: 'Director of Service Projects',
     tooltip: null,
     image: '/images/leaders/leader-service.jpg',
     fallbackImage: 'https://images.unsplash.com/photo-1614023342667-6f060e9d1e04?w=480&h=580&fit=crop&auto=format',
-    dept: 'Service Projects'
+    dept: 'Service Projects',
+    email: 'service@rotaractdistrict9126.com.ng',
+    phone: '+234 800 912 6005',
+    bio: 'Coordinates high-impact community interventions, water borehole projects, literacy drives, and multi-club joint service days across all 7 constituent states.'
   },
   {
+    id: 'advisor',
     name: 'Rtr. PP Adebayo Sodiq',
     role: 'Strategic Advisor',
     tooltip: 'PHF+1',
     image: '/images/leaders/drr-adebayo-sodiq.jpg',
     fallbackImage: 'https://images.unsplash.com/photo-1602009786436-96b827675d32?w=480&h=580&fit=crop&auto=format',
-    dept: 'Strategy & Governance'
+    dept: 'Strategy & Governance',
+    email: 'advisor@rotaractdistrict9126.com.ng',
+    phone: '+234 800 912 6006',
+    bio: '15th and final DRR of District 9125. Provides high-level strategic guidance, Rotary Foundation partnerships, and inter-district alliances.'
   }
 ];
 
@@ -164,74 +208,100 @@ const sevenStates = [
     name: 'Osun State',
     region: 'South-West Nigeria',
     clubs: 'Osogbo, Ile-Ife, Ilesa, Ede, Ikirun',
-    focus: 'Cultural Heritage & Youth Entrepreneurship'
+    focus: 'Cultural Heritage & Youth Entrepreneurship',
+    landmark: 'Living Culture & Heritage'
   },
   {
     name: 'Oyo State',
     region: 'South-West Nigeria',
     clubs: 'Ibadan, Ogbomoso, Oyo, Saki',
-    focus: 'Higher Education Hubs & Digital Literacy'
+    focus: 'Higher Education Hubs & Digital Literacy',
+    landmark: 'Cradle of Higher Learning'
   },
   {
     name: 'Ondo State',
     region: 'South-West Nigeria',
     clubs: 'Akure, Ondo, Owo, Ikare',
-    focus: 'Agricultural Innovation & Maternal Health'
+    focus: 'Agricultural Innovation & Maternal Health',
+    landmark: 'Sunshine Agricultural Hub'
   },
   {
     name: 'Ekiti State',
     region: 'South-West Nigeria',
     clubs: 'Ado-Ekiti, Ikole, Ijero',
-    focus: 'Scholastic Mentorship & Civic Leadership'
+    focus: 'Scholastic Mentorship & Civic Leadership',
+    landmark: 'Land of Honor & Academics'
   },
   {
     name: 'Kwara State',
     region: 'North-Central Nigeria',
     clubs: 'Ilorin, Offa, Omu-Aran',
-    focus: 'WASH (Clean Water) & Commercial Development'
+    focus: 'WASH (Clean Water) & Commercial Development',
+    landmark: 'State of Harmony & Commerce'
   },
   {
     name: 'Niger State',
     region: 'North-Central Nigeria',
     clubs: 'Minna, Bida, Suleja, Kontagora',
-    focus: 'Rural Health Outreach & Food Security'
+    focus: 'Rural Health Outreach & Food Security',
+    landmark: 'Power State & Agriculture'
   },
   {
     name: 'Kogi State',
     region: 'North-Central Nigeria',
     clubs: 'Lokoja, Okene, Kabba, Anyigba',
-    focus: 'Youth Skills Training & Community Welfare'
+    focus: 'Youth Skills Training & Community Welfare',
+    landmark: 'Confluence State'
   }
 ];
 
 export default function AboutPage() {
   const [activeTab, setActiveTab] = useState<'overview' | 'history' | 'states' | 'team' | 'past-leaders'>('overview');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedDept, setSelectedDept] = useState('All');
+  const [selectedLeaderModal, setSelectedLeaderModal] = useState<LeaderMember | null>(null);
+
+  const departments = ['All', 'Executive Office', 'Advisory Council', 'Secretariat', 'Finance & Accounts', 'Service Projects', 'Strategy & Governance'];
+
+  const filteredTeam = useMemo(() => {
+    return currentTeam.filter((member) => {
+      const matchesSearch = member.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                            member.role.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                            member.dept.toLowerCase().includes(searchQuery.toLowerCase());
+      const matchesDept = selectedDept === 'All' || member.dept === selectedDept;
+      return matchesSearch && matchesDept;
+    });
+  }, [searchQuery, selectedDept]);
 
   return (
     <div className="min-h-screen bg-[#F8F5F2] text-[#111111]" style={{ fontFamily: 'Inter, sans-serif' }}>
       <Navbar />
       
-      {/* HERO HEADER */}
+      {/* ================= HERO HEADER WITH HAND-DRAWN ACCENT & AMBIENT GLOW ================= */}
       <section className="relative pt-[120px] pb-20 overflow-hidden bg-[#0C101A] text-white">
         <div 
           className="absolute inset-0 pointer-events-none"
           style={{ background: 'radial-gradient(70% 60% at 50% 0%, rgba(217, 27, 92, 0.28) 0%, transparent 75%)' }}
         />
         
+        {/* Subtle geometric dot grid overlay */}
         <div className="absolute inset-0 pointer-events-none opacity-10 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:24px_24px]" />
 
         <div className="max-w-7xl mx-auto px-6 lg:px-10 relative z-10 text-center">
           
+          {/* Cursive Accent Tag Inspired by D3141 */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="flex items-center justify-center gap-3 mb-4"
+            className="inline-flex flex-col items-center mb-3"
           >
-            <span className="text-xs font-bold tracking-[0.35em] uppercase text-[#FF4D8D]">
-              District 9126 History & Heritage
+            <span className="text-sm font-semibold tracking-wider text-[#FF4D8D] font-sans">
+              Meet the People Behind District 9126
             </span>
-            <div className="h-px w-12 bg-gradient-to-r from-[#FF4D8D] to-transparent" />
+            <svg viewBox="0 0 180 18" className="h-2.5 w-36 text-[#D91B5C] mt-0.5">
+              <path d="M2 11C18 7 35 12 52 9C69 6 88 9 105 8C123 7 142 10 178 7" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" opacity="0.85" />
+            </svg>
           </motion.div>
 
           <motion.h1 
@@ -252,10 +322,10 @@ export default function AboutPage() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="max-w-3xl mx-auto text-slate-300 text-base md:text-lg leading-relaxed mb-10 font-sans"
           >
-            The story of Rotaract District 9126 is a journey of leadership, growth, and transformation — born from the 15-year foundation of District 9125 and forged into an autonomous powerhouse uniting 77 clubs across South-West and North-Central Nigeria.
+            One District. One Leadership Team. One Shared Vision — Uniting 77 chartered clubs and ~700 young changemakers across Oyo, Osun, Ondo, Ekiti, Kwara, Kogi, and Niger states.
           </motion.p>
 
-          {/* Quick Navigation Tabs */}
+          {/* Quick Navigation Segmented Control */}
           <motion.div 
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -266,7 +336,7 @@ export default function AboutPage() {
               { id: 'overview', label: 'Overview' },
               { id: 'history', label: 'History & Redistricting' },
               { id: 'states', label: '7 Constituent States' },
-              { id: 'team', label: 'Current Executive Team' },
+              { id: 'team', label: 'Executive Team' },
               { id: 'past-leaders', label: 'DRR Lineage' }
             ].map((tab) => {
               const isActive = activeTab === tab.id;
@@ -293,7 +363,77 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* SECTION 1: DETAILED HISTORY & REDISTRICTING */}
+      {/* ================= SECTION 0: DRR SPOTLIGHT BANNER ================= */}
+      {(activeTab === 'overview' || activeTab === 'team') && (
+        <section className="py-12 max-w-7xl mx-auto px-6 lg:px-10">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7 }}
+            className="rounded-3xl border border-black/[0.08] bg-gradient-to-br from-white via-white to-amber-50/40 p-6 sm:p-10 shadow-lg relative overflow-hidden"
+          >
+            {/* Background ambient badge */}
+            <div className="absolute right-[-40px] top-[-40px] w-80 h-80 rounded-full bg-[#D4A520]/10 blur-3xl pointer-events-none" />
+
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
+              
+              {/* Portrait */}
+              <div className="lg:col-span-4 flex justify-center lg:justify-start">
+                <div className="w-64 sm:w-72 aspect-[3/4] rounded-2xl overflow-hidden border-2 border-[#D4A520]/40 shadow-2xl relative group">
+                  <img
+                    src="/images/leaders/drr-adaramoye-iyanuoluwa.jpg"
+                    onError={(e) => { e.currentTarget.src = 'https://images.unsplash.com/photo-1644152993066-9b9ee687930d?w=480&h=580&fit=crop&auto=format'; }}
+                    alt="DRR Adaramoye Iyanuoluwa"
+                    className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
+                  />
+                  <div className="absolute bottom-0 inset-x-0 p-3 bg-gradient-to-t from-black/90 to-transparent text-white text-center">
+                    <span className="text-[10px] font-mono tracking-widest uppercase text-[#D4A520] font-bold">Sitting 3rd DRR · 2026/2027</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Bio & Actions */}
+              <div className="lg:col-span-8 space-y-4 text-center lg:text-left">
+                <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#981132]/10 text-[#981132] text-xs font-bold uppercase tracking-wider">
+                  <Award size={14} /> Theme: "Creating Lasting Impact"
+                </div>
+
+                <h2 className="text-2xl sm:text-4xl lg:text-5xl font-black text-[#1C1C1E] tracking-tight leading-tight font-sans">
+                  Rtr. PP Adaramoye Iyanuoluwa
+                </h2>
+
+                <p className="text-xs font-bold text-[#D91B5C] uppercase tracking-widest">
+                  District Rotaract Representative · District 9126
+                </p>
+
+                <p className="text-slate-700 text-sm sm:text-base leading-relaxed max-w-2xl font-sans">
+                  Presiding as the 3rd District Rotaract Representative of Rotaract District 9126. Leading the expansion of digital membership identities, youth leadership training, maternal health outreach, and sustainable clean water access across 77 chartered clubs.
+                </p>
+
+                <div className="flex flex-wrap items-center justify-center lg:justify-start gap-3 pt-2">
+                  <a
+                    href="mailto:drr@rotaractdistrict9126.com.ng"
+                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#981132] text-white text-xs font-bold hover:bg-[#7D0E29] transition-colors shadow-md shadow-[#981132]/30"
+                  >
+                    <Mail size={14} /> Contact Executive Office
+                  </a>
+                  <button
+                    type="button"
+                    onClick={() => setSelectedLeaderModal(currentTeam[0])}
+                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-black/5 hover:bg-black/10 text-slate-800 text-xs font-bold transition-colors border border-black/10"
+                  >
+                    <Users size={14} /> View Complete Dossier
+                  </button>
+                </div>
+              </div>
+
+            </div>
+          </motion.div>
+        </section>
+      )}
+
+      {/* ================= SECTION 1: DETAILED HISTORY & REDISTRICTING ================= */}
       {(activeTab === 'overview' || activeTab === 'history') && (
         <section className="py-20 max-w-7xl mx-auto px-6 lg:px-10 border-b border-black/[0.06]">
           
@@ -414,7 +554,7 @@ export default function AboutPage() {
         </section>
       )}
 
-      {/* SECTION 2: 7 CONSTITUENT STATES */}
+      {/* ================= SECTION 2: 7 CONSTITUENT STATES ================= */}
       {(activeTab === 'overview' || activeTab === 'states') && (
         <section className="py-20 max-w-7xl mx-auto px-6 lg:px-10 border-b border-black/[0.06]">
           <motion.div
@@ -453,9 +593,13 @@ export default function AboutPage() {
                     <MapPin size={14} className="text-[#981132]" />
                   </div>
 
-                  <h3 className="text-xl font-black text-[#1C1C1E] mb-2 font-sans group-hover:text-[#981132] transition-colors">
+                  <h3 className="text-xl font-black text-[#1C1C1E] mb-1 font-sans group-hover:text-[#981132] transition-colors">
                     {st.name}
                   </h3>
+
+                  <div className="text-[11px] font-semibold text-[#D4A520] mb-3 font-sans">
+                    {st.landmark}
+                  </div>
 
                   <div className="text-xs text-slate-500 font-medium mb-3 font-sans">
                     <strong>Major Hubs:</strong> {st.clubs}
@@ -505,18 +649,19 @@ export default function AboutPage() {
         </section>
       )}
 
-      {/* SECTION 3: CURRENT EXECUTIVE COUNCIL */}
+      {/* ================= SECTION 3: CURRENT EXECUTIVE COUNCIL WITH FILTER BAR ================= */}
       {(activeTab === 'overview' || activeTab === 'team') && (
         <section className="py-20 max-w-7xl mx-auto px-6 lg:px-10 border-b border-black/[0.06]">
+          
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="text-center mb-14"
+            className="text-center mb-10"
           >
             <span className="text-[10px] font-bold tracking-[0.3em] uppercase text-[#981132] font-sans">
-              Executive Council 2026/2027
+              District Executive Board 2026/2027
             </span>
             <h2 className="text-3xl md:text-5xl font-black tracking-tight text-[#1C1C1E] mt-2 mb-3 font-sans">
               The Sitting Leadership Team
@@ -526,15 +671,54 @@ export default function AboutPage() {
             </p>
           </motion.div>
 
+          {/* Interactive Search & Filter Bar */}
+          <div className="mb-10 p-4 rounded-2xl bg-white border border-black/[0.08] shadow-sm flex flex-col md:flex-row gap-4 items-center justify-between">
+            {/* Search Input */}
+            <div className="relative w-full md:w-80">
+              <Search size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400" />
+              <input
+                type="text"
+                placeholder="Search executive leaders..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full pl-9 pr-4 py-2 text-xs rounded-xl bg-gray-50 border border-black/10 focus:outline-none focus:border-[#981132] font-sans transition-colors"
+              />
+            </div>
+
+            {/* Department Filter Chips */}
+            <div className="flex items-center gap-1.5 overflow-x-auto w-full md:w-auto pb-1 md:pb-0 scrollbar-none">
+              {departments.map((dept) => (
+                <button
+                  key={dept}
+                  onClick={() => setSelectedDept(dept)}
+                  className={`px-3 py-1.5 rounded-full text-[11px] font-bold whitespace-nowrap transition-all ${
+                    selectedDept === dept
+                      ? 'bg-[#981132] text-white shadow-sm'
+                      : 'bg-gray-100 hover:bg-gray-200 text-gray-700'
+                  }`}
+                >
+                  {dept}
+                </button>
+              ))}
+            </div>
+
+            {/* Result Count */}
+            <div className="text-[11px] text-gray-500 font-mono font-semibold shrink-0">
+              {filteredTeam.length} Leader{filteredTeam.length === 1 ? '' : 's'}
+            </div>
+          </div>
+
+          {/* Executive Grid */}
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 sm:gap-5">
-            {currentTeam.map((member, idx) => (
+            {filteredTeam.map((member, idx) => (
               <motion.div 
-                key={idx}
+                key={member.id}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: idx * 0.08 }}
-                className="group relative"
+                className="group relative cursor-pointer"
+                onClick={() => setSelectedLeaderModal(member)}
               >
                 <div className="rounded-2xl bg-[#0F1624] border border-white/10 shadow-lg hover:shadow-2xl transition-all duration-300 group-hover:-translate-y-2 flex flex-col h-full">
                   
@@ -547,6 +731,11 @@ export default function AboutPage() {
                       className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-110" 
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-[#0F1624] via-transparent to-transparent opacity-90" />
+                    
+                    {/* Hover Dossier Hint */}
+                    <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity bg-black/60 backdrop-blur-md rounded-full p-1 text-white text-[10px]">
+                      <ArrowUpRight size={13} />
+                    </div>
                   </div>
 
                   {/* Card Body */}
@@ -579,7 +768,7 @@ export default function AboutPage() {
         </section>
       )}
 
-      {/* SECTION 4: DRR LINEAGE & PAST LEADERS TIMELINE */}
+      {/* ================= SECTION 4: DRR LINEAGE & PAST LEADERS TIMELINE ================= */}
       {(activeTab === 'overview' || activeTab === 'past-leaders') && (
         <section className="py-20 max-w-7xl mx-auto px-6 lg:px-10">
           <motion.div 
@@ -650,7 +839,92 @@ export default function AboutPage() {
         </section>
       )}
 
-      {/* FINAL INSPIRATIONAL CREED */}
+      {/* ================= LEADER DOSSIER POPUP MODAL ================= */}
+      <AnimatePresence>
+        {selectedLeaderModal && (
+          <div className="fixed inset-0 z-[99999] flex items-center justify-center p-4">
+            {/* Backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setSelectedLeaderModal(null)}
+              className="fixed inset-0 bg-black/80 backdrop-blur-md"
+            />
+
+            {/* Modal Card */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.9, y: 20 }}
+              transition={{ type: 'spring', damping: 25, stiffness: 350 }}
+              className="relative w-full max-w-lg bg-[#0F1624] border border-white/20 rounded-3xl shadow-2xl overflow-hidden text-white z-10 p-6 sm:p-8"
+              style={{
+                boxShadow: '0 30px 70px -15px rgba(0, 0, 0, 0.9), 0 0 30px rgba(217, 27, 92, 0.3)',
+              }}
+            >
+              {/* Header Top Gradient Accent */}
+              <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-[#981132] via-[#D91B5C] to-[#D4A520]" />
+              
+              {/* Close Button */}
+              <button
+                type="button"
+                onClick={() => setSelectedLeaderModal(null)}
+                className="absolute top-5 right-5 w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors"
+              >
+                <X size={16} />
+              </button>
+
+              <div className="flex flex-col sm:flex-row gap-5 items-center sm:items-start mb-6">
+                <div className="w-28 h-36 rounded-2xl overflow-hidden border border-white/20 shadow-lg shrink-0">
+                  <img
+                    src={selectedLeaderModal.image}
+                    onError={(e) => { e.currentTarget.src = selectedLeaderModal.fallbackImage; }}
+                    alt={selectedLeaderModal.name}
+                    className="w-full h-full object-cover object-top"
+                  />
+                </div>
+
+                <div className="text-center sm:text-left space-y-1">
+                  <span className="text-[10px] uppercase font-bold tracking-widest px-2.5 py-0.5 rounded-full bg-[#D91B5C]/20 text-[#FF4D8D] border border-[#D91B5C]/40">
+                    {selectedLeaderModal.dept}
+                  </span>
+                  <h3 className="text-xl sm:text-2xl font-black text-white font-sans mt-2">
+                    {selectedLeaderModal.name}
+                  </h3>
+                  <p className="text-xs font-semibold text-[#D4A520] font-sans">
+                    {selectedLeaderModal.role}
+                  </p>
+                </div>
+              </div>
+
+              {/* Bio */}
+              <p className="text-xs sm:text-sm text-slate-300 leading-relaxed font-sans bg-white/[0.04] p-4 rounded-xl border border-white/10 mb-6">
+                {selectedLeaderModal.bio}
+              </p>
+
+              {/* Contact Actions */}
+              <div className="grid grid-cols-2 gap-3">
+                <a
+                  href={`mailto:${selectedLeaderModal.email}`}
+                  className="flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-[#981132] hover:bg-[#7D0E29] text-white text-xs font-bold transition-colors shadow-md font-sans"
+                >
+                  <Mail size={14} /> Send Email
+                </a>
+                <a
+                  href={`tel:${selectedLeaderModal.phone}`}
+                  className="flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-bold transition-colors font-sans"
+                >
+                  <Phone size={14} /> Direct Line
+                </a>
+              </div>
+
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+
+      {/* ================= FINAL INSPIRATIONAL CREED ================= */}
       <section className="py-16 bg-[#111111] text-white text-center">
         <div className="max-w-4xl mx-auto px-6">
           <span className="text-[10px] font-bold tracking-[0.3em] uppercase text-[#D4A520] font-sans">
