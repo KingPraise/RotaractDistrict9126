@@ -117,24 +117,19 @@ function AuthForm({ initialMode = 'login' }: AuthContainerProps) {
       </Link>
 
       {/* Brand Emblem Lockup */}
+      {/* Brand Logo (Enlarged to match Navbar, No Text Tagline) */}
       <div 
-        className="relative z-10 flex flex-col items-center gap-2 mb-8"
+        className="relative z-10 flex flex-col items-center mb-7"
         style={{ animation: '0.6s ease 0s 1 normal both running authEntrance' }}
       >
-        <img 
-          src="/images/rotaract-logo.png" 
-          onError={(e) => { e.currentTarget.src = '/images/rotary-wheel.png'; }}
-          alt="Rotaract logo" 
-          className="w-14 h-14 object-contain"
-        />
-        <div className="flex flex-col items-center leading-none gap-0.5 text-center font-sans">
-          <span className="text-base font-extrabold tracking-[0.15em] text-[#981132] uppercase">
-            Rotaract
-          </span>
-          <span className="text-[10px] tracking-[0.3em] text-gray-400 uppercase font-semibold">
-            District 9126
-          </span>
-        </div>
+        <Link href="/" className="hover:opacity-90 transition-opacity">
+          <img 
+            src="/images/rotaract-logo.png" 
+            onError={(e) => { e.currentTarget.src = '/images/rotary-wheel.png'; }}
+            alt="Rotaract District 9126 logo" 
+            className="h-[56px] sm:h-[66px] w-auto object-contain drop-shadow-sm"
+          />
+        </Link>
       </div>
 
       {/* Main Auth Card */}
