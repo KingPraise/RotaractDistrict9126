@@ -5,7 +5,6 @@ import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import { 
   Shield, 
-  Sparkles, 
   Award, 
   History, 
   Users, 
@@ -476,7 +475,7 @@ export default function AboutPage() {
                 { icon: History, value: 15, suffix: '+ Years', label: 'Legacy under District 9125' },
                 { icon: Globe, value: 7, suffix: ' States', label: 'Constituent Regional Scope' },
                 { icon: Shield, value: 77, suffix: ' Clubs', label: 'Active Chartered Units' },
-                { icon: Sparkles, value: 50000, suffix: '+', label: 'Documented Beneficiaries' }
+                { icon: HeartHandshake, value: 50000, suffix: '+', label: 'Documented Beneficiaries' }
               ].map((card, idx) => {
                 const Icon = card.icon;
                 return (

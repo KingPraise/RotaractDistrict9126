@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Search, X, Sparkles, Building2, MapPin, ShieldCheck, HeartHandshake, ArrowRight } from 'lucide-react';
+import { Search, X, History, Building2, MapPin, ShieldCheck, HeartHandshake, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 
 interface GlobalSearchProps {
@@ -37,7 +37,7 @@ const SEARCH_DIRECTORIES = [
     title: 'District Heritage & DRR Lineage',
     category: 'Archives',
     href: '/heritage',
-    icon: Sparkles,
+    icon: History,
     desc: 'Explore historical leadership succession from 2023 to 2027',
   },
   {

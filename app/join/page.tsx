@@ -7,7 +7,7 @@ import Footer from '@/components/layout/Footer';
 import { motion } from 'framer-motion';
 import { submitProspectLead } from '@/actions/prospects';
 import { DistrictState, ProspectInput } from '@/types';
-import { Sparkles, Send, CheckCircle2, AlertCircle, HeartHandshake, Users, ShieldCheck, ArrowRight, Building2 } from 'lucide-react';
+import { Compass, Send, CheckCircle2, AlertCircle, HeartHandshake, Users, ShieldCheck, ArrowRight, Building2 } from 'lucide-react';
 import Link from 'next/link';
 
 const CLUBS_BY_STATE: Record<DistrictState, { id: string; name: string }[]> = {
@@ -211,7 +211,7 @@ function JoinContent() {
           className="lg:col-span-5 space-y-6"
         >
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#D91B5C]/10 border border-[#D91B5C]/20 text-[#D91B5C] text-xs font-semibold">
-            <Sparkles className="h-3.5 w-3.5" />
+            <Compass className="h-3.5 w-3.5" />
             <span>Membership Intake 2026/2027</span>
           </div>
 

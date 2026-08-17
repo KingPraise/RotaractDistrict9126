@@ -16,7 +16,7 @@ import {
   ArrowRight,
   SlidersHorizontal,
   Globe,
-  Sparkles
+  Globe2
 } from 'lucide-react';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
@@ -247,7 +247,7 @@ export default function ProjectsPage() {
               transition={{ duration: 0.5 }}
               className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#981132]/10 border border-[#981132]/20 text-[#981132] text-xs font-semibold mb-4"
             >
-              <Sparkles className="h-3.5 w-3.5" />
+              <Globe2 className="h-3.5 w-3.5" />
               <span>District Impact Showcase</span>
             </motion.div>
 

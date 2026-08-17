@@ -4,7 +4,7 @@ import React, { useState, useMemo } from 'react';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Search, ArrowRight, Sparkles, BookOpen } from 'lucide-react';
+import { Search, ArrowRight, BookOpen } from 'lucide-react';
 import { subscribeNewsletter } from '@/lib/services/newsletter-service';
 
 interface BlogPost {

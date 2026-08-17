@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Shield, Award, Sparkles } from 'lucide-react';
+import { X, Shield, Award } from 'lucide-react';
 import { createPortal } from 'react-dom';
 
 export const ROTARY_ACRONYMS: Record<string, { term: string; definition: string; category?: string }> = {
