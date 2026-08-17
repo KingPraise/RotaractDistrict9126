@@ -8,7 +8,7 @@ import { ArrowUpRight, Search, Menu, X } from 'lucide-react';
 import GlobalSearch from '@/components/ui/GlobalSearch';
 
 const NAV_LINKS = [
-  { label: 'About', href: '/#who-we-are' },
+  { label: 'About', href: '/about' },
   { label: 'Clubs', href: '/clubs' },
   { label: 'Projects', href: '/projects' },
   { label: 'Blog', href: '/heritage' },
@@ -29,14 +29,16 @@ export default function Navbar() {
   });
 
   useEffect(() => {
-    if (pathname === '/clubs') {
+    if (pathname === '/about') {
+      setActiveLink('About');
+    } else if (pathname === '/clubs') {
       setActiveLink('Clubs');
     } else if (pathname === '/projects') {
       setActiveLink('Projects');
     } else if (pathname === '/heritage') {
-      setActiveLink('Blog');
-    } else if (pathname === '/') {
       setActiveLink('About');
+    } else if (pathname === '/') {
+      setActiveLink('');
     }
   }, [pathname]);
 
