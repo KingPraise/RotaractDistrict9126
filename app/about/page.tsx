@@ -13,6 +13,7 @@ import {
   MapPin, 
   CheckCircle2, 
   ArrowRight, 
+  HeartHandshake,
   BookOpen,
   Milestone,
   Building2,
