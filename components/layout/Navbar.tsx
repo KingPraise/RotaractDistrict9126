@@ -16,7 +16,7 @@ const NAV_LINKS = [
 
 export default function Navbar() {
   const pathname = usePathname();
-  const [activeLink, setActiveLink] = useState('About');
+  const [activeLink, setActiveLink] = useState('');
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
 
@@ -29,7 +29,7 @@ export default function Navbar() {
   });
 
   useEffect(() => {
-    if (pathname === '/about') {
+    if (pathname === '/about' || pathname === '/heritage') {
       setActiveLink('About');
     } else if (pathname === '/clubs') {
       setActiveLink('Clubs');
@@ -37,9 +37,7 @@ export default function Navbar() {
       setActiveLink('Projects');
     } else if (pathname === '/blog') {
       setActiveLink('Blog');
-    } else if (pathname === '/heritage') {
-      setActiveLink('About');
-    } else if (pathname === '/') {
+    } else {
       setActiveLink('');
     }
   }, [pathname]);
