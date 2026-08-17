@@ -1,7 +1,9 @@
 export type UserRole = 'member' | 'president' | 'district_admin';
 export type DuesStatus = 'pending' | 'cleared';
-export type DistrictState = 'Oyo' | 'Osun' | 'Ogun' | 'Ondo' | 'Ekiti';
+export type DistrictState = 'Osun' | 'Oyo' | 'Ondo' | 'Ekiti' | 'Kwara' | 'Niger' | 'Kogi' | 'E-Club / Multi-State';
+export type DistrictRegion = 'South-West' | 'North-Central';
 export type ProspectStatus = 'new' | 'contacted' | 'meeting_attended' | 'inducted';
+export type ClubType = 'Community' | 'Campus' | 'E-Club';
 
 /**
  * User schema representing Rotaract members, club presidents, and district executives.
@@ -30,7 +32,11 @@ export interface User {
 export interface Club {
   clubId: string;
   name: string;
+  rotaryId?: string | number;
+  memberCount?: number;
+  clubType?: ClubType;
   state: DistrictState;
+  region: DistrictRegion;
   meetingVenue: string;
   meetingDay: string;
   meetingTime: string;
@@ -41,6 +47,32 @@ export interface Club {
   };
   createdAt?: string;
   updatedAt?: string;
+}
+
+/**
+ * Historical Leadership schema for DRRs and Heritage Archive.
+ * Stored in Firestore collection: `leadership/{eraId}`
+ */
+export interface HistoricalLeader {
+  eraId: string;
+  year: string;
+  designation: string;
+  leaderName: string;
+  theme: string;
+  rotaryYear: string;
+  isCurrent?: boolean;
+  district: string;
+  avatarUrl?: string;
+  notes?: string;
+}
+
+/**
+ * District-wide public metrics
+ */
+export interface DistrictMetrics {
+  activeClubs: number;
+  totalRotaractors: number;
+  constituentStates: number;
 }
 
 /**

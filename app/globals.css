@@ -2,50 +2,236 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ─── CSS Custom Properties (Figma Design Tokens) ─── */
 :root {
-  --color-canvas: #080c14;
-  --color-cranberry: #d91b5c;
-  --color-cranberry-deep: #a70c43;
-  --color-royal-blue: #00246c;
-  --color-gold: #f7a81b;
-  --glass-bg: rgba(255, 255, 255, 0.05);
-  --glass-border: rgba(255, 255, 255, 0.12);
+  --color-cranberry: #981132;
+  --color-cranberry-rose: #D91B5C;
+  --color-cranberry-glow: #A70C43;
+  --color-gold: #D4A520;
+  --color-gold-rotary: #FFC72C;
+  --color-coral: #F87171;
+  --color-surface-cream: #F8F5F2;
+  --color-surface-dark: #0F1624;
+  --color-canvas: #080C14;
+  --color-text-primary: #1C1C1E;
+  --color-text-secondary: #374151;
+  --color-text-muted: #6B7280;
+  --color-status-green: #22C55E;
+  --shadow-card: 0 4px 16px rgba(0, 0, 0, 0.08);
+  --shadow-card-dark: 0 8px 32px rgba(0, 0, 0, 0.37);
+}
+
+/* ─── Base Styles ─── */
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background-color: var(--color-canvas);
-  color: #f8fafc;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  background-color: var(--color-surface-cream);
+  color: var(--color-text-primary);
   overflow-x: hidden;
 }
 
-/* Glassmorphism utilities */
-.glass-panel {
-  background: var(--glass-bg);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid var(--glass-border);
+::selection {
+  background-color: var(--color-cranberry);
+  color: #ffffff;
 }
 
-.glass-card {
-  background: rgba(255, 255, 255, 0.03);
+/* ─── Live Figma Keyframe Animations ─── */
+@keyframes heroKenBurns {
+  0%   { opacity: 1; transform: scale(1.00) translate(0%, 0%); }
+  20%  { opacity: 1; transform: scale(1.13) translate(-1%, 0.5%); }
+  25%  { opacity: 0; transform: scale(1.13) translate(-1%, 0.5%); }
+  100% { opacity: 0; transform: scale(1.00) translate(0%, 0%); }
+}
+
+@keyframes ctaPulse {
+  0%, 100% { box-shadow: 0 4px 20px rgba(152,17,50,0.4), 0 0 0 0 rgba(152,17,50,0); }
+  50%      { box-shadow: 0 6px 28px rgba(152,17,50,0.65), 0 0 0 10px rgba(152,17,50,0.08); }
+}
+
+@keyframes cardKenBurns {
+  from { transform: scale(1.00); }
+  to   { transform: scale(1.12); }
+}
+
+.animate-hero-kenburns {
+  animation: heroKenBurns 18s ease-in-out infinite;
+}
+
+.animate-cta-pulse {
+  animation: ctaPulse 3s infinite;
+}
+
+.animate-card-kenburns {
+  animation: cardKenBurns 8s ease-out forwards;
+}
+
+/* ─── Gradient Utilities ─── */
+.gradient-cranberry-section {
+  background: linear-gradient(
+    135deg,
+    #981132 0%,
+    #7d0e29 40%,
+    #4A0818 100%
+  );
+}
+
+.gradient-footer {
+  background: radial-gradient(
+    ellipse at 50% 0%,
+    rgba(217, 27, 92, 0.15) 0%,
+    transparent 60%
+  );
+}
+
+.gradient-hero-glow {
+  background: radial-gradient(
+    ellipse at 30% 80%,
+    rgba(152, 17, 50, 0.08) 0%,
+    transparent 50%
+  ),
+  radial-gradient(
+    ellipse at 70% 20%,
+    rgba(212, 165, 32, 0.06) 0%,
+    transparent 50%
+  );
+}
+
+.gradient-gold-divider {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--color-gold) 50%,
+    transparent 100%
+  );
+}
+
+.gradient-photo-overlay {
+  background: linear-gradient(
+    to top,
+    rgba(15, 22, 36, 0.95) 0%,
+    rgba(15, 22, 36, 0.4) 40%,
+    transparent 100%
+  );
+}
+
+.gradient-photo-overlay-soft {
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.7) 0%,
+    rgba(0, 0, 0, 0.2) 50%,
+    transparent 100%
+  );
+}
+
+/* ─── Card Styles ─── */
+.card-light {
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 16px;
+  box-shadow: var(--shadow-card);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.card-light:hover {
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+  transform: translateY(-2px);
+}
+
+.card-dark {
+  background: var(--color-surface-dark);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  border-radius: 16px;
+  box-shadow: var(--shadow-card-dark);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.card-dark:hover {
+  border-color: rgba(255, 255, 255, 0.18);
+  transform: translateY(-2px);
+}
+
+/* ─── Stat Numbers ─── */
+.stat-gold {
+  color: var(--color-gold);
+  font-weight: 900;
+  text-shadow: 0 2px 8px rgba(212, 165, 32, 0.2);
+}
+
+/* ─── Section Heading Gold Glow ─── */
+.heading-gold {
+  color: var(--color-gold);
+  text-shadow: 0 2px 12px rgba(212, 165, 32, 0.15);
+}
+
+/* ─── Blur Overlay for Cards ─── */
+.glass-overlay {
+  background: rgba(15, 22, 36, 0.85);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  transition: all 0.3s ease;
 }
 
-.glass-card:hover {
-  background: rgba(255, 255, 255, 0.06);
-  border-color: rgba(217, 27, 92, 0.3);
-  box-shadow: 0 8px 32px 0 rgba(217, 27, 92, 0.15);
+/* ─── Navbar Glass ─── */
+.nav-glass {
+  background: rgba(255, 255, 255, 0.97);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 0 1px 12px rgba(0, 0, 0, 0.06);
 }
 
-/* Glow effects */
-.glow-cranberry {
-  box-shadow: 0 0 25px rgba(217, 27, 92, 0.4);
+/* ─── Active Nav Indicator ─── */
+.nav-active-bar {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 38px;
+  height: 2.5px;
+  background: var(--color-cranberry);
+  border-radius: 99px;
 }
 
-.glow-text-cranberry {
-  text-shadow: 0 0 20px rgba(217, 27, 92, 0.6);
+/* ─── Quote Mark ─── */
+.quote-mark {
+  font-size: 80px;
+  line-height: 1;
+  color: var(--color-cranberry-rose);
+  font-family: Georgia, 'Times New Roman', serif;
+  user-select: none;
+}
+
+/* ─── Responsive Container ─── */
+.section-container {
+  width: 100%;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 24px;
+  padding-right: 24px;
+}
+
+@media (max-width: 767px) {
+  .section-container {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}
+
+/* ─── Scrollbar Styling ─── */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-surface-cream);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c4b5a3;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a89888;
 }

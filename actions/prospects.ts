@@ -43,18 +43,53 @@ export async function submitProspectLead(
 
     await prospectRef.set(newProspect);
 
-    // Alert Club President / Notification Trigger
+    // Alert District Admin / Club President via Resend Email
     try {
-      const clubDoc = await adminDb.collection('clubs').doc(input.assignedClubId).get();
-      if (clubDoc.exists) {
-        const clubData = clubDoc.data();
-        console.log(
-          `[LEAD ALERT] New prospect ${newProspect.fullName} assigned to Club ${clubData?.name || input.assignedClubId} (President ID: ${clubData?.presidentId})`
-        );
-        // Future: Trigger Resend/Mailchimp transactional email to president
+      const resendApiKey = process.env.RESEND_API_KEY;
+      if (resendApiKey) {
+        const clubDoc = await adminDb.collection('clubs').doc(input.assignedClubId).get();
+        const clubName = clubDoc.exists ? clubDoc.data()?.name : input.assignedClubId;
+
+        const emailHtml = `
+          <div style="font-family: Arial, sans-serif; background-color: #080C14; color: #ffffff; padding: 24px; border-radius: 12px;">
+            <h2 style="color: #D91B5C; margin-bottom: 8px;">Rotaract District 9126 - New Membership Lead</h2>
+            <p style="color: #94A3B8; font-size: 14px;">A new prospective member has submitted interest to join District 9126.</p>
+            <div style="background-color: rgba(255,255,255,0.05); padding: 16px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); margin-top: 16px;">
+              <p><strong>Full Name:</strong> ${newProspect.fullName}</p>
+              <p><strong>Email:</strong> ${newProspect.email}</p>
+              <p><strong>Phone:</strong> ${newProspect.phone}</p>
+              <p><strong>Assigned Club:</strong> ${clubName}</p>
+              <p><strong>Preferred State:</strong> ${newProspect.preferredState || 'N/A'}</p>
+              <p><strong>Notes:</strong> ${newProspect.notes || 'None'}</p>
+              <p><strong>Date:</strong> ${new Date(createdAt).toLocaleString()}</p>
+            </div>
+            <p style="margin-top: 20px; font-size: 12px; color: #64748B;">Rotaract District 9126 Automated Pipeline Alert</p>
+          </div>
+        `;
+
+        const resendRes = await fetch('https://api.resend.com/emails', {
+          method: 'POST',
+          headers: {
+            Authorization: `Bearer ${resendApiKey}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            from: 'Rotaract 9126 <onboarding@resend.dev>',
+            to: ['kingpraise15@gmail.com'],
+            subject: `New Lead: ${newProspect.fullName} (${clubName})`,
+            html: emailHtml,
+          }),
+        });
+
+        if (resendRes.ok) {
+          console.log(`[RESEND EMAIL] Alert sent to kingpraise15@gmail.com for lead ${newProspect.fullName}`);
+        } else {
+          const resendErr = await resendRes.text();
+          console.warn('[RESEND EMAIL] Failed to dispatch email:', resendErr);
+        }
       }
     } catch (alertErr) {
-      console.warn('Non-fatal: Could not dispatch president alert:', alertErr);
+      console.warn('Non-fatal: Could not dispatch Resend lead alert:', alertErr);
     }
 
     return {
