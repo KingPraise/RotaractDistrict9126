@@ -1,7 +1,7 @@
 'use client';
 
-import React, { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import React, { useState, useEffect, Suspense } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { 
   User, 
@@ -15,14 +15,24 @@ import {
 } from 'lucide-react';
 
 interface AuthContainerProps {
-  initialMode?: 'login' | 'register';
+  initialMode?: 'login' | 'register' | 'forgot';
 }
 
-export default function AuthContainer({ initialMode = 'login' }: AuthContainerProps) {
+function AuthForm({ initialMode = 'login' }: AuthContainerProps) {
   const router = useRouter();
-  const [mode, setMode] = useState<'login' | 'register'>(initialMode);
+  const searchParams = useSearchParams();
+  const modeParam = searchParams.get('mode');
+  
+  const computedInitialMode = 
+    modeParam === 'register' 
+      ? 'register' 
+      : modeParam === 'forgot' 
+      ? 'forgot' 
+      : initialMode;
 
-  // Form states
+  const [mode, setMode] = useState<'login' | 'register' | 'forgot'>(computedInitialMode);
+
+  // Form inputs
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
@@ -31,11 +41,33 @@ export default function AuthContainer({ initialMode = 'login' }: AuthContainerPr
   const [rememberMe, setRememberMe] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    const currentMode = searchParams.get('mode');
+    if (currentMode === 'register' || currentMode === 'forgot' || currentMode === 'login') {
+      setMode(currentMode);
+    }
+  }, [searchParams]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
+    setSuccessMessage('');
+
+    if (mode === 'forgot') {
+      if (!email) {
+        setError('Please enter your email address.');
+        return;
+      }
+      setIsLoading(true);
+      setTimeout(() => {
+        setIsLoading(false);
+        setSuccessMessage('A reset link has been sent to your email address.');
+      }, 800);
+      return;
+    }
 
     if (mode === 'login') {
       if (!email || !password) {
@@ -58,8 +90,6 @@ export default function AuthContainer({ initialMode = 'login' }: AuthContainerPr
     }
 
     setIsLoading(true);
-
-    // Simulate authentication and route to member portal
     setTimeout(() => {
       setIsLoading(false);
       router.push('/portal/dashboard');
@@ -119,7 +149,7 @@ export default function AuthContainer({ initialMode = 'login' }: AuthContainerPr
           {/* Card Top Strip */}
           <div className="h-1 w-full bg-[#981132]" />
 
-          {/* Progress Segment Indicator */}
+          {/* 3-Segment Progress Indicator */}
           <div className="flex px-7 pt-6 gap-1">
             <div 
               className="h-0.5 flex-1 rounded-full transition-all duration-400"
@@ -129,7 +159,10 @@ export default function AuthContainer({ initialMode = 'login' }: AuthContainerPr
               className="h-0.5 flex-1 rounded-full transition-all duration-400"
               style={{ background: mode === 'register' ? 'rgb(152, 17, 50)' : 'rgba(0, 0, 0, 0.08)' }}
             />
-            <div className="h-0.5 flex-1 rounded-full bg-black/[0.08]" />
+            <div 
+              className="h-0.5 flex-1 rounded-full transition-all duration-400"
+              style={{ background: mode === 'forgot' ? 'rgb(152, 17, 50)' : 'rgba(0, 0, 0, 0.08)' }}
+            />
           </div>
 
           <div className="overflow-hidden">
@@ -144,23 +177,46 @@ export default function AuthContainer({ initialMode = 'login' }: AuthContainerPr
             >
               <form onSubmit={handleSubmit} className="flex flex-col gap-4 font-sans">
                 
-                {/* Header Title */}
-                <div className="flex flex-col gap-1 mb-1">
-                  <h2 className="text-[1.6rem] font-extrabold text-[#111111] tracking-tight leading-tight">
-                    {mode === 'login' ? 'Welcome back' : 'Join the District'}
-                  </h2>
-                  <p className="text-xs text-gray-500">
-                    {mode === 'login' 
-                      ? 'Sign in to your District 9126 account' 
-                      : 'Create your Rotaract District 9126 account'}
-                  </p>
-                </div>
+                {/* FORGOT PASSWORD HEADER */}
+                {mode === 'forgot' ? (
+                  <div className="flex flex-col gap-1 mb-1">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setError('');
+                        setSuccessMessage('');
+                        setMode('login');
+                      }}
+                      className="flex items-center gap-1.5 mb-3 w-fit text-[#981132] text-xs font-semibold hover:underline cursor-pointer"
+                    >
+                      <ChevronLeft size={14} strokeWidth={2} />
+                      Back to Sign In
+                    </button>
+                    <h2 className="text-[1.6rem] font-extrabold text-[#111111] tracking-tight leading-tight font-sans">
+                      Reset Password
+                    </h2>
+                    <p className="text-xs text-gray-500 font-sans">
+                      Enter your email and we'll send a reset link
+                    </p>
+                  </div>
+                ) : (
+                  <div className="flex flex-col gap-1 mb-1">
+                    <h2 className="text-[1.6rem] font-extrabold text-[#111111] tracking-tight leading-tight font-sans">
+                      {mode === 'login' ? 'Welcome back' : 'Join the District'}
+                    </h2>
+                    <p className="text-xs text-gray-500 font-sans">
+                      {mode === 'login' 
+                        ? 'Sign in to your District 9126 account' 
+                        : 'Create your Rotaract District 9126 account'}
+                    </p>
+                  </div>
+                )}
 
-                {/* Registration: Name Row */}
+                {/* REGISTER: First & Last Name */}
                 {mode === 'register' && (
                   <div className="grid grid-cols-2 gap-3">
                     <div className="flex flex-col gap-1.5">
-                      <label className="text-xs font-semibold tracking-wide uppercase text-gray-500">
+                      <label className="text-xs font-semibold tracking-wide uppercase text-gray-500 font-sans">
                         First Name
                       </label>
                       <div className="relative flex items-center">
@@ -178,7 +234,7 @@ export default function AuthContainer({ initialMode = 'login' }: AuthContainerPr
                     </div>
 
                     <div className="flex flex-col gap-1.5">
-                      <label className="text-xs font-semibold tracking-wide uppercase text-gray-500">
+                      <label className="text-xs font-semibold tracking-wide uppercase text-gray-500 font-sans">
                         Last Name
                       </label>
                       <div className="relative flex items-center">
@@ -194,9 +250,9 @@ export default function AuthContainer({ initialMode = 'login' }: AuthContainerPr
                   </div>
                 )}
 
-                {/* Email Address */}
+                {/* Email Address (Common) */}
                 <div className="flex flex-col gap-1.5">
-                  <label className="text-xs font-semibold tracking-wide uppercase text-gray-500">
+                  <label className="text-xs font-semibold tracking-wide uppercase text-gray-500 font-sans">
                     Email address
                   </label>
                   <div className="relative flex items-center">
@@ -214,37 +270,39 @@ export default function AuthContainer({ initialMode = 'login' }: AuthContainerPr
                   </div>
                 </div>
 
-                {/* Password */}
-                <div className="flex flex-col gap-1.5">
-                  <label className="text-xs font-semibold tracking-wide uppercase text-gray-500">
-                    Password
-                  </label>
-                  <div className="relative flex items-center">
-                    <span className="absolute left-3.5 pointer-events-none text-gray-400">
-                      <Lock size={15} strokeWidth={2} />
-                    </span>
-                    <input
-                      type={showPassword ? 'text' : 'password'}
-                      placeholder={mode === 'login' ? '••••••••' : 'Min. 8 characters'}
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                      autoComplete={mode === 'login' ? 'current-password' : 'new-password'}
-                      className="w-full py-3 text-sm rounded-xl outline-none pl-11 pr-11 bg-[#F8F5F2] border border-black/[0.12] text-[#111111] focus:border-[#981132] focus:bg-white transition-all font-sans"
-                    />
-                    <button
-                      type="button"
-                      onClick={() => setShowPassword(!showPassword)}
-                      className="absolute right-3.5 text-gray-400 hover:text-gray-600 transition-colors"
-                    >
-                      {showPassword ? <EyeOff size={15} /> : <Eye size={15} />}
-                    </button>
+                {/* Password (Login & Register) */}
+                {mode !== 'forgot' && (
+                  <div className="flex flex-col gap-1.5">
+                    <label className="text-xs font-semibold tracking-wide uppercase text-gray-500 font-sans">
+                      Password
+                    </label>
+                    <div className="relative flex items-center">
+                      <span className="absolute left-3.5 pointer-events-none text-gray-400">
+                        <Lock size={15} strokeWidth={2} />
+                      </span>
+                      <input
+                        type={showPassword ? 'text' : 'password'}
+                        placeholder={mode === 'login' ? '••••••••' : 'Min. 8 characters'}
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        autoComplete={mode === 'login' ? 'current-password' : 'new-password'}
+                        className="w-full py-3 text-sm rounded-xl outline-none pl-11 pr-11 bg-[#F8F5F2] border border-black/[0.12] text-[#111111] focus:border-[#981132] focus:bg-white transition-all font-sans"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => setShowPassword(!showPassword)}
+                        className="absolute right-3.5 text-gray-400 hover:text-gray-600 transition-colors cursor-pointer"
+                      >
+                        {showPassword ? <EyeOff size={15} /> : <Eye size={15} />}
+                      </button>
+                    </div>
                   </div>
-                </div>
+                )}
 
-                {/* Registration: Confirm Password */}
+                {/* Confirm Password (Register Only) */}
                 {mode === 'register' && (
                   <div className="flex flex-col gap-1.5">
-                    <label className="text-xs font-semibold tracking-wide uppercase text-gray-500">
+                    <label className="text-xs font-semibold tracking-wide uppercase text-gray-500 font-sans">
                       Confirm Password
                     </label>
                     <div className="relative flex items-center">
@@ -263,7 +321,7 @@ export default function AuthContainer({ initialMode = 'login' }: AuthContainerPr
                   </div>
                 )}
 
-                {/* Login: Remember me & Forgot Password */}
+                {/* Remember Me & Forgot Link (Login Only) */}
                 {mode === 'login' && (
                   <div className="flex items-center justify-between">
                     <label 
@@ -280,26 +338,41 @@ export default function AuthContainer({ initialMode = 'login' }: AuthContainerPr
                       <span className="text-xs text-gray-500 font-sans">Remember me</span>
                     </label>
                     
-                    <a href="#" className="text-xs text-[#981132] hover:underline font-semibold font-sans">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setError('');
+                        setSuccessMessage('');
+                        setMode('forgot');
+                      }}
+                      className="text-xs text-[#981132] hover:underline font-semibold font-sans cursor-pointer"
+                    >
                       Forgot password?
-                    </a>
+                    </button>
                   </div>
                 )}
 
-                {/* Error Notice */}
+                {/* Alerts */}
                 {error && (
                   <p className="text-xs px-3 py-2 rounded-lg text-[#981132] bg-[#981132]/[0.08] border border-[#981132]/20 font-sans">
                     {error}
                   </p>
                 )}
+                {successMessage && (
+                  <p className="text-xs px-3 py-2 rounded-lg text-green-700 bg-green-50 border border-green-200 font-sans">
+                    {successMessage}
+                  </p>
+                )}
 
-                {/* Submit Action Button */}
+                {/* Submit Button */}
                 <button
                   type="submit"
                   disabled={isLoading}
                   className="w-full inline-flex items-center justify-center gap-2 py-2.5 px-5 rounded-full bg-[#981132] hover:bg-[#A70C43] text-white text-[13.5px] font-bold tracking-wide shadow-[0_4px_20px_rgba(152,17,50,0.32)] transition-all mt-1 disabled:opacity-70 font-sans cursor-pointer"
                 >
-                  {isLoading ? 'Processing…' : (mode === 'login' ? 'Sign In' : 'Create Account')}
+                  {isLoading ? 'Processing…' : (
+                    mode === 'login' ? 'Sign In' : mode === 'register' ? 'Create Account' : 'Send Reset Link'
+                  )}
                   <span className="w-[26px] h-[26px] rounded-full bg-black/35 backdrop-blur-sm inline-flex items-center justify-center border border-white/15 shrink-0">
                     <svg width="11" height="11" viewBox="0 0 12 12" fill="none">
                       <path d="M2.5 9.5L9.5 2.5M9.5 2.5H4.5M9.5 2.5V7.5" stroke="white" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
@@ -307,34 +380,38 @@ export default function AuthContainer({ initialMode = 'login' }: AuthContainerPr
                   </span>
                 </button>
 
-                {/* Divider */}
-                <div className="flex items-center gap-3 my-1">
-                  <div className="flex-1 h-px bg-black/[0.08]" />
-                  <span className="text-[10px] uppercase tracking-widest text-gray-400 font-sans">or</span>
-                  <div className="flex-1 h-px bg-black/[0.08]" />
-                </div>
+                {/* Divider (Login Only) */}
+                {mode === 'login' && (
+                  <div className="flex items-center gap-3 my-1">
+                    <div className="flex-1 h-px bg-black/[0.08]" />
+                    <span className="text-[10px] uppercase tracking-widest text-gray-400 font-sans">or</span>
+                    <div className="flex-1 h-px bg-black/[0.08]" />
+                  </div>
+                )}
 
                 {/* Mode Switcher */}
-                <p className="text-center text-xs text-gray-500 font-sans">
-                  {mode === 'login' ? "Don't have an account? " : "Already have an account? "}
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setError('');
-                      setMode(mode === 'login' ? 'register' : 'login');
-                    }}
-                    className="font-semibold text-[#981132] hover:underline cursor-pointer"
-                  >
-                    {mode === 'login' ? 'Create account' : 'Sign In'}
-                  </button>
-                </p>
+                {mode !== 'forgot' && (
+                  <p className="text-center text-xs text-gray-500 font-sans">
+                    {mode === 'login' ? "Don't have an account? " : "Already have an account? "}
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setError('');
+                        setMode(mode === 'login' ? 'register' : 'login');
+                      }}
+                      className="font-semibold text-[#981132] hover:underline cursor-pointer"
+                    >
+                      {mode === 'login' ? 'Create account' : 'Sign In'}
+                    </button>
+                  </p>
+                )}
 
               </form>
             </div>
           </div>
         </div>
 
-        {/* Legal Disclaimer */}
+        {/* Legal Notice */}
         <p className="text-center mt-4 text-[10px] text-gray-400 leading-relaxed px-4 font-sans">
           By signing in you agree to the{' '}
           <Link className="text-[#981132] hover:underline font-semibold" href="#">Terms of Service</Link>{' '}
@@ -356,5 +433,13 @@ export default function AuthContainer({ initialMode = 'login' }: AuthContainerPr
       </div>
 
     </div>
+  );
+}
+
+export default function AuthContainer({ initialMode = 'login' }: AuthContainerProps) {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-[#F8F5F2]" />}>
+      <AuthForm initialMode={initialMode} />
+    </Suspense>
   );
 }
