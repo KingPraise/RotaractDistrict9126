@@ -350,9 +350,119 @@ export default function MemberDashboardPage() {
         {/* Dashboard 2-Column Split: Analytics (Left) & Digital ID (Right) */}
         <div className="flex-1 flex flex-col lg:flex-row overflow-hidden">
           
-          {/* Middle Analytics / Events / Identity Card Column */}
+          {/* Middle Analytics / Projects / Events / Identity Card Column */}
           <div className="flex-1 overflow-y-auto p-6 space-y-5">
-            {activeNav === 'Events' ? (
+            {activeNav === 'Projects' ? (
+              /* DEDICATED PROJECTS INVOLVEMENT VIEW */
+              <div className="space-y-5 font-sans">
+                <div>
+                  <div className="text-[9.5px] font-semibold text-black/40 tracking-[0.14em] uppercase mb-1.5 font-sans">
+                    My Involvement
+                  </div>
+                  <h2 className="text-[22px] font-extrabold text-[#1C1C1E] tracking-tight font-sans">
+                    Projects
+                  </h2>
+                </div>
+
+                {/* Project Cards List */}
+                <div className="flex flex-col gap-3">
+                  {[
+                    {
+                      id: 'P1',
+                      title: 'Operation Vaccinate 500',
+                      category: 'Healthcare',
+                      members: '12 members',
+                      date: 'Jun 2026',
+                      role: 'Volunteer',
+                      status: 'Completed',
+                      progress: 100,
+                      statusColor: 'text-green-700 bg-green-50 border-green-200',
+                      barColor: 'bg-green-600'
+                    },
+                    {
+                      id: 'P2',
+                      title: 'Digital Skills Academy',
+                      category: 'Education',
+                      members: '24 members',
+                      date: 'Ongoing',
+                      role: 'Team Lead',
+                      status: 'Active',
+                      progress: 68,
+                      statusColor: 'text-[#981132] bg-[#981132]/[0.08] border-[#981132]/20',
+                      barColor: 'bg-[#981132]'
+                    },
+                    {
+                      id: 'P3',
+                      title: 'Green Ibadan Initiative',
+                      category: 'Environment',
+                      members: '38 members',
+                      date: 'Ongoing',
+                      role: 'Volunteer',
+                      status: 'Active',
+                      progress: 44,
+                      statusColor: 'text-[#981132] bg-[#981132]/[0.08] border-[#981132]/20',
+                      barColor: 'bg-[#981132]'
+                    },
+                    {
+                      id: 'P4',
+                      title: 'Literacy for All Campaign',
+                      category: 'Education',
+                      members: '8 members',
+                      date: 'Sep 2026',
+                      role: 'Core Member',
+                      status: 'Planning',
+                      progress: 12,
+                      statusColor: 'text-amber-700 bg-amber-50 border-amber-200',
+                      barColor: 'bg-amber-500'
+                    }
+                  ].map((p) => (
+                    <div 
+                      key={p.id}
+                      className="p-5 rounded-2xl bg-black/[0.024] border border-black/[0.06] hover:border-black/[0.12] transition-colors"
+                    >
+                      {/* Top Title & Badges Row */}
+                      <div className="flex items-start justify-between gap-4 mb-3">
+                        <div>
+                          <div className="text-[13px] font-bold text-[#1C1C1E] mb-1">
+                            {p.title}
+                          </div>
+                          <div className="flex items-center gap-2 text-[9.5px] text-black/40">
+                            <span>{p.category}</span>
+                            <span className="w-1 h-1 rounded-full bg-black/20" />
+                            <span>{p.members}</span>
+                            <span className="w-1 h-1 rounded-full bg-black/20" />
+                            <span>{p.date}</span>
+                          </div>
+                        </div>
+
+                        <div className="flex items-center gap-2 shrink-0">
+                          <span className="px-2 py-0.5 rounded text-[9px] font-semibold bg-[#981132]/[0.09] text-[#981132] border border-[#981132]/20">
+                            {p.role}
+                          </span>
+                          <span className={`px-2 py-0.5 rounded text-[9px] font-semibold border ${p.statusColor}`}>
+                            {p.status}
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* Progress Bar Container */}
+                      <div>
+                        <div className="flex justify-between text-[9px] mb-1.5">
+                          <span className="text-black/40">Progress</span>
+                          <span className="font-semibold text-black/80">{p.progress}%</span>
+                        </div>
+                        <div className="h-1.5 w-full rounded-full bg-black/[0.06] overflow-hidden">
+                          <div 
+                            className={`h-full rounded-full transition-all duration-500 ${p.barColor}`}
+                            style={{ width: `${p.progress}%` }}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ) : activeNav === 'Events' ? (
               /* DEDICATED EVENTS & MEETINGS VIEW */
               <div className="space-y-5 font-sans">
                 <div>
