@@ -19,18 +19,18 @@ export default function Footer() {
       {/* Bottom Radial Shadow Glow */}
       <div 
         className="absolute inset-0 pointer-events-none" 
-        style={{ background: 'radial-gradient(80% 100% at 50% 100%, rgba(152, 17, 50, 1) 0%, transparent 70%)' }} 
+        style={{ background: 'rgb(152, 17, 50)' }} 
       />
 
       <div className="relative max-w-7xl mx-auto px-6 lg:px-10 py-14">
         <div className="flex flex-col lg:flex-row items-center justify-between gap-8">
           
-          {/* Brand Lockup (Left) - Prominently Large Logo */}
+          {/* Brand Lockup (Left) */}
           <Link href="/" className="flex items-center bg-transparent border-none cursor-pointer group py-1">
             <img 
-              src="/images/rotary-wheel.png" 
+              src="/images/Rotaract-Simple_Black.png" 
               alt="Rotaract District 9126 logo" 
-              className="h-[120px] sm:h-[140px] w-auto max-h-[140px] object-contain shrink-0 transition-transform duration-300 group-hover:scale-105 filter drop-shadow-xl brightness-105" 
+              className="h-[65px] sm:h-[75px] w-auto max-h-[85px] object-contain shrink-0 transition-transform duration-300 group-hover:scale-105 filter drop-shadow-md brightness-0 invert" 
             />
           </Link>
 
