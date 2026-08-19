@@ -349,174 +349,309 @@ export default function MemberDashboardPage() {
         {/* Dashboard 2-Column Split: Analytics (Left) & Digital ID (Right) */}
         <div className="flex-1 flex flex-col lg:flex-row overflow-hidden">
           
-          {/* Middle Analytics Column */}
+          {/* Middle Analytics / Identity Card Column */}
           <div className="flex-1 overflow-y-auto p-6 space-y-5">
-            
-            {/* 3 Metric Cards */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-              <div className="p-4 rounded-2xl bg-black/[0.024] border border-black/[0.06] shadow-sm flex flex-col justify-between">
-                <div className="flex items-center justify-between text-[9px] font-bold text-black/40 uppercase tracking-wider">
-                  Impact Points
-                  <span className="px-1.5 py-0.5 rounded-full bg-green-50 text-green-600 font-bold border border-green-200">+8%</span>
-                </div>
-                <div className="text-2xl font-black text-[#D4A520] my-2">1,240</div>
-                <div className="text-[10px] text-black/60">260 pts to Tier 2</div>
-              </div>
-
-              <div className="p-4 rounded-2xl bg-black/[0.024] border border-black/[0.06] shadow-sm flex flex-col justify-between">
-                <div className="flex items-center justify-between text-[9px] font-bold text-black/40 uppercase tracking-wider">
-                  Events Attended
-                  <span className="px-1.5 py-0.5 rounded-full bg-green-50 text-green-600 font-bold border border-green-200">+33%</span>
-                </div>
-                <div className="text-2xl font-black text-[#D4A520] my-2">12</div>
-                <div className="text-[10px] text-black/60">This Rotaract year</div>
-              </div>
-
-              <div className="p-4 rounded-2xl bg-black/[0.024] border border-black/[0.06] shadow-sm flex flex-col justify-between">
-                <div className="flex items-center justify-between text-[9px] font-bold text-black/40 uppercase tracking-wider">
-                  Projects Joined
-                  <span className="px-1.5 py-0.5 rounded-full bg-green-50 text-green-600 font-bold border border-green-200">+1 this month</span>
-                </div>
-                <div className="text-2xl font-black text-[#D4A520] my-2">4</div>
-                <div className="text-[10px] text-black/60">Active across D9126</div>
-              </div>
-            </div>
-
-            {/* Monthly Bar Chart */}
-            <div className="p-5 rounded-2xl bg-black/[0.024] border border-black/[0.06] shadow-sm">
-              <div className="flex items-center justify-between mb-4 flex-wrap gap-2">
+            {activeNav === 'Identity Card' ? (
+              /* DEDICATED IDENTITY CARD VIEW (max-w-[640px]) */
+              <div className="max-w-[640px] space-y-6">
                 <div>
-                  <div className="text-[9.5px] font-bold text-black/40 uppercase tracking-wider">Activity Overview</div>
-                  <div className="flex items-baseline gap-2 mt-0.5">
-                    <span className="text-2xl font-black text-[#1C1C1E]">12</span>
-                    <span className="text-xs text-black/60">events this season</span>
-                    <span className="text-[10px] font-bold text-green-600 bg-green-50 border border-green-200 px-2 py-0.5 rounded-full">+33% vs last month</span>
+                  <div className="text-[9.5px] font-semibold text-black/40 tracking-[0.14em] uppercase mb-1.5 font-sans">
+                    Member Identity
+                  </div>
+                  <h2 className="text-[22px] font-extrabold text-[#1C1C1E] tracking-tight font-sans">
+                    Your Identity Card
+                  </h2>
+                </div>
+
+                {/* Large Credit Card (Aspect Ratio: 1.586 / 1) */}
+                <div className="w-full max-w-[420px]">
+                  <div 
+                    className="w-full rounded-[20px] overflow-hidden relative text-white p-5 md:p-6 flex flex-col justify-between"
+                    style={{
+                      aspectRatio: '1.586 / 1',
+                      background: 'linear-gradient(135deg, rgb(41, 50, 91) 0%, rgb(72, 30, 48) 100%)',
+                      boxShadow: 'rgba(255, 255, 255, 0.1) 0px 0px 0px 1px, rgba(255, 255, 255, 0.12) 0px 1px 0px inset, rgba(0, 0, 0, 0.7) 0px 24px 60px'
+                    }}
+                  >
+                    {/* Top Header Row */}
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <img 
+                          src="https://images.unsplash.com/photo-1614023342667-6f060e9d1e04?w=200&h=200&fit=crop&auto=format" 
+                          alt="Tunde Adeyemi"
+                          className="w-9 h-9 rounded-full object-cover border-2 border-white/20"
+                        />
+                        <div>
+                          <div className="text-[13px] font-extrabold text-white leading-tight font-sans">
+                            Tunde Adeyemi
+                          </div>
+                          <div className="text-[9px] text-white/50 tracking-wider font-sans">
+                            Active Member
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="px-2.5 py-0.5 rounded-md bg-green-500/20 border border-green-500/40">
+                        <span className="text-[8.5px] font-bold text-green-400 tracking-wider font-sans">
+                          ACTIVE
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Masked Card Number */}
+                    <div className="font-mono text-base tracking-[0.22em] text-white/65">
+                      **** **** **** 0847
+                    </div>
+
+                    {/* Bottom Card Row: Club & QR */}
+                    <div className="flex items-end justify-between">
+                      <div>
+                        <div className="text-[8px] uppercase tracking-wider text-white/35 font-sans mb-0.5">
+                          Club
+                        </div>
+                        <div className="text-[11px] font-semibold text-white font-sans">
+                          Rotaract Club of Ibadan Central
+                        </div>
+                        <div className="text-[9px] text-white/40 font-sans mt-1">
+                          Expires 08/27
+                        </div>
+                      </div>
+
+                      {/* QR Code Container */}
+                      <div className="p-2 rounded-xl bg-white shadow-[0_4px_14px_rgba(0,0,0,0.5)]">
+                        <div className="w-[58px] h-[58px] bg-[#1A1D2E] rounded-md flex items-center justify-center text-white text-[8px] font-mono font-bold">
+                          QR
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
 
-                {/* Filter Switcher */}
-                <div className="flex gap-1 p-1 rounded-xl bg-black/[0.04] border border-black/[0.08]">
-                  {(['Events', 'Projects', 'Volunteering'] as const).map((tab) => (
-                    <button
-                      key={tab}
-                      onClick={() => setActiveChartTab(tab)}
-                      className={`px-3 py-1 rounded-lg text-[11px] font-medium transition-all cursor-pointer ${
-                        activeChartTab === tab 
-                          ? 'bg-[#981132] text-white font-bold shadow-sm' 
-                          : 'text-black/60 hover:text-black'
-                      }`}
-                    >
-                      {tab}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              {/* Histogram Canvas */}
-              <div className="relative pt-6 pb-2">
-                {/* Dashed Threshold Lines */}
-                <div className="absolute inset-x-0 top-6 border-t border-dashed border-black/[0.06]" />
-                <div className="absolute inset-x-0 top-16 border-t border-dashed border-black/[0.06]" />
-                <div className="absolute inset-x-0 top-26 border-t border-dashed border-black/[0.06]" />
-
-                <div className="flex items-end justify-between h-[130px] px-4 relative z-10">
-                  {monthlyData.map((d) => (
-                    <div key={d.month} className="flex flex-col items-center gap-1.5">
-                      <span className="text-[9px] font-bold text-black/40">{d.count}</span>
-                      <div 
-                        className={`w-6 rounded-t-md transition-all ${
-                          d.isCurrent 
-                            ? 'bg-[#981132] shadow-[0_0_16px_rgba(152,17,50,0.6)]' 
-                            : 'bg-black/[0.06]'
-                        }`}
-                        style={{ height: d.height }}
-                      />
-                      <span className="text-[9px] text-black/40 font-medium">{d.month}</span>
+                {/* 6-Box Member Ledger Grid */}
+                <div className="grid grid-cols-2 gap-3 font-sans">
+                  <div className="p-3.5 md:p-4 rounded-xl bg-black/[0.024] border border-black/[0.06]">
+                    <div className="text-[9px] font-semibold text-black/40 tracking-wider uppercase mb-1">
+                      Member ID
                     </div>
-                  ))}
+                    <div className="text-xs font-semibold text-[#1C1C1E]">
+                      RAD-9126-2024-0847
+                    </div>
+                  </div>
+
+                  <div className="p-3.5 md:p-4 rounded-xl bg-black/[0.024] border border-black/[0.06]">
+                    <div className="text-[9px] font-semibold text-black/40 tracking-wider uppercase mb-1">
+                      Tier
+                    </div>
+                    <div className="text-xs font-semibold text-[#1C1C1E]">
+                      Tier 1 · Oyo State
+                    </div>
+                  </div>
+
+                  <div className="p-3.5 md:p-4 rounded-xl bg-black/[0.024] border border-black/[0.06]">
+                    <div className="text-[9px] font-semibold text-black/40 tracking-wider uppercase mb-1">
+                      Club
+                    </div>
+                    <div className="text-xs font-semibold text-[#1C1C1E]">
+                      Rotaract Club of Ibadan Central
+                    </div>
+                  </div>
+
+                  <div className="p-3.5 md:p-4 rounded-xl bg-black/[0.024] border border-black/[0.06]">
+                    <div className="text-[9px] font-semibold text-black/40 tracking-wider uppercase mb-1">
+                      Joined
+                    </div>
+                    <div className="text-xs font-semibold text-[#1C1C1E]">
+                      Sep 2023
+                    </div>
+                  </div>
+
+                  <div className="p-3.5 md:p-4 rounded-xl bg-black/[0.024] border border-black/[0.06]">
+                    <div className="text-[9px] font-semibold text-black/40 tracking-wider uppercase mb-1">
+                      Dues Status
+                    </div>
+                    <div className="text-xs font-semibold text-green-700">
+                      Cleared
+                    </div>
+                  </div>
+
+                  <div className="p-3.5 md:p-4 rounded-xl bg-black/[0.024] border border-black/[0.06]">
+                    <div className="text-[9px] font-semibold text-black/40 tracking-wider uppercase mb-1">
+                      Dues Paid
+                    </div>
+                    <div className="text-xs font-semibold text-[#1C1C1E]">
+                      Jul 1, 2026
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
+            ) : (
+              <>
+                {/* 3 Metric Cards */}
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                  <div className="p-4 rounded-2xl bg-black/[0.024] border border-black/[0.06] shadow-sm flex flex-col justify-between">
+                    <div className="flex items-center justify-between text-[9px] font-bold text-black/40 uppercase tracking-wider">
+                      Impact Points
+                      <span className="px-1.5 py-0.5 rounded-full bg-green-50 text-green-600 font-bold border border-green-200">+8%</span>
+                    </div>
+                    <div className="text-2xl font-black text-[#D4A520] my-2">1,240</div>
+                    <div className="text-[10px] text-black/60">260 pts to Tier 2</div>
+                  </div>
 
-            {/* Dues & Roster Table */}
-            <div className="rounded-2xl bg-black/[0.024] border border-black/[0.06] shadow-sm overflow-hidden">
-              <div className="p-4 border-b border-black/[0.06] flex items-center justify-between gap-4">
-                <div className="relative max-w-xs flex-1">
-                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-black/30" size={13}/>
-                  <input
-                    type="text"
-                    placeholder="Search members..."
-                    value={searchMember}
-                    onChange={(e) => setSearchMember(e.target.value)}
-                    className="w-full pl-8 pr-3 py-1.5 rounded-xl bg-black/[0.04] border border-black/[0.08] text-xs outline-none focus:border-[#981132] transition-colors"
-                  />
+                  <div className="p-4 rounded-2xl bg-black/[0.024] border border-black/[0.06] shadow-sm flex flex-col justify-between">
+                    <div className="flex items-center justify-between text-[9px] font-bold text-black/40 uppercase tracking-wider">
+                      Events Attended
+                      <span className="px-1.5 py-0.5 rounded-full bg-green-50 text-green-600 font-bold border border-green-200">+33%</span>
+                    </div>
+                    <div className="text-2xl font-black text-[#D4A520] my-2">12</div>
+                    <div className="text-[10px] text-black/60">This Rotaract year</div>
+                  </div>
+
+                  <div className="p-4 rounded-2xl bg-black/[0.024] border border-black/[0.06] shadow-sm flex flex-col justify-between">
+                    <div className="flex items-center justify-between text-[9px] font-bold text-black/40 uppercase tracking-wider">
+                      Projects Joined
+                      <span className="px-1.5 py-0.5 rounded-full bg-green-50 text-green-600 font-bold border border-green-200">+1 this month</span>
+                    </div>
+                    <div className="text-2xl font-black text-[#D4A520] my-2">4</div>
+                    <div className="text-[10px] text-black/60">Active across D9126</div>
+                  </div>
                 </div>
 
-                <div className="flex items-center gap-2">
-                  <button className="px-3 py-1.5 rounded-xl bg-black/[0.04] border border-black/[0.08] text-xs text-black/70 hover:bg-black/[0.08] cursor-pointer">
-                    Export CSV
-                  </button>
-                </div>
-              </div>
+                {/* Monthly Bar Chart */}
+                <div className="p-5 rounded-2xl bg-black/[0.024] border border-black/[0.06] shadow-sm">
+                  <div className="flex items-center justify-between mb-4 flex-wrap gap-2">
+                    <div>
+                      <div className="text-[9.5px] font-bold text-black/40 uppercase tracking-wider">Activity Overview</div>
+                      <div className="flex items-baseline gap-2 mt-0.5">
+                        <span className="text-2xl font-black text-[#1C1C1E]">12</span>
+                        <span className="text-xs text-black/60">events this season</span>
+                        <span className="text-[10px] font-bold text-green-600 bg-green-50 border border-green-200 px-2 py-0.5 rounded-full">+33% vs last month</span>
+                      </div>
+                    </div>
 
-              {/* Table Body */}
-              <div className="overflow-x-auto">
-                <table className="w-full text-left text-xs">
-                  <thead>
-                    <tr className="border-b border-black/[0.06] text-black/40 text-[9px] font-bold uppercase tracking-wider">
-                      <th className="py-2.5 px-4">Member</th>
-                      <th className="py-2.5 px-4">Club</th>
-                      <th className="py-2.5 px-4 text-center">Dues Status</th>
-                      <th className="py-2.5 px-4">Period</th>
-                      <th className="py-2.5 px-4 text-right">Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-black/[0.04]">
-                    {filteredDues.map((row) => (
-                      <tr key={row.id} className="hover:bg-black/[0.02] transition-colors">
-                        <td className="py-3 px-4">
-                          <div className="flex items-center gap-2.5">
-                            <img 
-                              src={row.avatar} 
-                              alt={row.name} 
-                              className="w-7 h-7 rounded-full object-cover shrink-0 border border-black/10"
-                            />
-                            <div>
-                              <div className="font-bold text-[#1C1C1E]">{row.name}</div>
-                              <div className="text-[10px] text-black/40 font-mono">{row.id}</div>
-                            </div>
-                          </div>
-                        </td>
-                        <td className="py-3 px-4 text-black/70 font-medium">{row.club}</td>
-                        <td className="py-3 px-4 text-center">
-                          <span 
-                            className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider ${
-                              row.status === 'Cleared'
-                                ? 'bg-emerald-50 text-emerald-600 border border-emerald-200'
-                                : row.status === 'Pending'
-                                ? 'bg-amber-50 text-amber-600 border border-amber-200'
-                                : 'bg-rose-50 text-rose-600 border border-rose-200'
+                    {/* Filter Switcher */}
+                    <div className="flex gap-1 p-1 rounded-xl bg-black/[0.04] border border-black/[0.08]">
+                      {(['Events', 'Projects', 'Volunteering'] as const).map((tab) => (
+                        <button
+                          key={tab}
+                          onClick={() => setActiveChartTab(tab)}
+                          className={`px-3 py-1 rounded-lg text-[11px] font-medium transition-all cursor-pointer ${
+                            activeChartTab === tab 
+                              ? 'bg-[#981132] text-white font-bold shadow-sm' 
+                              : 'text-black/60 hover:text-black'
+                          }`}
+                        >
+                          {tab}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Histogram Canvas */}
+                  <div className="relative pt-6 pb-2">
+                    {/* Dashed Threshold Lines */}
+                    <div className="absolute inset-x-0 top-6 border-t border-dashed border-black/[0.06]" />
+                    <div className="absolute inset-x-0 top-16 border-t border-dashed border-black/[0.06]" />
+                    <div className="absolute inset-x-0 top-26 border-t border-dashed border-black/[0.06]" />
+
+                    <div className="flex items-end justify-between h-[130px] px-4 relative z-10">
+                      {monthlyData.map((d) => (
+                        <div key={d.month} className="flex flex-col items-center gap-1.5">
+                          <span className="text-[9px] font-bold text-black/40">{d.count}</span>
+                          <div 
+                            className={`w-6 rounded-t-md transition-all ${
+                              d.isCurrent 
+                                ? 'bg-[#981132] shadow-[0_0_16px_rgba(152,17,50,0.6)]' 
+                                : 'bg-black/[0.06]'
                             }`}
-                          >
-                            {row.status === 'Cleared' && <CheckCircle2 size={10} />}
-                            {row.status === 'Pending' && <Clock size={10} />}
-                            {row.status === 'Defaulted' && <AlertCircle size={10} />}
-                            {row.status}
-                          </span>
-                        </td>
-                        <td className="py-3 px-4 text-black/50 text-[11px] font-mono">{row.period}</td>
-                        <td className="py-3 px-4 text-right">
-                          <button className="p-1 rounded-lg hover:bg-black/[0.06] text-black/40 hover:text-black transition-colors cursor-pointer">
-                            <MoreVertical size={13}/>
-                          </button>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </div>
+                            style={{ height: d.height }}
+                          />
+                          <span className="text-[9px] text-black/40 font-medium">{d.month}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
 
+                {/* Dues & Roster Table */}
+                <div className="rounded-2xl bg-black/[0.024] border border-black/[0.06] shadow-sm overflow-hidden">
+                  <div className="p-4 border-b border-black/[0.06] flex items-center justify-between gap-4">
+                    <div className="relative max-w-xs flex-1">
+                      <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-black/30" size={13}/>
+                      <input
+                        type="text"
+                        placeholder="Search members..."
+                        value={searchMember}
+                        onChange={(e) => setSearchMember(e.target.value)}
+                        className="w-full pl-8 pr-3 py-1.5 rounded-xl bg-black/[0.04] border border-black/[0.08] text-xs outline-none focus:border-[#981132] transition-colors"
+                      />
+                    </div>
+
+                    <div className="flex items-center gap-2">
+                      <button className="px-3 py-1.5 rounded-xl bg-black/[0.04] border border-black/[0.08] text-xs text-black/70 hover:bg-black/[0.08] cursor-pointer">
+                        Export CSV
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Table Body */}
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-left text-xs">
+                      <thead>
+                        <tr className="border-b border-black/[0.06] text-black/40 text-[9px] font-bold uppercase tracking-wider">
+                          <th className="py-2.5 px-4">Member</th>
+                          <th className="py-2.5 px-4">Club</th>
+                          <th className="py-2.5 px-4 text-center">Dues Status</th>
+                          <th className="py-2.5 px-4">Period</th>
+                          <th className="py-2.5 px-4 text-right">Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-black/[0.04]">
+                        {filteredDues.map((row) => (
+                          <tr key={row.id} className="hover:bg-black/[0.02] transition-colors">
+                            <td className="py-3 px-4">
+                              <div className="flex items-center gap-2.5">
+                                <img 
+                                  src={row.avatar} 
+                                  alt={row.name} 
+                                  className="w-7 h-7 rounded-full object-cover shrink-0 border border-black/10"
+                                />
+                                <div>
+                                  <div className="font-bold text-[#1C1C1E]">{row.name}</div>
+                                  <div className="text-[10px] text-black/40 font-mono">{row.id}</div>
+                                </div>
+                              </div>
+                            </td>
+                            <td className="py-3 px-4 text-black/70 font-medium">{row.club}</td>
+                            <td className="py-3 px-4 text-center">
+                              <span 
+                                className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider ${
+                                  row.status === 'Cleared'
+                                    ? 'bg-emerald-50 text-emerald-600 border border-emerald-200'
+                                    : row.status === 'Pending'
+                                    ? 'bg-amber-50 text-amber-600 border border-amber-200'
+                                    : 'bg-rose-50 text-rose-600 border border-rose-200'
+                                }`}
+                              >
+                                {row.status === 'Cleared' && <CheckCircle2 size={10} />}
+                                {row.status === 'Pending' && <Clock size={10} />}
+                                {row.status === 'Defaulted' && <AlertCircle size={10} />}
+                                {row.status}
+                              </span>
+                            </td>
+                            <td className="py-3 px-4 text-black/50 text-[11px] font-mono">{row.period}</td>
+                            <td className="py-3 px-4 text-right">
+                              <button className="p-1 rounded-lg hover:bg-black/[0.06] text-black/40 hover:text-black transition-colors cursor-pointer">
+                                <MoreVertical size={13}/>
+                              </button>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </>
+            )}
           </div>
 
           {/* 3. RIGHT RAIL: DIGITAL ID CARD & FAST ACTIONS */}
