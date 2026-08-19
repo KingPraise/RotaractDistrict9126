@@ -1,5 +1,19 @@
 'use client';
 
+import { db } from '@/lib/firebase/client';
+import {
+  collection,
+  doc,
+  getDocs,
+  setDoc,
+  updateDoc,
+  deleteDoc,
+  onSnapshot,
+  query,
+  orderBy,
+  serverTimestamp,
+} from 'firebase/firestore';
+
 export interface ProjectItem {
   id: string;
   title: string;
@@ -119,13 +133,16 @@ export function getStoredProjects(): ProjectItem[] {
   }
 }
 
-// Save a new project
+// Save a new project with Firestore sync & Local Storage cache
 export function saveProject(project: Omit<ProjectItem, 'id' | 'createdAt'>): ProjectItem {
   const current = getStoredProjects();
+  const id = `proj-${Date.now()}`;
+  const createdAt = new Date().toISOString();
+
   const newProject: ProjectItem = {
     ...project,
-    id: `proj-${Date.now()}`,
-    createdAt: new Date().toISOString(),
+    id,
+    createdAt,
     statNumber: project.statNumber || (project.progress === 100 ? '100%' : `${project.progress}%`),
     statLabel: project.statLabel || 'Project Milestone'
   };
@@ -135,6 +152,18 @@ export function saveProject(project: Omit<ProjectItem, 'id' | 'createdAt'>): Pro
     localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
     window.dispatchEvent(new Event(EVENT_NAME));
   }
+
+  // Background Firestore sync
+  try {
+    const projectRef = doc(db, 'projects', id);
+    setDoc(projectRef, {
+      ...newProject,
+      createdAtServer: serverTimestamp(),
+    }).catch((err) => console.warn('Firestore project write warning:', err));
+  } catch (err) {
+    console.warn('Firestore project write failed:', err);
+  }
+
   return newProject;
 }
 
@@ -154,6 +183,22 @@ export function updateProject(id: string, updates: Partial<ProjectItem>): Projec
     localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
     window.dispatchEvent(new Event(EVENT_NAME));
   }
+
+  // Background Firestore update
+  try {
+    const projectRef = doc(db, 'projects', id);
+    updateDoc(projectRef, {
+      ...updates,
+      updatedAtServer: serverTimestamp(),
+    }).catch(() => {
+      if (updatedItem) {
+        setDoc(projectRef, updatedItem, { merge: true }).catch(() => {});
+      }
+    });
+  } catch (err) {
+    console.warn('Firestore project update warning:', err);
+  }
+
   return updatedItem;
 }
 
@@ -165,10 +210,19 @@ export function deleteProject(id: string): boolean {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(filtered));
     window.dispatchEvent(new Event(EVENT_NAME));
   }
+
+  // Background Firestore deletion
+  try {
+    const projectRef = doc(db, 'projects', id);
+    deleteDoc(projectRef).catch((err) => console.warn('Firestore delete warning:', err));
+  } catch (err) {
+    console.warn('Firestore delete failed:', err);
+  }
+
   return true;
 }
 
-// Subscribe to real-time project updates across components/tabs
+// Subscribe to real-time project updates across components/tabs & Firestore
 export function subscribeToProjects(callback: (projects: ProjectItem[]) => void): () => void {
   if (typeof window === 'undefined') return () => {};
 
@@ -179,8 +233,37 @@ export function subscribeToProjects(callback: (projects: ProjectItem[]) => void)
   window.addEventListener(EVENT_NAME, handler);
   window.addEventListener('storage', handler);
 
+  // Firestore real-time snapshot subscription
+  let unsubFirestore = () => {};
+  try {
+    const q = query(collection(db, 'projects'));
+    unsubFirestore = onSnapshot(
+      q,
+      (snapshot) => {
+        if (!snapshot.empty) {
+          const remoteItems = snapshot.docs.map((d) => ({
+            id: d.id,
+            ...d.data(),
+          })) as ProjectItem[];
+
+          if (remoteItems.length > 0) {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(remoteItems));
+            callback(remoteItems);
+          }
+        }
+      },
+      (error) => {
+        // Fallback to local
+        console.info('Firestore project subscription notice:', error);
+      }
+    );
+  } catch (err) {
+    console.info('Firestore onSnapshot init notice:', err);
+  }
+
   return () => {
     window.removeEventListener(EVENT_NAME, handler);
     window.removeEventListener('storage', handler);
+    unsubFirestore();
   };
 }

@@ -43,12 +43,13 @@ Sub-Orchestrator for Milestone 1: Schemas, Types, Rules & Seeding in Rotaract Di
 | explorer_m1_1 | teamwork_preview_explorer | Schema & Types Investigation | completed | 1e19d7fc-86aa-42bb-8548-28aefaec3fe7 |
 | explorer_m1_2 | teamwork_preview_explorer | Firestore Rules & RBAC Investigation | completed | 6a164cc7-e4b0-4594-b289-b7ad70e86c93 |
 | explorer_m1_3 | teamwork_preview_explorer | Seed Data & Execution Investigation | completed | daeabbab-7e3a-4e20-84a1-f14544ce2334 |
-| worker_m1_1 | teamwork_preview_worker | Implement Schemas, Rules, Seeding | in-progress | 9fc725d2-9578-49c0-a1a7-af310dca74e6 |
+| worker_m1_1 | teamwork_preview_worker | Implement Schemas, Rules, Seeding | failed | 9fc725d2-9578-49c0-a1a7-af310dca74e6 |
+| worker_m1_2 | teamwork_preview_worker | Implement Schemas, Rules, Seeding | in-progress | 3a3c90a5-7cd9-449f-8d45-deeeca6b2155 |
 
 ## Succession Status
 - Succession required: no
-- Spawn count: 4 / 16
-- Pending subagents: 9fc725d2-9578-49c0-a1a7-af310dca74e6
+- Spawn count: 5 / 16
+- Pending subagents: 3a3c90a5-7cd9-449f-8d45-deeeca6b2155
 - Predecessor: none
 - Successor: not yet spawned
 

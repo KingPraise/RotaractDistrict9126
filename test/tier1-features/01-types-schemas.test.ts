@@ -149,7 +149,7 @@ export async function run(): Promise<{
       category: 'WASH',
     });
     expectSchemaValid(project, validateProjectSchema, 'Project schema should pass validation');
-    expectEqual(project.images.length >= 1, true);
+    expectEqual((project.images?.length ?? 0) >= 1, true);
 
     const cloudinaryPayload = generateMockCloudinaryPayload({
       folder: 'rotaract_9126/projects',

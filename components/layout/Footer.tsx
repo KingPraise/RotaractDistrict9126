@@ -19,7 +19,7 @@ export default function Footer() {
       {/* Bottom Radial Shadow Glow */}
       <div 
         className="absolute inset-0 pointer-events-none" 
-        style={{ background: 'radial-gradient(80% 100% at 50% 100%, rgba(0, 0, 0, 0.18) 0%, transparent 70%)' }} 
+        style={{ background: 'radial-gradient(80% 100% at 50% 100%, rgba(152, 17, 50, 1) 0%, transparent 70%)' }} 
       />
 
       <div className="relative max-w-7xl mx-auto px-6 lg:px-10 py-14">

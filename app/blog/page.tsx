@@ -1,164 +1,36 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Search, ArrowRight, BookOpen } from 'lucide-react';
 import { subscribeNewsletter } from '@/lib/services/newsletter-service';
+import { getBlogArticles, INITIAL_ARTICLES, ArticleItem } from '@/lib/services/articles-service';
 
-interface BlogPost {
-  id: string;
-  title: string;
-  excerpt: string;
-  category: 'Impact Reports' | 'Events' | 'Community Stories' | 'District News' | 'Announcements';
-  date: string;
-  readTime: string;
-  author: {
-    name: string;
-    image: string;
-  };
-  image: string;
-  tags: string[];
-  featured?: boolean;
-}
-
-const blogPosts: BlogPost[] = [
-  {
-    id: '1',
-    title: '2,500 Families Vaccinated as District 9126 Launches Largest Health Drive in Its History',
-    excerpt: 'A coalition of 14 clubs across seven states converged at six simultaneous sites to administer vaccines and conduct screenings, setting a new district record for single-day outreach participation.',
-    category: 'Impact Reports',
-    date: 'Jul 18, 2026',
-    readTime: '6 min read',
-    author: {
-      name: 'Tunde Adeyemi',
-      image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop&auto=format'
-    },
-    image: 'https://images.unsplash.com/photo-1621353880071-4752fa42cbc7?w=1200&h=800&fit=crop&auto=format',
-    tags: ['#Healthcare', '#Outreach', '#Record'],
-    featured: true
-  },
-  {
-    id: '2',
-    title: 'District Leadership Summit 2026 Draws 400+ Rotaractors From Across the Region',
-    excerpt: 'Three days of high-intensity workshops, panel discussions with global Rotary leaders, and cross-club networking redefined what collaboration looks like for the next generation.',
-    category: 'Events',
-    date: 'Jul 12, 2026',
-    readTime: '4 min read',
-    author: {
-      name: 'Funmi Olatunde',
-      image: 'https://images.unsplash.com/photo-1573497491765-dccce02b29df?w=80&h=80&fit=crop&auto=format'
-    },
-    image: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=1200&h=800&fit=crop&auto=format',
-    tags: ['#Leadership', '#Summit2026']
-  },
-  {
-    id: '3',
-    title: 'How One Borehole Transformed a Village of 3,000 in Rural Kwara State',
-    excerpt: 'Access to clean potable water reduced waterborne illness rates by 70% in under six months, according to independent data from the local primary health centre.',
-    category: 'Community Stories',
-    date: 'Jul 05, 2026',
-    readTime: '5 min read',
-    author: {
-      name: 'Bayo Alabi',
-      image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=80&h=80&fit=crop&auto=format'
-    },
-    image: 'https://images.unsplash.com/photo-1611502029437-54521b5e6ada?w=1200&h=800&fit=crop&auto=format',
-    tags: ['#WASH', '#KwaraState']
-  },
-  {
-    id: '4',
-    title: '70 New Members Inducted Across 12 Campus Clubs in Unprecedented Orientation Drive',
-    excerpt: 'Universities and polytechnics across District 9126 witnessed record turnout as student leaders joined the global Rotary family during the annual New Member Induction Month.',
-    category: 'District News',
-    date: 'Jun 28, 2026',
-    readTime: '3 min read',
-    author: {
-      name: 'Amaka Eze',
-      image: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=80&h=80&fit=crop&auto=format'
-    },
-    image: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=1200&h=800&fit=crop&auto=format',
-    tags: ['#Induction', '#CampusClubs']
-  },
-  {
-    id: '5',
-    title: 'District 9126 Restores and Re-stocks Central Community Library with 2,000 Books',
-    excerpt: 'A 10-week joint project between four clubs delivered freshly painted learning spaces, high-speed internet access points, and modern reference materials for secondary students.',
-    category: 'Community Stories',
-    date: 'Jun 25, 2026',
-    readTime: '4 min read',
-    author: {
-      name: 'Kunle Adeleke',
-      image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&h=80&fit=crop&auto=format'
-    },
-    image: 'https://images.unsplash.com/photo-1521587760476-6c12a4b040da?w=1200&h=800&fit=crop&auto=format',
-    tags: ['#Education', '#Library']
-  },
-  {
-    id: '6',
-    title: 'Free Cataract Surgeries Restores Sight to 80 Elderly Residents in Ogbomoso',
-    excerpt: 'In partnership with specialist ophthalmologists, Rotaract volunteers coordinated pre-screenings, transportation, and post-operative care for beneficiaries across three local governments.',
-    category: 'Impact Reports',
-    date: 'Jun 22, 2026',
-    readTime: '4 min read',
-    author: {
-      name: 'Seun Adegoke',
-      image: 'https://images.unsplash.com/photo-1609371497456-3a55a205d5eb?w=80&h=80&fit=crop&auto=format'
-    },
-    image: 'https://images.unsplash.com/photo-1621353880594-70b5fd44ecb3?w=1200&h=800&fit=crop&auto=format',
-    tags: ['#Healthcare', '#Ogbomoso']
-  },
-  {
-    id: '7',
-    title: 'District 9126 Receives Continental Award for Outstanding Community Service',
-    excerpt: 'Rotary International recognizes District 9126 for high-impact youth programs and the successful completion of the multi-state borehole campaign.',
-    category: 'Announcements',
-    date: 'Jun 18, 2026',
-    readTime: '2 min read',
-    author: {
-      name: 'Sola Adebayo',
-      image: 'https://images.unsplash.com/photo-1573497491765-dccce02b29df?w=80&h=80&fit=crop&auto=format'
-    },
-    image: 'https://images.unsplash.com/photo-1561489396-888724a1543d?w=1200&h=800&fit=crop&auto=format',
-    tags: ['#Award', '#Excellence']
-  },
-  {
-    id: '8',
-    title: 'After-School STEM Programme Graduates Its First 120 Students',
-    excerpt: 'Practical coding, robotics, and design curriculum delivered across three public secondary schools concludes with an exhibition and scholarship grant awards.',
-    category: 'Community Stories',
-    date: 'Jun 14, 2026',
-    readTime: '5 min read',
-    author: {
-      name: 'Dapo Olawale',
-      image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop&auto=format'
-    },
-    image: 'https://images.unsplash.com/photo-1632932693914-89b90ae3d16d?w=1200&h=800&fit=crop&auto=format',
-    tags: ['#STEM', '#Youth']
-  },
-  {
-    id: '9',
-    title: 'Rotaract Mental Health Week 2026 Generates 20,000 Impressions Across Social Media',
-    excerpt: 'Workshops, live Q&A sessions with clinical psychologists, and peer-support circles provided accessible wellness toolkits to hundreds of young Nigerians.',
-    category: 'Events',
-    date: 'Jun 08, 2026',
-    readTime: '3 min read',
-    author: {
-      name: 'Zainab Bello',
-      image: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=80&h=80&fit=crop&auto=format'
-    },
-    image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=1200&h=800&fit=crop&auto=format',
-    tags: ['#MentalHealth', '#Wellness']
-  }
-];
+const categoryBadgeStyles: Record<string, { bg: string; text: string }> = {
+  'Impact Reports': { bg: 'rgba(152, 17, 50, 0.1)', text: 'rgb(152, 17, 50)' },
+  Events: { bg: 'rgba(37, 99, 235, 0.1)', text: 'rgb(29, 78, 216)' },
+  'Community Stories': { bg: 'rgba(109, 40, 217, 0.1)', text: 'rgb(109, 40, 217)' },
+  'District News': { bg: 'rgba(152, 17, 50, 0.1)', text: 'rgb(152, 17, 50)' },
+  Announcements: { bg: 'rgba(5, 150, 105, 0.1)', text: 'rgb(5, 150, 105)' }
+};
 
 export default function BlogPage() {
+  const [posts, setPosts] = useState<ArticleItem[]>(INITIAL_ARTICLES);
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [newsletterEmail, setNewsletterEmail] = useState('');
   const [isSubscribing, setIsSubscribing] = useState(false);
   const [newsletterStatus, setNewsletterStatus] = useState<{ success: boolean; message: string } | null>(null);
+
+  useEffect(() => {
+    getBlogArticles().then((fetched) => {
+      if (fetched && fetched.length > 0) {
+        setPosts(fetched);
+      }
+    });
+  }, []);
 
   const categories = ['All', 'Impact Reports', 'Events', 'Community Stories', 'District News', 'Announcements'];
 
@@ -187,7 +59,7 @@ export default function BlogPage() {
   };
 
   const filteredPosts = useMemo(() => {
-    return blogPosts.filter((post) => {
+    return posts.filter((post) => {
       const matchesCategory = selectedCategory === 'All' || post.category === selectedCategory;
       const matchesSearch = 
         post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -195,9 +67,9 @@ export default function BlogPage() {
         post.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()));
       return matchesCategory && matchesSearch;
     });
-  }, [selectedCategory, searchQuery]);
+  }, [posts, selectedCategory, searchQuery]);
 
-  const featuredPost = blogPosts.find(p => p.featured) || blogPosts[0];
+  const featuredPost = posts.find(p => p.featured) || posts[0];
   const secondaryPosts = filteredPosts.filter(p => p.id !== featuredPost.id).slice(0, 2);
   const remainingPosts = filteredPosts.filter(p => p.id !== featuredPost.id).slice(2);
 
