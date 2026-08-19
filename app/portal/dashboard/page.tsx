@@ -41,6 +41,9 @@ export default function MemberDashboardPage() {
   const [eventFilter, setEventFilter] = useState('All');
   const [searchMember, setSearchMember] = useState('');
   const [searchDirectory, setSearchDirectory] = useState('');
+  const [emailNotifications, setEmailNotifications] = useState(true);
+  const [districtNewsletter, setDistrictNewsletter] = useState(true);
+  const [twoFactorAuth, setTwoFactorAuth] = useState(false);
   const [qrCodeUrl, setQrCodeUrl] = useState('');
 
   useEffect(() => {
@@ -351,9 +354,166 @@ export default function MemberDashboardPage() {
         {/* Dashboard 2-Column Split: Analytics (Left) & Digital ID (Right) */}
         <div className="flex-1 flex flex-col lg:flex-row overflow-hidden">
           
-          {/* Middle Analytics / Directory / Dues / Projects / Events / Identity Card Column */}
+          {/* Middle Analytics / Settings / Directory / Dues / Projects / Events / Identity Card Column */}
           <div className="flex-1 overflow-y-auto p-6 space-y-5">
-            {activeNav === 'Directory' ? (
+            {activeNav === 'Settings' ? (
+              /* DEDICATED ACCOUNT SETTINGS VIEW */
+              <div className="max-w-[640px] space-y-5 font-sans">
+                <div>
+                  <div className="text-[9.5px] font-semibold text-black/40 tracking-[0.14em] uppercase mb-1.5 font-sans">
+                    Account
+                  </div>
+                  <h2 className="text-[22px] font-extrabold text-[#1C1C1E] tracking-tight font-sans">
+                    Settings
+                  </h2>
+                </div>
+
+                {/* Profile Information Card */}
+                <div className="p-6 rounded-2xl bg-black/[0.024] border border-black/[0.06]">
+                  <div className="text-xs font-bold text-[#1C1C1E] mb-5">
+                    Profile Information
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+                    {/* First Name */}
+                    <div className="flex flex-col gap-1.5">
+                      <label className="text-[9.5px] font-semibold text-black/40 tracking-wider uppercase">
+                        First Name
+                      </label>
+                      <input
+                        type="text"
+                        defaultValue="Tunde"
+                        className="w-full px-3.5 py-2.5 rounded-xl bg-black/[0.04] border border-black/[0.08] text-xs text-[#1C1C1E] outline-none focus:border-[#981132] focus:bg-white transition-all font-sans"
+                      />
+                    </div>
+
+                    {/* Full Name */}
+                    <div className="flex flex-col gap-1.5">
+                      <label className="text-[9.5px] font-semibold text-black/40 tracking-wider uppercase">
+                        Full Name
+                      </label>
+                      <input
+                        type="text"
+                        defaultValue="Tunde Adeyemi"
+                        className="w-full px-3.5 py-2.5 rounded-xl bg-black/[0.04] border border-black/[0.08] text-xs text-[#1C1C1E] outline-none focus:border-[#981132] focus:bg-white transition-all font-sans"
+                      />
+                    </div>
+
+                    {/* Email */}
+                    <div className="flex flex-col gap-1.5">
+                      <label className="text-[9.5px] font-semibold text-black/40 tracking-wider uppercase">
+                        Email
+                      </label>
+                      <input
+                        type="email"
+                        defaultValue="t.adeyemi@rotaract9126.org"
+                        className="w-full px-3.5 py-2.5 rounded-xl bg-black/[0.04] border border-black/[0.08] text-xs text-[#1C1C1E] outline-none focus:border-[#981132] focus:bg-white transition-all font-sans"
+                      />
+                    </div>
+
+                    {/* Phone */}
+                    <div className="flex flex-col gap-1.5">
+                      <label className="text-[9.5px] font-semibold text-black/40 tracking-wider uppercase">
+                        Phone
+                      </label>
+                      <input
+                        type="tel"
+                        defaultValue="+234 800 123 4567"
+                        className="w-full px-3.5 py-2.5 rounded-xl bg-black/[0.04] border border-black/[0.08] text-xs text-[#1C1C1E] outline-none focus:border-[#981132] focus:bg-white transition-all font-sans"
+                      />
+                    </div>
+
+                    {/* Club (Full Width) */}
+                    <div className="sm:col-span-2 flex flex-col gap-1.5">
+                      <label className="text-[9.5px] font-semibold text-black/40 tracking-wider uppercase">
+                        Club
+                      </label>
+                      <input
+                        type="text"
+                        defaultValue="Rotaract Club of Ibadan Central"
+                        className="w-full px-3.5 py-2.5 rounded-xl bg-black/[0.04] border border-black/[0.08] text-xs text-[#1C1C1E] outline-none focus:border-[#981132] focus:bg-white transition-all font-sans"
+                      />
+                    </div>
+                  </div>
+
+                  <button
+                    onClick={() => alert('Profile settings updated successfully!')}
+                    className="px-5 py-2 rounded-xl bg-[#981132] text-white text-xs font-semibold hover:bg-[#A70C43] shadow-[0_0_20px_rgba(152,17,50,0.3)] transition-all cursor-pointer"
+                  >
+                    Save changes
+                  </button>
+                </div>
+
+                {/* Notification & Security Toggles Card */}
+                <div className="p-6 rounded-2xl bg-black/[0.024] border border-black/[0.06]">
+                  <div className="text-xs font-bold text-[#1C1C1E] mb-3">
+                    Notifications
+                  </div>
+
+                  <div className="divide-y divide-black/[0.06]">
+                    {/* Toggle 1: Email Notifications */}
+                    <div className="py-3 flex items-center justify-between">
+                      <span className="text-xs text-black/70 font-medium">
+                        Email notifications
+                      </span>
+                      <button
+                        type="button"
+                        onClick={() => setEmailNotifications(!emailNotifications)}
+                        className={`w-11 h-6 rounded-full relative transition-colors duration-200 cursor-pointer shrink-0 ${
+                          emailNotifications ? 'bg-[#981132]' : 'bg-black/[0.12]'
+                        }`}
+                      >
+                        <div
+                          className={`w-4.5 h-4.5 rounded-full bg-white absolute top-0.75 shadow-sm transition-transform duration-200 ${
+                            emailNotifications ? 'translate-x-5.5 left-0.5' : 'left-0.75'
+                          }`}
+                        />
+                      </button>
+                    </div>
+
+                    {/* Toggle 2: District Newsletter */}
+                    <div className="py-3 flex items-center justify-between">
+                      <span className="text-xs text-black/70 font-medium">
+                        District newsletter
+                      </span>
+                      <button
+                        type="button"
+                        onClick={() => setDistrictNewsletter(!districtNewsletter)}
+                        className={`w-11 h-6 rounded-full relative transition-colors duration-200 cursor-pointer shrink-0 ${
+                          districtNewsletter ? 'bg-[#981132]' : 'bg-black/[0.12]'
+                        }`}
+                      >
+                        <div
+                          className={`w-4.5 h-4.5 rounded-full bg-white absolute top-0.75 shadow-sm transition-transform duration-200 ${
+                            districtNewsletter ? 'translate-x-5.5 left-0.5' : 'left-0.75'
+                          }`}
+                        />
+                      </button>
+                    </div>
+
+                    {/* Toggle 3: Two-Factor Authentication */}
+                    <div className="py-3 flex items-center justify-between">
+                      <span className="text-xs text-black/70 font-medium">
+                        Two-factor authentication
+                      </span>
+                      <button
+                        type="button"
+                        onClick={() => setTwoFactorAuth(!twoFactorAuth)}
+                        className={`w-11 h-6 rounded-full relative transition-colors duration-200 cursor-pointer shrink-0 ${
+                          twoFactorAuth ? 'bg-[#981132]' : 'bg-black/[0.12]'
+                        }`}
+                      >
+                        <div
+                          className={`w-4.5 h-4.5 rounded-full bg-white absolute top-0.75 shadow-sm transition-transform duration-200 ${
+                            twoFactorAuth ? 'translate-x-5.5 left-0.5' : 'left-0.75'
+                          }`}
+                        />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ) : activeNav === 'Directory' ? (
               /* DEDICATED CLUB MEMBERS DIRECTORY VIEW */
               <div className="space-y-5 font-sans">
                 <div>
