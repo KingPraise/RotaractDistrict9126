@@ -28,6 +28,13 @@ export default function LeadershipSection() {
       fallbackImage: "https://images.unsplash.com/photo-1533108344127-a586d2b02479?w=480&h=580&fit=crop&auto=format"
     },
     {
+      name: "Rtr. Hussain Abdulhakeem",
+      role: "Chief of Staff / District Admin",
+      tooltip: "PHF",
+      image: "/images/leaders/leader-chief-of-staff.jpg",
+      fallbackImage: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=480&h=580&fit=crop&auto=format"
+    },
+    {
       name: "Rtr. PP Faleye Ifeoluwa",
       role: "District Secretary",
       tooltip: "PP",
@@ -95,8 +102,8 @@ export default function LeadershipSection() {
           </p>
         </motion.div>
 
-        {/* 6-Column Grid with Staggered Cascading Animation */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-5">
+        {/* 7-Column Responsive Grid with Staggered Cascading Animation */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7 gap-4">
           {leaders.map((leader, idx) => (
             <motion.div 
               key={idx} 

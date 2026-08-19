@@ -200,6 +200,18 @@ const currentTeam: LeaderMember[] = [
     bio: 'Directs the district fiscal strategy, automated club dues reconciliations, project budgets, and transparent audit reports.'
   },
   {
+    id: 'cos',
+    name: 'Rtr. Hussain Abdulhakeem Ayokunnu',
+    role: 'Chief of Staff / District Administrator',
+    tooltip: 'PHF',
+    image: '/images/leaders/leader-chief-of-staff.jpg',
+    fallbackImage: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=480&h=580&fit=crop&auto=format',
+    dept: 'Executive Office / Administration',
+    email: 'chiefofstaff@rotaractdistrict9126.com.ng',
+    phone: '+234 800 912 6007',
+    bio: 'Chief of Staff and District Administrator of District 9126. Oversees executive operations, administrative alignment, district council coordination, and strategic program implementation.'
+  },
+  {
     id: 'advisor',
     name: 'Rtr. PP Adebayo Sodiq Babatunde',
     role: 'Strategic Advisor (15th DRR D9125)',
