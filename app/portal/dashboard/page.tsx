@@ -40,6 +40,7 @@ export default function MemberDashboardPage() {
   const [memberFilter, setMemberFilter] = useState<'Active' | 'Alumni'>('Active');
   const [eventFilter, setEventFilter] = useState('All');
   const [searchMember, setSearchMember] = useState('');
+  const [searchDirectory, setSearchDirectory] = useState('');
   const [qrCodeUrl, setQrCodeUrl] = useState('');
 
   useEffect(() => {
@@ -350,9 +351,114 @@ export default function MemberDashboardPage() {
         {/* Dashboard 2-Column Split: Analytics (Left) & Digital ID (Right) */}
         <div className="flex-1 flex flex-col lg:flex-row overflow-hidden">
           
-          {/* Middle Analytics / Dues / Projects / Events / Identity Card Column */}
+          {/* Middle Analytics / Directory / Dues / Projects / Events / Identity Card Column */}
           <div className="flex-1 overflow-y-auto p-6 space-y-5">
-            {activeNav === 'Dues & Payments' ? (
+            {activeNav === 'Directory' ? (
+              /* DEDICATED CLUB MEMBERS DIRECTORY VIEW */
+              <div className="space-y-5 font-sans">
+                <div>
+                  <div className="text-[9.5px] font-semibold text-black/40 tracking-[0.14em] uppercase mb-1.5 font-sans">
+                    Club Members
+                  </div>
+                  <h2 className="text-[22px] font-extrabold text-[#1C1C1E] tracking-tight font-sans">
+                    Directory
+                  </h2>
+                </div>
+
+                {/* Search Box */}
+                <div className="flex items-center gap-2 max-w-[320px] px-3 py-2 rounded-xl bg-black/[0.04] border border-black/[0.08]">
+                  <Search className="text-black/40 shrink-0" size={13}/>
+                  <input
+                    type="text"
+                    placeholder="Search members..."
+                    value={searchDirectory}
+                    onChange={(e) => setSearchDirectory(e.target.value)}
+                    className="w-full bg-transparent border-none outline-none text-[11px] text-[#1C1C1E] placeholder-black/40 font-sans"
+                  />
+                </div>
+
+                {/* Responsive Members Grid */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5">
+                  {[
+                    {
+                      id: 'M1',
+                      name: 'Tunde Adeyemi',
+                      club: 'RC Ibadan Central',
+                      status: 'Cleared',
+                      statusStyle: 'text-green-700 bg-green-500/[0.08] border-green-500/[0.16]',
+                      avatar: 'https://images.unsplash.com/photo-1614023342667-6f060e9d1e04?w=80&h=80&fit=crop&auto=format'
+                    },
+                    {
+                      id: 'M2',
+                      name: 'Funmi Olatunde',
+                      club: 'RC Ibadan Bodija',
+                      status: 'Pending',
+                      statusStyle: 'text-black/60 bg-black/[0.04] border-black/[0.08]',
+                      avatar: 'https://images.unsplash.com/photo-1573497491765-dccce02b29df?w=80&h=80&fit=crop&auto=format'
+                    },
+                    {
+                      id: 'M3',
+                      name: 'Sola Adebayo',
+                      club: 'RC Univ. of Ibadan',
+                      status: 'Cleared',
+                      statusStyle: 'text-green-700 bg-green-500/[0.08] border-green-500/[0.16]',
+                      avatar: 'https://images.unsplash.com/photo-1609436132311-e4b0c9370469?w=80&h=80&fit=crop&auto=format'
+                    },
+                    {
+                      id: 'M4',
+                      name: 'Kayode Faleye',
+                      club: 'RC Ibadan Ring Road',
+                      status: 'Defaulted',
+                      statusStyle: 'text-red-700 bg-red-500/[0.08] border-red-500/[0.16]',
+                      avatar: 'https://images.unsplash.com/photo-1659422440915-d516c6dc932e?w=80&h=80&fit=crop&auto=format'
+                    },
+                    {
+                      id: 'M5',
+                      name: 'Yetunde Balogun',
+                      club: 'RC Ibadan North',
+                      status: 'Cleared',
+                      statusStyle: 'text-green-700 bg-green-500/[0.08] border-green-500/[0.16]',
+                      avatar: 'https://images.unsplash.com/photo-1657218380188-40c56bfdf97f?w=80&h=80&fit=crop&auto=format'
+                    },
+                    {
+                      id: 'M6',
+                      name: 'Seun Adegoke',
+                      club: 'RC LAUTECH Ogbomoso',
+                      status: 'Pending',
+                      statusStyle: 'text-black/60 bg-black/[0.04] border-black/[0.08]',
+                      avatar: 'https://images.unsplash.com/photo-1646658104783-2eec2433c1d1?w=80&h=80&fit=crop&auto=format'
+                    }
+                  ]
+                    .filter(m => 
+                      m.name.toLowerCase().includes(searchDirectory.toLowerCase()) || 
+                      m.club.toLowerCase().includes(searchDirectory.toLowerCase())
+                    )
+                    .map((member) => (
+                    <div
+                      key={member.id}
+                      className="flex items-center gap-3 p-3.5 rounded-2xl bg-black/[0.024] border border-black/[0.06] hover:border-black/[0.12] transition-colors"
+                    >
+                      <img
+                        src={member.avatar}
+                        alt={member.name}
+                        className="w-10 h-10 rounded-full object-cover shrink-0 border-[1.5px] border-black/[0.08]"
+                      />
+                      <div className="min-w-0 flex-1">
+                        <div className="text-xs font-semibold text-[#1C1C1E] truncate">
+                          {member.name}
+                        </div>
+                        <div className="text-[10px] text-black/40 truncate mt-0.5">
+                          {member.club}
+                        </div>
+                      </div>
+                      <span className={`px-2 py-0.5 rounded-full text-[9.5px] font-semibold shrink-0 border ${member.statusStyle}`}>
+                        {member.status}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ) : activeNav === 'Dues & Payments' ? (
               /* DEDICATED DUES & PAYMENTS VIEW */
               <div className="space-y-5 font-sans">
                 <div>
