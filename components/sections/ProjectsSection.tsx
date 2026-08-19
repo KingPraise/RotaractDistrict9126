@@ -1,34 +1,23 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { MapPin, ArrowRight } from 'lucide-react';
+import { getStoredProjects, subscribeToProjects, ProjectItem } from '@/lib/services/projects-service';
 
 export default function ProjectsSection() {
-  const projects = [
-    {
-      title: "Operation Vaccinate 500",
-      location: "Ogbomoso, Oyo State",
-      statNumber: "500",
-      statLabel: "Children Vaccinated",
-      image: "https://images.unsplash.com/photo-1509099836639-18ba1795216d?w=900&h=700&fit=crop&auto=format",
-    },
-    {
-      title: "Clean Water for Offa",
-      location: "Offa, Kwara State",
-      statNumber: "2",
-      statLabel: "Boreholes Constructed",
-      image: "https://images.unsplash.com/photo-1760873059715-7c7cfbe2a2c6?w=900&h=600&fit=crop&auto=format",
-    },
-    {
-      title: "Digital Skills Academy",
-      location: "Ibadan, Oyo State",
-      statNumber: "2,400",
-      statLabel: "Youth Trained",
-      image: "https://images.unsplash.com/photo-1620829813573-7c9e1877706f?w=900&h=700&fit=crop&auto=format",
-    }
-  ];
+  const [projects, setProjects] = useState<ProjectItem[]>([]);
+
+  useEffect(() => {
+    setProjects(getStoredProjects());
+    const unsubscribe = subscribeToProjects((updated) => {
+      setProjects(updated);
+    });
+    return unsubscribe;
+  }, []);
+
+  const displayProjects = projects.slice(0, 3);
 
   return (
     <section id="projects" className="relative pt-10 pb-24 lg:pt-12 lg:pb-32 overflow-hidden bg-[#F8F5F2]">
@@ -87,7 +76,7 @@ export default function ProjectsSection() {
 
         {/* 3-Column Projects Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {projects.map((proj, idx) => (
+          {displayProjects.map((proj, idx) => (
             <motion.div 
               key={idx} 
               initial={{ opacity: 0, y: 30 }}

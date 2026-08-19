@@ -30,8 +30,21 @@ import {
   MoreVertical,
   Building2,
   MapPin,
-  ExternalLink
+  ExternalLink,
+  Edit3,
+  Trash2,
+  Image as ImageIcon,
+  X,
+  Upload
 } from 'lucide-react';
+import { 
+  getStoredProjects, 
+  saveProject, 
+  updateProject, 
+  deleteProject, 
+  subscribeToProjects, 
+  ProjectItem 
+} from '@/lib/services/projects-service';
 
 export default function MemberDashboardPage() {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
@@ -45,6 +58,44 @@ export default function MemberDashboardPage() {
   const [districtNewsletter, setDistrictNewsletter] = useState(true);
   const [twoFactorAuth, setTwoFactorAuth] = useState(false);
   const [qrCodeUrl, setQrCodeUrl] = useState('');
+
+  // Projects CRUD State
+  const [dashboardProjects, setDashboardProjects] = useState<ProjectItem[]>([]);
+  const [isProjectModalOpen, setIsProjectModalOpen] = useState(false);
+  const [editingProjectId, setEditingProjectId] = useState<string | null>(null);
+  const [projectForm, setProjectForm] = useState<{
+    title: string;
+    category: string;
+    club: string;
+    location: string;
+    year: string;
+    image: string;
+    description: string;
+    status: 'In Progress' | 'Completed' | 'Upcoming';
+    progress: number;
+    statNumber: string;
+    statLabel: string;
+  }>({
+    title: '',
+    category: 'Healthcare',
+    club: 'Rotaract Club of Ibadan Central',
+    location: 'Ibadan, Oyo State',
+    year: '2026',
+    image: 'https://images.unsplash.com/photo-1509099836639-18ba1795216d?w=900&h=700&fit=crop&auto=format',
+    description: '',
+    status: 'In Progress',
+    progress: 50,
+    statNumber: '1,000',
+    statLabel: 'Beneficiaries'
+  });
+
+  useEffect(() => {
+    setDashboardProjects(getStoredProjects());
+    const unsubscribe = subscribeToProjects((updated) => {
+      setDashboardProjects(updated);
+    });
+    return unsubscribe;
+  }, []);
 
   useEffect(() => {
     const qrData = encodeURIComponent(
@@ -765,114 +816,338 @@ export default function MemberDashboardPage() {
                 </div>
               </div>
             ) : activeNav === 'Projects' ? (
-              /* DEDICATED PROJECTS INVOLVEMENT VIEW */
+              /* DEDICATED PROJECTS INVOLVEMENT & UPLOAD CRUD VIEW */
               <div className="space-y-5 font-sans">
-                <div>
-                  <div className="text-[9.5px] font-semibold text-black/40 tracking-[0.14em] uppercase mb-1.5 font-sans">
-                    My Involvement
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                  <div>
+                    <div className="text-[9.5px] font-semibold text-black/40 tracking-[0.14em] uppercase mb-1 font-sans">
+                      District & Club Initiatives
+                    </div>
+                    <h2 className="text-[22px] font-extrabold text-[#1C1C1E] tracking-tight font-sans">
+                      Projects Management
+                    </h2>
                   </div>
-                  <h2 className="text-[22px] font-extrabold text-[#1C1C1E] tracking-tight font-sans">
-                    Projects
-                  </h2>
+
+                  {/* Upload Project Action Button */}
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setEditingProjectId(null);
+                      setProjectForm({
+                        title: '',
+                        category: 'Healthcare',
+                        club: 'Rotaract Club of Ibadan Central',
+                        location: 'Ibadan, Oyo State',
+                        year: '2026',
+                        image: 'https://images.unsplash.com/photo-1509099836639-18ba1795216d?w=900&h=700&fit=crop&auto=format',
+                        description: '',
+                        status: 'In Progress',
+                        progress: 50,
+                        statNumber: '1,000',
+                        statLabel: 'Beneficiaries'
+                      });
+                      setIsProjectModalOpen(true);
+                    }}
+                    className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#981132] text-white text-xs font-bold hover:bg-[#7D0E29] transition-all shadow-md shadow-[#981132]/25 cursor-pointer shrink-0"
+                  >
+                    <Plus size={15} />
+                    <span>Upload New Project</span>
+                  </button>
                 </div>
 
                 {/* Project Cards List */}
-                <div className="flex flex-col gap-3">
-                  {[
-                    {
-                      id: 'P1',
-                      title: 'Operation Vaccinate 500',
-                      category: 'Healthcare',
-                      members: '12 members',
-                      date: 'Jun 2026',
-                      role: 'Volunteer',
-                      status: 'Completed',
-                      progress: 100,
-                      statusColor: 'text-green-700 bg-green-50 border-green-200',
-                      barColor: 'bg-green-600'
-                    },
-                    {
-                      id: 'P2',
-                      title: 'Digital Skills Academy',
-                      category: 'Education',
-                      members: '24 members',
-                      date: 'Ongoing',
-                      role: 'Team Lead',
-                      status: 'Active',
-                      progress: 68,
-                      statusColor: 'text-[#981132] bg-[#981132]/[0.08] border-[#981132]/20',
-                      barColor: 'bg-[#981132]'
-                    },
-                    {
-                      id: 'P3',
-                      title: 'Green Ibadan Initiative',
-                      category: 'Environment',
-                      members: '38 members',
-                      date: 'Ongoing',
-                      role: 'Volunteer',
-                      status: 'Active',
-                      progress: 44,
-                      statusColor: 'text-[#981132] bg-[#981132]/[0.08] border-[#981132]/20',
-                      barColor: 'bg-[#981132]'
-                    },
-                    {
-                      id: 'P4',
-                      title: 'Literacy for All Campaign',
-                      category: 'Education',
-                      members: '8 members',
-                      date: 'Sep 2026',
-                      role: 'Core Member',
-                      status: 'Planning',
-                      progress: 12,
-                      statusColor: 'text-amber-700 bg-amber-50 border-amber-200',
-                      barColor: 'bg-amber-500'
-                    }
-                  ].map((p) => (
-                    <div 
-                      key={p.id}
-                      className="p-5 rounded-2xl bg-black/[0.024] border border-black/[0.06] hover:border-black/[0.12] transition-colors"
-                    >
-                      {/* Top Title & Badges Row */}
-                      <div className="flex items-start justify-between gap-4 mb-3">
-                        <div>
-                          <div className="text-[13px] font-bold text-[#1C1C1E] mb-1">
-                            {p.title}
-                          </div>
-                          <div className="flex items-center gap-2 text-[9.5px] text-black/40">
-                            <span>{p.category}</span>
-                            <span className="w-1 h-1 rounded-full bg-black/20" />
-                            <span>{p.members}</span>
-                            <span className="w-1 h-1 rounded-full bg-black/20" />
-                            <span>{p.date}</span>
-                          </div>
-                        </div>
+                <div className="flex flex-col gap-3.5">
+                  {dashboardProjects.length === 0 ? (
+                    <div className="text-center py-12 p-6 rounded-2xl bg-black/[0.024] border border-black/[0.06]">
+                      <p className="text-xs text-black/50">No projects uploaded yet.</p>
+                    </div>
+                  ) : (
+                    dashboardProjects.map((p) => {
+                      const isComplete = p.status === 'Completed' || p.progress === 100;
+                      const statusColor = isComplete 
+                        ? 'text-green-700 bg-green-50 border-green-200'
+                        : p.status === 'Upcoming'
+                        ? 'text-amber-700 bg-amber-50 border-amber-200'
+                        : 'text-[#981132] bg-[#981132]/[0.08] border-[#981132]/20';
+                      const barColor = isComplete ? 'bg-green-600' : p.status === 'Upcoming' ? 'bg-amber-500' : 'bg-[#981132]';
 
-                        <div className="flex items-center gap-2 shrink-0">
-                          <span className="px-2 py-0.5 rounded text-[9px] font-semibold bg-[#981132]/[0.09] text-[#981132] border border-[#981132]/20">
-                            {p.role}
-                          </span>
-                          <span className={`px-2 py-0.5 rounded text-[9px] font-semibold border ${p.statusColor}`}>
-                            {p.status}
-                          </span>
+                      return (
+                        <div 
+                          key={p.id}
+                          className="p-5 rounded-2xl bg-white border border-black/[0.08] hover:border-black/[0.15] transition-all shadow-sm hover:shadow-md"
+                        >
+                          <div className="flex flex-col sm:flex-row gap-4">
+                            {/* Project Photo Preview */}
+                            <div className="w-full sm:w-28 sm:h-24 h-36 rounded-xl overflow-hidden shrink-0 border border-black/10 relative bg-black/5">
+                              <img 
+                                src={p.image} 
+                                alt={p.title}
+                                className="w-full h-full object-cover"
+                              />
+                              <span className="absolute bottom-1 left-1 px-1.5 py-0.5 rounded text-[8px] font-black uppercase tracking-wider bg-black/70 text-white backdrop-blur-sm">
+                                {p.category}
+                              </span>
+                            </div>
+
+                            {/* Project Information */}
+                            <div className="flex-1 min-w-0 flex flex-col justify-between">
+                              <div>
+                                <div className="flex items-start justify-between gap-2 mb-1">
+                                  <div className="text-sm font-bold text-[#1C1C1E] truncate">
+                                    {p.title}
+                                  </div>
+                                  <span className={`px-2 py-0.5 rounded text-[9px] font-semibold border ${statusColor} shrink-0`}>
+                                    {p.status}
+                                  </span>
+                                </div>
+
+                                <div className="flex items-center gap-2 text-[10px] text-black/50 mb-1.5 flex-wrap">
+                                  <span className="font-semibold text-black/70">{p.club}</span>
+                                  <span className="w-1 h-1 rounded-full bg-black/20" />
+                                  <span>{p.location}</span>
+                                  <span className="w-1 h-1 rounded-full bg-black/20" />
+                                  <span>{p.year}</span>
+                                </div>
+
+                                {p.description && (
+                                  <p className="text-xs text-black/60 line-clamp-2 mb-2 font-sans">
+                                    {p.description}
+                                  </p>
+                                )}
+                              </div>
+
+                              {/* Progress & Stat Row */}
+                              <div className="pt-2 border-t border-black/[0.05] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                                <div className="flex-1 max-w-xs">
+                                  <div className="flex justify-between text-[9px] mb-1">
+                                    <span className="text-black/40">Execution Progress</span>
+                                    <span className="font-semibold text-black/80">{p.progress}%</span>
+                                  </div>
+                                  <div className="h-1.5 w-full rounded-full bg-black/[0.06] overflow-hidden">
+                                    <div 
+                                      className={`h-full rounded-full transition-all duration-500 ${barColor}`}
+                                      style={{ width: `${p.progress}%` }}
+                                    />
+                                  </div>
+                                </div>
+
+                                {/* Actions: Edit & Delete */}
+                                <div className="flex items-center gap-2 shrink-0">
+                                  <button
+                                    type="button"
+                                    onClick={() => {
+                                      setEditingProjectId(p.id);
+                                      setProjectForm({
+                                        title: p.title,
+                                        category: p.category,
+                                        club: p.club,
+                                        location: p.location,
+                                        year: p.year,
+                                        image: p.image,
+                                        description: p.description || '',
+                                        status: p.status,
+                                        progress: p.progress,
+                                        statNumber: p.statNumber || '1,000',
+                                        statLabel: p.statLabel || 'Beneficiaries'
+                                      });
+                                      setIsProjectModalOpen(true);
+                                    }}
+                                    className="p-1.5 rounded-lg border border-black/10 hover:bg-black/5 text-slate-700 text-xs font-semibold flex items-center gap-1 cursor-pointer transition-colors"
+                                  >
+                                    <Edit3 size={13} />
+                                    <span>Edit</span>
+                                  </button>
+
+                                  <button
+                                    type="button"
+                                    onClick={() => {
+                                      if (confirm(`Are you sure you want to delete "${p.title}"? This will remove it from the public homepage and projects page.`)) {
+                                        deleteProject(p.id);
+                                      }
+                                    }}
+                                    className="p-1.5 rounded-lg border border-red-200 bg-red-50/50 hover:bg-red-100 text-red-700 text-xs font-semibold flex items-center gap-1 cursor-pointer transition-colors"
+                                  >
+                                    <Trash2 size={13} />
+                                    <span>Delete</span>
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
                         </div>
+                      );
+                    })
+                  )}
+                </div>
+
+                {/* Upload & Edit Modal Dialog */}
+                {isProjectModalOpen && (
+                  <div className="fixed inset-0 z-[99999] flex items-center justify-center p-4">
+                    <div 
+                      className="fixed inset-0 bg-black/60 backdrop-blur-sm"
+                      onClick={() => setIsProjectModalOpen(false)}
+                    />
+
+                    <div className="relative w-full max-w-lg bg-white rounded-3xl border border-black/10 shadow-2xl p-6 sm:p-7 z-10 max-h-[90vh] overflow-y-auto font-sans">
+                      <div className="flex items-center justify-between pb-3 mb-4 border-b border-black/[0.08]">
+                        <div>
+                          <div className="text-[9.5px] font-bold uppercase tracking-wider text-[#981132]">
+                            Project Management
+                          </div>
+                          <h3 className="text-lg font-black text-[#1C1C1E]">
+                            {editingProjectId ? 'Edit Project' : 'Upload & Save Project'}
+                          </h3>
+                        </div>
+                        <button
+                          type="button"
+                          onClick={() => setIsProjectModalOpen(false)}
+                          className="w-8 h-8 rounded-full bg-black/5 hover:bg-black/10 flex items-center justify-center text-slate-600 transition-colors"
+                        >
+                          <X size={16} />
+                        </button>
                       </div>
 
-                      {/* Progress Bar Container */}
-                      <div>
-                        <div className="flex justify-between text-[9px] mb-1.5">
-                          <span className="text-black/40">Progress</span>
-                          <span className="font-semibold text-black/80">{p.progress}%</span>
-                        </div>
-                        <div className="h-1.5 w-full rounded-full bg-black/[0.06] overflow-hidden">
-                          <div 
-                            className={`h-full rounded-full transition-all duration-500 ${p.barColor}`}
-                            style={{ width: `${p.progress}%` }}
+                      {/* Project Form Fields */}
+                      <div className="space-y-4 text-xs">
+                        {/* Title */}
+                        <div className="flex flex-col gap-1">
+                          <label className="text-[10px] font-bold uppercase text-black/50">Project Title *</label>
+                          <input
+                            type="text"
+                            placeholder="e.g. Operation Vaccinate 500"
+                            value={projectForm.title}
+                            onChange={(e) => setProjectForm(prev => ({ ...prev, title: e.target.value }))}
+                            className="w-full px-3.5 py-2.5 rounded-xl bg-black/[0.03] border border-black/10 outline-none focus:border-[#981132] focus:bg-white transition-all text-xs"
                           />
+                        </div>
+
+                        {/* Category & Status Row */}
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                          <div className="flex flex-col gap-1">
+                            <label className="text-[10px] font-bold uppercase text-black/50">Category</label>
+                            <select
+                              value={projectForm.category}
+                              onChange={(e) => setProjectForm(prev => ({ ...prev, category: e.target.value }))}
+                              className="w-full px-3.5 py-2.5 rounded-xl bg-black/[0.03] border border-black/10 outline-none focus:border-[#981132] focus:bg-white transition-all text-xs cursor-pointer"
+                            >
+                              <option value="Healthcare">Healthcare</option>
+                              <option value="WASH">WASH (Water & Sanitation)</option>
+                              <option value="Education">Education & Literacy</option>
+                              <option value="Environment">Environment</option>
+                              <option value="Food Security">Food Security</option>
+                              <option value="Empowerment">Youth Empowerment</option>
+                            </select>
+                          </div>
+
+                          <div className="flex flex-col gap-1">
+                            <label className="text-[10px] font-bold uppercase text-black/50">Status</label>
+                            <select
+                              value={projectForm.status}
+                              onChange={(e) => setProjectForm(prev => ({ ...prev, status: e.target.value as any }))}
+                              className="w-full px-3.5 py-2.5 rounded-xl bg-black/[0.03] border border-black/10 outline-none focus:border-[#981132] focus:bg-white transition-all text-xs cursor-pointer"
+                            >
+                              <option value="In Progress">In Progress</option>
+                              <option value="Completed">Completed</option>
+                              <option value="Upcoming">Upcoming</option>
+                            </select>
+                          </div>
+                        </div>
+
+                        {/* Club & Location Row */}
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                          <div className="flex flex-col gap-1">
+                            <label className="text-[10px] font-bold uppercase text-black/50">Organizing Club</label>
+                            <input
+                              type="text"
+                              value={projectForm.club}
+                              onChange={(e) => setProjectForm(prev => ({ ...prev, club: e.target.value }))}
+                              className="w-full px-3.5 py-2.5 rounded-xl bg-black/[0.03] border border-black/10 outline-none focus:border-[#981132] focus:bg-white transition-all text-xs"
+                            />
+                          </div>
+
+                          <div className="flex flex-col gap-1">
+                            <label className="text-[10px] font-bold uppercase text-black/50">Location / State</label>
+                            <input
+                              type="text"
+                              value={projectForm.location}
+                              onChange={(e) => setProjectForm(prev => ({ ...prev, location: e.target.value }))}
+                              className="w-full px-3.5 py-2.5 rounded-xl bg-black/[0.03] border border-black/10 outline-none focus:border-[#981132] focus:bg-white transition-all text-xs"
+                            />
+                          </div>
+                        </div>
+
+                        {/* Progress % Slider */}
+                        <div className="flex flex-col gap-1">
+                          <div className="flex items-center justify-between">
+                            <label className="text-[10px] font-bold uppercase text-black/50">Progress (%)</label>
+                            <span className="font-bold text-[#981132]">{projectForm.progress}%</span>
+                          </div>
+                          <input
+                            type="range"
+                            min="0"
+                            max="100"
+                            value={projectForm.progress}
+                            onChange={(e) => setProjectForm(prev => ({ ...prev, progress: Number(e.target.value) }))}
+                            className="w-full accent-[#981132] cursor-pointer"
+                          />
+                        </div>
+
+                        {/* Photo / Image URL */}
+                        <div className="flex flex-col gap-1">
+                          <label className="text-[10px] font-bold uppercase text-black/50">Cover Photo URL</label>
+                          <input
+                            type="url"
+                            placeholder="https://..."
+                            value={projectForm.image}
+                            onChange={(e) => setProjectForm(prev => ({ ...prev, image: e.target.value }))}
+                            className="w-full px-3.5 py-2.5 rounded-xl bg-black/[0.03] border border-black/10 outline-none focus:border-[#981132] focus:bg-white transition-all text-xs"
+                          />
+                        </div>
+
+                        {/* Description */}
+                        <div className="flex flex-col gap-1">
+                          <label className="text-[10px] font-bold uppercase text-black/50">Project Description</label>
+                          <textarea
+                            rows={3}
+                            placeholder="Briefly describe the impact, target beneficiaries, and community milestone..."
+                            value={projectForm.description}
+                            onChange={(e) => setProjectForm(prev => ({ ...prev, description: e.target.value }))}
+                            className="w-full px-3.5 py-2.5 rounded-xl bg-black/[0.03] border border-black/10 outline-none focus:border-[#981132] focus:bg-white transition-all text-xs font-sans resize-none"
+                          />
+                        </div>
+
+                        {/* Action Buttons */}
+                        <div className="pt-2 flex items-center justify-end gap-3 border-t border-black/[0.08]">
+                          <button
+                            type="button"
+                            onClick={() => setIsProjectModalOpen(false)}
+                            className="px-4 py-2 rounded-xl bg-black/5 hover:bg-black/10 text-slate-700 font-semibold text-xs transition-colors"
+                          >
+                            Cancel
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => {
+                              if (!projectForm.title.trim()) {
+                                alert('Please enter a project title.');
+                                return;
+                              }
+                              if (editingProjectId) {
+                                updateProject(editingProjectId, projectForm);
+                              } else {
+                                saveProject(projectForm);
+                              }
+                              setIsProjectModalOpen(false);
+                            }}
+                            className="px-5 py-2 rounded-xl bg-[#981132] text-white font-bold text-xs hover:bg-[#7D0E29] transition-colors shadow-md shadow-[#981132]/30"
+                          >
+                            {editingProjectId ? 'Save Changes' : 'Publish Project'}
+                          </button>
                         </div>
                       </div>
                     </div>
-                  ))}
-                </div>
+                  </div>
+                )}
               </div>
             ) : activeNav === 'Events' ? (
               /* DEDICATED EVENTS & MEETINGS VIEW */

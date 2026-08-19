@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import Link from 'next/link';
 import { 
   Search, 
@@ -20,188 +20,44 @@ import {
 } from 'lucide-react';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
-
-interface Project {
-  id: string;
-  title: string;
-  category: 'Healthcare' | 'WASH' | 'Education' | 'Environment' | 'Food Security' | 'Empowerment';
-  year: string;
-  club: string;
-  location: string;
-  image: string;
-  height: string; // For dynamic masonry feel
-  stats: {
-    icon: 'heart' | 'users' | 'zap' | 'droplets' | 'book' | 'leaf' | 'pin';
-    value: string;
-    label: string;
-  }[];
-}
-
-const projectsData: Project[] = [
-  {
-    id: '1',
-    title: 'Operation Vaccinate 500',
-    category: 'Healthcare',
-    year: '2024',
-    club: 'Rotaract Club of LAUTECH',
-    location: 'Ogbomoso, Oyo State',
-    image: 'https://images.unsplash.com/photo-1509099836639-18ba1795216d?w=900&h=700&fit=crop&auto=format',
-    height: 'h-[380px]',
-    stats: [
-      { icon: 'heart', value: '500', label: 'Children Vaccinated' },
-      { icon: 'users', value: '12', label: 'Medical Volunteers' },
-      { icon: 'pin', value: '3', label: 'Communities Reached' }
-    ]
-  },
-  {
-    id: '2',
-    title: 'Clean Water for Offa',
-    category: 'WASH',
-    year: '2024',
-    club: 'Rotaract Club of Offa',
-    location: 'Offa, Kwara State',
-    image: 'https://images.unsplash.com/photo-1760873059715-7c7cfbe2a2c6?w=900&h=600&fit=crop&auto=format',
-    height: 'h-[280px]',
-    stats: [
-      { icon: 'droplets', value: '2', label: 'Boreholes Constructed' },
-      { icon: 'users', value: '1,200', label: 'Beneficiaries' },
-      { icon: 'zap', value: '₦48K', label: 'Community Investment' }
-    ]
-  },
-  {
-    id: '3',
-    title: 'Digital Skills Academy',
-    category: 'Education',
-    year: '2023',
-    club: 'Rotaract Club of Ibadan Central',
-    location: 'Ibadan, Oyo State',
-    image: 'https://images.unsplash.com/photo-1620829813573-7c9e1877706f?w=900&h=700&fit=crop&auto=format',
-    height: 'h-[260px]',
-    stats: [
-      { icon: 'users', value: '2,400', label: 'Youth Trained' },
-      { icon: 'book', value: '8', label: 'Training Centres' },
-      { icon: 'zap', value: '94%', label: 'Job Placement Rate' }
-    ]
-  },
-  {
-    id: '4',
-    title: 'Green Ibadan Initiative',
-    category: 'Environment',
-    year: '2024',
-    club: 'Rotaract Club of University of Ibadan',
-    location: 'Ibadan, Oyo State',
-    image: 'https://images.unsplash.com/photo-1598335624134-5bceb5de202d?w=900&h=600&fit=crop&auto=format',
-    height: 'h-[280px]',
-    stats: [
-      { icon: 'leaf', value: '5,000', label: 'Trees Planted' },
-      { icon: 'users', value: '340', label: 'Volunteers' },
-      { icon: 'pin', value: '7', label: 'Forest Zones' }
-    ]
-  },
-  {
-    id: '5',
-    title: 'End Polio Awareness Walk',
-    category: 'Healthcare',
-    year: '2023',
-    club: 'Rotaract Club of Akure',
-    location: 'Akure, Ondo State',
-    image: 'https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=900&h=600&fit=crop&auto=format',
-    height: 'h-[300px]',
-    stats: [
-      { icon: 'users', value: '600+', label: 'Walkers' },
-      { icon: 'zap', value: '₦1.2M', label: 'Funds Raised' },
-      { icon: 'pin', value: '14', label: 'Clubs Participating' }
-    ]
-  },
-  {
-    id: '6',
-    title: 'Feed the Street Osogbo',
-    category: 'Food Security',
-    year: '2024',
-    club: 'Rotaract Club of Osogbo Central',
-    location: 'Osogbo, Osun State',
-    image: 'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=900&h=600&fit=crop&auto=format',
-    height: 'h-[360px]',
-    stats: [
-      { icon: 'heart', value: '3,200', label: 'Meals Distributed' },
-      { icon: 'users', value: '85', label: 'Volunteers' },
-      { icon: 'pin', value: '5', label: 'Distribution Points' }
-    ]
-  },
-  {
-    id: '7',
-    title: 'Blood Donation Drive',
-    category: 'Healthcare',
-    year: '2023',
-    club: 'Rotaract Club of University of Ibadan',
-    location: 'Ibadan, Oyo State',
-    image: 'https://images.unsplash.com/flagged/photo-1555251255-e9a095d6eb9d?w=900&h=700&fit=crop&auto=format',
-    height: 'h-[280px]',
-    stats: [
-      { icon: 'heart', value: '850', label: 'Units Collected' },
-      { icon: 'users', value: '28', label: 'Hospitals Supplied' },
-      { icon: 'zap', value: '3', label: 'Drive Days' }
-    ]
-  },
-  {
-    id: '8',
-    title: 'Literacy For All Campaign',
-    category: 'Education',
-    year: '2023',
-    club: 'Rotaract Club of Lokoja',
-    location: 'Lokoja, Kogi State',
-    image: 'https://images.unsplash.com/photo-1627423893729-3a79f48ff473?w=900&h=600&fit=crop&auto=format',
-    height: 'h-[260px]',
-    stats: [
-      { icon: 'book', value: '1,200', label: 'Adults Trained' },
-      { icon: 'users', value: '60', label: 'Volunteer Teachers' },
-      { icon: 'pin', value: '9', label: 'Learning Centres' }
-    ]
-  },
-  {
-    id: '9',
-    title: 'Water Pump Installation',
-    category: 'WASH',
-    year: '2024',
-    club: 'Rotaract Club of Minna',
-    location: 'Minna, Niger State',
-    image: 'https://images.unsplash.com/photo-1611502029437-54521b5e6ada?w=900&h=700&fit=crop&auto=format',
-    height: 'h-[380px]',
-    stats: [
-      { icon: 'droplets', value: '4', label: 'Pumps Installed' },
-      { icon: 'users', value: '3,400', label: 'Daily Users' },
-      { icon: 'pin', value: '4', label: 'Villages Served' }
-    ]
-  }
-];
+import { getStoredProjects, subscribeToProjects, ProjectItem } from '@/lib/services/projects-service';
 
 const categoryColors: Record<string, { bg: string; border: string; text: string }> = {
   Healthcare: { bg: 'rgba(217, 27, 92, 0.133)', border: 'rgba(217, 27, 92, 0.267)', text: '#D91B5C' },
   WASH: { bg: 'rgba(27, 140, 217, 0.133)', border: 'rgba(27, 140, 217, 0.267)', text: '#1B8CD9' },
-  Education: { bg: 'rgba(139, 27, 217, 0.133)', border: 'rgba(139, 27, 217, 0.267)', text: '#8B1BD9' },
-  Environment: { bg: 'rgba(22, 163, 74, 0.133)', border: 'rgba(22, 163, 74, 0.267)', text: '#16A34A' },
-  'Food Security': { bg: 'rgba(217, 119, 27, 0.133)', border: 'rgba(217, 119, 27, 0.267)', text: '#D9771B' },
-  Empowerment: { bg: 'rgba(212, 165, 32, 0.133)', border: 'rgba(212, 165, 32, 0.267)', text: '#D4A520' }
+  Education: { bg: 'rgba(212, 165, 32, 0.133)', border: 'rgba(212, 165, 32, 0.267)', text: '#D4A520' },
+  Environment: { bg: 'rgba(34, 197, 94, 0.133)', border: 'rgba(34, 197, 94, 0.267)', text: '#22C55E' },
+  'Food Security': { bg: 'rgba(249, 115, 22, 0.133)', border: 'rgba(249, 115, 22, 0.267)', text: '#F97316' },
+  Empowerment: { bg: 'rgba(168, 85, 247, 0.133)', border: 'rgba(168, 85, 247, 0.267)', text: '#A855F7' }
 };
 
 export default function ProjectsPage() {
+  const [projectsList, setProjectsList] = useState<ProjectItem[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [activeSlide, setActiveSlide] = useState<number>(0);
 
-  const categories = ['All', 'Healthcare', 'WASH', 'Education', 'Environment', 'Food Security'];
+  useEffect(() => {
+    setProjectsList(getStoredProjects());
+    const unsubscribe = subscribeToProjects((updated) => {
+      setProjectsList(updated);
+    });
+    return unsubscribe;
+  }, []);
 
-  const featuredProjects = useMemo(() => projectsData.slice(0, 3), []);
+  const categories = ['All', 'Healthcare', 'WASH', 'Education', 'Environment', 'Food Security', 'Empowerment'];
+
+  const featuredProjects = useMemo(() => projectsList.slice(0, 3), [projectsList]);
 
   const filteredProjects = useMemo(() => {
-    return projectsData.filter((p) => {
-      const matchCategory = selectedCategory === 'All' || p.category === selectedCategory;
+    return projectsList.filter((p) => {
+      const matchCategory = selectedCategory === 'All' || p.category.toLowerCase() === selectedCategory.toLowerCase();
       const matchSearch = p.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
                           p.location.toLowerCase().includes(searchQuery.toLowerCase()) ||
                           p.club.toLowerCase().includes(searchQuery.toLowerCase());
       return matchCategory && matchSearch;
     });
-  }, [selectedCategory, searchQuery]);
+  }, [projectsList, selectedCategory, searchQuery]);
 
   const renderIcon = (icon: string, color: string) => {
     switch (icon) {
@@ -341,7 +197,9 @@ export default function ProjectsPage() {
                         </h2>
 
                         <div className="flex items-center gap-4 flex-wrap">
-                          {p.stats.map((s, sIdx) => (
+                          {(p.stats && p.stats.length > 0 ? p.stats : [
+                            { icon: 'users', value: p.statNumber || '1,000+', label: p.statLabel || 'Impact' }
+                          ]).map((s, sIdx) => (
                             <div key={sIdx} className="flex items-center gap-1.5 font-sans">
                               {renderIcon(s.icon, '#D91B5C')}
                               <span className="font-black text-white text-sm">{s.value}</span>
@@ -495,7 +353,7 @@ export default function ProjectsPage() {
               return (
                 <div key={p.id} className="break-inside-avoid mb-5">
                   <div 
-                    className={`relative overflow-hidden rounded-2xl cursor-pointer group shadow-lg ${p.height}`}
+                    className={`relative overflow-hidden rounded-2xl cursor-pointer group shadow-lg ${p.height || 'h-[300px]'}`}
                     style={{ border: '1px solid rgba(0, 0, 0, 0.08)' }}
                   >
                     <img 
@@ -545,7 +403,9 @@ export default function ProjectsPage() {
 
                       {/* Stat Metrics Row */}
                       <div className="flex flex-wrap gap-x-4 gap-y-2">
-                        {p.stats.map((s, sIdx) => (
+                        {(p.stats && p.stats.length > 0 ? p.stats : [
+                          { icon: 'users', value: p.statNumber || '1,000+', label: p.statLabel || 'Impact' }
+                        ]).map((s, sIdx) => (
                           <div key={sIdx} className="flex items-center gap-1.5 font-sans">
                             {renderIcon(s.icon, theme.text)}
                             <span className="font-black text-white text-sm">{s.value}</span>
