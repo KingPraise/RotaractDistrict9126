@@ -350,9 +350,155 @@ export default function MemberDashboardPage() {
         {/* Dashboard 2-Column Split: Analytics (Left) & Digital ID (Right) */}
         <div className="flex-1 flex flex-col lg:flex-row overflow-hidden">
           
-          {/* Middle Analytics / Projects / Events / Identity Card Column */}
+          {/* Middle Analytics / Dues / Projects / Events / Identity Card Column */}
           <div className="flex-1 overflow-y-auto p-6 space-y-5">
-            {activeNav === 'Projects' ? (
+            {activeNav === 'Dues & Payments' ? (
+              /* DEDICATED DUES & PAYMENTS VIEW */
+              <div className="space-y-5 font-sans">
+                <div>
+                  <div className="text-[9.5px] font-semibold text-black/40 tracking-[0.14em] uppercase mb-1.5 font-sans">
+                    Financials
+                  </div>
+                  <h2 className="text-[22px] font-extrabold text-[#1C1C1E] tracking-tight font-sans">
+                    Dues & Payments
+                  </h2>
+                </div>
+
+                {/* 3-Card Financial Summary Matrix */}
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                  {/* Current Status */}
+                  <div className="p-4 rounded-2xl bg-green-500/[0.03] border border-green-500/[0.14] flex flex-col justify-between">
+                    <div className="text-[9px] font-semibold text-black/40 tracking-wider uppercase mb-2">
+                      Current Status
+                    </div>
+                    <div className="text-[22px] font-extrabold text-green-600 leading-none">
+                      Cleared
+                    </div>
+                    <div className="text-[10px] text-green-700/80 mt-2 font-medium">
+                      Paid on Jul 1, 2026
+                    </div>
+                  </div>
+
+                  {/* Next Due */}
+                  <div className="p-4 rounded-2xl bg-black/[0.024] border border-black/[0.06] flex flex-col justify-between">
+                    <div className="text-[9px] font-semibold text-black/40 tracking-wider uppercase mb-2">
+                      Next Due
+                    </div>
+                    <div className="text-[22px] font-extrabold text-[#D4A520] leading-none">
+                      ₦4,500
+                    </div>
+                    <div className="text-[10px] text-black/40 mt-2">
+                      Due Aug 31, 2026
+                    </div>
+                  </div>
+
+                  {/* Consecutive Terms */}
+                  <div className="p-4 rounded-2xl bg-black/[0.024] border border-black/[0.06] flex flex-col justify-between">
+                    <div className="text-[9px] font-semibold text-black/40 tracking-wider uppercase mb-2">
+                      Consecutive Terms
+                    </div>
+                    <div className="text-[22px] font-extrabold text-[#981132] leading-none">
+                      4
+                    </div>
+                    <div className="text-[10px] text-black/40 mt-2">
+                      terms cleared in a row
+                    </div>
+                  </div>
+                </div>
+
+                {/* Payment History Ledger Table */}
+                <div className="rounded-2xl bg-black/[0.024] border border-black/[0.06] shadow-sm overflow-hidden">
+                  {/* Table Header Row */}
+                  <div className="p-4 border-b border-black/[0.06] flex items-center justify-between">
+                    <span className="text-xs font-bold text-[#1C1C1E]">
+                      Payment History
+                    </span>
+                    <button 
+                      onClick={() => alert('Exporting Payment Receipts…')}
+                      className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-black/[0.04] border border-black/[0.08] text-[11px] text-black/70 hover:bg-black/[0.08] transition-colors cursor-pointer"
+                    >
+                      <Download size={12}/> Export
+                    </button>
+                  </div>
+
+                  {/* Grid Table */}
+                  <div className="overflow-x-auto">
+                    <div className="min-w-[560px]">
+                      {/* Column Titles */}
+                      <div className="grid grid-cols-[1.4fr_1fr_0.8fr_1fr_1fr] px-4 py-2 border-b border-black/[0.06] text-[9px] font-bold text-black/40 uppercase tracking-wider">
+                        <span>Reference</span>
+                        <span>Period</span>
+                        <span>Amount</span>
+                        <span>Status</span>
+                        <span>Date & Method</span>
+                      </div>
+
+                      {/* Rows */}
+                      <div className="divide-y divide-black/[0.04]">
+                        {[
+                          {
+                            ref: 'PAY-2026-Q2',
+                            period: 'Q2 2026 (Apr–Jun)',
+                            amount: '₦4,500',
+                            status: 'Cleared',
+                            date: 'Jul 1, 2026',
+                            method: 'Bank Transfer'
+                          },
+                          {
+                            ref: 'PAY-2026-Q1',
+                            period: 'Q1 2026 (Jan–Mar)',
+                            amount: '₦4,500',
+                            status: 'Cleared',
+                            date: 'Apr 2, 2026',
+                            method: 'Bank Transfer'
+                          },
+                          {
+                            ref: 'PAY-2025-Q4',
+                            period: 'Q4 2025 (Oct–Dec)',
+                            amount: '₦4,000',
+                            status: 'Cleared',
+                            date: 'Jan 5, 2026',
+                            method: 'Bank Transfer'
+                          },
+                          {
+                            ref: 'PAY-2025-Q3',
+                            period: 'Q3 2025 (Jul–Sep)',
+                            amount: '₦4,000',
+                            status: 'Cleared',
+                            date: 'Oct 3, 2025',
+                            method: 'Cash'
+                          }
+                        ].map((row) => (
+                          <div 
+                            key={row.ref}
+                            className="grid grid-cols-[1.4fr_1fr_0.8fr_1fr_1fr] items-center px-4 py-3 text-xs hover:bg-black/[0.02] transition-colors"
+                          >
+                            <span className="font-mono text-[10px] text-black/40">
+                              {row.ref}
+                            </span>
+                            <span className="text-[11px] text-black/60">
+                              {row.period}
+                            </span>
+                            <span className="font-bold text-[#1C1C1E]">
+                              {row.amount}
+                            </span>
+                            <div>
+                              <span className="inline-block text-[10px] font-semibold text-green-700 bg-green-50 border border-green-200 px-2.5 py-0.5 rounded-full">
+                                {row.status}
+                              </span>
+                            </div>
+                            <div>
+                              <div className="text-[11px] text-black/60">{row.date}</div>
+                              <div className="text-[9px] text-black/40">{row.method}</div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ) : activeNav === 'Projects' ? (
               /* DEDICATED PROJECTS INVOLVEMENT VIEW */
               <div className="space-y-5 font-sans">
                 <div>
