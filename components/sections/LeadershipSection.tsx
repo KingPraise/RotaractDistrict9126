@@ -14,18 +14,18 @@ export default function LeadershipSection() {
       fallbackImage: "https://images.unsplash.com/photo-1644152993066-9b9ee687930d?w=480&h=580&fit=crop&auto=format"
     },
     {
-      name: "Rtr. PP Oyewumi Kamaldeen",
+      name: "Rtr. PP Raji Abeeb Adekola",
       role: "Immediate Past DRR",
       tooltip: "IPDRR",
-      image: "/images/leaders/drr-oyewumi-kamaldeen.jpg",
-      fallbackImage: "https://images.unsplash.com/photo-1533108344127-a586d2b02479?w=480&h=580&fit=crop&auto=format"
+      image: "/images/leaders/drr-raji-abeeb.jpg",
+      fallbackImage: "https://images.unsplash.com/photo-1629145810320-aec9e63dd798?w=480&h=580&fit=crop&auto=format"
     },
     {
-      name: "Rtr. Chukwuemeka Obi",
-      role: "Director of Service Projects",
-      tooltip: null,
-      image: "/images/leaders/leader-service.jpg",
-      fallbackImage: "https://images.unsplash.com/photo-1614023342667-6f060e9d1e04?w=480&h=580&fit=crop&auto=format"
+      name: "Rtr. PP Oyewumi Kamaldeen",
+      role: "Inaugural 1st DRR & Advisory Chair",
+      tooltip: "PHF",
+      image: "/images/leaders/drr-oyewumi-kamaldeen.jpg",
+      fallbackImage: "https://images.unsplash.com/photo-1533108344127-a586d2b02479?w=480&h=580&fit=crop&auto=format"
     },
     {
       name: "Rtr. PP Faleye Ifeoluwa",

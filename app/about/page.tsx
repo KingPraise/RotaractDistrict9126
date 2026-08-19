@@ -70,48 +70,57 @@ const redistrictingTimeline = [
 
 const pastLeaders = [
   {
-    tenure: '2023–2024',
-    title: '15th DRR (District 9125 Transition Era)',
-    name: 'Rtr. PP Adebayo Sodiq Babatunde',
-    credentials: 'PHF+1, Past President',
-    theme: 'Create Hope in the World',
-    roleNote: 'Guided the transitional phase leading to the official charter of District 9126.',
-    image: '/images/leaders/drr-adebayo-sodiq.jpg',
-    fallbackImage: 'https://images.unsplash.com/photo-1602009786436-96b827675d32?w=480&h=580&fit=crop&auto=format',
-    badge: 'D9125 Lineage'
-  },
-  {
     tenure: '2024–2025',
-    title: 'Inaugural 1st DRR (District 9126 Foundation)',
-    name: 'Rtr. PP Oyewumi Kamaldeen',
-    credentials: 'PHF, IPDRR',
+    order: '1st DRR',
+    title: 'Inaugural 1st District Rotaract Representative',
+    name: 'Rtr. PP Oyewumi Kamaldeen Adeshina',
+    credentials: 'PHF, FEIPA, Past President',
     theme: 'The Magic of Rotary',
-    roleNote: 'Pioneered the foundation of District 9126 across the 7 constituent states.',
+    roleNote: 'Inaugural DRR who established the sovereign governance structure, district bylaws, and official charter of District 9126 across all 7 constituent states.',
     image: '/images/leaders/drr-oyewumi-kamaldeen.jpg',
     fallbackImage: 'https://images.unsplash.com/photo-1533108344127-a586d2b02479?w=480&h=580&fit=crop&auto=format',
-    badge: 'Inaugural Era'
+    badge: '1st DRR · Inaugural Era',
+    accentColor: '#981132'
   },
   {
     tenure: '2025–2026',
-    title: '2nd DRR (Consolidation Era)',
-    name: 'Rtr. PP Folake Adesanya',
-    credentials: 'PP, Paul Harris Fellow',
-    theme: 'Unite for Impact',
-    roleNote: 'Consolidated district infrastructure, digital intake, and cross-state programs.',
-    image: '/images/leader-finance.jpg',
+    order: '2nd DRR',
+    title: '2nd District Rotaract Representative',
+    name: 'Rtr. PP Raji Abeeb Adekola',
+    credentials: 'Past President, Paul Harris Fellow',
+    theme: 'Unite for Greater Impact',
+    roleNote: '2nd DRR who consolidated district operations, cross-state programs, youth leadership institutes, automated dues protocols, and club vitality.',
+    image: '/images/leaders/drr-raji-abeeb.jpg',
     fallbackImage: 'https://images.unsplash.com/photo-1629145810320-aec9e63dd798?w=480&h=580&fit=crop&auto=format',
-    badge: 'Consolidation Era'
+    badge: '2nd DRR · Consolidation Era',
+    accentColor: '#D91B5C'
   },
   {
     tenure: '2026–2027',
-    title: 'Sitting 3rd DRR (Current Administration)',
+    order: '3rd DRR',
+    title: 'Sitting 3rd District Rotaract Representative',
     name: 'Rtr. PP Adaramoye Iyanuoluwa',
     credentials: 'DRR, Past President',
     theme: 'Creating Lasting Impact',
-    roleNote: 'Current executive leadership driving expansion and member digital identity.',
+    roleNote: 'Presiding District Rotaract Representative driving digital transformation, verified member credentials, and maternal & child health outreach.',
     image: '/images/leaders/drr-adaramoye-iyanuoluwa.jpg',
     fallbackImage: 'https://images.unsplash.com/photo-1644152993066-9b9ee687930d?w=480&h=580&fit=crop&auto=format',
-    badge: 'Current DRR'
+    badge: '3rd DRR · Present Administration',
+    accentColor: '#D4A520',
+    isCurrent: true
+  },
+  {
+    tenure: '2023–2024',
+    order: 'D9125 Precursor',
+    title: '15th & Final DRR (District 9125 Transition Era)',
+    name: 'Rtr. PP Adebayo Sodiq Babatunde',
+    credentials: 'PHF+1, Past President',
+    theme: 'Create Hope in the World',
+    roleNote: '15th and final DRR of District 9125 who shepherded the historic creation and Rotary International Board approval of District 9126.',
+    image: '/images/leaders/drr-adebayo-sodiq.jpg',
+    fallbackImage: 'https://images.unsplash.com/photo-1602009786436-96b827675d32?w=480&h=580&fit=crop&auto=format',
+    badge: 'D9125 Precursor · Transition',
+    accentColor: '#4338CA'
   }
 ];
 
@@ -139,19 +148,31 @@ const currentTeam: LeaderMember[] = [
     dept: 'Executive Office',
     email: 'drr@rotaractdistrict9126.com.ng',
     phone: '+234 800 912 6001',
-    bio: 'Presiding District Rotaract Representative for the 2026/2027 Rotary Year. Steering digital transformation, member verified credentials, and flagship maternal & child health outreach across 7 states.'
+    bio: 'Presiding 3rd District Rotaract Representative for the 2026/2027 Rotary Year. Steering digital transformation, member verified credentials, and flagship maternal & child health outreach across 7 states.'
   },
   {
     id: 'ipdrr',
-    name: 'Rtr. PP Oyewumi Kamaldeen',
+    name: 'Rtr. PP Raji Abeeb Adekola',
     role: 'Immediate Past DRR',
     tooltip: 'IPDRR',
-    image: '/images/leaders/drr-oyewumi-kamaldeen.jpg',
-    fallbackImage: 'https://images.unsplash.com/photo-1533108344127-a586d2b02479?w=480&h=580&fit=crop&auto=format',
+    image: '/images/leaders/drr-raji-abeeb.jpg',
+    fallbackImage: 'https://images.unsplash.com/photo-1629145810320-aec9e63dd798?w=480&h=580&fit=crop&auto=format',
     dept: 'Advisory Council',
     email: 'ipdrr@rotaractdistrict9126.com.ng',
     phone: '+234 800 912 6002',
-    bio: 'Inaugural DRR who established the sovereign structures of District 9126 during the 2024/2025 chartering era. Advises on executive alignment, governance, and institutional continuity.'
+    bio: '2nd DRR of District 9126 (2025/2026). Advises on executive alignment, leadership institutes, governance, and institutional continuity.'
+  },
+  {
+    id: 'founding-drr',
+    name: 'Rtr. PP Oyewumi Kamaldeen Adeshina',
+    role: 'Inaugural 1st DRR & Advisory Chair',
+    tooltip: 'PHF',
+    image: '/images/leaders/drr-oyewumi-kamaldeen.jpg',
+    fallbackImage: 'https://images.unsplash.com/photo-1533108344127-a586d2b02479?w=480&h=580&fit=crop&auto=format',
+    dept: 'Council of Past DRRs',
+    email: 'foundingdrr@rotaractdistrict9126.com.ng',
+    phone: '+234 800 912 6003',
+    bio: 'Inaugural DRR who established the sovereign structures of District 9126 during the 2024/2025 chartering era. Serves as senior counsel for executive policy and inter-district alliances.'
   },
   {
     id: 'sec',
@@ -162,37 +183,25 @@ const currentTeam: LeaderMember[] = [
     fallbackImage: 'https://images.unsplash.com/photo-1629145810320-aec9e63dd798?w=480&h=580&fit=crop&auto=format',
     dept: 'Secretariat',
     email: 'secretary@rotaractdistrict9126.com.ng',
-    phone: '+234 800 912 6003',
+    phone: '+234 800 912 6004',
     bio: 'Manages the district secretariat, official records, administrative correspondence, and inter-club communication across all 77 chartered clubs.'
   },
   {
     id: 'treasurer',
-    name: 'Rtr. PP Odufuwa Omotoke',
+    name: 'Rtr. PP Odufuwa Omotoke Anita',
     role: 'District Treasurer',
     tooltip: 'PP',
     image: '/images/leaders/leader-treasurer-odufuwa.jpg',
     fallbackImage: 'https://images.unsplash.com/photo-1650490323009-96fc950a959c?w=480&h=580&fit=crop&auto=format',
     dept: 'Finance & Accounts',
     email: 'treasury@rotaractdistrict9126.com.ng',
-    phone: '+234 800 912 6004',
+    phone: '+234 800 912 6005',
     bio: 'Directs the district fiscal strategy, automated club dues reconciliations, project budgets, and transparent audit reports.'
   },
   {
-    id: 'service',
-    name: 'Rtr. Chukwuemeka Obi',
-    role: 'Director of Service Projects',
-    tooltip: null,
-    image: '/images/leaders/leader-service.jpg',
-    fallbackImage: 'https://images.unsplash.com/photo-1614023342667-6f060e9d1e04?w=480&h=580&fit=crop&auto=format',
-    dept: 'Service Projects',
-    email: 'service@rotaractdistrict9126.com.ng',
-    phone: '+234 800 912 6005',
-    bio: 'Coordinates high-impact community interventions, water borehole projects, literacy drives, and multi-club joint service days across all 7 constituent states.'
-  },
-  {
     id: 'advisor',
-    name: 'Rtr. PP Adebayo Sodiq',
-    role: 'Strategic Advisor',
+    name: 'Rtr. PP Adebayo Sodiq Babatunde',
+    role: 'Strategic Advisor (15th DRR D9125)',
     tooltip: 'PHF+1',
     image: '/images/leaders/drr-adebayo-sodiq.jpg',
     fallbackImage: 'https://images.unsplash.com/photo-1602009786436-96b827675d32?w=480&h=580&fit=crop&auto=format',
@@ -776,19 +785,60 @@ export default function AboutPage() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="text-center mb-14"
+            className="text-center mb-12"
           >
             <span className="text-[10px] font-bold tracking-[0.3em] uppercase text-[#981132] font-sans">
-              Leadership Succession
+              District 9126 Leadership Succession
             </span>
             <h2 className="text-3xl md:text-5xl font-black tracking-tight text-[#1C1C1E] mt-2 mb-3 font-sans">
-              Hall of Past & Sitting Leaders
+              Order of DRR Leadership (1st to Present)
             </h2>
-            <p className="max-w-xl mx-auto text-gray-600 text-sm md:text-base font-sans">
-              Chronological lineage of District Rotaract Representatives steering the transition, chartering, and expansion of our movement.
+            <p className="max-w-2xl mx-auto text-gray-600 text-sm md:text-base font-sans">
+              From the founding charter to the sitting administration — the chronological lineage of District Rotaract Representatives steering District 9126.
             </p>
           </motion.div>
 
+          {/* Quick Succession Stepper Track */}
+          <div className="mb-14 max-w-4xl mx-auto bg-gradient-to-r from-black/[0.02] via-black/[0.04] to-black/[0.02] p-5 sm:p-6 rounded-3xl border border-black/[0.06] shadow-sm">
+            <div className="text-[10px] font-bold uppercase tracking-widest text-[#981132] text-center mb-4">
+              Chronological DRR Succession Track
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 relative">
+              {pastLeaders.filter(l => l.order !== 'D9125 Precursor').map((l, i) => (
+                <div 
+                  key={l.order}
+                  className={`p-3.5 rounded-2xl border transition-all flex items-center gap-3 ${
+                    l.isCurrent 
+                      ? 'bg-gradient-to-br from-[#981132]/10 via-[#D91B5C]/5 to-transparent border-[#981132]/30 shadow-sm'
+                      : 'bg-white border-black/[0.08]'
+                  }`}
+                >
+                  <div className="w-10 h-10 rounded-xl overflow-hidden shrink-0 border border-black/10 shadow-sm">
+                    <img 
+                      src={l.image} 
+                      onError={(e) => { e.currentTarget.src = l.fallbackImage; }}
+                      alt={l.name}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <div className="flex items-center gap-1.5">
+                      <span className={`text-[9px] font-black uppercase tracking-wider ${l.isCurrent ? 'text-[#981132]' : 'text-gray-500'}`}>
+                        {l.order}
+                      </span>
+                      {l.isCurrent && (
+                        <span className="w-1.5 h-1.5 rounded-full bg-[#981132] animate-pulse" />
+                      )}
+                    </div>
+                    <div className="text-xs font-bold text-[#1C1C1E] truncate">{l.name.replace('Rtr. PP ', '')}</div>
+                    <div className="text-[10px] text-gray-500 font-mono">{l.tenure}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Full Chronological Cards List */}
           <div className="space-y-6 max-w-4xl mx-auto">
             {pastLeaders.map((leader, idx) => (
               <motion.div 
@@ -797,40 +847,58 @@ export default function AboutPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: idx * 0.1 }}
-                className="p-6 md:p-8 rounded-2xl bg-white border border-black/[0.08] shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col md:flex-row items-center md:items-start gap-6 group hover:-translate-y-1"
+                className={`p-6 md:p-8 rounded-3xl bg-white border transition-all duration-300 flex flex-col md:flex-row items-center md:items-start gap-6 group hover:-translate-y-1 shadow-sm hover:shadow-xl ${
+                  leader.isCurrent 
+                    ? 'border-[#981132]/40 ring-2 ring-[#981132]/10' 
+                    : 'border-black/[0.08]'
+                }`}
               >
-                <div className="w-24 h-24 md:w-28 md:h-28 rounded-2xl overflow-hidden shrink-0 border border-black/10 shadow-md">
-                  <img 
-                    src={leader.image} 
-                    onError={(e) => { e.currentTarget.src = leader.fallbackImage; }}
-                    alt={leader.name}
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                <div className="relative">
+                  <div className="w-24 h-28 md:w-32 md:h-36 rounded-2xl overflow-hidden shrink-0 border-2 border-black/10 shadow-lg relative z-10">
+                    <img 
+                      src={leader.image} 
+                      onError={(e) => { e.currentTarget.src = leader.fallbackImage; }}
+                      alt={leader.name}
+                      className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                    />
+                  </div>
+                  <div 
+                    className="absolute -inset-1 rounded-2xl blur-md opacity-25 -z-0 pointer-events-none"
+                    style={{ background: leader.accentColor || '#981132' }}
                   />
                 </div>
 
                 <div className="flex-1 text-center md:text-left">
-                  <div className="flex items-center justify-center md:justify-start gap-2 mb-1 flex-wrap">
-                    <span className="px-3 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-[#981132]/10 text-[#981132] font-sans">
+                  <div className="flex items-center justify-center md:justify-start gap-2 mb-1.5 flex-wrap">
+                    <span 
+                      className="px-3 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider font-sans"
+                      style={{ 
+                        backgroundColor: `${leader.accentColor || '#981132'}15`,
+                        color: leader.accentColor || '#981132'
+                      }}
+                    >
                       {leader.badge}
                     </span>
-                    <span className="text-xs font-semibold text-gray-500 font-sans">
+                    <span className="text-xs font-semibold text-gray-500 font-mono">
                       {leader.tenure}
                     </span>
                   </div>
 
-                  <h3 className="text-xl font-black text-[#1C1C1E] mt-1 font-sans">
+                  <h3 className="text-xl md:text-2xl font-black text-[#1C1C1E] font-sans">
                     {leader.name}
                   </h3>
                   <div className="text-xs font-semibold text-[#D91B5C] mb-2 font-sans">
                     {leader.title} · <span className="text-gray-500">{leader.credentials}</span>
                   </div>
 
-                  <p className="text-sm text-gray-600 leading-relaxed mb-3 font-sans">
+                  <p className="text-sm text-gray-600 leading-relaxed mb-4 font-sans">
                     {leader.roleNote}
                   </p>
 
-                  <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-gray-100 text-[11px] font-medium text-gray-700 italic font-sans">
-                    <Award className="text-[#981132]" size={14} /> Theme: "{leader.theme}"
+                  <div className="flex items-center justify-center md:justify-start gap-3 flex-wrap">
+                    <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-gray-100 text-[11px] font-semibold text-gray-700 italic font-sans">
+                      <Award className="text-[#981132]" size={14} /> Theme: "{leader.theme}"
+                    </div>
                   </div>
                 </div>
               </motion.div>
