@@ -398,7 +398,7 @@ export default function AboutPage() {
 
       {/* ================= SECTION 1: DETAILED HISTORY & REDISTRICTING ================= */}
       {(activeTab === 'overview' || activeTab === 'history') && (
-        <section className="py-20 max-w-7xl mx-auto px-6 lg:px-10 border-b border-black/[0.06]">
+        <section id="history" className="py-20 max-w-7xl mx-auto px-6 lg:px-10 border-b border-black/[0.06] scroll-mt-24">
           
           {/* Top Intro Grid */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center mb-20">
@@ -733,7 +733,7 @@ export default function AboutPage() {
 
       {/* ================= SECTION 4: DRR LINEAGE & PAST LEADERS TIMELINE ================= */}
       {(activeTab === 'overview' || activeTab === 'past-leaders') && (
-        <section className="py-20 max-w-7xl mx-auto px-6 lg:px-10">
+        <section id="lineage" className="py-20 max-w-7xl mx-auto px-6 lg:px-10 scroll-mt-24">
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}

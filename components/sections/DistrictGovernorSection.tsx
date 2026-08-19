@@ -2,8 +2,9 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Award, Compass, ShieldCheck, HeartHandshake, ChevronLeft, ChevronRight, Quote, Sparkles, Building2 } from 'lucide-react';
+import { Award, Compass, ShieldCheck, HeartHandshake, ChevronLeft, ChevronRight, Quote, Sparkles, Building2, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 const DG_PHOTOS = [
   {
@@ -39,6 +40,7 @@ const DG_PHOTOS = [
 ];
 
 export default function DistrictGovernorSection() {
+  const pathname = usePathname();
   const [activePhotoIdx, setActivePhotoIdx] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
 
@@ -267,21 +269,41 @@ export default function DistrictGovernorSection() {
               </div>
             </div>
 
-            {/* Quick Action Link */}
-            <div className="pt-2 flex items-center gap-3">
-              <Link 
-                href="/about" 
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-[#D4A520] to-[#F59E0B] text-black font-bold text-xs tracking-wide shadow-lg shadow-[#D4A520]/25 hover:opacity-95 transition-all"
-              >
-                <span>Read District Heritage & Lineage</span>
-                <Compass size={14} />
-              </Link>
-              <Link 
-                href="/clubs" 
-                className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-white/5 hover:bg-white/10 border border-white/15 text-white font-semibold text-xs transition-colors"
-              >
-                <span>Find Chartered Clubs</span>
-              </Link>
+            {/* Context-Aware Action Links */}
+            <div className="pt-2 flex flex-wrap items-center gap-3">
+              {pathname === '/about' ? (
+                <>
+                  <a 
+                    href="#lineage" 
+                    className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-[#D4A520] to-[#F59E0B] text-black font-bold text-xs tracking-wide shadow-lg shadow-[#D4A520]/25 hover:opacity-95 transition-all cursor-pointer"
+                  >
+                    <span>Explore DRR Lineage</span>
+                    <ArrowRight size={14} />
+                  </a>
+                  <Link 
+                    href="/projects" 
+                    className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-white/5 hover:bg-white/10 border border-white/15 text-white font-semibold text-xs transition-colors"
+                  >
+                    <span>Explore Flagship Projects</span>
+                  </Link>
+                </>
+              ) : (
+                <>
+                  <Link 
+                    href="/about" 
+                    className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-[#D4A520] to-[#F59E0B] text-black font-bold text-xs tracking-wide shadow-lg shadow-[#D4A520]/25 hover:opacity-95 transition-all"
+                  >
+                    <span>Read District Heritage & Lineage</span>
+                    <Compass size={14} />
+                  </Link>
+                  <Link 
+                    href="/clubs" 
+                    className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-white/5 hover:bg-white/10 border border-white/15 text-white font-semibold text-xs transition-colors"
+                  >
+                    <span>Find Chartered Clubs</span>
+                  </Link>
+                </>
+              )}
             </div>
 
           </motion.div>
