@@ -29,6 +29,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import RotaryTooltip from '@/components/ui/RotaryTooltip';
 import CountUp from '@/components/ui/CountUp';
 import DistrictGovernorSection from '@/components/sections/DistrictGovernorSection';
+import DRRSpotlightSection from '@/components/sections/DRRSpotlightSection';
 
 const redistrictingTimeline = [
   {
@@ -390,74 +391,9 @@ export default function AboutPage() {
         <DistrictGovernorSection />
       )}
 
-      {/* ================= SECTION 0: DRR SPOTLIGHT BANNER ================= */}
+      {/* ================= SECTION 0: DRR SPOTLIGHT & 4-PHOTO CAROUSEL ================= */}
       {(activeTab === 'overview' || activeTab === 'team') && (
-        <section className="py-12 max-w-7xl mx-auto px-6 lg:px-10">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7 }}
-            className="rounded-3xl border border-black/[0.08] bg-gradient-to-br from-white via-white to-amber-50/40 p-6 sm:p-10 shadow-lg relative overflow-hidden"
-          >
-            {/* Background ambient badge */}
-            <div className="absolute right-[-40px] top-[-40px] w-80 h-80 rounded-full bg-[#D4A520]/10 blur-3xl pointer-events-none" />
-
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
-              
-              {/* Portrait */}
-              <div className="lg:col-span-4 flex justify-center lg:justify-start">
-                <div className="w-64 sm:w-72 aspect-[3/4] rounded-2xl overflow-hidden border-2 border-[#D4A520]/40 shadow-2xl relative group">
-                  <img
-                    src="/images/leaders/drr-adaramoye-iyanuoluwa.jpg"
-                    onError={(e) => { e.currentTarget.src = 'https://images.unsplash.com/photo-1644152993066-9b9ee687930d?w=480&h=580&fit=crop&auto=format'; }}
-                    alt="DRR Adaramoye Iyanuoluwa"
-                    className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
-                  />
-                  <div className="absolute bottom-0 inset-x-0 p-3 bg-gradient-to-t from-black/90 to-transparent text-white text-center">
-                    <span className="text-[10px] font-mono tracking-widest uppercase text-[#D4A520] font-bold">Sitting 3rd DRR · 2026/2027</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Bio & Actions */}
-              <div className="lg:col-span-8 space-y-4 text-center lg:text-left">
-                <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#981132]/10 text-[#981132] text-xs font-bold uppercase tracking-wider">
-                  <Award size={14} /> Theme: "Creating Lasting Impact"
-                </div>
-
-                <h2 className="text-2xl sm:text-4xl lg:text-5xl font-black text-[#1C1C1E] tracking-tight leading-tight font-sans">
-                  Rtr. PP Adaramoye Iyanuoluwa
-                </h2>
-
-                <p className="text-xs font-bold text-[#D91B5C] uppercase tracking-widest">
-                  District Rotaract Representative · District 9126
-                </p>
-
-                <p className="text-slate-700 text-sm sm:text-base leading-relaxed max-w-2xl font-sans">
-                  Presiding as the 3rd District Rotaract Representative of Rotaract District 9126. Leading the expansion of digital membership identities, youth leadership training, maternal health outreach, and sustainable clean water access across 77 chartered clubs.
-                </p>
-
-                <div className="flex flex-wrap items-center justify-center lg:justify-start gap-3 pt-2">
-                  <a
-                    href="mailto:drr@rotaractdistrict9126.com.ng"
-                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#981132] text-white text-xs font-bold hover:bg-[#7D0E29] transition-colors shadow-md shadow-[#981132]/30"
-                  >
-                    <Mail size={14} /> Contact Executive Office
-                  </a>
-                  <button
-                    type="button"
-                    onClick={() => setSelectedLeaderModal(currentTeam[0])}
-                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-black/5 hover:bg-black/10 text-slate-800 text-xs font-bold transition-colors border border-black/10"
-                  >
-                    <Users size={14} /> View Complete Dossier
-                  </button>
-                </div>
-              </div>
-
-            </div>
-          </motion.div>
-        </section>
+        <DRRSpotlightSection />
       )}
 
       {/* ================= SECTION 1: DETAILED HISTORY & REDISTRICTING ================= */}
