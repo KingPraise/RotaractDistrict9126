@@ -28,6 +28,7 @@ import {
 import { motion, AnimatePresence } from 'framer-motion';
 import RotaryTooltip from '@/components/ui/RotaryTooltip';
 import CountUp from '@/components/ui/CountUp';
+import DistrictGovernorSection from '@/components/sections/DistrictGovernorSection';
 
 const redistrictingTimeline = [
   {
@@ -371,6 +372,11 @@ export default function AboutPage() {
           </motion.div>
         </div>
       </section>
+
+      {/* ================= SECTION -1: DISTRICT GOVERNOR PATRON SECTION ================= */}
+      {(activeTab === 'overview' || activeTab === 'team') && (
+        <DistrictGovernorSection />
+      )}
 
       {/* ================= SECTION 0: DRR SPOTLIGHT BANNER ================= */}
       {(activeTab === 'overview' || activeTab === 'team') && (
