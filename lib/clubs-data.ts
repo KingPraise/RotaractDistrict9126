@@ -13,6 +13,7 @@ export interface Club {
   meetingSchedule?: string;
   president?: string;
   presidentAvatar?: string;
+  presidentPhone?: string;
   coordinates: {
     lat: number;
     lng: number;
@@ -20,7 +21,7 @@ export interface Club {
 }
 
 export const clubsData: Club[] = [
-  // SOUTH-WEST REGION — Oyo State (22 Clubs)
+  // SOUTH-WEST REGION — Oyo State (20 Clubs)
   {
     id: 'club-ibadan-ring-road',
     name: 'RC Ibadan Ring Road',
@@ -288,34 +289,6 @@ export const clubsData: Club[] = [
     coordinates: { lat: 7.8210, lng: 3.9120 },
   },
   {
-    id: 'club-adecom-college',
-    name: 'RC Adecom College',
-    rotaryId: '8827618',
-    memberCount: 18,
-    type: 'Campus',
-    state: 'Oyo',
-    city: 'Ibadan',
-    region: 'South-West',
-    meetingVenue: 'Adecom College Campus Hall, Ibadan',
-    meetingSchedule: 'Every Thursday · 4:00 PM',
-    president: 'Temiloluwa Bankole',
-    coordinates: { lat: 7.3620, lng: 3.8710 },
-  },
-  {
-    id: 'club-highland-college',
-    name: 'RC Highland College of Technology',
-    rotaryId: '8827458',
-    memberCount: 11,
-    type: 'Campus',
-    state: 'Oyo',
-    city: 'Ibadan',
-    region: 'South-West',
-    meetingVenue: 'Engineering Lecture Hall, Highland College, Ibadan',
-    meetingSchedule: 'Every Tuesday · 4:00 PM',
-    president: 'Victoria Shonibare',
-    coordinates: { lat: 7.4200, lng: 3.8900 },
-  },
-  {
     id: 'club-eclub-ibadan-pacesetter',
     name: 'RC E-Club of Ibadan Pacesetter',
     rotaryId: '8825776',
@@ -330,7 +303,7 @@ export const clubsData: Club[] = [
     coordinates: { lat: 7.3775, lng: 3.9470 },
   },
 
-  // SOUTH-WEST REGION — Osun State (18 Clubs)
+  // SOUTH-WEST REGION — Osun State (16 Clubs)
   {
     id: 'club-osogbo',
     name: 'RC Osogbo',
@@ -416,20 +389,6 @@ export const clubsData: Club[] = [
     coordinates: { lat: 7.5186, lng: 4.5284 },
   },
   {
-    id: 'club-oau-ile-ife-2',
-    name: 'RC Obafemi Awolowo University, Ile-Ife',
-    rotaryId: '92022',
-    memberCount: 7,
-    type: 'Campus',
-    state: 'Osun',
-    city: 'Ile-Ife',
-    region: 'South-West',
-    meetingVenue: 'Faculty of Social Sciences Foyer, OAU, Ile-Ife',
-    meetingSchedule: 'Every Thursday · 4:30 PM',
-    president: 'Blessing Adeoti',
-    coordinates: { lat: 7.5200, lng: 4.5300 },
-  },
-  {
     id: 'club-ede-cb',
     name: 'RC Ede Community Based',
     rotaryId: '90075',
@@ -484,20 +443,6 @@ export const clubsData: Club[] = [
     meetingSchedule: 'Every 2nd & 4th Sunday · 4:00 PM',
     president: 'Kazeem Adeleke',
     coordinates: { lat: 7.9120, lng: 4.6610 },
-  },
-  {
-    id: 'club-ila-orangun-cb',
-    name: 'RC Ila Orangun CB',
-    rotaryId: '90751',
-    memberCount: 1,
-    type: 'Community',
-    state: 'Osun',
-    city: 'Ila Orangun',
-    region: 'South-West',
-    meetingVenue: 'Ila Civic Center, Main Road, Ila Orangun',
-    meetingSchedule: 'Every 1st & 3rd Saturday · 4:00 PM',
-    president: 'Sunday Adeyeye',
-    coordinates: { lat: 8.0170, lng: 4.9030 },
   },
   {
     id: 'club-iragbiji-cb',
@@ -882,6 +827,64 @@ export const clubsData: Club[] = [
     meetingSchedule: 'Every 1st & 3rd Sunday · 4:00 PM',
     president: 'Olawale Popoola',
     coordinates: { lat: 8.1490, lng: 4.7180 },
+  },
+
+  // NORTH-CENTRAL REGION — Niger State (4 Clubs)
+  {
+    id: 'club-minna-central',
+    name: 'RC Minna Central',
+    rotaryId: '8829101',
+    memberCount: 12,
+    type: 'Community',
+    state: 'Niger',
+    city: 'Minna',
+    region: 'North-Central',
+    meetingVenue: 'Hydro Hotel Conference Hall, Minna',
+    meetingSchedule: 'Every 2nd & 4th Saturday · 4:00 PM',
+    president: 'Ibrahim Mohammed',
+    coordinates: { lat: 9.6178, lng: 6.5569 },
+  },
+  {
+    id: 'club-futminna-bosso',
+    name: 'RC FUTMinna',
+    rotaryId: '8829102',
+    memberCount: 18,
+    type: 'Campus',
+    state: 'Niger',
+    city: 'Minna',
+    region: 'North-Central',
+    meetingVenue: 'Bosso Campus Auditorium, FUT Minna',
+    meetingSchedule: 'Every Wednesday · 4:00 PM',
+    president: 'Usman Bello',
+    coordinates: { lat: 9.5833, lng: 6.5500 },
+  },
+  {
+    id: 'club-bida-central',
+    name: 'RC Bida Central',
+    rotaryId: '8829103',
+    memberCount: 8,
+    type: 'Community',
+    state: 'Niger',
+    city: 'Bida',
+    region: 'North-Central',
+    meetingVenue: 'Bida Town Hall, Poly Road, Bida',
+    meetingSchedule: 'Every 1st & 3rd Sunday · 4:00 PM',
+    president: 'Fatima Umar',
+    coordinates: { lat: 9.0833, lng: 6.0167 },
+  },
+  {
+    id: 'club-suleja-metro',
+    name: 'RC Suleja Metro',
+    rotaryId: '8829104',
+    memberCount: 14,
+    type: 'Community',
+    state: 'Niger',
+    city: 'Suleja',
+    region: 'North-Central',
+    meetingVenue: 'Royal Tropicana Hotel Conference Hall, Suleja',
+    meetingSchedule: 'Every 2nd & 4th Sunday · 4:30 PM',
+    president: 'Mustapha Aliyu',
+    coordinates: { lat: 9.1800, lng: 7.1800 },
   },
 
   // NORTH-CENTRAL REGION — Kogi State (9 Clubs)

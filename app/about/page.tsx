@@ -72,57 +72,69 @@ const redistrictingTimeline = [
 
 const pastLeaders = [
   {
-    tenure: '2024–2025',
-    order: '1st DRR',
-    title: 'Inaugural 1st District Rotaract Representative',
-    name: 'Rtr. PP Oyewumi Kamaldeen Adeshina',
-    credentials: 'PHF, FEIPA, Past President',
-    theme: 'The Magic of Rotary',
-    roleNote: 'Inaugural DRR who established the sovereign governance structure, district bylaws, and official charter of District 9126 across all 7 constituent states.',
-    image: '/images/leaders/drr-oyewumi-kamaldeen.jpg',
-    fallbackImage: 'https://images.unsplash.com/photo-1533108344127-a586d2b02479?w=480&h=580&fit=crop&auto=format',
-    badge: '1st DRR · Inaugural Era',
-    accentColor: '#981132'
-  },
-  {
-    tenure: '2025–2026',
-    order: '2nd DRR',
-    title: '2nd District Rotaract Representative',
-    name: 'Rtr. PP Raji Abeeb Adekola',
-    credentials: 'Past President, Paul Harris Fellow',
-    theme: 'Unite for Greater Impact',
-    roleNote: '2nd DRR who consolidated district operations, cross-state programs, youth leadership institutes, automated dues protocols, and club vitality.',
-    image: '/images/leaders/drr-raji-abeeb.jpg',
-    fallbackImage: 'https://images.unsplash.com/photo-1629145810320-aec9e63dd798?w=480&h=580&fit=crop&auto=format',
-    badge: '2nd DRR · Consolidation Era',
-    accentColor: '#D91B5C'
-  },
-  {
-    tenure: '2026–2027',
-    order: '3rd DRR',
-    title: 'Sitting 3rd District Rotaract Representative',
-    name: 'Rtr. PP Adaramoye Iyanuoluwa',
-    credentials: 'DRR, Past President',
-    theme: 'Creating Lasting Impact',
-    roleNote: 'Presiding District Rotaract Representative driving digital transformation, verified member credentials, and maternal & child health outreach.',
-    image: '/images/leaders/drr-adaramoye-iyanuoluwa.jpg',
-    fallbackImage: 'https://images.unsplash.com/photo-1644152993066-9b9ee687930d?w=480&h=580&fit=crop&auto=format',
-    badge: '3rd DRR · Present Administration',
-    accentColor: '#D4A520',
-    isCurrent: true
-  },
-  {
     tenure: '2023–2024',
-    order: 'D9125 Precursor',
+    order: 'Transition Architect',
+    eraNumber: '00',
     title: '15th & Final DRR (District 9125 Transition Era)',
     name: 'Rtr. PP Adebayo Sodiq Babatunde',
     credentials: 'PHF+1, Past President',
     theme: 'Create Hope in the World',
-    roleNote: '15th and final DRR of District 9125 who shepherded the historic creation and Rotary International Board approval of District 9126.',
+    roleNote: '15th and final DRR of District 9125 who architected the historic transition, spearheaded the 7-state territorial demarcation, and secured Rotary International Board approval for the creation of District 9126.',
+    highlights: ['RI Board Approval of D9126', '7-State Boundary Demarcation', 'The Genesis Bridge Administration'],
     image: '/images/leaders/drr-adebayo-sodiq.jpg',
     fallbackImage: 'https://images.unsplash.com/photo-1602009786436-96b827675d32?w=480&h=580&fit=crop&auto=format',
-    badge: 'D9125 Precursor · Transition',
-    accentColor: '#4338CA'
+    badge: 'The Genesis · Transition Architect',
+    accentColor: '#6366F1',
+    glowColor: 'rgba(99, 102, 241, 0.25)'
+  },
+  {
+    tenure: '2024–2025',
+    order: '1st DRR',
+    eraNumber: '01',
+    title: 'Inaugural 1st District Rotaract Representative',
+    name: 'Rtr. PP Oyewumi Kamaldeen Adeshina',
+    credentials: 'PHF, FEIPA, Past President',
+    theme: 'The Magic of Rotary',
+    roleNote: 'Inaugural Founding DRR who established the sovereign governance structure, codified district bylaws, inaugurated the executive council, and organized the first 77-club district assembly.',
+    highlights: ['Inaugural District Bylaws', 'First 77-Club Assembly', 'Foundational Secretariat Setup'],
+    image: '/images/leaders/drr-oyewumi-kamaldeen.jpg',
+    fallbackImage: 'https://images.unsplash.com/photo-1533108344127-a586d2b02479?w=480&h=580&fit=crop&auto=format',
+    badge: '1st DRR · Inaugural Foundation Era',
+    accentColor: '#981132',
+    glowColor: 'rgba(152, 17, 50, 0.25)'
+  },
+  {
+    tenure: '2025–2026',
+    order: '2nd DRR',
+    eraNumber: '02',
+    title: '2nd District Rotaract Representative',
+    name: 'Rtr. PP Raji Abeeb Adekola',
+    credentials: 'Past President, Paul Harris Fellow',
+    theme: 'Unite for Greater Impact',
+    roleNote: '2nd DRR who consolidated district operations, institutionalized youth leadership institutes, automated financial dues reconciliation, and deepened inter-club fellowship across 7 states.',
+    highlights: ['Youth Leadership Institutes', 'Automated Financial Reconciliation', 'District Membership Expansion'],
+    image: '/images/leaders/drr-raji-abeeb.jpg',
+    fallbackImage: 'https://images.unsplash.com/photo-1629145810320-aec9e63dd798?w=480&h=580&fit=crop&auto=format',
+    badge: '2nd DRR · Consolidation Era',
+    accentColor: '#D91B5C',
+    glowColor: 'rgba(217, 27, 92, 0.25)'
+  },
+  {
+    tenure: '2026–2027',
+    order: '3rd DRR (Sitting)',
+    eraNumber: '03',
+    title: 'Sitting 3rd District Rotaract Representative',
+    name: 'Rtr. PP Adaramoye Iyanuoluwa',
+    credentials: 'DRR, Past President',
+    theme: 'Creating Lasting Impact',
+    roleNote: 'Presiding District Rotaract Representative driving verified sovereign digital membership credentials, 7-state maternal health missions, and sustainable community empowerment.',
+    highlights: ['Verified Digital Member IDs', '7-State Maternal Health Outreach', 'Youth Innovation Academy'],
+    image: '/images/leaders/drr-adaramoye-iyanuoluwa.jpg',
+    fallbackImage: 'https://images.unsplash.com/photo-1644152993066-9b9ee687930d?w=480&h=580&fit=crop&auto=format',
+    badge: '3rd DRR · Sitting Administration',
+    accentColor: '#D4A520',
+    glowColor: 'rgba(212, 165, 32, 0.25)',
+    isCurrent: true
   }
 ];
 
@@ -731,133 +743,239 @@ export default function AboutPage() {
         </section>
       )}
 
-      {/* ================= SECTION 4: DRR LINEAGE & PAST LEADERS TIMELINE ================= */}
+      {/* ================= SECTION 4: CINEMATIC DRR LINEAGE & SUCCESSION CHRONICLE ================= */}
       {(activeTab === 'overview' || activeTab === 'past-leaders') && (
-        <section id="lineage" className="py-20 max-w-7xl mx-auto px-6 lg:px-10 scroll-mt-24">
+        <section id="lineage" className="py-24 max-w-7xl mx-auto px-6 lg:px-10 scroll-mt-24 font-sans">
+          
+          {/* Section Header */}
           <motion.div 
+            initial={{ opacity: 0, y: 25 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7 }}
+            className="text-center mb-16"
+          >
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#D4A520]/10 border border-[#D4A520]/25 text-[#D4A520] text-xs font-bold uppercase tracking-widest mb-3">
+              <Award size={14} /> The Hall of DRR Leadership · District 9126
+            </div>
+            
+            <h2 className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight text-[#1C1C1E] mt-1 mb-4 font-sans">
+              Chronicle of Leadership Succession
+            </h2>
+            
+            <p className="max-w-3xl mx-auto text-slate-600 text-sm sm:text-base leading-relaxed font-sans">
+              From the vision of the <strong>15th & Final DRR Transition Architect</strong> who secured Rotary International Board charter approval, through the founding and consolidation eras, to the sitting administration.
+            </p>
+          </motion.div>
+
+          {/* Glowing 4-Node Chronological Stepper Track */}
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="text-center mb-12"
+            className="mb-16 p-6 sm:p-8 rounded-3xl bg-[#080C14] border border-white/10 shadow-2xl relative overflow-hidden text-white"
           >
-            <span className="text-[10px] font-bold tracking-[0.3em] uppercase text-[#981132] font-sans">
-              District 9126 Leadership Succession
-            </span>
-            <h2 className="text-3xl md:text-5xl font-black tracking-tight text-[#1C1C1E] mt-2 mb-3 font-sans">
-              Order of DRR Leadership (1st to Present)
-            </h2>
-            <p className="max-w-2xl mx-auto text-gray-600 text-sm md:text-base font-sans">
-              From the founding charter to the sitting administration — the chronological lineage of District Rotaract Representatives steering District 9126.
-            </p>
-          </motion.div>
+            {/* Ambient Lighting */}
+            <div className="absolute left-1/4 top-0 w-72 h-72 rounded-full bg-[#6366F1]/15 blur-3xl pointer-events-none" />
+            <div className="absolute right-1/4 bottom-0 w-72 h-72 rounded-full bg-[#D4A520]/15 blur-3xl pointer-events-none" />
 
-          {/* Quick Succession Stepper Track */}
-          <div className="mb-14 max-w-4xl mx-auto bg-gradient-to-r from-black/[0.02] via-black/[0.04] to-black/[0.02] p-5 sm:p-6 rounded-3xl border border-black/[0.06] shadow-sm">
-            <div className="text-[10px] font-bold uppercase tracking-widest text-[#981132] text-center mb-4">
-              Chronological DRR Succession Track
+            <div className="text-[10px] font-black uppercase tracking-[0.25em] text-[#D4A520] text-center mb-6">
+              The 4 Historical Eras of Governance
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 relative">
-              {pastLeaders.filter(l => l.order !== 'D9125 Precursor').map((l, i) => (
-                <div 
-                  key={l.order}
-                  className={`p-3.5 rounded-2xl border transition-all flex items-center gap-3 ${
-                    l.isCurrent 
-                      ? 'bg-gradient-to-br from-[#981132]/10 via-[#D91B5C]/5 to-transparent border-[#981132]/30 shadow-sm'
-                      : 'bg-white border-black/[0.08]'
-                  }`}
-                >
-                  <div className="w-10 h-10 rounded-xl overflow-hidden shrink-0 border border-black/10 shadow-sm">
-                    <img 
-                      src={l.image} 
-                      onError={(e) => { e.currentTarget.src = l.fallbackImage; }}
-                      alt={l.name}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                  <div className="min-w-0 flex-1">
-                    <div className="flex items-center gap-1.5">
-                      <span className={`text-[9px] font-black uppercase tracking-wider ${l.isCurrent ? 'text-[#981132]' : 'text-gray-500'}`}>
-                        {l.order}
+
+            {/* 4 Connected Stepper Nodes */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 relative z-10">
+              {pastLeaders.map((leader, i) => {
+                const isCurrent = leader.isCurrent;
+                return (
+                  <div
+                    key={leader.eraNumber}
+                    className={`p-4 rounded-2xl border transition-all relative flex flex-col justify-between ${
+                      isCurrent
+                        ? 'bg-gradient-to-b from-[#981132]/30 via-black/60 to-black/80 border-[#D4A520]/50 shadow-lg shadow-[#981132]/30'
+                        : 'bg-white/[0.04] border-white/10 hover:border-white/20'
+                    }`}
+                  >
+                    <div>
+                      {/* Top Era Number & Pulse Badge */}
+                      <div className="flex items-center justify-between mb-2">
+                        <span 
+                          className="px-2 py-0.5 rounded text-[9px] font-black font-mono"
+                          style={{ 
+                            backgroundColor: `${leader.accentColor}25`,
+                            color: leader.accentColor
+                          }}
+                        >
+                          ERA {leader.eraNumber}
+                        </span>
+                        <span className="text-[10px] font-mono text-slate-400">
+                          {leader.tenure}
+                        </span>
+                      </div>
+
+                      {/* Small Avatar & Name */}
+                      <div className="flex items-center gap-2.5 my-2">
+                        <div className="w-10 h-10 rounded-xl overflow-hidden shrink-0 border border-white/20 shadow-md">
+                          <img 
+                            src={leader.image}
+                            onError={(e) => { e.currentTarget.src = leader.fallbackImage; }}
+                            alt={leader.name}
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
+                        <div className="min-w-0 flex-1">
+                          <div className="text-xs font-bold text-white truncate leading-tight">
+                            {leader.name.replace('Rtr. PP ', '')}
+                          </div>
+                          <div className="text-[10px] text-slate-400 truncate mt-0.5">
+                            {leader.order}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Badge */}
+                    <div className="mt-2 pt-2 border-t border-white/10 flex items-center justify-between">
+                      <span className="text-[9.5px] font-semibold text-slate-300 truncate">
+                        "{leader.theme}"
                       </span>
-                      {l.isCurrent && (
-                        <span className="w-1.5 h-1.5 rounded-full bg-[#981132] animate-pulse" />
+                      {isCurrent && (
+                        <span className="w-2 h-2 rounded-full bg-[#D4A520] animate-pulse shrink-0" />
                       )}
                     </div>
-                    <div className="text-xs font-bold text-[#1C1C1E] truncate">{l.name.replace('Rtr. PP ', '')}</div>
-                    <div className="text-[10px] text-gray-500 font-mono">{l.tenure}</div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
-          </div>
+          </motion.div>
 
-          {/* Full Chronological Cards List */}
-          <div className="space-y-6 max-w-4xl mx-auto">
-            {pastLeaders.map((leader, idx) => (
-              <motion.div 
-                key={idx}
-                initial={{ opacity: 0, y: 25 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: idx * 0.1 }}
-                className={`p-6 md:p-8 rounded-3xl bg-white border transition-all duration-300 flex flex-col md:flex-row items-center md:items-start gap-6 group hover:-translate-y-1 shadow-sm hover:shadow-xl ${
-                  leader.isCurrent 
-                    ? 'border-[#981132]/40 ring-2 ring-[#981132]/10' 
-                    : 'border-black/[0.08]'
-                }`}
-              >
-                <div className="relative">
-                  <div className="w-24 h-28 md:w-32 md:h-36 rounded-2xl overflow-hidden shrink-0 border-2 border-black/10 shadow-lg relative z-10">
-                    <img 
-                      src={leader.image} 
-                      onError={(e) => { e.currentTarget.src = leader.fallbackImage; }}
-                      alt={leader.name}
-                      className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
-                    />
-                  </div>
-                  <div 
-                    className="absolute -inset-1 rounded-2xl blur-md opacity-25 -z-0 pointer-events-none"
-                    style={{ background: leader.accentColor || '#981132' }}
-                  />
-                </div>
-
-                <div className="flex-1 text-center md:text-left">
-                  <div className="flex items-center justify-center md:justify-start gap-2 mb-1.5 flex-wrap">
-                    <span 
-                      className="px-3 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider font-sans"
-                      style={{ 
-                        backgroundColor: `${leader.accentColor || '#981132'}15`,
-                        color: leader.accentColor || '#981132'
-                      }}
-                    >
-                      {leader.badge}
-                    </span>
-                    <span className="text-xs font-semibold text-gray-500 font-mono">
-                      {leader.tenure}
-                    </span>
+          {/* Cinematic 4-Leader Hero Dossier Cards */}
+          <div className="space-y-8">
+            {pastLeaders.map((leader, idx) => {
+              const isCurrent = leader.isCurrent;
+              return (
+                <motion.div 
+                  key={leader.eraNumber}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: idx * 0.12 }}
+                  className={`p-6 sm:p-8 lg:p-10 rounded-3xl border transition-all duration-500 relative overflow-hidden group shadow-lg hover:shadow-2xl ${
+                    isCurrent
+                      ? 'bg-gradient-to-br from-white via-white to-amber-50/40 border-[#D4A520]/40 ring-2 ring-[#D4A520]/15'
+                      : 'bg-white border-black/[0.08] hover:border-black/[0.15]'
+                  }`}
+                >
+                  {/* Subtle Background Era Number Watermark */}
+                  <div className="absolute right-4 top-2 text-[120px] sm:text-[160px] font-black text-black/[0.02] select-none pointer-events-none font-mono leading-none">
+                    {leader.eraNumber}
                   </div>
 
-                  <h3 className="text-xl md:text-2xl font-black text-[#1C1C1E] font-sans">
-                    {leader.name}
-                  </h3>
-                  <div className="text-xs font-semibold text-[#D91B5C] mb-2 font-sans">
-                    {leader.title} · <span className="text-gray-500">{leader.credentials}</span>
-                  </div>
-
-                  <p className="text-sm text-gray-600 leading-relaxed mb-4 font-sans">
-                    {leader.roleNote}
-                  </p>
-
-                  <div className="flex items-center justify-center md:justify-start gap-3 flex-wrap">
-                    <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-gray-100 text-[11px] font-semibold text-gray-700 italic font-sans">
-                      <Award className="text-[#981132]" size={14} /> Theme: "{leader.theme}"
+                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
+                    
+                    {/* Left: Authentic Portrait with Cinematic Frame */}
+                    <div className="lg:col-span-4 flex justify-center lg:justify-start">
+                      <div className="relative group/photo w-56 sm:w-64 aspect-[3/4] rounded-2xl overflow-hidden border-2 border-black/10 shadow-2xl bg-[#0F1624]">
+                        <img 
+                          src={leader.image} 
+                          onError={(e) => { e.currentTarget.src = leader.fallbackImage; }}
+                          alt={leader.name}
+                          className="w-full h-full object-cover object-top transition-transform duration-700 group-hover/photo:scale-105"
+                        />
+                        
+                        {/* Gradient Bottom Tag */}
+                        <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent p-3.5 text-white flex items-center justify-between">
+                          <span 
+                            className="px-2 py-0.5 rounded text-[9px] font-black uppercase tracking-wider"
+                            style={{ backgroundColor: leader.accentColor }}
+                          >
+                            {leader.order}
+                          </span>
+                          <span className="text-[10px] font-mono text-amber-300 font-bold">
+                            {leader.tenure}
+                          </span>
+                        </div>
+                      </div>
                     </div>
+
+                    {/* Right: Leadership Metadata, Bio, Theme & Milestone Highlights */}
+                    <div className="lg:col-span-8 space-y-4 text-center lg:text-left">
+                      
+                      {/* Badge Row */}
+                      <div className="flex items-center justify-center lg:justify-start gap-2 flex-wrap">
+                        <span 
+                          className="px-3.5 py-1 rounded-full text-[10px] font-black uppercase tracking-wider font-sans border"
+                          style={{ 
+                            backgroundColor: `${leader.accentColor}12`,
+                            borderColor: `${leader.accentColor}30`,
+                            color: leader.accentColor
+                          }}
+                        >
+                          {leader.badge}
+                        </span>
+
+                        <span className="px-3 py-1 rounded-full bg-black/[0.04] text-slate-600 text-xs font-mono font-bold">
+                          Rotary Year: {leader.tenure}
+                        </span>
+
+                        {isCurrent && (
+                          <span className="px-3 py-1 rounded-full bg-[#D4A520]/20 text-[#B45309] text-xs font-bold inline-flex items-center gap-1">
+                            <span className="w-2 h-2 rounded-full bg-[#D4A520] animate-pulse" />
+                            Sitting Administration
+                          </span>
+                        )}
+                      </div>
+
+                      {/* Leader Name & Designation */}
+                      <div>
+                        <h3 className="text-2xl sm:text-3xl lg:text-4xl font-black text-[#1C1C1E] tracking-tight font-sans">
+                          {leader.name}
+                        </h3>
+                        <div className="text-xs sm:text-sm font-bold text-[#D91B5C] uppercase tracking-wider mt-1 font-sans">
+                          {leader.title} · <span className="text-slate-500 font-medium">{leader.credentials}</span>
+                        </div>
+                      </div>
+
+                      {/* Theme Quote Box */}
+                      <div className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-black/[0.03] border border-black/[0.06] text-xs font-bold text-slate-700 italic font-sans">
+                        <Award className="text-[#981132] shrink-0" size={15} /> 
+                        <span>Presidential Theme: "{leader.theme}"</span>
+                      </div>
+
+                      {/* Executive Narrative */}
+                      <p className="text-slate-600 text-xs sm:text-sm leading-relaxed font-sans">
+                        {leader.roleNote}
+                      </p>
+
+                      {/* Key Milestone Highlights Chips */}
+                      {leader.highlights && (
+                        <div className="pt-2">
+                          <div className="text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-2">
+                            Key Era Milestones:
+                          </div>
+                          <div className="flex items-center justify-center lg:justify-start gap-2 flex-wrap">
+                            {leader.highlights.map((h, hIdx) => (
+                              <span 
+                                key={hIdx}
+                                className="px-3 py-1 rounded-lg bg-white border border-black/10 text-slate-800 text-[11px] font-semibold shadow-sm flex items-center gap-1.5"
+                              >
+                                <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: leader.accentColor }} />
+                                {h}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+
+                    </div>
+
                   </div>
-                </div>
-              </motion.div>
-            ))}
+                </motion.div>
+              );
+            })}
           </div>
+
         </section>
       )}
 

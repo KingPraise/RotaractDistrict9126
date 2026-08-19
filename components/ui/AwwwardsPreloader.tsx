@@ -12,11 +12,18 @@ const PRELOADER_WORDS = [
 ];
 
 export default function AwwwardsPreloader() {
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [counter, setCounter] = useState(0);
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
 
   useEffect(() => {
+    // Only run the opening scene if not seen in current session
+    const hasSeen = sessionStorage.getItem('d9126_opening_scene_seen');
+    if (hasSeen) {
+      setIsLoading(false);
+      return;
+    }
+
     setIsLoading(true);
     const duration = 2800; // ms for crisp snappy intro
     const startTime = performance.now();
@@ -42,6 +49,7 @@ export default function AwwwardsPreloader() {
         clearInterval(timer);
         setTimeout(() => {
           setIsLoading(false);
+          sessionStorage.setItem('d9126_opening_scene_seen', 'true');
         }, 250);
       }
     }, 20);
@@ -51,6 +59,7 @@ export default function AwwwardsPreloader() {
 
   const handleSkip = () => {
     setIsLoading(false);
+    sessionStorage.setItem('d9126_opening_scene_seen', 'true');
   };
 
   const activeWord = PRELOADER_WORDS[currentWordIndex] || PRELOADER_WORDS[0];

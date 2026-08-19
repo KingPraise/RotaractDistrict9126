@@ -15,7 +15,7 @@ export async function toggleMemberDues(
   targetUserId: string,
   newStatus: DuesStatus,
   callerToken?: string
-): Promise<ActionResult<{ userId: string; duesStatus: DuesStatus; updatedAt: string }>> {
+): Promise<ActionResult<{ userId: string; duesStatus: DuesStatus; auditLogId: string; updatedAt: string }>> {
   try {
     if (!targetUserId || !newStatus) {
       return { success: false, error: 'Missing required parameters: targetUserId and newStatus.' };
@@ -25,6 +25,8 @@ export async function toggleMemberDues(
       return { success: false, error: 'Invalid dues status. Must be "cleared" or "pending".' };
     }
 
+    let callerProfile: User | null = null;
+
     // Auth & RBAC Check
     if (callerToken) {
       const decodedToken = await verifyAuthToken(callerToken);
@@ -32,7 +34,7 @@ export async function toggleMemberDues(
         return { success: false, error: 'Unauthorized: Invalid authentication session.' };
       }
 
-      const callerProfile = await getUserProfile(decodedToken.uid);
+      callerProfile = await getUserProfile(decodedToken.uid);
       if (!callerProfile) {
         return { success: false, error: 'Caller user profile not found.' };
       }
@@ -53,12 +55,51 @@ export async function toggleMemberDues(
       }
     }
 
+    const targetProfile = await getUserProfile(targetUserId);
     const updatedAt = new Date().toISOString();
 
-    // Update in Firestore
-    await adminDb.collection('users').doc(targetUserId).update({
+    // 1. Update in Firestore `users` collection
+    await adminDb.collection('users').doc(targetUserId).set({
       duesStatus: newStatus,
       updatedAt,
+    }, { merge: true });
+
+    // Also sync to `auth_users` if exists
+    try {
+      await adminDb.collection('auth_users').doc(targetUserId).set({
+        duesStatus: newStatus,
+        updatedAt,
+      }, { merge: true });
+    } catch {
+      // Non-critical fallback
+    }
+
+    // 2. Append immutable audit log to `dues_audit_log`
+    const targetUserName = targetProfile
+      ? `${targetProfile.firstName || ''} ${targetProfile.lastName || ''}`.trim() || 'Rotaract Member'
+      : 'Rotaract Member';
+
+    const modifiedBy = callerProfile?.userId || 'system_admin';
+    const modifiedByName = callerProfile
+      ? `${callerProfile.firstName || ''} ${callerProfile.lastName || ''}`.trim() || 'District Officer'
+      : 'District Officer';
+    const modifiedByRole = callerProfile?.role || 'district_admin';
+
+    const auditDocRef = await adminDb.collection('dues_audit_log').add({
+      targetUserId,
+      memberId: targetUserId,
+      targetUserName,
+      clubId: targetProfile?.clubId || '',
+      previousStatus: targetProfile?.duesStatus || 'pending',
+      newStatus,
+      modifiedBy,
+      clearedBy: modifiedByName,
+      modifiedByName,
+      modifiedByRole,
+      timestamp: updatedAt,
+      createdAt: updatedAt,
+      updatedAt,
+      reason: `Administrative clearance update to ${newStatus}`,
     });
 
     return {
@@ -66,6 +107,7 @@ export async function toggleMemberDues(
       data: {
         userId: targetUserId,
         duesStatus: newStatus,
+        auditLogId: auditDocRef.id,
         updatedAt,
       },
     };
@@ -103,7 +145,11 @@ export async function getClubDuesRoster(
       .where('clubId', '==', clubId)
       .get();
 
-    const members: User[] = snapshot.docs.map((doc) => doc.data() as User);
+    const members: User[] = snapshot.docs.map((doc) => ({
+      userId: doc.id,
+      id: doc.id,
+      ...(doc.data() as Omit<User, 'userId' | 'id'>),
+    }));
 
     return {
       success: true,
