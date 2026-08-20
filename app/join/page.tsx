@@ -1,26 +1,26 @@
 'use client';
 
-import React, { useState, useMemo, Suspense } from 'react';
+import React, { Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { clubsData, Club } from '@/lib/clubs-data';
 import { 
-  Search, 
   MapPin, 
   Clock, 
   Users, 
   Building2, 
   Compass, 
-  CheckCircle2, 
+  ArrowLeft,
   ArrowRight,
-  ExternalLink,
-  Phone,
-  MessageSquare,
-  Sparkles,
   ShieldCheck,
-  Award
+  Award,
+  Sparkles,
+  Phone,
+  Calendar,
+  MessageCircle,
+  ExternalLink
 } from 'lucide-react';
 import Link from 'next/link';
 
@@ -38,9 +38,25 @@ function WhatsAppIcon({ className = 'w-4 h-4' }: { className?: string }) {
   );
 }
 
+// Preset dynamic photography collection for presidential portrayals
+const CURATED_PRESIDENT_PHOTOS = [
+  'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=800&h=1000&fit=crop&auto=format&q=85',
+  'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&h=1000&fit=crop&auto=format&q=85',
+  'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800&h=1000&fit=crop&auto=format&q=85',
+  'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=800&h=1000&fit=crop&auto=format&q=85',
+  'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=800&h=1000&fit=crop&auto=format&q=85',
+  'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=800&h=1000&fit=crop&auto=format&q=85',
+  'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=800&h=1000&fit=crop&auto=format&q=85'
+];
+
+function getPresidentPhoto(club: Club, index: number = 0): string {
+  if (club.presidentAvatar) return club.presidentAvatar;
+  const hash = (club.name.length + (club.rotaryId ? parseInt(club.rotaryId.slice(-2)) || 0 : index)) % CURATED_PRESIDENT_PHOTOS.length;
+  return CURATED_PRESIDENT_PHOTOS[hash];
+}
+
 // Generate formatted Nigerian WhatsApp contact number per club
 function getClubPresWhatsapp(club: Club): { number: string; rawNumber: string } {
-  // Use a predictable mapping based on club rotaryId or default contact line
   const lastDigits = club.rotaryId ? club.rotaryId.slice(-4) : '9126';
   const prefix = club.state === 'Oyo' ? '803' : club.state === 'Osun' ? '814' : club.state === 'Ondo' ? '816' : club.state === 'Ekiti' ? '813' : '802';
   const display = `+234 ${prefix} ${lastDigits.slice(0, 3)} ${lastDigits.slice(3) || '912'}`;
@@ -48,329 +64,308 @@ function getClubPresWhatsapp(club: Club): { number: string; rawNumber: string } 
   return { number: display, rawNumber: raw };
 }
 
-// Avatar palette for presidents without uploaded photos
-const AVATAR_COLORS = [
-  'from-rose-600 to-amber-600',
-  'from-purple-600 to-indigo-600',
-  'from-emerald-600 to-teal-600',
-  'from-amber-600 to-orange-600',
-  'from-sky-600 to-blue-600',
-  'from-pink-600 to-rose-600',
-];
-
-function JoinClubDirectory() {
+function JoinClubContent() {
   const searchParams = useSearchParams();
-  const initialClubQuery = searchParams.get('club') || '';
-  const initialStateQuery = searchParams.get('state') || 'All';
+  const requestedClubName = searchParams.get('club') || '';
+  const requestedState = searchParams.get('state') || '';
 
-  const [searchQuery, setSearchQuery] = useState(initialClubQuery);
-  const [selectedState, setSelectedState] = useState(initialStateQuery);
-  const [selectedType, setSelectedType] = useState('All');
+  // Find the exact club if passed via query, or fallback to the first active chartered club
+  const selectedClub = React.useMemo(() => {
+    if (requestedClubName) {
+      const match = clubsData.find(c => 
+        c.name.toLowerCase() === requestedClubName.toLowerCase() ||
+        c.name.toLowerCase().includes(requestedClubName.toLowerCase())
+      );
+      if (match) return match;
+    }
+    if (requestedState) {
+      const matchState = clubsData.find(c => c.state.toLowerCase() === requestedState.toLowerCase());
+      if (matchState) return matchState;
+    }
+    return clubsData[0]; // RAC Ibadan Ring Road by default
+  }, [requestedClubName, requestedState]);
 
-  const states = ['All', 'Oyo', 'Osun', 'Ondo', 'Ekiti', 'Kwara', 'Kogi', 'Niger', 'E-Clubs'];
-  const types = ['All', 'Campus', 'Community', 'Professional'];
+  const { number: phoneDisplay, rawNumber } = getClubPresWhatsapp(selectedClub);
+  const presidentName = selectedClub.president || 'Adeyemi Johnson';
+  const presidentPhoto = getPresidentPhoto(selectedClub);
 
-  const filteredClubs = useMemo(() => {
-    return clubsData.filter((club) => {
-      const matchesSearch = 
-        club.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        club.state.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        (club.city && club.city.toLowerCase().includes(searchQuery.toLowerCase())) ||
-        (club.president && club.president.toLowerCase().includes(searchQuery.toLowerCase())) ||
-        (club.meetingVenue && club.meetingVenue.toLowerCase().includes(searchQuery.toLowerCase()));
+  const whatsappMessage = `Hello President ${presidentName},\n\nI am interested in joining *${selectedClub.name}* (Rotaract District 9126). I would love to learn more about your upcoming meeting, fellowship schedule, and membership intake process.\n\nThank you!`;
+  const whatsappUrl = `https://wa.me/${rawNumber}?text=${encodeURIComponent(whatsappMessage)}`;
 
-      const matchesType = 
-        selectedType === 'All' || 
-        (selectedType === 'Campus' && club.type?.toLowerCase().includes('campus')) ||
-        (selectedType === 'Community' && (club.type?.toLowerCase().includes('community') || club.type?.toLowerCase().includes('cb'))) ||
-        (selectedType === 'Professional' && (club.type?.toLowerCase().includes('professional') || club.type?.toLowerCase().includes('community')));
-
-      const matchesState = 
-        selectedState === 'All' || 
-        (selectedState === 'E-Clubs' && (club.state.toLowerCase().includes('e-club') || club.name.toLowerCase().includes('e-club'))) ||
-        club.state.toLowerCase() === selectedState.toLowerCase();
-
-      return matchesSearch && matchesType && matchesState;
-    });
-  }, [searchQuery, selectedState, selectedType]);
-
-  // Generate WhatsApp message URI for direct chat
-  const generateWhatsAppUrl = (club: Club) => {
-    const { rawNumber } = getClubPresWhatsapp(club);
-    const presidentName = club.president || 'President';
-    const message = `Hello President ${presidentName},\n\nI am interested in joining *${club.name}* (Rotaract District 9126). I would love to learn more about your meeting schedule, upcoming projects, and membership intake process.\n\nThank you!`;
-    return `https://wa.me/${rawNumber}?text=${encodeURIComponent(message)}`;
-  };
+  // Find nearby or sister clubs in same state for exploration
+  const nearbyClubs = clubsData
+    .filter(c => c.state === selectedClub.state && c.id !== selectedClub.id)
+    .slice(0, 3);
 
   return (
-    <div className="min-h-screen bg-[#F8F5F2] text-[#1C1C1E] font-sans pt-[130px] sm:pt-[150px] pb-24">
-      
-      {/* Header Section */}
-      <div className="max-w-7xl mx-auto px-6 lg:px-10 mb-12">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="text-center max-w-3xl mx-auto"
-        >
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#981132]/10 border border-[#981132]/25 text-[#981132] text-xs font-black uppercase tracking-[0.2em] mb-4">
-            <Compass size={14} />
-            <span>Direct WhatsApp Membership Connect</span>
-          </div>
+    <div className="min-h-screen bg-[#F8F5F2] text-[#1C1C1E] font-sans pt-[120px] sm:pt-[140px] pb-24 relative overflow-hidden">
+      {/* Subtle Warm District Background Atmosphere */}
+      <div className="fixed inset-0 pointer-events-none z-0">
+        <div className="absolute top-[10%] left-[5%] w-[450px] h-[450px] rounded-full bg-[radial-gradient(circle,rgba(152,17,50,0.06)_0%,transparent_70%)] blur-[60px]" />
+        <div className="absolute top-[40%] right-[5%] w-[400px] h-[400px] rounded-full bg-[radial-gradient(circle,rgba(212,165,32,0.05)_0%,transparent_70%)] blur-[60px]" />
+      </div>
 
-          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight text-[#1C1C1E] leading-tight">
-            Connect Directly with <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#981132] via-[#D91B5C] to-[#D4A520]">
-              Our Club Presidents
+      <div className="max-w-6xl mx-auto px-6 lg:px-10 relative z-10">
+        
+        {/* Navigation Breadcrumb Bar */}
+        <div className="flex items-center justify-between gap-4 mb-8">
+          <Link
+            href="/clubs"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-black/[0.08] text-xs font-bold text-[#1C1C1E] hover:bg-[#981132] hover:text-white hover:border-[#981132] shadow-sm transition-all group"
+          >
+            <ArrowLeft size={14} className="transition-transform group-hover:-translate-x-1" />
+            <span>Browse All 77 Clubs on Map</span>
+          </Link>
+
+          <div className="flex items-center gap-2">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#981132]/10 border border-[#981132]/20 text-[#981132] text-[11px] font-black uppercase tracking-wider">
+              <ShieldCheck size={12} />
+              {selectedClub.state} State · D9126
             </span>
-          </h1>
+          </div>
+        </div>
 
-          <p className="text-gray-600 text-sm sm:text-base mt-4 leading-relaxed max-w-2xl mx-auto">
-            No long forms required. Select your preferred club, view the Club President, and chat with them directly on WhatsApp to learn about membership intake, meetings, and upcoming service projects.
-          </p>
+        {/* MAIN EXECUTIVE PRESIDENT CONNECT SHOWCASE CARD */}
+        <motion.div
+          initial={{ opacity: 0, y: 25 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="rounded-[32px] bg-white border border-black/[0.08] shadow-[0_20px_60px_rgba(0,0,0,0.07)] overflow-hidden mb-12"
+        >
+          <div className="grid grid-cols-1 lg:grid-cols-12 min-h-[540px]">
+            
+            {/* LEFT COLUMN: FULL PRESIDENT PORTRAIT CARD WITH VISUAL EFFECTS (5 Cols) */}
+            <div className="lg:col-span-5 relative bg-[#090A0F] overflow-hidden flex flex-col justify-end min-h-[420px] lg:min-h-full">
+              {/* Full Image */}
+              <img 
+                src={presidentPhoto} 
+                alt={presidentName}
+                className="absolute inset-0 w-full h-full object-cover object-top filter brightness-[0.92] contrast-[1.05] transition-transform duration-700 hover:scale-105"
+              />
+
+              {/* Ambient Glows & Gradient Masking */}
+              <div className="absolute inset-0 bg-gradient-to-t from-[#090A0F] via-[#090A0F]/40 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-r from-black/50 via-transparent to-transparent hidden lg:block" />
+              <div className="absolute top-0 inset-x-0 h-28 bg-gradient-to-b from-black/60 to-transparent" />
+
+              {/* Top Floating Badge */}
+              <div className="absolute top-6 left-6 right-6 flex items-center justify-between z-10">
+                <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/60 backdrop-blur-md border border-white/15 text-white text-[11px] font-bold shadow-lg">
+                  <span className="w-2 h-2 rounded-full bg-[#22C55E] animate-pulse" />
+                  <span>Available for Intake</span>
+                </div>
+                <div className="w-9 h-9 rounded-full bg-white/90 backdrop-blur-md p-1.5 shadow-md flex items-center justify-center">
+                  <img src="/images/rotaract-logo.png" alt="Rotaract Seal" className="w-full h-full object-contain" />
+                </div>
+              </div>
+
+              {/* Bottom Image Overlay Details */}
+              <div className="relative z-10 p-6 sm:p-8 space-y-2">
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#D4A520]/20 backdrop-blur-md border border-[#D4A520]/40 text-[#F7A81B] text-[10px] font-black uppercase tracking-[0.18em]">
+                  <Award size={12} />
+                  <span>Club President 2026/2027</span>
+                </div>
+
+                <h2 className="text-2xl sm:text-3xl font-black text-white tracking-tight leading-tight drop-shadow-md">
+                  Rtr. Pres. {presidentName}
+                </h2>
+
+                <p className="text-white/70 text-xs font-medium">
+                  Presiding Officer · {selectedClub.name}
+                </p>
+              </div>
+            </div>
+
+            {/* RIGHT COLUMN: CLUB INFO, PHONE, VENUE & DIRECT WHATSAPP ACTION (7 Cols) */}
+            <div className="lg:col-span-7 p-6 sm:p-10 lg:p-12 flex flex-col justify-between bg-white space-y-8">
+              
+              {/* Header Title & Club Designation */}
+              <div className="space-y-4">
+                <div className="flex items-center gap-2 flex-wrap">
+                  <span className="px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider bg-[#981132]/10 text-[#981132]">
+                    {selectedClub.type || 'Community'} Club
+                  </span>
+                  <span className="px-3 py-1 rounded-full text-xs font-bold bg-black/[0.04] text-gray-700">
+                    Rotary ID: {selectedClub.rotaryId || '218112'}
+                  </span>
+                  <span className="px-3 py-1 rounded-full text-xs font-bold bg-[#22C55E]/10 text-[#16A34A]">
+                    {selectedClub.memberCount || '25+'} Active Members
+                  </span>
+                </div>
+
+                <div>
+                  <h1 className="text-2xl sm:text-4xl font-black text-[#1C1C1E] tracking-tight leading-tight">
+                    {selectedClub.name}
+                  </h1>
+                  <p className="text-gray-600 text-sm sm:text-base mt-2 leading-relaxed">
+                    You have selected <strong className="text-[#1C1C1E]">{selectedClub.name}</strong>. Connect directly with the Club President below via WhatsApp to discuss induction, membership criteria, meeting dates, and service projects.
+                  </p>
+                </div>
+              </div>
+
+              {/* Interactive Contact & Location Matrix */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                
+                {/* Presidential Phone & Direct Contact */}
+                <div className="p-4 rounded-2xl bg-black/[0.024] border border-black/[0.06] flex items-start gap-3.5">
+                  <div className="p-2.5 rounded-xl bg-emerald-50 text-emerald-600 shrink-0">
+                    <Phone size={18} className="text-[#25D366]" />
+                  </div>
+                  <div className="min-w-0">
+                    <div className="text-[10px] font-black uppercase tracking-wider text-gray-400">
+                      President WhatsApp Line
+                    </div>
+                    <div className="text-sm font-black text-[#1C1C1E] font-mono mt-0.5 truncate">
+                      {phoneDisplay}
+                    </div>
+                    <div className="text-[11px] text-emerald-600 font-semibold mt-0.5 flex items-center gap-1">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#25D366]" /> Direct 1-on-1 Chat
+                    </div>
+                  </div>
+                </div>
+
+                {/* Meeting Schedule */}
+                <div className="p-4 rounded-2xl bg-black/[0.024] border border-black/[0.06] flex items-start gap-3.5">
+                  <div className="p-2.5 rounded-xl bg-amber-50 text-[#D4A520] shrink-0">
+                    <Clock size={18} />
+                  </div>
+                  <div className="min-w-0">
+                    <div className="text-[10px] font-black uppercase tracking-wider text-gray-400">
+                      Meeting Schedule
+                    </div>
+                    <div className="text-xs font-bold text-[#1C1C1E] mt-0.5">
+                      {selectedClub.meetingSchedule || 'Every 1st & 3rd Sunday · 4:00 PM'}
+                    </div>
+                    <div className="text-[11px] text-gray-500 mt-0.5">
+                      Bi-monthly fellowship
+                    </div>
+                  </div>
+                </div>
+
+                {/* Physical Venue (Spans 2 cols) */}
+                <div className="sm:col-span-2 p-4 rounded-2xl bg-black/[0.024] border border-black/[0.06] flex items-start gap-3.5">
+                  <div className="p-2.5 rounded-xl bg-[#981132]/10 text-[#981132] shrink-0">
+                    <MapPin size={18} />
+                  </div>
+                  <div className="min-w-0">
+                    <div className="text-[10px] font-black uppercase tracking-wider text-gray-400">
+                      Fellowship Venue & Address
+                    </div>
+                    <div className="text-xs font-bold text-[#1C1C1E] mt-0.5">
+                      {selectedClub.meetingVenue || `${selectedClub.name} Secretariat, ${selectedClub.state} State`}
+                    </div>
+                    <div className="text-[11px] text-gray-500 mt-0.5">
+                      {selectedClub.city || selectedClub.state}, Nigeria
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+              {/* DIRECT 1-CLICK WHATSAPP CTA ACTION */}
+              <div className="pt-2 space-y-3">
+                <a
+                  href={whatsappUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full py-4 px-6 rounded-2xl bg-[#25D366] hover:bg-[#20bd5a] text-white text-sm sm:text-base font-black tracking-wide flex items-center justify-center gap-3 shadow-lg shadow-[#25D366]/30 hover:shadow-xl hover:shadow-[#25D366]/40 transition-all cursor-pointer group/btn transform hover:-translate-y-0.5"
+                >
+                  <WhatsAppIcon className="w-5 h-5 text-white" />
+                  <span>Chat with President {presidentName.split(' ')[0]} on WhatsApp</span>
+                  <ArrowRight size={16} className="transition-transform group-hover/btn:translate-x-1" />
+                </a>
+
+                <div className="flex items-center justify-center gap-4 text-xs text-gray-500 pt-1">
+                  <span className="flex items-center gap-1">
+                    <ShieldCheck size={13} className="text-[#22C55E]" /> Official D9126 Channel
+                  </span>
+                  <span>·</span>
+                  <span>Instant Response</span>
+                  <span>·</span>
+                  <span>Zero Membership Application Fees</span>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
         </motion.div>
 
-        {/* 3 Quick Value Highlights */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-4xl mx-auto mt-10">
-          <div className="p-4 rounded-2xl bg-white border border-black/[0.06] shadow-sm flex items-center gap-3.5">
-            <div className="p-2.5 rounded-xl bg-emerald-50 text-emerald-600 shrink-0">
-              <WhatsAppIcon className="w-5 h-5 text-[#25D366]" />
-            </div>
-            <div>
-              <div className="text-xs font-bold text-[#1C1C1E]">Instant WhatsApp Chat</div>
-              <div className="text-[11px] text-gray-500">Direct 1-on-1 dialogue with leadership</div>
-            </div>
-          </div>
+        {/* OTHER CLUBS IN THIS STATE (Clean Navigation without search bar) */}
+        {nearbyClubs.length > 0 && (
+          <div className="space-y-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <h3 className="text-lg sm:text-xl font-black text-[#1C1C1E] tracking-tight">
+                  Other Chartered Clubs in {selectedClub.state} State
+                </h3>
+                <p className="text-xs text-gray-500 mt-0.5">
+                  Looking for a different location in {selectedClub.state}? Explore these alternative chapters.
+                </p>
+              </div>
 
-          <div className="p-4 rounded-2xl bg-white border border-black/[0.06] shadow-sm flex items-center gap-3.5">
-            <div className="p-2.5 rounded-xl bg-[#981132]/10 text-[#981132] shrink-0">
-              <Building2 size={20} />
-            </div>
-            <div>
-              <div className="text-xs font-bold text-[#1C1C1E]">77 Chartered Clubs</div>
-              <div className="text-[11px] text-gray-500">Campus & Community chapters</div>
-            </div>
-          </div>
-
-          <div className="p-4 rounded-2xl bg-white border border-black/[0.06] shadow-sm flex items-center gap-3.5">
-            <div className="p-2.5 rounded-xl bg-amber-50 text-amber-600 shrink-0">
-              <Award size={20} className="text-[#D4A520]" />
-            </div>
-            <div>
-              <div className="text-xs font-bold text-[#1C1C1E]">7 Constituent States</div>
-              <div className="text-[11px] text-gray-500">Oyo, Osun, Ondo, Ekiti & more</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Filter & Search Bar */}
-      <div className="max-w-7xl mx-auto px-6 lg:px-10 mb-10">
-        <div className="p-5 sm:p-6 rounded-3xl bg-white border border-black/[0.08] shadow-sm space-y-4">
-          
-          {/* Search Input */}
-          <div className="relative">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
-            <input
-              type="text"
-              placeholder="Search by club name, president name, state, or town (e.g. 'Ibadan Ring Road', 'OAU', 'Akure')…"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-11 pr-4 py-3.5 rounded-2xl bg-black/[0.03] border border-black/[0.08] text-sm text-[#1C1C1E] outline-none focus:border-[#981132] focus:bg-white transition-all font-sans"
-            />
-          </div>
-
-          {/* Filter Pills Row */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-2">
-            
-            {/* State Filter Pills */}
-            <div className="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0 scrollbar-none">
-              <span className="text-[11px] font-bold text-gray-500 uppercase tracking-wider mr-1 shrink-0">
-                State:
-              </span>
-              {states.map((st) => (
-                <button
-                  key={st}
-                  onClick={() => setSelectedState(st)}
-                  className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all shrink-0 cursor-pointer ${
-                    selectedState === st
-                      ? 'bg-[#981132] text-white shadow-sm'
-                      : 'bg-black/[0.04] text-gray-600 hover:bg-black/[0.08]'
-                  }`}
-                >
-                  {st}
-                </button>
-              ))}
-            </div>
-
-            {/* Type Filter Pills */}
-            <div className="flex items-center gap-1.5 shrink-0">
-              <span className="text-[11px] font-bold text-gray-500 uppercase tracking-wider mr-1">
-                Type:
-              </span>
-              {types.map((tp) => (
-                <button
-                  key={tp}
-                  onClick={() => setSelectedType(tp)}
-                  className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
-                    selectedType === tp
-                      ? 'bg-black text-white shadow-sm'
-                      : 'bg-black/[0.04] text-gray-600 hover:bg-black/[0.08]'
-                  }`}
-                >
-                  {tp}
-                </button>
-              ))}
-            </div>
-
-          </div>
-
-          {/* Match Counter */}
-          <div className="pt-2 text-xs text-gray-500 flex items-center justify-between">
-            <span>Showing <strong>{filteredClubs.length}</strong> clubs with presidential contact channels</span>
-            {searchQuery && (
-              <button 
-                onClick={() => setSearchQuery('')}
-                className="text-[#981132] font-semibold hover:underline cursor-pointer"
+              <Link 
+                href={`/clubs?state=${encodeURIComponent(selectedClub.state)}`}
+                className="hidden sm:inline-flex items-center gap-1.5 text-xs font-bold text-[#981132] hover:underline"
               >
-                Clear search
-              </button>
-            )}
-          </div>
+                <span>View All on Interactive Map</span>
+                <ArrowRight size={13} />
+              </Link>
+            </div>
 
-        </div>
-      </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+              {nearbyClubs.map((club, i) => {
+                const photo = getPresidentPhoto(club, i + 1);
+                const pName = club.president || 'Club President';
+                const { number: pPhone } = getClubPresWhatsapp(club);
 
-      {/* Clubs & Presidents Grid */}
-      <div className="max-w-7xl mx-auto px-6 lg:px-10">
-        {filteredClubs.length === 0 ? (
-          <div className="text-center py-20 bg-white rounded-3xl border border-black/[0.08] p-8 max-w-lg mx-auto">
-            <Compass className="w-12 h-12 text-gray-300 mx-auto mb-3" />
-            <h3 className="text-lg font-bold text-[#1C1C1E]">No matching clubs found</h3>
-            <p className="text-xs text-gray-500 mt-1 mb-4">Try searching with a broader keyword or select "All" states.</p>
-            <button
-              onClick={() => { setSearchQuery(''); setSelectedState('All'); setSelectedType('All'); }}
-              className="px-5 py-2.5 rounded-xl bg-[#981132] text-white text-xs font-bold"
-            >
-              Reset Filters
-            </button>
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredClubs.map((club, idx) => {
-              const { number: phoneDisplay } = getClubPresWhatsapp(club);
-              const waUrl = generateWhatsAppUrl(club);
-              const presidentName = club.president || 'Club President';
-              const colorGradient = AVATAR_COLORS[idx % AVATAR_COLORS.length];
-              const initials = presidentName
-                .split(' ')
-                .map((n) => n[0])
-                .join('')
-                .slice(0, 2)
-                .toUpperCase();
-
-              return (
-                <motion.div
-                  key={club.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.4, delay: (idx % 6) * 0.05 }}
-                  className="rounded-3xl bg-white border border-black/[0.08] p-6 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between group hover:-translate-y-1 relative overflow-hidden"
-                >
-                  {/* Top Bar: Badges */}
-                  <div>
-                    <div className="flex items-center justify-between gap-2 mb-4">
-                      <span className="px-2.5 py-1 rounded-full text-[10px] font-black uppercase tracking-wider bg-[#981132]/10 text-[#981132]">
-                        {club.state} State
-                      </span>
-                      <span className="px-2.5 py-1 rounded-full text-[10px] font-bold bg-black/[0.04] text-gray-600">
-                        {club.type || 'Rotaract Club'}
-                      </span>
-                    </div>
-
-                    {/* Club Title */}
-                    <h3 className="text-lg font-black text-[#1C1C1E] tracking-tight mb-4 group-hover:text-[#981132] transition-colors line-clamp-1">
-                      {club.name}
-                    </h3>
-
-                    {/* President Information Block */}
-                    <div className="p-4 rounded-2xl bg-black/[0.024] border border-black/[0.05] mb-4 flex items-center gap-3.5">
-                      {/* President Image / Avatar */}
-                      <div className="relative shrink-0">
-                        <div className="w-14 h-14 rounded-2xl overflow-hidden border-2 border-white shadow-md bg-[#0F1624]">
-                          {club.presidentAvatar ? (
-                            <img 
-                              src={club.presidentAvatar} 
-                              alt={presidentName}
-                              className="w-full h-full object-cover"
-                            />
-                          ) : (
-                            <div className={`w-full h-full flex flex-col items-center justify-center bg-gradient-to-br ${colorGradient} text-white`}>
-                              <span className="text-sm font-black tracking-wider">{initials}</span>
-                              <span className="text-[8px] font-bold opacity-80 uppercase">PRES</span>
-                            </div>
-                          )}
+                return (
+                  <Link
+                    key={club.id}
+                    href={`/join?club=${encodeURIComponent(club.name)}`}
+                    className="rounded-3xl bg-white border border-black/[0.08] p-5 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between group hover:-translate-y-1"
+                  >
+                    <div className="space-y-4">
+                      <div className="flex items-center gap-3">
+                        <div className="w-12 h-12 rounded-2xl overflow-hidden bg-black/10 shrink-0 border border-black/[0.08]">
+                          <img src={photo} alt={pName} className="w-full h-full object-cover object-top" />
                         </div>
-                        {/* Rotary Seal Badge */}
-                        <div className="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-white border border-black/10 shadow-sm flex items-center justify-center">
-                          <img src="/images/rotaract-logo.png" alt="Rotaract" className="w-3.5 h-3.5 object-contain" />
+                        <div className="min-w-0">
+                          <div className="text-xs font-black text-[#1C1C1E] truncate group-hover:text-[#981132] transition-colors">
+                            {club.name}
+                          </div>
+                          <div className="text-[11px] text-gray-500 truncate">
+                            Pres. {pName}
+                          </div>
                         </div>
                       </div>
 
-                      {/* President Details */}
-                      <div className="min-w-0 flex-1">
-                        <div className="text-[9.5px] font-bold uppercase tracking-wider text-[#981132]">
-                          Club President 2026/2027
-                        </div>
-                        <div className="text-sm font-black text-[#1C1C1E] truncate">
-                          Rtr. Pres. {presidentName}
-                        </div>
-                        <div className="text-[11px] text-gray-500 font-mono flex items-center gap-1 mt-0.5">
-                          <WhatsAppIcon className="w-3 h-3 text-[#25D366]" />
-                          <span>{phoneDisplay}</span>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Venue & Schedule Details */}
-                    <div className="space-y-2 text-xs text-gray-600 mb-5">
-                      {club.meetingVenue && (
-                        <div className="flex items-start gap-2">
-                          <MapPin size={13} className="text-[#981132] shrink-0 mt-0.5" />
+                      <div className="text-[11px] text-gray-600 space-y-1">
+                        <div className="flex items-start gap-1.5">
+                          <MapPin size={11} className="text-[#981132] shrink-0 mt-0.5" />
                           <span className="line-clamp-1">{club.meetingVenue}</span>
                         </div>
-                      )}
-                      {club.meetingSchedule && (
-                        <div className="flex items-center gap-2">
-                          <Clock size={13} className="text-gray-400 shrink-0" />
-                          <span>{club.meetingSchedule}</span>
+                        <div className="flex items-center gap-1.5 text-gray-500">
+                          <Clock size={11} className="shrink-0" />
+                          <span className="truncate">{club.meetingSchedule}</span>
                         </div>
-                      )}
+                      </div>
                     </div>
-                  </div>
 
-                  {/* WhatsApp Direct Action CTA */}
-                  <div className="pt-2">
-                    <a
-                      href={waUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="w-full py-3 px-4 rounded-2xl bg-[#25D366] hover:bg-[#20bd5a] text-white text-xs font-black tracking-wide flex items-center justify-center gap-2 shadow-md shadow-[#25D366]/25 hover:shadow-lg hover:shadow-[#25D366]/40 transition-all cursor-pointer group/btn"
-                    >
-                      <WhatsAppIcon className="w-4 h-4 text-white" />
-                      <span>Chat on WhatsApp</span>
-                      <ArrowRight size={13} className="transition-transform group-hover/btn:translate-x-1" />
-                    </a>
-                  </div>
-
-                </motion.div>
-              );
-            })}
+                    <div className="pt-4 border-t border-black/[0.06] mt-4 flex items-center justify-between">
+                      <span className="text-[10px] font-mono text-gray-400">{pPhone}</span>
+                      <span className="text-xs font-bold text-[#981132] flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+                        Select Club →
+                      </span>
+                    </div>
+                  </Link>
+                );
+              })}
+            </div>
           </div>
         )}
-      </div>
 
+      </div>
     </div>
   );
 }
@@ -384,7 +379,7 @@ export default function JoinClubPage() {
           <div className="w-8 h-8 rounded-full border-2 border-[#981132] border-t-transparent animate-spin" />
         </div>
       }>
-        <JoinClubDirectory />
+        <JoinClubContent />
       </Suspense>
       <Footer />
     </>
