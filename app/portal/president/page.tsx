@@ -10,15 +10,26 @@ import {
   Download, 
   Search, 
   Filter, 
-  ArrowLeft,
-  ShieldCheck,
-  Star,
-  BarChart2,
-  DollarSign,
-  UserPlus,
-  ChevronRight,
-  Mail,
-  ChevronDown
+  ArrowLeft, 
+  ShieldCheck, 
+  Star, 
+  BarChart2, 
+  DollarSign, 
+  UserPlus, 
+  ChevronRight, 
+  Mail, 
+  ChevronDown,
+  Calendar,
+  Layers,
+  Settings,
+  Phone,
+  Check,
+  X,
+  AlertCircle,
+  TrendingUp,
+  MapPin,
+  Save,
+  Plus
 } from 'lucide-react';
 
 interface MemberRecord {
@@ -31,6 +42,27 @@ interface MemberRecord {
   clearedDate?: string;
   lastActive: string;
   avatar: string;
+}
+
+interface ProspectLead {
+  id: string;
+  name: string;
+  email: string;
+  phone: string;
+  source: string;
+  date: string;
+  stage: 'intake' | 'orientation' | 'induction_ready';
+  notes?: string;
+}
+
+interface FinanceTransaction {
+  id: string;
+  date: string;
+  description: string;
+  member: string;
+  category: 'Annual Dues' | 'Project Levy' | 'Induction Fee' | 'Meeting Refreshment';
+  amount: number;
+  status: 'Completed' | 'Pending' | 'Remitted';
 }
 
 const INITIAL_MEMBERS: MemberRecord[] = [
@@ -234,6 +266,107 @@ const INITIAL_MEMBERS: MemberRecord[] = [
   }
 ];
 
+const INITIAL_PROSPECTS: ProspectLead[] = [
+  {
+    id: 'P1',
+    name: 'Chinedu Eze',
+    email: 'chinedu.eze@gmail.com',
+    phone: '+234 803 456 7890',
+    source: '/join',
+    date: 'Aug 18, 2026',
+    stage: 'intake',
+    notes: 'Interested in Community Health outreaches and youth leadership.'
+  },
+  {
+    id: 'P2',
+    name: 'Amina Bello',
+    email: 'amina.bello@techcorp.ng',
+    phone: '+234 809 112 3344',
+    source: '/clubs',
+    date: 'Aug 16, 2026',
+    stage: 'intake',
+    notes: 'Referred by Rtr. Sola Adebayo. Brand designer.'
+  },
+  {
+    id: 'P3',
+    name: 'Emmanuel Okafor',
+    email: 'e.okafor@lawpartners.ng',
+    phone: '+234 812 345 6789',
+    source: '/join',
+    date: 'Aug 10, 2026',
+    stage: 'orientation',
+    notes: 'Attended 2 general fellowship meetings. Orientation scheduled.'
+  },
+  {
+    id: 'P4',
+    name: 'Zainab Ibrahim',
+    email: 'zainab.ibrahim@unilorin.edu.ng',
+    phone: '+234 805 678 9012',
+    source: '/clubs',
+    date: 'Aug 04, 2026',
+    stage: 'orientation',
+    notes: 'Completed Rotary 101 workshop with high engagement.'
+  },
+  {
+    id: 'P5',
+    name: 'Victor Adeleke',
+    email: 'victor.adeleke@medicare.ng',
+    phone: '+234 814 556 7788',
+    source: '/join',
+    date: 'Jul 28, 2026',
+    stage: 'induction_ready',
+    notes: 'Dues paid, 4-way test approved. Ready for September induction.'
+  }
+];
+
+const INITIAL_FINANCES: FinanceTransaction[] = [
+  {
+    id: 'TXN-9126-101',
+    date: 'Aug 18, 2026',
+    description: 'Annual District & Club Dues',
+    member: 'Tunde Adeyemi',
+    category: 'Annual Dues',
+    amount: 7500,
+    status: 'Completed'
+  },
+  {
+    id: 'TXN-9126-102',
+    date: 'Aug 15, 2026',
+    description: 'Annual District & Club Dues',
+    member: 'Sola Adebayo',
+    category: 'Annual Dues',
+    amount: 7500,
+    status: 'Completed'
+  },
+  {
+    id: 'TXN-9126-103',
+    date: 'Aug 14, 2026',
+    description: 'Q3 Maternal Health Outreach Levy',
+    member: 'General Assessment (14 Members)',
+    category: 'Project Levy',
+    amount: 35000,
+    status: 'Completed'
+  },
+  {
+    id: 'TXN-9126-104',
+    date: 'Aug 10, 2026',
+    description: 'New Member Induction Kit & Pin',
+    member: 'Victor Adeleke',
+    category: 'Induction Fee',
+    amount: 15000,
+    status: 'Completed'
+  },
+  {
+    id: 'TXN-9126-105',
+    date: 'Aug 02, 2026',
+    description: 'District 9126 Capitation Remittance (Q1)',
+    member: 'District Secretariat',
+    category: 'Annual Dues',
+    amount: 60000,
+    status: 'Remitted'
+  }
+];
+
 export default function PresidentConsolePage() {
   const [members, setMembers] = useState<MemberRecord[]>(INITIAL_MEMBERS);
   const [activeTab, setActiveTab] = useState<'roster' | 'attendance' | 'finances' | 'pipeline' | 'settings'>('roster');
@@ -241,6 +374,48 @@ export default function PresidentConsolePage() {
   const [roleFilter, setRoleFilter] = useState('all');
   const [duesFilter, setDuesFilter] = useState('all');
   const [selectedMembers, setSelectedMembers] = useState<string[]>([]);
+
+  // Attendance Tab State
+  const [attendanceRoll, setAttendanceRoll] = useState<Record<string, 'present' | 'absent' | 'excused'>>({
+    '1': 'present',
+    '2': 'present',
+    '3': 'absent',
+    '4': 'present',
+    '5': 'present',
+    '6': 'present',
+    '7': 'excused',
+    '8': 'present',
+    '9': 'present',
+    '10': 'present',
+    '11': 'absent',
+    '12': 'absent',
+    '13': 'present',
+    '14': 'excused',
+    '15': 'absent',
+    '16': 'present',
+    '17': 'present',
+    '18': 'present'
+  });
+
+  // Pipeline State
+  const [prospects, setProspects] = useState<ProspectLead[]>(INITIAL_PROSPECTS);
+
+  // Settings State
+  const [meetingSchedule, setMeetingSchedule] = useState({
+    day: '1st & 3rd Sundays of the month',
+    time: '4:00 PM – 6:00 PM WAT',
+    venue: 'Kakanfo Inn & Conference Centre, Ring Road, Ibadan',
+    virtualLink: 'https://meet.google.com/rotaract-9126-ibadan-central'
+  });
+
+  const [executives, setExecutives] = useState([
+    { role: 'Vice President', name: 'Sola Adebayo', email: 's.adebayo@rotaract9126.org' },
+    { role: 'Club Secretary', name: 'Kayode Faleye', email: 'k.faleye@rotaract9126.org' },
+    { role: 'Club Treasurer', name: 'Funmi Olatunde', email: 'f.olatunde@rotaract9126.org' },
+    { role: 'Director of Community Service', name: 'Yetunde Balogun', email: 'y.balogun@rotaract9126.org' },
+    { role: 'Director of Club Administration', name: 'Babatunde Olawale', email: 'b.olawale@rotaract9126.org' },
+    { role: 'Director of Membership', name: 'Gbemisola Awoyemi', email: 'g.awoyemi@rotaract9126.org' }
+  ]);
 
   // Toggle single member selection
   const toggleSelectMember = (id: string) => {
@@ -272,6 +447,18 @@ export default function PresidentConsolePage() {
     );
   };
 
+  // Advance Prospect Lead Stage
+  const advanceProspectStage = (id: string) => {
+    setProspects((prev) =>
+      prev.map((p) => {
+        if (p.id !== id) return p;
+        if (p.stage === 'intake') return { ...p, stage: 'orientation' };
+        if (p.stage === 'orientation') return { ...p, stage: 'induction_ready' };
+        return p;
+      })
+    );
+  };
+
   // Filtered members list
   const filteredMembers = members.filter((m) => {
     const matchesSearch =
@@ -287,6 +474,9 @@ export default function PresidentConsolePage() {
   const clearedCount = members.filter((m) => m.duesStatus === 'cleared').length;
   const duesClearedPercentage = Math.round((clearedCount / totalCount) * 100);
   const overdueCount = members.filter((m) => m.duesStatus === 'overdue').length;
+
+  const presentAttendeesCount = Object.values(attendanceRoll).filter(v => v === 'present').length;
+  const attendanceRatePercentage = Math.round((presentAttendeesCount / totalCount) * 100);
 
   return (
     <div className="min-h-screen bg-[#090A0F] text-[#ECEEF5] font-sans relative overflow-x-hidden selection:bg-[#D91B5C] selection:text-white">
@@ -326,13 +516,13 @@ export default function PresidentConsolePage() {
           </div>
           <button
             onClick={() => alert('Executive HQ Opened')}
-            className="hidden sm:flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#4361EE]/10 hover:bg-[#4361EE]/20 border border-[#4361EE]/25 text-[#4361EE] text-xs font-semibold transition-colors"
+            className="hidden sm:flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#4361EE]/10 hover:bg-[#4361EE]/20 border border-[#4361EE]/25 text-[#4361EE] text-xs font-semibold transition-colors cursor-pointer"
           >
             <BarChart2 size={12}/> Executive HQ
           </button>
           <button
             onClick={() => alert('Add Member modal trigger')}
-            className="flex items-center pl-4 pr-0 h-9 rounded-full bg-gradient-to-r from-[#D91B5C] to-[#7C3AED] text-white text-xs font-bold shadow-[0_0_20px_rgba(217,27,92,0.25)] hover:opacity-95 transition-all overflow-hidden"
+            className="flex items-center pl-4 pr-0 h-9 rounded-full bg-gradient-to-r from-[#D91B5C] to-[#7C3AED] text-white text-xs font-bold shadow-[0_0_20px_rgba(217,27,92,0.25)] hover:opacity-95 transition-all overflow-hidden cursor-pointer"
           >
             <span className="mr-3">Add Member</span>
             <span className="w-9 h-9 rounded-full bg-black/30 flex items-center justify-center">
@@ -378,10 +568,10 @@ export default function PresidentConsolePage() {
               Avg attendance
             </div>
             <div className="text-[26px] font-extrabold leading-none text-[#22C55E]">
-              82%
+              {attendanceRatePercentage}%
             </div>
             <div className="text-[10px] text-[#ECEEF5]/50 mt-1.5">
-              Last 8 meetings
+              {presentAttendeesCount} Present at last meeting
             </div>
           </div>
 
@@ -404,8 +594,8 @@ export default function PresidentConsolePage() {
           {[
             { id: 'roster', label: 'Member Roster', badge: totalCount },
             { id: 'attendance', label: 'Attendance' },
-            { id: 'finances', label: 'Finances', badge: 8 },
-            { id: 'pipeline', label: 'Lead Pipeline', badge: 5, dot: true },
+            { id: 'finances', label: 'Finances', badge: INITIAL_FINANCES.length },
+            { id: 'pipeline', label: 'Lead Pipeline', badge: prospects.length, dot: true },
             { id: 'settings', label: 'Club Settings' }
           ].map((tab) => (
             <button
@@ -445,7 +635,7 @@ export default function PresidentConsolePage() {
           ))}
         </div>
 
-        {/* Table & Controls Section */}
+        {/* 1. MEMBER ROSTER TAB */}
         {activeTab === 'roster' && (
           <div className="flex flex-col gap-3">
             {/* Filter & Action Controls */}
@@ -666,7 +856,7 @@ export default function PresidentConsolePage() {
                           {member.duesStatus !== 'cleared' ? (
                             <button
                               onClick={() => alert(`Reminder sent to ${member.name} (${member.email})`)}
-                              className="px-2.5 py-1 rounded-lg border border-white/[0.08] bg-white/[0.04] hover:bg-white/[0.08] text-[#ECEEF5]/60 hover:text-white text-[10px] font-semibold transition-colors whitespace-nowrap"
+                              className="px-2.5 py-1 rounded-lg border border-white/[0.08] bg-white/[0.04] hover:bg-white/[0.08] text-[#ECEEF5]/60 hover:text-white text-[10px] font-semibold transition-colors whitespace-nowrap cursor-pointer"
                             >
                               Remind
                             </button>
@@ -693,31 +883,494 @@ export default function PresidentConsolePage() {
           </div>
         )}
 
-        {/* Attendance Tab Placeholder */}
+        {/* 2. ATTENDANCE & ROLL-CALL TAB */}
         {activeTab === 'attendance' && (
-          <div className="p-12 rounded-2xl bg-white/[0.04] border border-white/[0.07] text-center text-sm text-[#ECEEF5]/60">
-            Attendance management and meeting register sub-view.
+          <div className="space-y-6">
+            {/* Meeting Summary Card */}
+            <div className="p-6 rounded-2xl bg-white/[0.04] border border-white/[0.07] backdrop-blur-xl shadow-xl flex flex-col md:flex-row md:items-center justify-between gap-6">
+              <div className="space-y-1">
+                <div className="flex items-center gap-2">
+                  <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-[#981132]/20 text-[#D91B5C] border border-[#981132]/30">
+                    Active Meeting Session
+                  </span>
+                  <span className="text-xs text-[#ECEEF5]/40">Aug 16, 2026</span>
+                </div>
+                <h3 className="text-lg font-bold text-[#ECEEF5]">
+                  General Fellowship: &quot;Digital Leadership in Community Impact&quot;
+                </h3>
+                <p className="text-xs text-[#ECEEF5]/60">
+                  Venue: Kakanfo Inn & Conference Centre · Presiding: Rtr. Tunde Adeyemi
+                </p>
+              </div>
+
+              <div className="flex items-center gap-4 shrink-0">
+                <div className="text-right">
+                  <div className="text-2xl font-black text-[#22C55E] leading-none">
+                    {presentAttendeesCount} / {totalCount}
+                  </div>
+                  <div className="text-[10px] text-[#ECEEF5]/40 mt-1 uppercase tracking-wider font-semibold">
+                    {attendanceRatePercentage}% Attendance
+                  </div>
+                </div>
+                <button
+                  onClick={() => alert('Attendance Roll-Call saved and recorded!')}
+                  className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#22C55E] hover:bg-[#16A34A] text-black font-bold text-xs shadow-[0_0_20px_rgba(34,197,94,0.3)] transition-all cursor-pointer"
+                >
+                  <Save size={13} strokeWidth={2.5}/> Save Register
+                </button>
+              </div>
+            </div>
+
+            {/* Quick Roll-Call Table */}
+            <div className="rounded-2xl bg-white/[0.04] border border-white/[0.07] backdrop-blur-xl shadow-2xl overflow-hidden">
+              <div className="p-4 border-b border-white/[0.07] flex items-center justify-between">
+                <span className="text-xs font-bold text-[#ECEEF5]">
+                  Interactive Roll-Call Register
+                </span>
+                <span className="text-[11px] text-[#ECEEF5]/40">
+                  Mark status for each active club member
+                </span>
+              </div>
+
+              <div className="overflow-x-auto">
+                <table className="w-full border-collapse min-w-[700px] text-left">
+                  <thead>
+                    <tr className="border-b border-white/[0.07] bg-[#090A0F]/60 text-[10px] font-semibold text-[#ECEEF5]/30 uppercase tracking-wider">
+                      <th className="p-3.5 w-[250px]">Member</th>
+                      <th className="p-3.5 w-[160px]">Role</th>
+                      <th className="p-3.5 w-[140px]">Cumulative Att.</th>
+                      <th className="p-3.5 text-center">Mark Attendance</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-white/[0.05] text-xs">
+                    {members.map((member) => {
+                      const currentStatus = attendanceRoll[member.id] || 'absent';
+                      return (
+                        <tr key={member.id} className="hover:bg-white/[0.02] transition-colors">
+                          <td className="p-3.5">
+                            <div className="flex items-center gap-2.5">
+                              <img
+                                src={member.avatar}
+                                alt={member.name}
+                                className="w-8 h-8 rounded-full object-cover shrink-0"
+                              />
+                              <div>
+                                <div className="font-semibold text-[#ECEEF5]">{member.name}</div>
+                                <div className="text-[10px] text-[#ECEEF5]/40">{member.email}</div>
+                              </div>
+                            </div>
+                          </td>
+                          <td className="p-3.5 text-[#ECEEF5]/70 text-[11px]">
+                            {member.role}
+                          </td>
+                          <td className="p-3.5">
+                            <span className="font-semibold text-emerald-400">{member.attendance}%</span>
+                          </td>
+                          <td className="p-3.5 text-center">
+                            <div className="inline-flex items-center gap-1.5 p-1 rounded-xl bg-white/[0.03] border border-white/[0.06]">
+                              <button
+                                onClick={() => setAttendanceRoll(prev => ({ ...prev, [member.id]: 'present' }))}
+                                className={`px-3 py-1 rounded-lg text-[10px] font-bold transition-all cursor-pointer ${
+                                  currentStatus === 'present'
+                                    ? 'bg-[#22C55E] text-black shadow-sm'
+                                    : 'text-[#ECEEF5]/40 hover:text-white'
+                                }`}
+                              >
+                                Present
+                              </button>
+                              <button
+                                onClick={() => setAttendanceRoll(prev => ({ ...prev, [member.id]: 'excused' }))}
+                                className={`px-3 py-1 rounded-lg text-[10px] font-bold transition-all cursor-pointer ${
+                                  currentStatus === 'excused'
+                                    ? 'bg-[#F7A81B] text-black shadow-sm'
+                                    : 'text-[#ECEEF5]/40 hover:text-white'
+                                }`}
+                              >
+                                Excused
+                              </button>
+                              <button
+                                onClick={() => setAttendanceRoll(prev => ({ ...prev, [member.id]: 'absent' }))}
+                                className={`px-3 py-1 rounded-lg text-[10px] font-bold transition-all cursor-pointer ${
+                                  currentStatus === 'absent'
+                                    ? 'bg-[#EF4444] text-white shadow-sm'
+                                    : 'text-[#ECEEF5]/40 hover:text-white'
+                                }`}
+                              >
+                                Absent
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
+            </div>
           </div>
         )}
 
-        {/* Finances Tab Placeholder */}
+        {/* 3. CLUB FINANCES & LEDGER TAB */}
         {activeTab === 'finances' && (
-          <div className="p-12 rounded-2xl bg-white/[0.04] border border-white/[0.07] text-center text-sm text-[#ECEEF5]/60">
-            Club financial records, quarterly budgets, and payment ledger.
+          <div className="space-y-6">
+            {/* 3 Summary Cards */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/[0.07] backdrop-blur-xl shadow-lg">
+                <div className="text-[10px] font-semibold text-[#ECEEF5]/40 tracking-wider uppercase mb-2">
+                  Total Dues Collected
+                </div>
+                <div className="text-[26px] font-extrabold text-[#22C55E] leading-none">
+                  ₦81,000
+                </div>
+                <div className="text-[10px] text-[#ECEEF5]/50 mt-2">
+                  11 of 18 members cleared
+                </div>
+              </div>
+
+              <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/[0.07] backdrop-blur-xl shadow-lg">
+                <div className="text-[10px] font-semibold text-[#ECEEF5]/40 tracking-wider uppercase mb-2">
+                  Outstanding Dues
+                </div>
+                <div className="text-[26px] font-extrabold text-[#EF4444] leading-none">
+                  ₦36,000
+                </div>
+                <div className="text-[10px] text-[#ECEEF5]/50 mt-2">
+                  7 pending/overdue accounts
+                </div>
+              </div>
+
+              <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/[0.07] backdrop-blur-xl shadow-lg">
+                <div className="text-[10px] font-semibold text-[#ECEEF5]/40 tracking-wider uppercase mb-2">
+                  District Remittance Status
+                </div>
+                <div className="text-[18px] font-bold text-[#F7A81B] leading-tight flex items-center gap-1.5 mt-1">
+                  <ShieldCheck size={18} className="text-[#22C55E] shrink-0" />
+                  <span>Cleared</span>
+                </div>
+                <div className="text-[10px] text-[#ECEEF5]/50 mt-2">
+                  Remitted to D9126 Secretariat
+                </div>
+              </div>
+            </div>
+
+            {/* Club Ledger Table */}
+            <div className="rounded-2xl bg-white/[0.04] border border-white/[0.07] backdrop-blur-xl shadow-2xl overflow-hidden">
+              <div className="p-4 border-b border-white/[0.07] flex items-center justify-between">
+                <span className="text-xs font-bold text-[#ECEEF5]">
+                  Club Financial Ledger & Receipts
+                </span>
+                <button
+                  onClick={() => alert('Exporting Financial Report to CSV…')}
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.07] text-[#ECEEF5]/60 hover:text-white text-xs font-medium transition-colors cursor-pointer"
+                >
+                  <Download size={12}/> Export CSV
+                </button>
+              </div>
+
+              <div className="overflow-x-auto">
+                <table className="w-full border-collapse min-w-[760px] text-left">
+                  <thead>
+                    <tr className="border-b border-white/[0.07] bg-[#090A0F]/60 text-[10px] font-semibold text-[#ECEEF5]/30 uppercase tracking-wider">
+                      <th className="p-3.5">Txn Reference</th>
+                      <th className="p-3.5">Date</th>
+                      <th className="p-3.5">Transaction / Member</th>
+                      <th className="p-3.5">Category</th>
+                      <th className="p-3.5">Amount</th>
+                      <th className="p-3.5 text-center">Status</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-white/[0.05] text-xs">
+                    {INITIAL_FINANCES.map((txn) => (
+                      <tr key={txn.id} className="hover:bg-white/[0.02] transition-colors">
+                        <td className="p-3.5 font-mono text-[11px] text-[#ECEEF5]/50">{txn.id}</td>
+                        <td className="p-3.5 text-[#ECEEF5]/70 text-[11px]">{txn.date}</td>
+                        <td className="p-3.5">
+                          <div className="font-semibold text-[#ECEEF5]">{txn.description}</div>
+                          <div className="text-[10px] text-[#ECEEF5]/40">{txn.member}</div>
+                        </td>
+                        <td className="p-3.5">
+                          <span className="px-2.5 py-0.5 rounded-full text-[9px] font-semibold bg-white/[0.06] text-[#ECEEF5]/70">
+                            {txn.category}
+                          </span>
+                        </td>
+                        <td className="p-3.5 font-bold text-[#ECEEF5]">
+                          ₦{txn.amount.toLocaleString()}
+                        </td>
+                        <td className="p-3.5 text-center">
+                          <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold ${
+                            txn.status === 'Completed'
+                              ? 'bg-green-500/10 text-green-400 border border-green-500/20'
+                              : txn.status === 'Remitted'
+                              ? 'bg-blue-500/10 text-blue-400 border border-blue-500/20'
+                              : 'bg-amber-500/10 text-amber-400 border border-amber-500/20'
+                          }`}>
+                            {txn.status}
+                          </span>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
           </div>
         )}
 
-        {/* Lead Pipeline Tab Placeholder */}
+        {/* 4. PROSPECT LEAD PIPELINE TAB */}
         {activeTab === 'pipeline' && (
-          <div className="p-12 rounded-2xl bg-white/[0.04] border border-white/[0.07] text-center text-sm text-[#ECEEF5]/60">
-            Prospective member applications and induction pipeline.
+          <div className="space-y-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <h3 className="text-sm font-bold text-[#ECEEF5]">Membership Induction Pipeline</h3>
+                <p className="text-xs text-[#ECEEF5]/50">Leads captured from the public district portal and referrals</p>
+              </div>
+              <button
+                onClick={() => {
+                  const name = prompt('Enter prospect full name:');
+                  if (name) {
+                    setProspects(prev => [
+                      {
+                        id: `P-${Date.now()}`,
+                        name,
+                        email: `${name.toLowerCase().replace(/\s+/g, '.')}@example.com`,
+                        phone: '+234 800 000 0000',
+                        source: 'Direct Referral',
+                        date: 'Today',
+                        stage: 'intake',
+                        notes: 'Manual lead addition.'
+                      },
+                      ...prev
+                    ]);
+                  }
+                }}
+                className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-[#981132] hover:bg-[#A70C43] text-white text-xs font-bold transition-all cursor-pointer shadow-md shadow-[#981132]/30"
+              >
+                <Plus size={13}/> Add Prospect
+              </button>
+            </div>
+
+            {/* 3-Column Kanban Layout */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {/* Column 1: Intake Review */}
+              <div className="p-4 rounded-2xl bg-white/[0.03] border border-white/[0.06] flex flex-col gap-3">
+                <div className="flex items-center justify-between pb-2 border-b border-white/[0.06]">
+                  <span className="text-xs font-bold text-[#ECEEF5] flex items-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-blue-400" />
+                    1. Intake Review
+                  </span>
+                  <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-white/10 text-white">
+                    {prospects.filter(p => p.stage === 'intake').length}
+                  </span>
+                </div>
+
+                <div className="space-y-3 flex-1 overflow-y-auto">
+                  {prospects.filter(p => p.stage === 'intake').map((lead) => (
+                    <div key={lead.id} className="p-3.5 rounded-xl bg-white/[0.04] border border-white/[0.07] hover:border-white/15 transition-all space-y-2.5">
+                      <div className="flex items-start justify-between gap-2">
+                        <div className="font-bold text-xs text-[#ECEEF5]">{lead.name}</div>
+                        <span className="px-1.5 py-0.5 rounded text-[8px] font-bold bg-white/[0.06] text-[#ECEEF5]/60">{lead.source}</span>
+                      </div>
+                      <div className="text-[11px] text-[#ECEEF5]/60 space-y-0.5">
+                        <div className="flex items-center gap-1.5"><Mail size={10} className="text-white/40"/> {lead.email}</div>
+                        <div className="flex items-center gap-1.5"><Phone size={10} className="text-white/40"/> {lead.phone}</div>
+                      </div>
+                      {lead.notes && (
+                        <p className="text-[10px] text-[#ECEEF5]/40 italic bg-black/20 p-2 rounded-lg">
+                          &quot;{lead.notes}&quot;
+                        </p>
+                      )}
+                      <div className="pt-1 flex items-center justify-between">
+                        <span className="text-[9px] text-white/30">{lead.date}</span>
+                        <button
+                          onClick={() => advanceProspectStage(lead.id)}
+                          className="px-2.5 py-1 rounded-lg bg-[#4361EE]/20 hover:bg-[#4361EE]/30 border border-[#4361EE]/40 text-[#4361EE] text-[10px] font-bold transition-colors cursor-pointer"
+                        >
+                          Start Orientation →
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Column 2: In Orientation */}
+              <div className="p-4 rounded-2xl bg-white/[0.03] border border-white/[0.06] flex flex-col gap-3">
+                <div className="flex items-center justify-between pb-2 border-b border-white/[0.06]">
+                  <span className="text-xs font-bold text-[#ECEEF5] flex items-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-[#F7A81B]" />
+                    2. In Orientation
+                  </span>
+                  <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-white/10 text-white">
+                    {prospects.filter(p => p.stage === 'orientation').length}
+                  </span>
+                </div>
+
+                <div className="space-y-3 flex-1 overflow-y-auto">
+                  {prospects.filter(p => p.stage === 'orientation').map((lead) => (
+                    <div key={lead.id} className="p-3.5 rounded-xl bg-white/[0.04] border border-white/[0.07] hover:border-white/15 transition-all space-y-2.5">
+                      <div className="flex items-start justify-between gap-2">
+                        <div className="font-bold text-xs text-[#ECEEF5]">{lead.name}</div>
+                        <span className="px-1.5 py-0.5 rounded text-[8px] font-bold bg-[#F7A81B]/15 text-[#F7A81B]">{lead.source}</span>
+                      </div>
+                      <div className="text-[11px] text-[#ECEEF5]/60 space-y-0.5">
+                        <div className="flex items-center gap-1.5"><Mail size={10} className="text-white/40"/> {lead.email}</div>
+                        <div className="flex items-center gap-1.5"><Phone size={10} className="text-white/40"/> {lead.phone}</div>
+                      </div>
+                      {lead.notes && (
+                        <p className="text-[10px] text-[#ECEEF5]/40 italic bg-black/20 p-2 rounded-lg">
+                          &quot;{lead.notes}&quot;
+                        </p>
+                      )}
+                      <div className="pt-1 flex items-center justify-between">
+                        <span className="text-[9px] text-white/30">{lead.date}</span>
+                        <button
+                          onClick={() => advanceProspectStage(lead.id)}
+                          className="px-2.5 py-1 rounded-lg bg-[#22C55E]/20 hover:bg-[#22C55E]/30 border border-[#22C55E]/40 text-[#22C55E] text-[10px] font-bold transition-colors cursor-pointer"
+                        >
+                          Mark Ready →
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Column 3: Induction Ready */}
+              <div className="p-4 rounded-2xl bg-white/[0.03] border border-white/[0.06] flex flex-col gap-3">
+                <div className="flex items-center justify-between pb-2 border-b border-white/[0.06]">
+                  <span className="text-xs font-bold text-[#ECEEF5] flex items-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-[#22C55E]" />
+                    3. Induction Ready
+                  </span>
+                  <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-white/10 text-white">
+                    {prospects.filter(p => p.stage === 'induction_ready').length}
+                  </span>
+                </div>
+
+                <div className="space-y-3 flex-1 overflow-y-auto">
+                  {prospects.filter(p => p.stage === 'induction_ready').map((lead) => (
+                    <div key={lead.id} className="p-3.5 rounded-xl bg-gradient-to-br from-[#D91B5C]/10 to-transparent border border-[#D91B5C]/30 transition-all space-y-2.5">
+                      <div className="flex items-start justify-between gap-2">
+                        <div className="font-bold text-xs text-[#ECEEF5]">{lead.name}</div>
+                        <span className="px-2 py-0.5 rounded-full text-[8px] font-bold bg-[#22C55E]/20 text-[#22C55E]">Cleared for Pinning</span>
+                      </div>
+                      <div className="text-[11px] text-[#ECEEF5]/60 space-y-0.5">
+                        <div className="flex items-center gap-1.5"><Mail size={10} className="text-white/40"/> {lead.email}</div>
+                        <div className="flex items-center gap-1.5"><Phone size={10} className="text-white/40"/> {lead.phone}</div>
+                      </div>
+                      {lead.notes && (
+                        <p className="text-[10px] text-[#ECEEF5]/40 italic bg-black/20 p-2 rounded-lg">
+                          &quot;{lead.notes}&quot;
+                        </p>
+                      )}
+                      <div className="pt-1 flex items-center justify-between">
+                        <span className="text-[9px] text-white/30">{lead.date}</span>
+                        <button
+                          onClick={() => alert(`Induction ceremony confirmed for ${lead.name}!`)}
+                          className="px-3 py-1 rounded-lg bg-[#D91B5C] hover:bg-[#A70C43] text-white text-[10px] font-bold transition-colors cursor-pointer"
+                        >
+                          Confirm Induction ✓
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
           </div>
         )}
 
-        {/* Settings Tab Placeholder */}
+        {/* 5. CLUB SETTINGS & GOVERNANCE TAB */}
         {activeTab === 'settings' && (
-          <div className="p-12 rounded-2xl bg-white/[0.04] border border-white/[0.07] text-center text-sm text-[#ECEEF5]/60">
-            Charter details, committee assignments, and club operational settings.
+          <div className="max-w-[900px] space-y-6">
+            {/* Schedule Card */}
+            <div className="p-6 rounded-2xl bg-white/[0.04] border border-white/[0.07] backdrop-blur-xl shadow-xl space-y-4">
+              <h3 className="text-sm font-bold text-[#ECEEF5] flex items-center gap-2">
+                <Calendar size={15} className="text-[#D91B5C]" />
+                Meeting Schedule & Fellowship Venue
+              </h3>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="flex flex-col gap-1.5">
+                  <label className="text-[10px] font-bold uppercase text-[#ECEEF5]/40">Meeting Days</label>
+                  <input
+                    type="text"
+                    value={meetingSchedule.day}
+                    onChange={(e) => setMeetingSchedule(prev => ({ ...prev, day: e.target.value }))}
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-white/[0.05] border border-white/[0.08] text-xs text-[#ECEEF5] outline-none focus:border-[#D91B5C] transition-all"
+                  />
+                </div>
+
+                <div className="flex flex-col gap-1.5">
+                  <label className="text-[10px] font-bold uppercase text-[#ECEEF5]/40">Meeting Time</label>
+                  <input
+                    type="text"
+                    value={meetingSchedule.time}
+                    onChange={(e) => setMeetingSchedule(prev => ({ ...prev, time: e.target.value }))}
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-white/[0.05] border border-white/[0.08] text-xs text-[#ECEEF5] outline-none focus:border-[#D91B5C] transition-all"
+                  />
+                </div>
+
+                <div className="sm:col-span-2 flex flex-col gap-1.5">
+                  <label className="text-[10px] font-bold uppercase text-[#ECEEF5]/40">Physical Venue</label>
+                  <input
+                    type="text"
+                    value={meetingSchedule.venue}
+                    onChange={(e) => setMeetingSchedule(prev => ({ ...prev, venue: e.target.value }))}
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-white/[0.05] border border-white/[0.08] text-xs text-[#ECEEF5] outline-none focus:border-[#D91B5C] transition-all"
+                  />
+                </div>
+
+                <div className="sm:col-span-2 flex flex-col gap-1.5">
+                  <label className="text-[10px] font-bold uppercase text-[#ECEEF5]/40">Virtual Google Meet / Zoom Link</label>
+                  <input
+                    type="url"
+                    value={meetingSchedule.virtualLink}
+                    onChange={(e) => setMeetingSchedule(prev => ({ ...prev, virtualLink: e.target.value }))}
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-white/[0.05] border border-white/[0.08] text-xs text-[#ECEEF5] outline-none focus:border-[#D91B5C] transition-all"
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Executive Council & Committee Chairs */}
+            <div className="p-6 rounded-2xl bg-white/[0.04] border border-white/[0.07] backdrop-blur-xl shadow-xl space-y-4">
+              <h3 className="text-sm font-bold text-[#ECEEF5] flex items-center gap-2">
+                <Users size={15} className="text-[#4361EE]" />
+                Club Executive Council & Committee Chairs
+              </h3>
+
+              <div className="space-y-2.5">
+                {executives.map((exec, idx) => (
+                  <div key={idx} className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3.5 rounded-xl bg-white/[0.02] border border-white/[0.05]">
+                    <div className="min-w-0">
+                      <div className="text-xs font-bold text-[#ECEEF5]">{exec.role}</div>
+                      <div className="text-[11px] text-[#ECEEF5]/50">{exec.name} · {exec.email}</div>
+                    </div>
+                    <button
+                      onClick={() => {
+                        const newName = prompt(`Assign new ${exec.role}:`, exec.name);
+                        if (newName) {
+                          setExecutives(prev => prev.map((item, i) => i === idx ? { ...item, name: newName } : item));
+                        }
+                      }}
+                      className="px-3 py-1.5 rounded-lg bg-white/[0.05] hover:bg-white/10 border border-white/10 text-xs font-semibold text-[#ECEEF5]/80 hover:text-white transition-colors cursor-pointer self-start sm:self-center"
+                    >
+                      Reassign
+                    </button>
+                  </div>
+                ))}
+              </div>
+
+              <div className="pt-3 border-t border-white/[0.07] flex justify-end">
+                <button
+                  onClick={() => alert('Club governance and schedule settings saved successfully!')}
+                  className="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-[#981132] hover:bg-[#A70C43] text-white text-xs font-bold shadow-[0_0_20px_rgba(152,17,50,0.3)] transition-all cursor-pointer"
+                >
+                  <Save size={13}/> Save Club Settings
+                </button>
+              </div>
+            </div>
           </div>
         )}
       </main>
