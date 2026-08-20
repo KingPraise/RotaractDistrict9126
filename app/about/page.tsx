@@ -30,6 +30,7 @@ import RotaryTooltip from '@/components/ui/RotaryTooltip';
 import CountUp from '@/components/ui/CountUp';
 import DistrictGovernorSection from '@/components/sections/DistrictGovernorSection';
 import DRRSpotlightSection from '@/components/sections/DRRSpotlightSection';
+import InteractiveTimelineStack from '@/components/sections/InteractiveTimelineStack';
 
 const redistrictingTimeline = [
   {
@@ -478,52 +479,9 @@ export default function AboutPage() {
             </div>
           </div>
 
-          {/* Redistricting Journey Chronological Cards */}
-          <div className="mt-16">
-            <div className="text-center mb-12">
-              <span className="text-[10px] font-bold tracking-[0.3em] uppercase text-[#981132] font-sans">
-                Chronological Roadmap
-              </span>
-              <h3 className="text-2xl sm:text-4xl font-black tracking-tight text-[#1C1C1E] mt-1 font-sans">
-                The Journey Towards Redistricting (2021 – 2024)
-              </h3>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {redistrictingTimeline.map((item, idx) => (
-                <motion.div
-                  key={idx}
-                  initial={{ opacity: 0, y: 25 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: idx * 0.08 }}
-                  className="p-6 rounded-2xl bg-white border border-black/[0.08] shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between group hover:-translate-y-1.5"
-                >
-                  <div>
-                    <div className="flex items-center justify-between gap-2 mb-3">
-                      <span className="px-3 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-[#981132]/10 text-[#981132] font-sans">
-                        {item.badge}
-                      </span>
-                      <span className="text-xs font-bold text-slate-500 font-mono">
-                        {item.year}
-                      </span>
-                    </div>
-
-                    <h4 className="text-lg font-black text-[#1C1C1E] mb-2 font-sans group-hover:text-[#981132] transition-colors">
-                      {item.title}
-                    </h4>
-
-                    <p className="text-sm text-slate-600 leading-relaxed font-sans">
-                      {item.desc}
-                    </p>
-                  </div>
-
-                  <div className="mt-4 pt-3 border-t border-black/5 flex items-center gap-1.5 text-xs font-semibold text-[#981132] font-sans">
-                    <CheckCircle2 size={13} /> Official Rotary Record
-                  </div>
-                </motion.div>
-              ))}
-            </div>
+          {/* Interactive Stacking Chronological Roadmap */}
+          <div className="mt-12">
+            <InteractiveTimelineStack />
           </div>
 
         </section>
