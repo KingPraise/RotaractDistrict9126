@@ -641,8 +641,8 @@ export default function AboutPage() {
             </div>
           </div>
 
-          {/* Executive Grid */}
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 sm:gap-5">
+          {/* Executive Grid - Clean Professional Layout */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {filteredTeam.map((member, idx) => (
               <motion.div 
                 key={member.id}
@@ -653,44 +653,58 @@ export default function AboutPage() {
                 className="group relative cursor-pointer"
                 onClick={() => setSelectedLeaderModal(member)}
               >
-                <div className="rounded-2xl bg-[#0F1624] border border-white/10 shadow-lg hover:shadow-2xl transition-all duration-300 group-hover:-translate-y-2 flex flex-col h-full">
+                <div className="rounded-3xl bg-white border border-black/[0.08] shadow-[0_4px_20px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.12)] transition-all duration-300 group-hover:-translate-y-2 flex flex-col h-full overflow-hidden">
                   
-                  {/* Photo Container */}
-                  <div className="aspect-[3/4] relative overflow-hidden rounded-t-2xl">
+                  {/* Photo Container with Top Arc and Ambient Mask */}
+                  <div className="aspect-[4/5] relative overflow-hidden bg-[#0A0D14]">
                     <img 
                       src={member.image} 
                       onError={(e) => { e.currentTarget.src = member.fallbackImage; }}
                       alt={member.name}
-                      className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-110" 
+                      className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105" 
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#0F1624] via-transparent to-transparent opacity-90" />
                     
-                    {/* Hover Dossier Hint */}
-                    <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity bg-black/60 backdrop-blur-md rounded-full p-1 text-white text-[10px]">
-                      <ArrowUpRight size={13} />
+                    {/* Gradient Overlay at Bottom */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-80 group-hover:opacity-60 transition-opacity" />
+
+                    {/* Department Tag Overlay Top Left */}
+                    <div className="absolute top-3.5 left-3.5 z-10">
+                      <span className="px-2.5 py-1 rounded-full text-[9px] font-black uppercase tracking-wider bg-black/60 backdrop-blur-md text-white/90 border border-white/15 shadow-sm">
+                        {member.dept}
+                      </span>
+                    </div>
+
+                    {/* Hover Dossier Hint Top Right */}
+                    <div className="absolute top-3.5 right-3.5 opacity-0 group-hover:opacity-100 transition-all bg-white text-[#981132] rounded-full p-1.5 shadow-md transform group-hover:scale-110">
+                      <ArrowUpRight size={13} strokeWidth={2.5} />
+                    </div>
+
+                    {/* Bottom Floating Identity on Photo */}
+                    <div className="absolute bottom-3 inset-x-3 text-white">
+                      <div className="text-[10px] font-black uppercase tracking-wider text-[#F7A81B]">
+                        {member.tooltip || 'Executive'}
+                      </div>
+                      <div className="text-[14px] font-black text-white leading-tight truncate">
+                        {member.name}
+                      </div>
                     </div>
                   </div>
 
                   {/* Card Body */}
-                  <div className="p-3.5 flex flex-col justify-between flex-1">
+                  <div className="p-4 flex flex-col justify-between flex-1 bg-white space-y-3">
                     <div>
-                      <div className="text-[13px] font-bold text-white leading-snug font-sans group-hover:text-[#FF4D8D] transition-colors mb-1">
-                        {member.name}
+                      <div className="text-[12px] font-extrabold text-[#981132] font-sans leading-snug line-clamp-2">
+                        {member.role}
                       </div>
                       
-                      <div className="text-[11px] text-[#D91B5C] font-semibold tracking-wide font-sans">
-                        {member.tooltip ? (
-                          <RotaryTooltip term={member.tooltip}>
-                            <span>{member.role}</span>
-                          </RotaryTooltip>
-                        ) : (
-                          member.role
-                        )}
-                      </div>
+                      <p className="text-[11px] text-gray-500 line-clamp-2 mt-1.5 leading-relaxed font-sans">
+                        {member.bio}
+                      </p>
                     </div>
 
-                    <div className="text-[9.5px] text-white/45 uppercase tracking-wider mt-2.5 pt-2 border-t border-white/10 font-sans">
-                      {member.dept}
+                    <div className="pt-3 border-t border-black/[0.06] flex items-center justify-between text-[11px] font-semibold text-gray-400 group-hover:text-[#981132] transition-colors font-sans">
+                      <span>View Executive Bio</span>
+                      <ArrowRight size={12} className="transition-transform group-hover:translate-x-1" />
                     </div>
                   </div>
 
