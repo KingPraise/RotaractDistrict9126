@@ -45,6 +45,13 @@ import {
   subscribeToProjects, 
   ProjectItem 
 } from '@/lib/services/projects-service';
+import { getCurrentUser, signOutUser } from '@/lib/services/auth-service';
+import { 
+  getMemberDashboardData, 
+  getClubRoster, 
+  MemberDashboardState, 
+  ClubMemberRecord 
+} from '@/lib/services/dashboard-service';
 
 export default function MemberDashboardPage() {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
@@ -97,14 +104,32 @@ export default function MemberDashboardPage() {
     return unsubscribe;
   }, []);
 
-  useEffect(() => {
-    const qrData = encodeURIComponent(
-      'ROTARACT-9126:VERIFIED|ID:ROT-9126-2026|USER:TUNDE-ADEYEMI|STATUS:CLEARED|DISTRICT:9126-NIGERIA'
-    );
-    setQrCodeUrl(`https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${qrData}&bgcolor=ffffff&color=080c14&margin=1`);
-  }, []);
+  // Live User & Dashboard State
+  const [currentUser, setCurrentUser] = useState<MemberDashboardState['member']>({
+    userId: 'usr-default',
+    firstName: 'Tunde',
+    lastName: 'Adeyemi',
+    email: 't.adeyemi@rotaract9126.org',
+    rotaryId: 'ROT-9126-2026',
+    clubId: 'club-ibadan-central',
+    clubName: 'Rotaract Club of Ibadan Central',
+    state: 'Oyo State',
+    region: 'South-West',
+    role: 'member',
+    duesStatus: 'cleared',
+    avatarUrl: 'https://images.unsplash.com/photo-1614023342667-6f060e9d1e04?w=80&h=80&fit=crop&auto=format',
+    occupation: 'Active Member',
+    phoneNumber: '+234 800 123 4567'
+  });
 
-  const monthlyData = [
+  const [metrics, setMetrics] = useState({
+    impactPoints: 1240,
+    eventsAttended: 12,
+    projectsJoined: 4,
+    volunteerHours: 24
+  });
+
+  const [monthlyData, setMonthlyData] = useState([
     { month: 'Nov', count: 2, height: '18px' },
     { month: 'Dec', count: 3, height: '28px' },
     { month: 'Jan', count: 4, height: '37px' },
@@ -114,9 +139,17 @@ export default function MemberDashboardPage() {
     { month: 'May', count: 6, height: '55px' },
     { month: 'Jun', count: 5, height: '46px' },
     { month: 'Jul', count: 12, height: '110px', isCurrent: true },
-  ];
+  ]);
 
-  const duesRecords = [
+  const [duesRecords, setDuesRecords] = useState<Array<{
+    id: string;
+    name: string;
+    club: string;
+    status: 'Cleared' | 'Pending' | 'Defaulted';
+    period: string;
+    amount?: number;
+    avatar: string;
+  }>>([
     {
       id: 'PAY-D9126-001',
       name: 'Tunde Adeyemi',
@@ -124,48 +157,50 @@ export default function MemberDashboardPage() {
       status: 'Cleared',
       period: 'Jan – Jun 2026',
       avatar: 'https://images.unsplash.com/photo-1614023342667-6f060e9d1e04?w=80&h=80&fit=crop&auto=format'
-    },
-    {
-      id: 'PAY-D9126-002',
-      name: 'Funmi Olatunde',
-      club: 'RC Ibadan Bodija',
-      status: 'Pending',
-      period: 'Jan – Jun 2026',
-      avatar: 'https://images.unsplash.com/photo-1573497491765-dccce02b29df?w=80&h=80&fit=crop&auto=format'
-    },
-    {
-      id: 'PAY-D9126-003',
-      name: 'Sola Adebayo',
-      club: 'RC Univ. of Ibadan',
-      status: 'Cleared',
-      period: 'Jan – Jun 2026',
-      avatar: 'https://images.unsplash.com/photo-1609436132311-e4b0c9370469?w=80&h=80&fit=crop&auto=format'
-    },
-    {
-      id: 'PAY-D9126-004',
-      name: 'Kayode Faleye',
-      club: 'RC Ibadan Ring Road',
-      status: 'Defaulted',
-      period: 'Jan – Jun 2026',
-      avatar: 'https://images.unsplash.com/photo-1659422440915-d516c6dc932e?w=80&h=80&fit=crop&auto=format'
-    },
-    {
-      id: 'PAY-D9126-005',
-      name: 'Yetunde Balogun',
-      club: 'RC Ibadan North',
-      status: 'Cleared',
-      period: 'Jan – Jun 2026',
-      avatar: 'https://images.unsplash.com/photo-1657218380188-40c56bfdf97f?w=80&h=80&fit=crop&auto=format'
-    },
-    {
-      id: 'PAY-D9126-006',
-      name: 'Seun Adegoke',
-      club: 'RC LAUTECH Ogbomoso',
-      status: 'Pending',
-      period: 'Jan – Jun 2026',
-      avatar: 'https://images.unsplash.com/photo-1646658104783-2eec2433c1d1?w=80&h=80&fit=crop&auto=format'
     }
-  ];
+  ]);
+
+  const [directoryMembers, setDirectoryMembers] = useState<ClubMemberRecord[]>([]);
+
+  // Fetch live user and dashboard data on mount
+  useEffect(() => {
+    const authUser = getCurrentUser();
+    const targetUid = authUser?.uid || 'usr-default';
+
+    if (authUser) {
+      setCurrentUser(prev => ({
+        ...prev,
+        userId: authUser.uid,
+        firstName: authUser.firstName || prev.firstName,
+        lastName: authUser.lastName || prev.lastName,
+        email: authUser.email || prev.email,
+        role: authUser.role || prev.role,
+        duesStatus: authUser.duesStatus || prev.duesStatus,
+        occupation: authUser.role === 'club_president' ? 'Club President' : authUser.role === 'district_admin' ? 'District Administrator' : 'Active Member'
+      }));
+    }
+
+    // Load from Firestore dashboard service
+    getMemberDashboardData(targetUid).then((data) => {
+      if (data && data.member) {
+        setCurrentUser(data.member);
+        if (data.metrics) setMetrics(data.metrics);
+        if (data.monthlyActivity?.length) setMonthlyData(data.monthlyActivity);
+        if (data.duesRecords?.length) setDuesRecords(data.duesRecords);
+
+        // Generate verified QR code with live user data
+        const qrData = encodeURIComponent(
+          `ROTARACT-9126:VERIFIED|ID:${data.member.rotaryId}|USER:${data.member.firstName.toUpperCase()}-${data.member.lastName.toUpperCase()}|STATUS:${data.member.duesStatus.toUpperCase()}|DISTRICT:9126-NIGERIA`
+        );
+        setQrCodeUrl(`https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${qrData}&bgcolor=ffffff&color=080c14&margin=1`);
+
+        // Load live club directory roster
+        getClubRoster(data.member.clubId || 'club-ibadan-central').then((roster) => {
+          if (roster?.length) setDirectoryMembers(roster);
+        });
+      }
+    });
+  }, []);
 
   const filteredDues = duesRecords.filter(r => 
     r.name.toLowerCase().includes(searchMember.toLowerCase()) ||
@@ -346,15 +381,20 @@ export default function MemberDashboardPage() {
           <div className="p-2.5 rounded-xl bg-gradient-to-tr from-[#D91B5C]/10 to-[#A855F7]/10 border border-[#D91B5C]/20 flex items-center justify-between gap-2 mb-1">
             {!sidebarCollapsed && (
               <div className="min-w-0 flex-1">
-                <div className="text-xs font-bold text-[#1C1C1E] truncate">Tunde Adeyemi</div>
-                <div className="text-[9px] text-black/40">Active Member</div>
+                <div className="text-xs font-bold text-[#1C1C1E] truncate">
+                  {currentUser.firstName} {currentUser.lastName}
+                </div>
+                <div className="text-[9px] text-black/40 truncate">
+                  {currentUser.occupation || 'Active Member'}
+                </div>
               </div>
             )}
             <div className="relative shrink-0">
               <div className="w-8 h-8 rounded-full p-[1.5px] bg-gradient-to-tr from-[#D91B5C] to-[#A855F7]">
                 <img 
-                  src="https://images.unsplash.com/photo-1614023342667-6f060e9d1e04?w=80&h=80&fit=crop&auto=format" 
-                  alt="Tunde" 
+                  src={currentUser.avatarUrl} 
+                  onError={(e) => { e.currentTarget.src = 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=80&h=80&fit=crop&auto=format'; }}
+                  alt={currentUser.firstName} 
                   className="w-full h-full rounded-full object-cover"
                 />
               </div>
@@ -362,7 +402,10 @@ export default function MemberDashboardPage() {
           </div>
 
           <button 
-            onClick={() => window.location.href = '/login'}
+            onClick={async () => {
+              await signOutUser();
+              window.location.href = '/login';
+            }}
             className="w-full flex items-center gap-2 px-2 py-1.5 text-xs text-black/50 hover:text-black transition-colors cursor-pointer"
           >
             <LogOut size={13}/>
@@ -378,10 +421,10 @@ export default function MemberDashboardPage() {
         <header className="px-6 py-4 border-b border-black/[0.06] bg-white/95 backdrop-blur-md flex items-center justify-between gap-4 shrink-0">
           <div>
             <h1 className="text-xl md:text-2xl font-black text-[#1C1C1E] leading-tight">
-              Good afternoon, Tunde 👋
+              Welcome back, {currentUser.firstName} 👋
             </h1>
             <p className="text-[10px] text-black/40 mt-0.5">
-              Wednesday, 19 August 2026 · District 9126 Session
+              {currentUser.clubName} · {currentUser.state} · Rotary Year 2026/2027
             </p>
           </div>
 
@@ -590,56 +633,30 @@ export default function MemberDashboardPage() {
 
                 {/* Responsive Members Grid */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5">
-                  {[
-                    {
-                      id: 'M1',
-                      name: 'Tunde Adeyemi',
-                      club: 'RC Ibadan Central',
-                      status: 'Cleared',
-                      statusStyle: 'text-green-700 bg-green-500/[0.08] border-green-500/[0.16]',
-                      avatar: 'https://images.unsplash.com/photo-1614023342667-6f060e9d1e04?w=80&h=80&fit=crop&auto=format'
-                    },
-                    {
-                      id: 'M2',
-                      name: 'Funmi Olatunde',
-                      club: 'RC Ibadan Bodija',
-                      status: 'Pending',
-                      statusStyle: 'text-black/60 bg-black/[0.04] border-black/[0.08]',
-                      avatar: 'https://images.unsplash.com/photo-1573497491765-dccce02b29df?w=80&h=80&fit=crop&auto=format'
-                    },
-                    {
-                      id: 'M3',
-                      name: 'Sola Adebayo',
-                      club: 'RC Univ. of Ibadan',
-                      status: 'Cleared',
-                      statusStyle: 'text-green-700 bg-green-500/[0.08] border-green-500/[0.16]',
-                      avatar: 'https://images.unsplash.com/photo-1609436132311-e4b0c9370469?w=80&h=80&fit=crop&auto=format'
-                    },
-                    {
-                      id: 'M4',
-                      name: 'Kayode Faleye',
-                      club: 'RC Ibadan Ring Road',
-                      status: 'Defaulted',
-                      statusStyle: 'text-red-700 bg-red-500/[0.08] border-red-500/[0.16]',
-                      avatar: 'https://images.unsplash.com/photo-1659422440915-d516c6dc932e?w=80&h=80&fit=crop&auto=format'
-                    },
-                    {
-                      id: 'M5',
-                      name: 'Yetunde Balogun',
-                      club: 'RC Ibadan North',
-                      status: 'Cleared',
-                      statusStyle: 'text-green-700 bg-green-500/[0.08] border-green-500/[0.16]',
-                      avatar: 'https://images.unsplash.com/photo-1657218380188-40c56bfdf97f?w=80&h=80&fit=crop&auto=format'
-                    },
-                    {
-                      id: 'M6',
-                      name: 'Seun Adegoke',
-                      club: 'RC LAUTECH Ogbomoso',
-                      status: 'Pending',
-                      statusStyle: 'text-black/60 bg-black/[0.04] border-black/[0.08]',
-                      avatar: 'https://images.unsplash.com/photo-1646658104783-2eec2433c1d1?w=80&h=80&fit=crop&auto=format'
-                    }
-                  ]
+                  {(directoryMembers.length > 0
+                    ? directoryMembers.map(m => ({
+                        id: m.userId,
+                        name: `${m.firstName} ${m.lastName}`.trim() || 'District Member',
+                        club: currentUser.clubName,
+                        status: m.duesStatus === 'cleared' ? 'Cleared' : 'Pending',
+                        statusStyle: m.duesStatus === 'cleared'
+                          ? 'text-green-700 bg-green-500/[0.08] border-green-500/[0.16]'
+                          : 'text-black/60 bg-black/[0.04] border-black/[0.08]',
+                        avatar: m.avatarUrl || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=80&h=80&fit=crop&auto=format'
+                      }))
+                    : [
+                        {
+                          id: currentUser.userId,
+                          name: `${currentUser.firstName} ${currentUser.lastName}`.trim(),
+                          club: currentUser.clubName,
+                          status: currentUser.duesStatus === 'cleared' ? 'Cleared' : 'Pending',
+                          statusStyle: currentUser.duesStatus === 'cleared'
+                            ? 'text-green-700 bg-green-500/[0.08] border-green-500/[0.16]'
+                            : 'text-black/60 bg-black/[0.04] border-black/[0.08]',
+                          avatar: currentUser.avatarUrl
+                        }
+                      ]
+                  )
                     .filter(m => 
                       m.name.toLowerCase().includes(searchDirectory.toLowerCase()) || 
                       m.club.toLowerCase().includes(searchDirectory.toLowerCase())
@@ -651,6 +668,7 @@ export default function MemberDashboardPage() {
                     >
                       <img
                         src={member.avatar}
+                        onError={(e) => { e.currentTarget.src = 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=80&h=80&fit=crop&auto=format'; }}
                         alt={member.name}
                         className="w-10 h-10 rounded-full object-cover shrink-0 border-[1.5px] border-black/[0.08]"
                       />
@@ -684,41 +702,49 @@ export default function MemberDashboardPage() {
                 {/* 3-Card Financial Summary Matrix */}
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                   {/* Current Status */}
-                  <div className="p-4 rounded-2xl bg-green-500/[0.03] border border-green-500/[0.14] flex flex-col justify-between">
+                  <div className={`p-4 rounded-2xl flex flex-col justify-between ${
+                    currentUser.duesStatus === 'cleared'
+                      ? 'bg-green-500/[0.03] border border-green-500/[0.14]'
+                      : 'bg-amber-500/[0.03] border border-amber-500/[0.14]'
+                  }`}>
                     <div className="text-[9px] font-semibold text-black/40 tracking-wider uppercase mb-2">
                       Current Status
                     </div>
-                    <div className="text-[22px] font-extrabold text-green-600 leading-none">
-                      Cleared
+                    <div className={`text-[22px] font-extrabold leading-none ${
+                      currentUser.duesStatus === 'cleared' ? 'text-green-600' : 'text-amber-600'
+                    }`}>
+                      {currentUser.duesStatus === 'cleared' ? 'Cleared' : 'Pending'}
                     </div>
-                    <div className="text-[10px] text-green-700/80 mt-2 font-medium">
-                      Paid on Jul 1, 2026
+                    <div className={`text-[10px] mt-2 font-medium ${
+                      currentUser.duesStatus === 'cleared' ? 'text-green-700/80' : 'text-amber-700/80'
+                    }`}>
+                      {currentUser.duesStatus === 'cleared' ? 'Rotary Year 2026/2027' : 'Payment Required'}
                     </div>
                   </div>
 
                   {/* Next Due */}
                   <div className="p-4 rounded-2xl bg-black/[0.024] border border-black/[0.06] flex flex-col justify-between">
                     <div className="text-[9px] font-semibold text-black/40 tracking-wider uppercase mb-2">
-                      Next Due
+                      District Dues
                     </div>
                     <div className="text-[22px] font-extrabold text-[#D4A520] leading-none">
-                      ₦4,500
+                      ₦7,500
                     </div>
                     <div className="text-[10px] text-black/40 mt-2">
-                      Due Aug 31, 2026
+                      Annual District Assessment
                     </div>
                   </div>
 
                   {/* Consecutive Terms */}
                   <div className="p-4 rounded-2xl bg-black/[0.024] border border-black/[0.06] flex flex-col justify-between">
                     <div className="text-[9px] font-semibold text-black/40 tracking-wider uppercase mb-2">
-                      Consecutive Terms
+                      Verification Level
                     </div>
                     <div className="text-[22px] font-extrabold text-[#981132] leading-none">
-                      4
+                      Tier 1
                     </div>
                     <div className="text-[10px] text-black/40 mt-2">
-                      terms cleared in a row
+                      District 9126 Verified
                     </div>
                   </div>
                 </div>
@@ -747,66 +773,36 @@ export default function MemberDashboardPage() {
                         <span>Period</span>
                         <span>Amount</span>
                         <span>Status</span>
-                        <span>Date & Method</span>
+                        <span>Club</span>
                       </div>
 
                       {/* Rows */}
                       <div className="divide-y divide-black/[0.04]">
-                        {[
-                          {
-                            ref: 'PAY-2026-Q2',
-                            period: 'Q2 2026 (Apr–Jun)',
-                            amount: '₦4,500',
-                            status: 'Cleared',
-                            date: 'Jul 1, 2026',
-                            method: 'Bank Transfer'
-                          },
-                          {
-                            ref: 'PAY-2026-Q1',
-                            period: 'Q1 2026 (Jan–Mar)',
-                            amount: '₦4,500',
-                            status: 'Cleared',
-                            date: 'Apr 2, 2026',
-                            method: 'Bank Transfer'
-                          },
-                          {
-                            ref: 'PAY-2025-Q4',
-                            period: 'Q4 2025 (Oct–Dec)',
-                            amount: '₦4,000',
-                            status: 'Cleared',
-                            date: 'Jan 5, 2026',
-                            method: 'Bank Transfer'
-                          },
-                          {
-                            ref: 'PAY-2025-Q3',
-                            period: 'Q3 2025 (Jul–Sep)',
-                            amount: '₦4,000',
-                            status: 'Cleared',
-                            date: 'Oct 3, 2025',
-                            method: 'Cash'
-                          }
-                        ].map((row) => (
+                        {duesRecords.map((row) => (
                           <div 
-                            key={row.ref}
+                            key={row.id}
                             className="grid grid-cols-[1.4fr_1fr_0.8fr_1fr_1fr] items-center px-4 py-3 text-xs hover:bg-black/[0.02] transition-colors"
                           >
                             <span className="font-mono text-[10px] text-black/40">
-                              {row.ref}
+                              {row.id}
                             </span>
                             <span className="text-[11px] text-black/60">
                               {row.period}
                             </span>
                             <span className="font-bold text-[#1C1C1E]">
-                              {row.amount}
+                              ₦{row.amount ? row.amount.toLocaleString() : '7,500'}
                             </span>
                             <div>
-                              <span className="inline-block text-[10px] font-semibold text-green-700 bg-green-50 border border-green-200 px-2.5 py-0.5 rounded-full">
+                              <span className={`inline-block text-[10px] font-semibold px-2.5 py-0.5 rounded-full ${
+                                row.status === 'Cleared'
+                                  ? 'text-green-700 bg-green-50 border border-green-200'
+                                  : 'text-amber-700 bg-amber-50 border border-amber-200'
+                              }`}>
                                 {row.status}
                               </span>
                             </div>
                             <div>
-                              <div className="text-[11px] text-black/60">{row.date}</div>
-                              <div className="text-[9px] text-black/40">{row.method}</div>
+                              <div className="text-[11px] text-black/60">{row.club}</div>
                             </div>
                           </div>
                         ))}
@@ -1362,30 +1358,37 @@ export default function MemberDashboardPage() {
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2">
                         <img 
-                          src="https://images.unsplash.com/photo-1614023342667-6f060e9d1e04?w=200&h=200&fit=crop&auto=format" 
-                          alt="Tunde Adeyemi"
+                          src={currentUser.avatarUrl}
+                          onError={(e) => { e.currentTarget.src = 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=80&h=80&fit=crop&auto=format'; }}
+                          alt={`${currentUser.firstName} ${currentUser.lastName}`}
                           className="w-9 h-9 rounded-full object-cover border-2 border-white/20"
                         />
                         <div>
                           <div className="text-[13px] font-extrabold text-white leading-tight font-sans">
-                            Tunde Adeyemi
+                            {currentUser.firstName} {currentUser.lastName}
                           </div>
                           <div className="text-[9px] text-white/50 tracking-wider font-sans">
-                            Active Member
+                            {currentUser.occupation || 'Active Member'}
                           </div>
                         </div>
                       </div>
 
-                      <div className="px-2.5 py-0.5 rounded-md bg-green-500/20 border border-green-500/40">
-                        <span className="text-[8.5px] font-bold text-green-400 tracking-wider font-sans">
-                          ACTIVE
+                      <div className={`px-2.5 py-0.5 rounded-md border ${
+                        currentUser.duesStatus === 'cleared'
+                          ? 'bg-green-500/20 border-green-500/40'
+                          : 'bg-amber-500/20 border-amber-500/40'
+                      }`}>
+                        <span className={`text-[8.5px] font-bold tracking-wider font-sans ${
+                          currentUser.duesStatus === 'cleared' ? 'text-green-400' : 'text-amber-400'
+                        }`}>
+                          {currentUser.duesStatus === 'cleared' ? 'ACTIVE' : 'PENDING'}
                         </span>
                       </div>
                     </div>
 
                     {/* Masked Card Number */}
                     <div className="font-mono text-base tracking-[0.22em] text-white/65">
-                      **** **** **** 0847
+                      **** **** **** {currentUser.rotaryId.slice(-4) || '9126'}
                     </div>
 
                     {/* Bottom Card Row: Club & QR */}
@@ -1394,19 +1397,23 @@ export default function MemberDashboardPage() {
                         <div className="text-[8px] uppercase tracking-wider text-white/35 font-sans mb-0.5">
                           Club
                         </div>
-                        <div className="text-[11px] font-semibold text-white font-sans">
-                          Rotaract Club of Ibadan Central
+                        <div className="text-[11px] font-semibold text-white font-sans truncate max-w-[210px]">
+                          {currentUser.clubName}
                         </div>
                         <div className="text-[9px] text-white/40 font-sans mt-1">
-                          Expires 08/27
+                          Expires 06/27
                         </div>
                       </div>
 
                       {/* QR Code Container */}
-                      <div className="p-2 rounded-xl bg-white shadow-[0_4px_14px_rgba(0,0,0,0.5)]">
-                        <div className="w-[58px] h-[58px] bg-[#1A1D2E] rounded-md flex items-center justify-center text-white text-[8px] font-mono font-bold">
-                          QR
-                        </div>
+                      <div className="p-1.5 rounded-xl bg-white shadow-[0_4px_14px_rgba(0,0,0,0.5)] shrink-0">
+                        {qrCodeUrl ? (
+                          <img src={qrCodeUrl} alt="QR Code" className="w-[52px] h-[52px] object-contain" />
+                        ) : (
+                          <div className="w-[52px] h-[52px] bg-[#1A1D2E] rounded-md flex items-center justify-center text-white text-[8px] font-mono font-bold">
+                            QR
+                          </div>
+                        )}
                       </div>
                     </div>
                   </div>
@@ -1418,17 +1425,17 @@ export default function MemberDashboardPage() {
                     <div className="text-[9px] font-semibold text-black/40 tracking-wider uppercase mb-1">
                       Member ID
                     </div>
-                    <div className="text-xs font-semibold text-[#1C1C1E]">
-                      RAD-9126-2024-0847
+                    <div className="text-xs font-semibold text-[#1C1C1E] font-mono">
+                      {currentUser.rotaryId}
                     </div>
                   </div>
 
                   <div className="p-3.5 md:p-4 rounded-xl bg-black/[0.024] border border-black/[0.06]">
                     <div className="text-[9px] font-semibold text-black/40 tracking-wider uppercase mb-1">
-                      Tier
+                      District Jurisdiction
                     </div>
                     <div className="text-xs font-semibold text-[#1C1C1E]">
-                      Tier 1 · Oyo State
+                      District 9126 · {currentUser.state}
                     </div>
                   </div>
 
@@ -1436,17 +1443,17 @@ export default function MemberDashboardPage() {
                     <div className="text-[9px] font-semibold text-black/40 tracking-wider uppercase mb-1">
                       Club
                     </div>
-                    <div className="text-xs font-semibold text-[#1C1C1E]">
-                      Rotaract Club of Ibadan Central
+                    <div className="text-xs font-semibold text-[#1C1C1E] truncate">
+                      {currentUser.clubName}
                     </div>
                   </div>
 
                   <div className="p-3.5 md:p-4 rounded-xl bg-black/[0.024] border border-black/[0.06]">
                     <div className="text-[9px] font-semibold text-black/40 tracking-wider uppercase mb-1">
-                      Joined
+                      Member Role
                     </div>
-                    <div className="text-xs font-semibold text-[#1C1C1E]">
-                      Sep 2023
+                    <div className="text-xs font-semibold text-[#1C1C1E] capitalize">
+                      {currentUser.role === 'club_president' ? 'Club President' : currentUser.role}
                     </div>
                   </div>
 
@@ -1454,17 +1461,19 @@ export default function MemberDashboardPage() {
                     <div className="text-[9px] font-semibold text-black/40 tracking-wider uppercase mb-1">
                       Dues Status
                     </div>
-                    <div className="text-xs font-semibold text-green-700">
-                      Cleared
+                    <div className={`text-xs font-semibold ${
+                      currentUser.duesStatus === 'cleared' ? 'text-green-700' : 'text-amber-700'
+                    }`}>
+                      {currentUser.duesStatus === 'cleared' ? 'Cleared (District Good Standing)' : 'Pending Verification'}
                     </div>
                   </div>
 
                   <div className="p-3.5 md:p-4 rounded-xl bg-black/[0.024] border border-black/[0.06]">
                     <div className="text-[9px] font-semibold text-black/40 tracking-wider uppercase mb-1">
-                      Dues Paid
+                      Assessment
                     </div>
                     <div className="text-xs font-semibold text-[#1C1C1E]">
-                      Jul 1, 2026
+                      ₦7,500 / Year
                     </div>
                   </div>
                 </div>
@@ -1478,8 +1487,8 @@ export default function MemberDashboardPage() {
                       Impact Points
                       <span className="px-1.5 py-0.5 rounded-full bg-green-50 text-green-600 font-bold border border-green-200">+8%</span>
                     </div>
-                    <div className="text-2xl font-black text-[#D4A520] my-2">1,240</div>
-                    <div className="text-[10px] text-black/60">260 pts to Tier 2</div>
+                    <div className="text-2xl font-black text-[#D4A520] my-2">{metrics.impactPoints.toLocaleString()}</div>
+                    <div className="text-[10px] text-black/60">Verified Community Impact</div>
                   </div>
 
                   <div className="p-4 rounded-2xl bg-black/[0.024] border border-black/[0.06] shadow-sm flex flex-col justify-between">
@@ -1487,7 +1496,7 @@ export default function MemberDashboardPage() {
                       Events Attended
                       <span className="px-1.5 py-0.5 rounded-full bg-green-50 text-green-600 font-bold border border-green-200">+33%</span>
                     </div>
-                    <div className="text-2xl font-black text-[#D4A520] my-2">12</div>
+                    <div className="text-2xl font-black text-[#D4A520] my-2">{metrics.eventsAttended}</div>
                     <div className="text-[10px] text-black/60">This Rotaract year</div>
                   </div>
 
@@ -1496,7 +1505,7 @@ export default function MemberDashboardPage() {
                       Projects Joined
                       <span className="px-1.5 py-0.5 rounded-full bg-green-50 text-green-600 font-bold border border-green-200">+1 this month</span>
                     </div>
-                    <div className="text-2xl font-black text-[#D4A520] my-2">4</div>
+                    <div className="text-2xl font-black text-[#D4A520] my-2">{metrics.projectsJoined}</div>
                     <div className="text-[10px] text-black/60">Active across D9126</div>
                   </div>
                 </div>
