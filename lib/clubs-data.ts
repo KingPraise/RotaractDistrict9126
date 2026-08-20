@@ -24,7 +24,7 @@ export const clubsData: Club[] = [
   // SOUTH-WEST REGION — Oyo State (20 Clubs)
   {
     id: 'club-ibadan-ring-road',
-    name: 'RC Ibadan Ring Road',
+    name: 'RAC Ibadan Ring Road',
     rotaryId: '218112',
     memberCount: 11,
     type: 'Community',
@@ -38,7 +38,7 @@ export const clubsData: Club[] = [
   },
   {
     id: 'club-ui-ibadan',
-    name: 'RC University of Ibadan',
+    name: 'RAC University of Ibadan',
     rotaryId: '50205',
     memberCount: 19,
     type: 'Campus',
@@ -52,7 +52,7 @@ export const clubsData: Club[] = [
   },
   {
     id: 'club-lead-city-univ',
-    name: 'RC Lead City University Ibadan',
+    name: 'RAC Lead City University Ibadan',
     rotaryId: '217577',
     memberCount: 20,
     type: 'Campus',
@@ -66,7 +66,7 @@ export const clubsData: Club[] = [
   },
   {
     id: 'club-the-poly-ibadan',
-    name: 'RC The Polytechnic Ibadan',
+    name: 'RAC The Polytechnic Ibadan',
     rotaryId: '8827452',
     memberCount: 10,
     type: 'Campus',
@@ -80,7 +80,7 @@ export const clubsData: Club[] = [
   },
   {
     id: 'club-uch-ibadan',
-    name: 'RC University College Hospital, Ibadan',
+    name: 'RAC University College Hospital, Ibadan',
     rotaryId: '214344',
     memberCount: 12,
     type: 'Campus',
@@ -94,7 +94,7 @@ export const clubsData: Club[] = [
   },
   {
     id: 'club-fca-ibadan',
-    name: 'RC Federal College of Agriculture, Ibadan',
+    name: 'RAC Federal College of Agriculture, Ibadan',
     rotaryId: '215293',
     memberCount: 5,
     type: 'Campus',
@@ -108,7 +108,7 @@ export const clubsData: Club[] = [
   },
   {
     id: 'club-fcc-ibadan',
-    name: 'RC Federal Cooperative College Ibadan',
+    name: 'RAC Federal Cooperative College Ibadan',
     rotaryId: '213611',
     memberCount: 3,
     type: 'Campus',
@@ -122,7 +122,7 @@ export const clubsData: Club[] = [
   },
   {
     id: 'club-fss-oyo',
-    name: 'RC Federal School of Surveying, Oyo',
+    name: 'RAC Federal School of Surveying, Oyo',
     rotaryId: '91159',
     memberCount: 9,
     type: 'Campus',
@@ -136,7 +136,7 @@ export const clubsData: Club[] = [
   },
   {
     id: 'club-tech-u-ibadan',
-    name: 'RC First Technical University Ibadan',
+    name: 'RAC First Technical University Ibadan',
     rotaryId: '8824739',
     memberCount: 11,
     type: 'Campus',
@@ -150,7 +150,7 @@ export const clubsData: Club[] = [
   },
   {
     id: 'club-ibadan-akobo',
-    name: 'RC Ibadan Akobo',
+    name: 'RAC Ibadan Akobo',
     rotaryId: '90002',
     memberCount: 8,
     type: 'Community',
@@ -164,7 +164,7 @@ export const clubsData: Club[] = [
   },
   {
     id: 'club-ibadan-ologuneru',
-    name: 'RC Ibadan Ologuneru',
+    name: 'RAC Ibadan Ologuneru',
     rotaryId: '8826945',
     memberCount: 12,
     type: 'Community',
@@ -178,7 +178,7 @@ export const clubsData: Club[] = [
   },
   {
     id: 'club-ibadan-oritamefa',
-    name: 'RC Ibadan-Oritamefa',
+    name: 'RAC Ibadan-Oritamefa',
     rotaryId: '215660',
     memberCount: 2,
     type: 'Community',
@@ -192,7 +192,7 @@ export const clubsData: Club[] = [
   },
   {
     id: 'club-felele',
-    name: 'RC Felele',
+    name: 'RAC Felele',
     rotaryId: '215596',
     memberCount: 6,
     type: 'Community',
@@ -206,7 +206,7 @@ export const clubsData: Club[] = [
   },
   {
     id: 'club-moor-plantation',
-    name: 'RC Moor Plantation',
+    name: 'RAC Moor Plantation',
     rotaryId: '74374',
     memberCount: 3,
     type: 'Community',
@@ -220,7 +220,7 @@ export const clubsData: Club[] = [
   },
   {
     id: 'club-oyo-central',
-    name: 'RC Oyo Central',
+    name: 'RAC Oyo Central',
     rotaryId: '216394',
     memberCount: 11,
     type: 'Community',
@@ -234,7 +234,7 @@ export const clubsData: Club[] = [
   },
   {
     id: 'club-iseyin-pathfinder',
-    name: 'RC Iseyin Pathfinder',
+    name: 'RAC Iseyin Pathfinder',
     rotaryId: '8824492',
     memberCount: 6,
     type: 'Community',
@@ -248,7 +248,7 @@ export const clubsData: Club[] = [
   },
   {
     id: 'club-ibarapa-poly-eruwa',
-    name: 'RC Ibarapa Polytechnic, Eruwa Campus',
+    name: 'RAC Ibarapa Polytechnic, Eruwa Campus',
     rotaryId: '213220',
     memberCount: 4,
     type: 'Campus',
@@ -262,7 +262,7 @@ export const clubsData: Club[] = [
   },
   {
     id: 'club-lautech-ogbomoso',
-    name: 'RC Lautech',
+    name: 'RAC Lautech',
     rotaryId: '45480',
     memberCount: 10,
     type: 'Campus',
@@ -276,7 +276,7 @@ export const clubsData: Club[] = [
   },
   {
     id: 'club-atiba-university',
-    name: 'RC Atiba University',
+    name: 'RAC Atiba University',
     rotaryId: '8825777',
     memberCount: 3,
     type: 'Campus',
@@ -290,7 +290,7 @@ export const clubsData: Club[] = [
   },
   {
     id: 'club-eclub-ibadan-pacesetter',
-    name: 'RC E-Club of Ibadan Pacesetter',
+    name: 'RAC E-Club of Ibadan Pacesetter',
     rotaryId: '8825776',
     memberCount: 21,
     type: 'E-Club',
@@ -306,7 +306,7 @@ export const clubsData: Club[] = [
   // SOUTH-WEST REGION — Osun State (16 Clubs)
   {
     id: 'club-osogbo',
-    name: 'RC Osogbo',
+    name: 'RAC Osogbo',
     rotaryId: '15923',
     memberCount: 16,
     type: 'Community',
@@ -320,7 +320,7 @@ export const clubsData: Club[] = [
   },
   {
     id: 'club-osogbo-central',
-    name: 'RC Osogbo Central',
+    name: 'RAC Osogbo Central',
     rotaryId: '215585',
     memberCount: 4,
     type: 'Community',
@@ -334,7 +334,7 @@ export const clubsData: Club[] = [
   },
   {
     id: 'club-uniosun-osogbo',
-    name: 'RC Osun State University Osogbo Campus',
+    name: 'RAC Osun State University Osogbo Campus',
     rotaryId: '89365',
     memberCount: 10,
     type: 'Campus',
@@ -348,7 +348,7 @@ export const clubsData: Club[] = [
   },
   {
     id: 'club-fountain-univ',
-    name: 'RC Fountain University, Osogbo',
+    name: 'RAC Fountain University, Osogbo',
     rotaryId: '8827590',
     memberCount: 9,
     type: 'Campus',
@@ -362,7 +362,7 @@ export const clubsData: Club[] = [
   },
   {
     id: 'club-lautech-th-osogbo',
-    name: 'RC Lautech Teaching Hospital Osogbo',
+    name: 'RAC Lautech Teaching Hospital Osogbo',
     rotaryId: '218098',
     memberCount: 7,
     type: 'Campus',
@@ -376,7 +376,7 @@ export const clubsData: Club[] = [
   },
   {
     id: 'club-oau-ile-ife-1',
-    name: 'RC OAU Ile-Ife',
+    name: 'RAC OAU Ile-Ife',
     rotaryId: '8827783',
     memberCount: 9,
     type: 'Campus',
@@ -390,7 +390,7 @@ export const clubsData: Club[] = [
   },
   {
     id: 'club-ede-cb',
-    name: 'RC Ede Community Based',
+    name: 'RAC Ede Community Based',
     rotaryId: '90075',
     memberCount: 7,
     type: 'Community',
@@ -404,7 +404,7 @@ export const clubsData: Club[] = [
   },
   {
     id: 'club-fed-poly-ede',
-    name: 'RC Federal Polytechnic Ede',
+    name: 'RAC Federal Polytechnic Ede',
     rotaryId: '43553',
     memberCount: 3,
     type: 'Campus',
@@ -418,7 +418,7 @@ export const clubsData: Club[] = [
   },
   {
     id: 'club-harvard-poly',
-    name: 'RC Harvard Polytechnic',
+    name: 'RAC Harvard Polytechnic',
     rotaryId: '8826970',
     memberCount: 16,
     type: 'Campus',
@@ -432,7 +432,7 @@ export const clubsData: Club[] = [
   },
   {
     id: 'club-ikirun',
-    name: 'RC Ikirun',
+    name: 'RAC Ikirun',
     rotaryId: '57320',
     memberCount: 6,
     type: 'Community',
@@ -446,7 +446,7 @@ export const clubsData: Club[] = [
   },
   {
     id: 'club-iragbiji-cb',
-    name: 'RC Iragbiji CB',
+    name: 'RAC Iragbiji CB',
     rotaryId: '90749',
     memberCount: 5,
     type: 'Community',
@@ -460,7 +460,7 @@ export const clubsData: Club[] = [
   },
   {
     id: 'club-iwo-cb',
-    name: 'RC Iwo Community Based',
+    name: 'RAC Iwo Community Based',
     rotaryId: '214931',
     memberCount: 4,
     type: 'Community',
@@ -474,7 +474,7 @@ export const clubsData: Club[] = [
   },
   {
     id: 'club-modakeke',
-    name: 'RC Modakeke',
+    name: 'RAC Modakeke',
     rotaryId: '213160',
     memberCount: 9,
     type: 'Community',
@@ -488,7 +488,7 @@ export const clubsData: Club[] = [
   },
   {
     id: 'club-oyan',
-    name: 'RC Oyan',
+    name: 'RAC Oyan',
     rotaryId: '8826726',
     memberCount: 9,
     type: 'Community',
@@ -502,7 +502,7 @@ export const clubsData: Club[] = [
   },
   {
     id: 'club-uniosun-ipetu-ilesa',
-    name: 'RC University of Osun State Ipetu-Ilesa',
+    name: 'RAC University of Osun State Ipetu-Ilesa',
     rotaryId: '215840',
     memberCount: 7,
     type: 'Campus',
@@ -516,7 +516,7 @@ export const clubsData: Club[] = [
   },
   {
     id: 'club-mm-college-health',
-    name: 'RC Margaret Mosunmola College of Health Science',
+    name: 'RAC Margaret Mosunmola College of Health Science',
     rotaryId: '8826982',
     memberCount: 21,
     type: 'Campus',
@@ -532,7 +532,7 @@ export const clubsData: Club[] = [
   // SOUTH-WEST REGION — Ondo State (5 Clubs)
   {
     id: 'club-akure',
-    name: 'RC Akure',
+    name: 'RAC Akure',
     rotaryId: '16021',
     memberCount: 4,
     type: 'Community',
@@ -546,7 +546,7 @@ export const clubsData: Club[] = [
   },
   {
     id: 'club-futa-akure',
-    name: 'RC Federal University of Technology Akure',
+    name: 'RAC Federal University of Technology Akure',
     rotaryId: '15991',
     memberCount: 22,
     type: 'Campus',
@@ -560,7 +560,7 @@ export const clubsData: Club[] = [
   },
   {
     id: 'club-aaua-akungba',
-    name: 'RC Adekunle Ajasin University',
+    name: 'RAC Adekunle Ajasin University',
     rotaryId: '62102',
     memberCount: 3,
     type: 'Campus',
@@ -574,7 +574,7 @@ export const clubsData: Club[] = [
   },
   {
     id: 'club-adeyemi-univ-ondo',
-    name: 'RC Adeyemi Federal University of Education, Ondo',
+    name: 'RAC Adeyemi Federal University of Education, Ondo',
     rotaryId: '43033',
     memberCount: 5,
     type: 'Campus',
@@ -588,7 +588,7 @@ export const clubsData: Club[] = [
   },
   {
     id: 'club-ondo-city',
-    name: 'RC Ondo City',
+    name: 'RAC Ondo City',
     rotaryId: '8828614',
     memberCount: 22,
     type: 'Community',
@@ -604,7 +604,7 @@ export const clubsData: Club[] = [
   // SOUTH-WEST REGION — Ekiti State (6 Clubs)
   {
     id: 'club-abuad-ado-ekiti',
-    name: 'RC ABUAD',
+    name: 'RAC ABUAD',
     rotaryId: '8827237',
     memberCount: 17,
     type: 'Campus',
@@ -618,7 +618,7 @@ export const clubsData: Club[] = [
   },
   {
     id: 'club-eksu-ado-ekiti',
-    name: 'RC Ekiti State University',
+    name: 'RAC Ekiti State University',
     rotaryId: '81710',
     memberCount: 2,
     type: 'Campus',
@@ -632,7 +632,7 @@ export const clubsData: Club[] = [
   },
   {
     id: 'club-fed-poly-ado',
-    name: 'RC Federal Polytechnic CEC Ado-Ekiti',
+    name: 'RAC Federal Polytechnic CEC Ado-Ekiti',
     rotaryId: '90629',
     memberCount: 4,
     type: 'Campus',
@@ -646,7 +646,7 @@ export const clubsData: Club[] = [
   },
   {
     id: 'club-fuoye-ekiti',
-    name: 'RC Federal University, Oye-Ekiti',
+    name: 'RAC Federal University, Oye-Ekiti',
     rotaryId: '8823786',
     memberCount: 10,
     type: 'Campus',
@@ -660,7 +660,7 @@ export const clubsData: Club[] = [
   },
   {
     id: 'club-espahms-ijero',
-    name: 'RC ESPAHMS Ijero',
+    name: 'RAC ESPAHMS Ijero',
     rotaryId: '8827236',
     memberCount: 11,
     type: 'Campus',
@@ -674,7 +674,7 @@ export const clubsData: Club[] = [
   },
   {
     id: 'club-school-health-tech',
-    name: 'RC School of Health Technology',
+    name: 'RAC School of Health Technology',
     rotaryId: '86285',
     memberCount: 7,
     type: 'Campus',
@@ -690,7 +690,7 @@ export const clubsData: Club[] = [
   // NORTH-CENTRAL REGION — Kwara State (10 Clubs)
   {
     id: 'club-ilorin',
-    name: 'RC Ilorin',
+    name: 'RAC Ilorin',
     rotaryId: '15961',
     memberCount: 9,
     type: 'Community',
@@ -704,7 +704,7 @@ export const clubsData: Club[] = [
   },
   {
     id: 'club-ilorin-metro',
-    name: 'RC Ilorin Metro',
+    name: 'RAC Ilorin Metro',
     rotaryId: '212439',
     memberCount: 8,
     type: 'Community',
@@ -718,7 +718,7 @@ export const clubsData: Club[] = [
   },
   {
     id: 'club-ilorin-gra',
-    name: 'RC Ilorin GRA',
+    name: 'RAC Ilorin GRA',
     rotaryId: '214785',
     memberCount: 13,
     type: 'Community',
@@ -732,7 +732,7 @@ export const clubsData: Club[] = [
   },
   {
     id: 'club-ilorin-golden',
-    name: 'RC Ilorin Golden',
+    name: 'RAC Ilorin Golden',
     rotaryId: '8823814',
     memberCount: 1,
     type: 'Community',
@@ -746,7 +746,7 @@ export const clubsData: Club[] = [
   },
   {
     id: 'club-ilorin-new-dawn',
-    name: 'RC Ilorin New Dawn',
+    name: 'RAC Ilorin New Dawn',
     rotaryId: '216894',
     memberCount: 2,
     type: 'Community',
@@ -760,7 +760,7 @@ export const clubsData: Club[] = [
   },
   {
     id: 'club-ilorin-fate-neighbourhood',
-    name: 'RC Ilorin Fate Neighbourhood Community Base',
+    name: 'RAC Ilorin Fate Neighbourhood Community Base',
     rotaryId: '216995',
     memberCount: 5,
     type: 'Community',
@@ -774,7 +774,7 @@ export const clubsData: Club[] = [
   },
   {
     id: 'club-unilorin-campus',
-    name: 'RC University of Ilorin',
+    name: 'RAC University of Ilorin',
     rotaryId: '15899',
     memberCount: 7,
     type: 'Campus',
@@ -788,7 +788,7 @@ export const clubsData: Club[] = [
   },
   {
     id: 'club-nursing-ilorin',
-    name: 'RC College of Nursing and Midwifery, Ilorin',
+    name: 'RAC College of Nursing and Midwifery, Ilorin',
     rotaryId: '8825220',
     memberCount: 8,
     type: 'Campus',
@@ -802,7 +802,7 @@ export const clubsData: Club[] = [
   },
   {
     id: 'club-nursing-uith',
-    name: 'RC College of Nursing Sciences (UITH)',
+    name: 'RAC College of Nursing Sciences (UITH)',
     rotaryId: '8828433',
     memberCount: 15,
     type: 'Campus',
@@ -816,7 +816,7 @@ export const clubsData: Club[] = [
   },
   {
     id: 'club-offa-metro',
-    name: 'RC Offa Metropolitan',
+    name: 'RAC Offa Metropolitan',
     rotaryId: '8823807',
     memberCount: 5,
     type: 'Community',
@@ -832,7 +832,7 @@ export const clubsData: Club[] = [
   // NORTH-CENTRAL REGION — Niger State (4 Clubs)
   {
     id: 'club-minna-central',
-    name: 'RC Minna Central',
+    name: 'RAC Minna Central',
     rotaryId: '8829101',
     memberCount: 12,
     type: 'Community',
@@ -846,7 +846,7 @@ export const clubsData: Club[] = [
   },
   {
     id: 'club-futminna-bosso',
-    name: 'RC FUTMinna',
+    name: 'RAC FUTMinna',
     rotaryId: '8829102',
     memberCount: 18,
     type: 'Campus',
@@ -860,7 +860,7 @@ export const clubsData: Club[] = [
   },
   {
     id: 'club-bida-central',
-    name: 'RC Bida Central',
+    name: 'RAC Bida Central',
     rotaryId: '8829103',
     memberCount: 8,
     type: 'Community',
@@ -874,7 +874,7 @@ export const clubsData: Club[] = [
   },
   {
     id: 'club-suleja-metro',
-    name: 'RC Suleja Metro',
+    name: 'RAC Suleja Metro',
     rotaryId: '8829104',
     memberCount: 14,
     type: 'Community',
@@ -890,7 +890,7 @@ export const clubsData: Club[] = [
   // NORTH-CENTRAL REGION — Kogi State (9 Clubs)
   {
     id: 'club-lokoja-cb',
-    name: 'RC Lokoja CB',
+    name: 'RAC Lokoja CB',
     rotaryId: '8823883',
     memberCount: 5,
     type: 'Community',
@@ -904,7 +904,7 @@ export const clubsData: Club[] = [
   },
   {
     id: 'club-ful-lokoja',
-    name: 'RC Federal University Lokoja',
+    name: 'RAC Federal University Lokoja',
     rotaryId: '91235',
     memberCount: 4,
     type: 'Campus',
@@ -918,7 +918,7 @@ export const clubsData: Club[] = [
   },
   {
     id: 'club-kogi-poly-lokoja',
-    name: 'RC Kogi State Polytechnic Lokoja',
+    name: 'RAC Kogi State Polytechnic Lokoja',
     rotaryId: '88486',
     memberCount: 3,
     type: 'Campus',
@@ -932,7 +932,7 @@ export const clubsData: Club[] = [
   },
   {
     id: 'club-ankpa-central',
-    name: 'RC Ankpa Central',
+    name: 'RAC Ankpa Central',
     rotaryId: '91440',
     memberCount: 2,
     type: 'Community',
@@ -946,7 +946,7 @@ export const clubsData: Club[] = [
   },
   {
     id: 'club-ankpa-cb',
-    name: 'RC Ankpa Community Base',
+    name: 'RAC Ankpa Community Base',
     rotaryId: '91447',
     memberCount: 1,
     type: 'Community',
@@ -960,7 +960,7 @@ export const clubsData: Club[] = [
   },
   {
     id: 'club-alhikma-ankpa',
-    name: 'RC Alhikma C.O.E. Ankpa',
+    name: 'RAC Alhikma C.O.E. Ankpa',
     rotaryId: '91446',
     memberCount: 3,
     type: 'Campus',
@@ -974,7 +974,7 @@ export const clubsData: Club[] = [
   },
   {
     id: 'club-idah-cb',
-    name: 'RC Idah Community Base',
+    name: 'RAC Idah Community Base',
     rotaryId: '88728',
     memberCount: 7,
     type: 'Community',
@@ -988,7 +988,7 @@ export const clubsData: Club[] = [
   },
   {
     id: 'club-dekina-cb',
-    name: 'RC Dekina Community Base',
+    name: 'RAC Dekina Community Base',
     rotaryId: '91436',
     memberCount: 5,
     type: 'Community',
@@ -1002,7 +1002,7 @@ export const clubsData: Club[] = [
   },
   {
     id: 'club-ugwolawo-cb',
-    name: 'RC Ugwolawo C.B.',
+    name: 'RAC Ugwolawo C.B.',
     rotaryId: '88654',
     memberCount: 2,
     type: 'Community',
@@ -1018,7 +1018,7 @@ export const clubsData: Club[] = [
   // E-CLUBS & CROSS-REGIONAL (7 Clubs)
   {
     id: 'club-eclub-mighty',
-    name: 'RC E-Club Mighty',
+    name: 'RAC E-Club Mighty',
     rotaryId: '8825437',
     memberCount: 11,
     type: 'E-Club',
@@ -1032,7 +1032,7 @@ export const clubsData: Club[] = [
   },
   {
     id: 'club-eclub-greater-nigeria',
-    name: 'RC E-Club of Greater Nigeria',
+    name: 'RAC E-Club of Greater Nigeria',
     rotaryId: '214084',
     memberCount: 16,
     type: 'E-Club',
@@ -1046,7 +1046,7 @@ export const clubsData: Club[] = [
   },
   {
     id: 'club-eclub-greater-ng-golden',
-    name: 'RC E-Club of Greater Nigeria Golden',
+    name: 'RAC E-Club of Greater Nigeria Golden',
     rotaryId: '218582',
     memberCount: 10,
     type: 'E-Club',
@@ -1060,7 +1060,7 @@ export const clubsData: Club[] = [
   },
   {
     id: 'club-eclub-harmony',
-    name: 'RC E-Club of Harmony',
+    name: 'RAC E-Club of Harmony',
     rotaryId: '8826253',
     memberCount: 19,
     type: 'E-Club',
@@ -1074,7 +1074,7 @@ export const clubsData: Club[] = [
   },
   {
     id: 'club-eclub-ng-new-dawn',
-    name: 'RC E-Club of Nigeria New Dawn',
+    name: 'RAC E-Club of Nigeria New Dawn',
     rotaryId: '8827195',
     memberCount: 14,
     type: 'E-Club',
@@ -1088,7 +1088,7 @@ export const clubsData: Club[] = [
   },
   {
     id: 'club-eclub-one-nigeria',
-    name: 'RC E-Club of One Nigeria',
+    name: 'RAC E-Club of One Nigeria',
     rotaryId: '8826376',
     memberCount: 11,
     type: 'E-Club',
@@ -1102,7 +1102,7 @@ export const clubsData: Club[] = [
   },
   {
     id: 'club-eclub-peace-nigeria',
-    name: 'RC E-Club of Peace Nigeria',
+    name: 'RAC E-Club of Peace Nigeria',
     rotaryId: '8828549',
     memberCount: 10,
     type: 'E-Club',

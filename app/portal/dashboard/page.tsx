@@ -153,7 +153,7 @@ export default function MemberDashboardPage() {
     {
       id: 'PAY-D9126-001',
       name: 'Tunde Adeyemi',
-      club: 'RC Ibadan Central',
+      club: 'RAC Ibadan Central',
       status: 'Cleared',
       period: 'Jan – Jun 2026',
       avatar: 'https://images.unsplash.com/photo-1614023342667-6f060e9d1e04?w=80&h=80&fit=crop&auto=format'
@@ -1690,7 +1690,7 @@ export default function MemberDashboardPage() {
                   <p className="text-[10px] text-[#D4A520] font-semibold truncate">Co-DRR & Lead Architect</p>
                   <div className="mt-0.5 flex items-center gap-1 text-[9.5px] text-slate-300">
                     <Building2 className="h-2.5 w-2.5 text-slate-400" />
-                    <span className="truncate">RC Ibadan Central</span>
+                    <span className="truncate">RAC Ibadan Central</span>
                   </div>
                   <div className="flex items-center gap-1 text-[9.5px] text-slate-400">
                     <MapPin className="h-2.5 w-2.5 text-[#D91B5C]" />

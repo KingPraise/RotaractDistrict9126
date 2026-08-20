@@ -105,7 +105,7 @@ export async function getMemberDashboardData(userId: string): Promise<MemberDash
     const phoneNumber = userData?.phoneNumber || '+2348012345678';
 
     // 2. Fetch club details to resolve clubName, state, region
-    let clubName = 'RC Ibadan Central';
+    let clubName = 'RAC Ibadan Central';
     let state = 'Oyo State';
     let region = 'South-West';
 
@@ -243,7 +243,7 @@ export async function getMemberDashboardData(userId: string): Promise<MemberDash
         email: 'tunde.adeyemi@rotaractdistrict9126.com.ng',
         rotaryId: 'ROT-9126-2026',
         clubId: 'club-ibadan-central',
-        clubName: 'RC Ibadan Central',
+        clubName: 'RAC Ibadan Central',
         state: 'Oyo State',
         region: 'South-West',
         role: 'member',
@@ -263,7 +263,7 @@ export async function getMemberDashboardData(userId: string): Promise<MemberDash
         {
           id: 'PAY-D9126-001',
           name: 'Tunde Adeyemi',
-          club: 'RC Ibadan Central',
+          club: 'RAC Ibadan Central',
           status: 'Cleared',
           period: 'Jan – Jun 2026',
           amount: 7500,
