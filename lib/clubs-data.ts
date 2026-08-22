@@ -14,6 +14,7 @@ export interface Club {
   president?: string;
   presidentAvatar?: string;
   presidentPhone?: string;
+  instagramUrl?: string;
   coordinates: {
     lat: number;
     lng: number;
@@ -36,6 +37,7 @@ export const clubsData: Club[] = [
     president: 'Peleyeju Timileyin Omotayo',
     presidentAvatar: '/images/presidents/peleyeju-timileyin-omotayo.jpg',
     presidentPhone: '+234 902 115 5714',
+    instagramUrl: 'https://www.instagram.com/racib.ringroad/',
     coordinates: { lat: 7.3775, lng: 3.8670 },
   },
   {

@@ -20,7 +20,8 @@ import {
   Phone,
   Calendar,
   MessageCircle,
-  ExternalLink
+  ExternalLink,
+  Instagram
 } from 'lucide-react';
 import Link from 'next/link';
 
@@ -266,20 +267,35 @@ function JoinClubContent() {
 
               </div>
 
-              {/* DIRECT 1-CLICK WHATSAPP CTA ACTION */}
+              {/* DIRECT 1-CLICK ACTIONS: WHATSAPP + INSTAGRAM */}
               <div className="pt-2 space-y-3">
-                <a
-                  href={whatsappUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-full py-4 px-6 rounded-2xl bg-[#25D366] hover:bg-[#20bd5a] text-white text-sm sm:text-base font-black tracking-wide flex items-center justify-center gap-3 shadow-lg shadow-[#25D366]/30 hover:shadow-xl hover:shadow-[#25D366]/40 transition-all cursor-pointer group/btn transform hover:-translate-y-0.5"
-                >
-                  <WhatsAppIcon className="w-5 h-5 text-white" />
-                  <span>Chat with President {presidentName.split(' ')[0]} on WhatsApp</span>
-                  <ArrowRight size={16} className="transition-transform group-hover/btn:translate-x-1" />
-                </a>
+                <div className="flex flex-col sm:flex-row items-center gap-3">
+                  <a
+                    href={whatsappUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex-1 w-full py-4 px-6 rounded-2xl bg-[#25D366] hover:bg-[#20bd5a] text-white text-sm sm:text-base font-black tracking-wide flex items-center justify-center gap-3 shadow-lg shadow-[#25D366]/30 hover:shadow-xl hover:shadow-[#25D366]/40 transition-all cursor-pointer group/btn transform hover:-translate-y-0.5"
+                  >
+                    <WhatsAppIcon className="w-5 h-5 text-white" />
+                    <span>Chat on WhatsApp</span>
+                    <ArrowRight size={16} className="transition-transform group-hover/btn:translate-x-1" />
+                  </a>
 
-                <div className="flex items-center justify-center gap-4 text-xs text-gray-500 pt-1">
+                  {selectedClub.instagramUrl && (
+                    <a
+                      href={selectedClub.instagramUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-full sm:w-auto py-4 px-6 rounded-2xl bg-gradient-to-r from-[#833ab4] via-[#fd1d1d] to-[#fcb045] hover:opacity-95 text-white text-sm sm:text-base font-black tracking-wide flex items-center justify-center gap-2.5 shadow-lg shadow-pink-500/25 hover:shadow-xl hover:shadow-pink-500/35 transition-all cursor-pointer group/insta transform hover:-translate-y-0.5"
+                    >
+                      <Instagram size={18} />
+                      <span>@racib.ringroad</span>
+                      <ExternalLink size={14} className="opacity-80 transition-transform group-hover/insta:translate-x-0.5" />
+                    </a>
+                  )}
+                </div>
+
+                <div className="flex items-center justify-center gap-4 text-xs text-gray-500 pt-1 flex-wrap">
                   <span className="flex items-center gap-1">
                     <ShieldCheck size={13} className="text-[#22C55E]" /> Official D9126 Channel
                   </span>
