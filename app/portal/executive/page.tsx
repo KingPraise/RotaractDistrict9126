@@ -100,6 +100,21 @@ const CLUB_PERFORMANCE = [
   { rank: 8, name: 'Lokoja', members: 31, score: 71, color: 'rgba(168, 85, 247, 0.62)' },
 ];
 
+const LEAD_ACQUISITION_DATA = [
+  { month: 'Jan', leads: 42 },
+  { month: 'Feb', leads: 54 },
+  { month: 'Mar', leads: 62 },
+  { month: 'Apr', leads: 85 },
+  { month: 'May', leads: 98 },
+  { month: 'Jun', leads: 112 },
+  { month: 'Jul', leads: 125 },
+  { month: 'Aug', leads: 138 },
+  { month: 'Sep', leads: 144 },
+  { month: 'Oct', leads: 151 },
+  { month: 'Nov', leads: 156 },
+  { month: 'Dec', leads: 156 },
+];
+
 export default function DistrictExecutiveDashboardPage() {
   const [navActive, setNavActive] = useState('Overview');
   const [membershipTab, setMembershipTab] = useState<'Total' | 'Prospective' | 'Engaged'>('Total');
@@ -313,7 +328,180 @@ export default function DistrictExecutiveDashboardPage() {
 
         {/* Scroll Content */}
         <div className="flex-1 overflow-y-auto p-6 space-y-5">
-          {navActive === 'Club Performance' ? (
+          {navActive === 'Membership Growth' ? (
+            /* DEDICATED MEMBERSHIP GROWTH ANALYTICS SUB-VIEW */
+            <div className="space-y-4 font-sans">
+              
+              {/* Top Row: Hero Growth Chart (2-Span) + Stacked Fund & Engagement (1-Span) */}
+              <div className="flex flex-col lg:flex-row gap-3">
+                {/* 1. Membership Growth Hero Canvas */}
+                <div className="flex-[2] p-5 rounded-2xl bg-white/75 border border-black/[0.08] backdrop-blur-xl shadow-sm">
+                  <div className="flex items-start justify-between mb-4 flex-wrap gap-2">
+                    <div>
+                      <div className="text-xs font-bold text-[#1C1C1E] tracking-tight">Membership Growth</div>
+                      <div className="text-[10px] text-black/40 mt-0.5">District-wide, January – December 2026</div>
+                    </div>
+
+                    <div className="flex border-b border-black/[0.08]">
+                      {(['Total', 'Prospective', 'Engaged'] as const).map((tab) => (
+                        <button
+                          key={tab}
+                          onClick={() => setMembershipTab(tab)}
+                          className={`px-3 py-1 text-[10px] font-semibold transition-all -mb-px ${
+                            membershipTab === tab
+                              ? 'border-b-2 border-[#D91B5C] text-[#1C1C1E] font-bold'
+                              : 'text-black/40 hover:text-black/70'
+                          }`}
+                        >
+                          {tab}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="flex items-baseline gap-2.5 mb-4">
+                    <span className="text-3xl font-bold text-[#B8860B] leading-none">3,247</span>
+                    <span className="text-[11px] text-green-600 font-semibold">▲ +34.7% YTD</span>
+                    <span className="text-[10px] text-black/40">vs Jan 2026</span>
+                  </div>
+
+                  <div className="h-50 w-full">
+                    <ResponsiveContainer width="100%" height="100%">
+                      <AreaChart data={MEMBERSHIP_DATA} margin={{ top: 10, right: 0, left: -20, bottom: 0 }}>
+                        <defs>
+                          <linearGradient id="mb-growth-grad" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0%" stopColor="#D91B5C" stopOpacity={0.45} />
+                            <stop offset="55%" stopColor="#A855F7" stopOpacity={0.12} />
+                            <stop offset="100%" stopColor="#A855F7" stopOpacity={0} />
+                          </linearGradient>
+                        </defs>
+                        <CartesianGrid stroke="rgba(0,0,0,0.06)" vertical={false} />
+                        <XAxis dataKey="month" axisLine={false} tickLine={false} tick={{ fill: 'rgba(28,28,30,0.35)', fontSize: 10, fontFamily: 'Inter' }} />
+                        <YAxis axisLine={false} tickLine={false} tick={{ fill: 'rgba(28,28,30,0.35)', fontSize: 10, fontFamily: 'Inter' }} />
+                        <Tooltip contentStyle={{ background: '#090A0F', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '12px', fontSize: '11px', color: '#fff' }} />
+                        <Area type="monotone" dataKey={membershipTab === 'Total' ? 'total' : membershipTab === 'Prospective' ? 'prospective' : 'engaged'} stroke="#D91B5C" strokeWidth={3.5} fill="url(#mb-growth-grad)" />
+                      </AreaChart>
+                    </ResponsiveContainer>
+                  </div>
+                </div>
+
+                {/* 2. Right Stacked Metric Cards */}
+                <div className="flex-1 flex flex-col gap-3 min-w-[260px]">
+                  {/* District Fund Aggregate */}
+                  <div className="p-4.5 rounded-2xl bg-white/75 border border-black/[0.08] backdrop-blur-xl shadow-sm">
+                    <div className="text-xs font-bold text-[#1C1C1E]">District Fund Aggregate</div>
+                    <div className="text-[10px] text-black/40 mb-3">Monthly accumulation, NGN</div>
+                    <div className="flex items-baseline gap-2 mb-3">
+                      <span className="text-2xl font-bold text-[#B8860B] leading-none">₦485K</span>
+                      <span className="text-[10px] text-green-600 font-semibold">▲ +8.5%</span>
+                    </div>
+                    <div className="h-30 w-full">
+                      <ResponsiveContainer width="100%" height="100%">
+                        <AreaChart data={FUND_SPARKLINE} margin={{ top: 4, right: 0, left: -20, bottom: 0 }}>
+                          <defs>
+                            <linearGradient id="mb-fund-grad" x1="0" y1="0" x2="0" y2="1">
+                              <stop offset="0%" stopColor="#D91B5C" stopOpacity={0.4} />
+                              <stop offset="100%" stopColor="#A855F7" stopOpacity={0} />
+                            </linearGradient>
+                          </defs>
+                          <CartesianGrid stroke="rgba(0,0,0,0.06)" vertical={false} />
+                          <XAxis dataKey="month" axisLine={false} tickLine={false} tick={{ fill: 'rgba(28,28,30,0.35)', fontSize: 9, fontFamily: 'Inter' }} />
+                          <Area type="monotone" dataKey="value" stroke="#D91B5C" strokeWidth={2.5} fill="url(#mb-fund-grad)" />
+                        </AreaChart>
+                      </ResponsiveContainer>
+                    </div>
+                  </div>
+
+                  {/* Engagement Score */}
+                  <div className="p-4.5 rounded-2xl bg-white/75 border border-black/[0.08] backdrop-blur-xl shadow-sm">
+                    <div className="text-xs font-bold text-[#1C1C1E]">Engagement Score</div>
+                    <div className="text-[10px] text-black/40 mb-3">Rolling 12-week avg, all clubs</div>
+                    <div className="flex items-baseline gap-2 mb-3">
+                      <span className="text-2xl font-bold text-green-600 leading-none">91 / 100</span>
+                      <span className="text-[10px] text-green-600 font-semibold">▲ +47%</span>
+                    </div>
+                    <div className="h-30 w-full">
+                      <ResponsiveContainer width="100%" height="100%">
+                        <AreaChart data={ENGAGEMENT_SPARKLINE} margin={{ top: 4, right: 0, left: -20, bottom: 0 }}>
+                          <defs>
+                            <linearGradient id="mb-eng-grad" x1="0" y1="0" x2="0" y2="1">
+                              <stop offset="0%" stopColor="#16A34A" stopOpacity={0.35} />
+                              <stop offset="100%" stopColor="#16A34A" stopOpacity={0} />
+                            </linearGradient>
+                          </defs>
+                          <CartesianGrid stroke="rgba(0,0,0,0.06)" vertical={false} />
+                          <XAxis dataKey="week" axisLine={false} tickLine={false} tick={{ fill: 'rgba(28,28,30,0.35)', fontSize: 9, fontFamily: 'Inter' }} />
+                          <Area type="monotone" dataKey="value" stroke="#16A34A" strokeWidth={2.5} fill="url(#mb-eng-grad)" />
+                        </AreaChart>
+                      </ResponsiveContainer>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Bottom Row: Lead Acquisition Trend (Left) + Impact by Category (Right) */}
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
+                {/* 1. Lead Acquisition Trend */}
+                <div className="p-5 rounded-2xl bg-white/75 border border-black/[0.08] backdrop-blur-xl shadow-sm">
+                  <div className="text-xs font-bold text-[#1C1C1E]">Lead Acquisition Trend</div>
+                  <div className="text-[10px] text-black/40 mb-3.5">Monthly prospective leads via Club Finder</div>
+                  
+                  <div className="h-40 w-full">
+                    <ResponsiveContainer width="100%" height="100%">
+                      <AreaChart data={LEAD_ACQUISITION_DATA} margin={{ top: 4, right: 0, left: -20, bottom: 0 }}>
+                        <defs>
+                          <linearGradient id="mb-leads-grad" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0%" stopColor="#0891B2" stopOpacity={0.4} />
+                            <stop offset="100%" stopColor="#0891B2" stopOpacity={0} />
+                          </linearGradient>
+                        </defs>
+                        <CartesianGrid stroke="rgba(0,0,0,0.06)" vertical={false} />
+                        <XAxis dataKey="month" axisLine={false} tickLine={false} tick={{ fill: 'rgba(28,28,30,0.35)', fontSize: 9, fontFamily: 'Inter' }} />
+                        <Area type="monotone" dataKey="leads" stroke="#0891B2" strokeWidth={2.5} fill="url(#mb-leads-grad)" />
+                      </AreaChart>
+                    </ResponsiveContainer>
+                  </div>
+                </div>
+
+                {/* 2. Impact by Category */}
+                <div className="p-5 rounded-2xl bg-white/75 border border-black/[0.08] backdrop-blur-xl shadow-sm flex flex-col justify-between">
+                  <div>
+                    <div className="text-xs font-bold text-[#1C1C1E]">Impact by Category</div>
+                    <div className="text-[10px] text-black/40 mb-4">Project distribution, all 47 clubs</div>
+                  </div>
+
+                  <div className="flex items-center gap-4">
+                    <div className="w-28 h-28 shrink-0">
+                      <ResponsiveContainer width="100%" height="100%">
+                        <PieChart>
+                          <Pie data={CATEGORY_DATA} dataKey="value" innerRadius={30} outerRadius={52} paddingAngle={2}>
+                            {CATEGORY_DATA.map((entry, index) => (
+                              <Cell key={`cell-${index}`} fill={entry.color} />
+                            ))}
+                          </Pie>
+                        </PieChart>
+                      </ResponsiveContainer>
+                    </div>
+
+                    <div className="flex-1 space-y-2">
+                      {CATEGORY_DATA.map((cat) => (
+                        <div key={cat.name} className="flex items-center gap-2">
+                          <span className="w-2 h-2 rounded-xs shrink-0" style={{ background: cat.color }} />
+                          <span className="text-[10px] text-black/60 flex-1">{cat.name}</span>
+                          <span className="text-[10px] font-bold" style={{ color: cat.color }}>{cat.value}%</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="pt-3 border-t border-black/[0.06] text-[10px] text-black/40">
+                    180+ active verified projects on District Registry
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          ) : navActive === 'Club Performance' ? (
             /* DEDICATED CLUB PERFORMANCE DEEP-DIVE VIEW */
             <div className="space-y-4 font-sans">
               <div className="text-xs text-black/40">
