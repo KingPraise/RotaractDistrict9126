@@ -53,6 +53,7 @@ export const clubsData: Club[] = [
     meetingSchedule: 'Every Sunday · 3:30 PM for 4:00 PM',
     president: 'Samson Oluwatobiloba Sharon',
     presidentAvatar: '/images/presidents/samson-oluwatobiloba-sharon.jpg',
+    presidentPhone: '+234 702 565 2468',
     coordinates: { lat: 7.4443, lng: 3.8997 },
   },
   {
@@ -95,6 +96,8 @@ export const clubsData: Club[] = [
     meetingVenue: 'Famewo Common Room (FCR) in ABH, UCH Ibadan',
     meetingSchedule: 'Every 2nd & 4th Sunday of the Month',
     president: 'Solarin Imisioluwa',
+    presidentAvatar: '/images/presidents/solarin-imisioluwa.jpg',
+    presidentPhone: '+234 810 571 8463',
     coordinates: { lat: 7.4022, lng: 3.9048 },
   },
   {
@@ -307,6 +310,7 @@ export const clubsData: Club[] = [
     meetingSchedule: 'Every 2nd & 4th Sunday · 8:00 PM',
     president: 'Ifedolapo Iyanda',
     presidentAvatar: '/images/presidents/ifedolapo-iyanda.jpg',
+    presidentPhone: '+234 903 852 0700',
     coordinates: { lat: 7.3775, lng: 3.9470 },
   },
   {
