@@ -33,7 +33,9 @@ export const clubsData: Club[] = [
     region: 'South-West',
     meetingVenue: 'Rotary Center, Iyaganku GRA, Ring Road, Ibadan',
     meetingSchedule: 'Every 1st & 3rd Sunday · 4:00 PM',
-    president: 'Adeyemi Johnson',
+    president: 'Peleyeju Timileyin Omotayo',
+    presidentAvatar: '/images/presidents/peleyeju-timileyin-omotayo.jpg',
+    presidentPhone: '+234 800 912 6020',
     coordinates: { lat: 7.3775, lng: 3.8670 },
   },
   {

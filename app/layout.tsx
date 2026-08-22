@@ -60,7 +60,7 @@ export const metadata: Metadata = {
       'Uniting 77 chartered clubs and 700+ young leaders across Oyo, Osun, Ondo, Ekiti, Kwara, Kogi, and Niger states for humanitarian service, youth leadership, and community transformation.',
     images: [
       {
-        url: '/opengraph-image',
+        url: '/images/rotaract-logo.png',
         width: 1200,
         height: 630,
         alt: 'Rotaract District 9126 Leadership & Community Impact',
@@ -74,7 +74,7 @@ export const metadata: Metadata = {
     title: 'Rotaract District 9126 | Leadership, Fellowship & Service across 7 States',
     description:
       'Uniting 77 chartered clubs and 700+ young leaders across 7 Nigerian states for impactful community projects and leadership development.',
-    images: ['/opengraph-image'],
+    images: ['/images/rotaract-logo.png'],
   },
   icons: {
     icon: [
