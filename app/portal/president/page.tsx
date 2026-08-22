@@ -1,7 +1,8 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { 
   Users, 
   CheckCircle2, 
@@ -29,8 +30,14 @@ import {
   TrendingUp,
   MapPin,
   Save,
-  Plus
+  Plus,
+  Lock,
+  Sparkles,
+  Award,
+  Target,
+  Briefcase
 } from 'lucide-react';
+import { getCurrentUser } from '@/lib/services/auth-service';
 
 interface MemberRecord {
   id: string;
@@ -60,7 +67,7 @@ interface FinanceTransaction {
   date: string;
   description: string;
   member: string;
-  category: 'Annual Dues' | 'Project Levy' | 'Induction Fee' | 'Meeting Refreshment';
+  category: 'Annual Dues' | 'Project Levy' | 'Induction Fee' | 'Donation';
   amount: number;
   status: 'Completed' | 'Pending' | 'Remitted';
 }
@@ -68,201 +75,124 @@ interface FinanceTransaction {
 const INITIAL_MEMBERS: MemberRecord[] = [
   {
     id: '1',
-    name: 'Sola Adebayo',
-    email: 's.adebayo@rotaract9126.org',
-    role: 'Vice President',
-    attendance: 91,
+    name: 'Adebayo Sodiq Babatunde',
+    email: 'a.babatunde@rotaract9126.org',
+    role: 'President',
+    attendance: 100,
     duesStatus: 'cleared',
-    clearedDate: 'Jul 3',
-    lastActive: 'Yesterday',
-    avatar: 'https://images.unsplash.com/photo-1573497161161-c3e73707e25c?w=80&h=80&fit=crop&auto=format'
+    clearedDate: 'Jul 1',
+    lastActive: 'Online',
+    avatar: '/images/leaders/drr-adebayo-sodiq.jpg'
   },
   {
     id: '2',
-    name: 'Seun Adegoke',
-    email: 's.adegoke@rotaract9126.org',
-    role: 'Member',
-    attendance: 90,
+    name: 'Sola Adebayo',
+    email: 's.adebayo@rotaract9126.org',
+    role: 'Vice President',
+    attendance: 92,
     duesStatus: 'cleared',
-    clearedDate: 'Jul 7',
-    lastActive: 'Yesterday',
-    avatar: 'https://images.unsplash.com/photo-1748290880596-2a2c80530bc0?w=80&h=80&fit=crop&auto=format'
+    clearedDate: 'Jul 3',
+    lastActive: 'Today',
+    avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=80&h=80&fit=crop&auto=format'
   },
   {
     id: '3',
-    name: 'Folake Adewusi',
-    email: 'f.adewusi@rotaract9126.org',
-    role: 'Member',
-    attendance: 83,
-    duesStatus: 'overdue',
-    clearedDate: '—',
-    lastActive: '3 days ago',
-    avatar: 'https://images.unsplash.com/photo-1573497491207-618cc224f243?w=80&h=80&fit=crop&auto=format'
-  },
-  {
-    id: '4',
-    name: 'Tunde Adeyemi',
-    email: 't.adeyemi@rotaract9126.org',
-    role: 'President',
-    attendance: 97,
-    duesStatus: 'cleared',
-    clearedDate: 'Jul 1',
-    lastActive: 'Today',
-    avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop&auto=format'
-  },
-  {
-    id: '5',
-    name: 'Damilola Afolabi',
-    email: 'd.afolabi@rotaract9126.org',
-    role: 'Member',
-    attendance: 87,
-    duesStatus: 'cleared',
-    clearedDate: 'Jul 9',
-    lastActive: '2 days ago',
-    avatar: 'https://images.unsplash.com/photo-1592188657297-c6473609bbd2?w=80&h=80&fit=crop&auto=format'
-  },
-  {
-    id: '6',
-    name: 'Bimbo Ajayi',
-    email: 'b.ajayi@rotaract9126.org',
-    role: 'Member',
-    attendance: 74,
-    duesStatus: 'pending',
-    clearedDate: '—',
-    lastActive: '5 days ago',
-    avatar: 'https://images.unsplash.com/photo-1527203561188-dae1bc1a417f?w=80&h=80&fit=crop&auto=format'
-  },
-  {
-    id: '7',
-    name: 'Gbemisola Awoyemi',
-    email: 'g.awoyemi@rotaract9126.org',
-    role: 'Director',
-    attendance: 84,
-    duesStatus: 'pending',
-    clearedDate: '—',
-    lastActive: '3 days ago',
-    avatar: 'https://images.unsplash.com/photo-1609371497456-3a55a205d5eb?w=80&h=80&fit=crop&auto=format'
-  },
-  {
-    id: '8',
-    name: 'Yetunde Balogun',
-    email: 'y.balogun@rotaract9126.org',
-    role: 'Director',
-    attendance: 93,
-    duesStatus: 'cleared',
-    clearedDate: 'Jul 4',
-    lastActive: 'Yesterday',
-    avatar: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=80&h=80&fit=crop&auto=format'
-  },
-  {
-    id: '9',
     name: 'Kayode Faleye',
     email: 'k.faleye@rotaract9126.org',
     role: 'Secretary',
     attendance: 88,
+    duesStatus: 'pending',
+    clearedDate: '—',
+    lastActive: 'Yesterday',
+    avatar: 'https://images.unsplash.com/photo-1629145810320-aec9e63dd798?w=80&h=80&fit=crop&auto=format'
+  },
+  {
+    id: '4',
+    name: 'Yetunde Balogun',
+    email: 'y.balogun@rotaract9126.org',
+    role: 'Director',
+    attendance: 96,
     duesStatus: 'cleared',
     clearedDate: 'Jul 5',
+    lastActive: 'Today',
+    avatar: 'https://images.unsplash.com/photo-1650490323009-96fc950a959c?w=80&h=80&fit=crop&auto=format'
+  },
+  {
+    id: '5',
+    name: 'Gbemisola Awoyemi',
+    email: 'g.awoyemi@rotaract9126.org',
+    role: 'Director',
+    attendance: 84,
+    duesStatus: 'cleared',
+    clearedDate: 'Jul 4',
+    lastActive: '3 days ago',
+    avatar: 'https://images.unsplash.com/photo-1614023342667-6f060e9d1e04?w=80&h=80&fit=crop&auto=format'
+  },
+  {
+    id: '6',
+    name: 'Victor Adeleke',
+    email: 'v.adeleke@rotaract9126.org',
+    role: 'Member',
+    attendance: 78,
+    duesStatus: 'cleared',
+    clearedDate: 'Jul 10',
     lastActive: '2 days ago',
-    avatar: 'https://images.unsplash.com/photo-1631824925667-28632e135463?w=80&h=80&fit=crop&auto=format'
+    avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop&auto=format'
+  },
+  {
+    id: '7',
+    name: 'Damilola Ajayi',
+    email: 'd.ajayi@rotaract9126.org',
+    role: 'Member',
+    attendance: 70,
+    duesStatus: 'pending',
+    clearedDate: '—',
+    lastActive: '5 days ago',
+    avatar: 'https://images.unsplash.com/photo-1628157582853-a796fa650a6a?w=80&h=80&fit=crop&auto=format'
+  },
+  {
+    id: '8',
+    name: 'Chukwuemeka Obi',
+    email: 'c.obi@rotaract9126.org',
+    role: 'Member',
+    attendance: 82,
+    duesStatus: 'cleared',
+    clearedDate: 'Jul 8',
+    lastActive: 'Today',
+    avatar: 'https://images.unsplash.com/photo-1707343843437-caacff5cfa74?w=80&h=80&fit=crop&auto=format'
+  },
+  {
+    id: '9',
+    name: 'Zainab Alabi',
+    email: 'z.alabi@rotaract9126.org',
+    role: 'Member',
+    attendance: 90,
+    duesStatus: 'cleared',
+    clearedDate: 'Jul 2',
+    lastActive: 'Yesterday',
+    avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=80&h=80&fit=crop&auto=format'
   },
   {
     id: '10',
-    name: 'Rotimi Fasanya',
-    email: 'r.fasanya@rotaract9126.org',
+    name: 'Tunde Bakare',
+    email: 't.bakare@rotaract9126.org',
     role: 'Member',
-    attendance: 81,
+    attendance: 75,
     duesStatus: 'cleared',
-    clearedDate: 'Jul 10',
+    clearedDate: 'Jul 15',
     lastActive: '4 days ago',
-    avatar: 'https://images.unsplash.com/photo-1646658104783-2eec2433c1d1?w=80&h=80&fit=crop&auto=format'
+    avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=80&h=80&fit=crop&auto=format'
   },
   {
     id: '11',
-    name: 'Omotola Idowu',
-    email: 'o.idowu@rotaract9126.org',
+    name: 'Maryam Hassan',
+    email: 'm.hassan@rotaract9126.org',
     role: 'Member',
-    attendance: 78,
-    duesStatus: 'pending',
-    clearedDate: '—',
-    lastActive: '1 week ago',
-    avatar: 'https://images.unsplash.com/photo-1698650427325-d9c575dd6109?w=80&h=80&fit=crop&auto=format'
-  },
-  {
-    id: '12',
-    name: 'Rasheed Lawal',
-    email: 'r.lawal@rotaract9126.org',
-    role: 'Member',
-    attendance: 68,
+    attendance: 58,
     duesStatus: 'overdue',
     clearedDate: '—',
     lastActive: '1 week ago',
-    avatar: 'https://images.unsplash.com/photo-1784651989032-b55410f21e52?w=80&h=80&fit=crop&auto=format'
-  },
-  {
-    id: '13',
-    name: 'Adunola Makinde',
-    email: 'a.makinde@rotaract9126.org',
-    role: 'Member',
-    attendance: 72,
-    duesStatus: 'cleared',
-    clearedDate: 'Jul 12',
-    lastActive: '5 days ago',
-    avatar: 'https://images.unsplash.com/photo-1598547461182-45d03f6661e4?w=80&h=80&fit=crop&auto=format'
-  },
-  {
-    id: '14',
-    name: 'Kemi Ogundimu',
-    email: 'k.ogundimu@rotaract9126.org',
-    role: 'Member',
-    attendance: 65,
-    duesStatus: 'pending',
-    clearedDate: '—',
-    lastActive: '2 weeks ago',
-    avatar: 'https://images.unsplash.com/photo-1632765854612-9b02b6ec2b15?w=80&h=80&fit=crop&auto=format'
-  },
-  {
-    id: '15',
-    name: 'Taiwo Olabisi',
-    email: 't.olabisi@rotaract9126.org',
-    role: 'Member',
-    attendance: 60,
-    duesStatus: 'overdue',
-    clearedDate: '—',
-    lastActive: '2 weeks ago',
-    avatar: 'https://images.unsplash.com/photo-1598803784715-34ae74c751a3?w=80&h=80&fit=crop&auto=format'
-  },
-  {
-    id: '16',
-    name: 'Funmi Olatunde',
-    email: 'f.olatunde@rotaract9126.org',
-    role: 'Treasurer',
-    attendance: 95,
-    duesStatus: 'cleared',
-    clearedDate: 'Jul 2',
-    lastActive: 'Today',
-    avatar: 'https://images.unsplash.com/photo-1748290880596-2a2c80530bc0?w=80&h=80&fit=crop&auto=format'
-  },
-  {
-    id: '17',
-    name: 'Babatunde Olawale',
-    email: 'b.olawale@rotaract9126.org',
-    role: 'Director',
-    attendance: 85,
-    duesStatus: 'cleared',
-    clearedDate: 'Jul 6',
-    lastActive: 'Today',
-    avatar: 'https://images.unsplash.com/photo-1617440431587-138ca5c563ec?w=80&h=80&fit=crop&auto=format'
-  },
-  {
-    id: '18',
-    name: 'Lanre Oyelaran',
-    email: 'l.oyelaran@rotaract9126.org',
-    role: 'Member',
-    attendance: 76,
-    duesStatus: 'pending',
-    clearedDate: '—',
-    lastActive: '3 days ago',
-    avatar: 'https://images.unsplash.com/photo-1650490323009-96fc950a959c?w=80&h=80&fit=crop&auto=format'
+    avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=80&h=80&fit=crop&auto=format'
   }
 ];
 
@@ -278,16 +208,6 @@ const INITIAL_PROSPECTS: ProspectLead[] = [
     notes: 'Interested in Community Health outreaches and youth leadership.'
   },
   {
-    id: 'P2',
-    name: 'Amina Bello',
-    email: 'amina.bello@techcorp.ng',
-    phone: '+234 809 112 3344',
-    source: '/clubs',
-    date: 'Aug 16, 2026',
-    stage: 'intake',
-    notes: 'Referred by Rtr. Sola Adebayo. Brand designer.'
-  },
-  {
     id: 'P3',
     name: 'Emmanuel Okafor',
     email: 'e.okafor@lawpartners.ng',
@@ -299,81 +219,88 @@ const INITIAL_PROSPECTS: ProspectLead[] = [
   },
   {
     id: 'P4',
-    name: 'Zainab Ibrahim',
-    email: 'zainab.ibrahim@unilorin.edu.ng',
-    phone: '+234 805 678 9012',
+    name: 'Blessing Adeyemo',
+    email: 'b.adeyemo@biomed.com',
+    phone: '+234 814 555 6677',
     source: '/clubs',
     date: 'Aug 04, 2026',
-    stage: 'orientation',
-    notes: 'Completed Rotary 101 workshop with high engagement.'
-  },
-  {
-    id: 'P5',
-    name: 'Victor Adeleke',
-    email: 'victor.adeleke@medicare.ng',
-    phone: '+234 814 556 7788',
-    source: '/join',
-    date: 'Jul 28, 2026',
     stage: 'induction_ready',
-    notes: 'Dues paid, 4-way test approved. Ready for September induction.'
+    notes: 'Completed 4-week orientation curriculum. Dues remittance verified.'
   }
 ];
 
 const INITIAL_FINANCES: FinanceTransaction[] = [
   {
     id: 'TXN-9126-101',
-    date: 'Aug 18, 2026',
-    description: 'Annual District & Club Dues',
-    member: 'Tunde Adeyemi',
+    date: 'Aug 17, 2026',
+    description: 'Annual Club Dues (2026/2027 Season)',
+    member: 'Adebayo Sodiq Babatunde',
     category: 'Annual Dues',
-    amount: 7500,
+    amount: 12000,
     status: 'Completed'
   },
   {
     id: 'TXN-9126-102',
     date: 'Aug 15, 2026',
-    description: 'Annual District & Club Dues',
+    description: 'Annual Club Dues (2026/2027 Season)',
     member: 'Sola Adebayo',
     category: 'Annual Dues',
-    amount: 7500,
+    amount: 12000,
     status: 'Completed'
   },
   {
     id: 'TXN-9126-103',
-    date: 'Aug 14, 2026',
-    description: 'Q3 Maternal Health Outreach Levy',
-    member: 'General Assessment (14 Members)',
+    date: 'Aug 12, 2026',
+    description: 'District Health Outreach Project Levy',
+    member: 'Yetunde Balogun',
     category: 'Project Levy',
-    amount: 35000,
+    amount: 5000,
     status: 'Completed'
-  },
-  {
-    id: 'TXN-9126-104',
-    date: 'Aug 10, 2026',
-    description: 'New Member Induction Kit & Pin',
-    member: 'Victor Adeleke',
-    category: 'Induction Fee',
-    amount: 15000,
-    status: 'Completed'
-  },
-  {
-    id: 'TXN-9126-105',
-    date: 'Aug 02, 2026',
-    description: 'District 9126 Capitation Remittance (Q1)',
-    member: 'District Secretariat',
-    category: 'Annual Dues',
-    amount: 60000,
-    status: 'Remitted'
   }
 ];
 
 export default function PresidentConsolePage() {
+  const router = useRouter();
+  const [isAuthorized, setIsAuthorized] = useState<boolean | null>(null);
+  const [authChecked, setAuthChecked] = useState(false);
+
   const [members, setMembers] = useState<MemberRecord[]>(INITIAL_MEMBERS);
   const [activeTab, setActiveTab] = useState<'roster' | 'attendance' | 'finances' | 'pipeline' | 'settings'>('roster');
   const [searchQuery, setSearchQuery] = useState('');
   const [roleFilter, setRoleFilter] = useState('all');
   const [duesFilter, setDuesFilter] = useState('all');
   const [selectedMembers, setSelectedMembers] = useState<string[]>([]);
+
+  // Modals state
+  const [isAddMemberModalOpen, setIsAddMemberModalOpen] = useState(false);
+  const [isExecutiveHqModalOpen, setIsExecutiveHqModalOpen] = useState(false);
+
+  // New Member Form State
+  const [newMemberForm, setNewMemberForm] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    role: 'Member' as MemberRecord['role'],
+    duesStatus: 'cleared' as MemberRecord['duesStatus']
+  });
+
+  // Verify President / Admin authorization
+  useEffect(() => {
+    const user = getCurrentUser();
+    if (!user) {
+      setIsAuthorized(false);
+      setAuthChecked(true);
+      return;
+    }
+
+    const hasPresidentAccess = 
+      user.role === 'club_president' || 
+      user.role === 'district_admin' || 
+      (user as any).occupation?.toLowerCase().includes('president');
+
+    setIsAuthorized(hasPresidentAccess);
+    setAuthChecked(true);
+  }, []);
 
   // Attendance Tab State
   const [attendanceRoll, setAttendanceRoll] = useState<Record<string, 'present' | 'absent' | 'excused'>>({
@@ -387,14 +314,7 @@ export default function PresidentConsolePage() {
     '8': 'present',
     '9': 'present',
     '10': 'present',
-    '11': 'absent',
-    '12': 'absent',
-    '13': 'present',
-    '14': 'excused',
-    '15': 'absent',
-    '16': 'present',
-    '17': 'present',
-    '18': 'present'
+    '11': 'absent'
   });
 
   // Pipeline State
@@ -416,6 +336,37 @@ export default function PresidentConsolePage() {
     { role: 'Director of Club Administration', name: 'Babatunde Olawale', email: 'b.olawale@rotaract9126.org' },
     { role: 'Director of Membership', name: 'Gbemisola Awoyemi', email: 'g.awoyemi@rotaract9126.org' }
   ]);
+
+  // Handle Add Member submit
+  const handleAddMember = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newMemberForm.name || !newMemberForm.email) {
+      alert('Please fill in member name and email');
+      return;
+    }
+
+    const newRecord: MemberRecord = {
+      id: String(members.length + 1),
+      name: newMemberForm.name,
+      email: newMemberForm.email,
+      role: newMemberForm.role,
+      attendance: 100,
+      duesStatus: newMemberForm.duesStatus,
+      clearedDate: newMemberForm.duesStatus === 'cleared' ? 'Today' : '—',
+      lastActive: 'Just registered',
+      avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=80&h=80&fit=crop&auto=format'
+    };
+
+    setMembers(prev => [newRecord, ...prev]);
+    setIsAddMemberModalOpen(false);
+    setNewMemberForm({
+      name: '',
+      email: '',
+      phone: '',
+      role: 'Member',
+      duesStatus: 'cleared'
+    });
+  };
 
   // Toggle single member selection
   const toggleSelectMember = (id: string) => {
@@ -478,6 +429,37 @@ export default function PresidentConsolePage() {
   const presentAttendeesCount = Object.values(attendanceRoll).filter(v => v === 'present').length;
   const attendanceRatePercentage = Math.round((presentAttendeesCount / totalCount) * 100);
 
+  // Access Denied Screen for non-presidents
+  if (authChecked && isAuthorized === false) {
+    return (
+      <div className="min-h-screen bg-[#090A0F] text-[#ECEEF5] font-sans flex items-center justify-center p-6">
+        <div className="max-w-md w-full p-8 rounded-3xl bg-white/[0.04] border border-white/10 backdrop-blur-2xl text-center space-y-5 shadow-2xl">
+          <div className="w-16 h-16 rounded-2xl bg-[#EF4444]/10 border border-[#EF4444]/25 text-[#EF4444] flex items-center justify-center mx-auto">
+            <Lock size={28} />
+          </div>
+          <h2 className="text-2xl font-black text-white">Access Restricted</h2>
+          <p className="text-sm text-white/60 leading-relaxed">
+            The <strong>President Management Console</strong> is exclusively accessible to verified <strong>Club Presidents</strong> and District Executive Administrators.
+          </p>
+          <div className="pt-2 flex flex-col gap-3">
+            <Link
+              href="/portal/dashboard"
+              className="w-full py-3 rounded-xl bg-[#981132] hover:bg-[#A70C43] text-white text-xs font-bold transition-colors shadow-lg"
+            >
+              Return to Member Dashboard
+            </Link>
+            <Link
+              href="/login"
+              className="w-full py-3 rounded-xl bg-white/[0.05] hover:bg-white/10 text-white/70 hover:text-white text-xs font-semibold transition-colors border border-white/10"
+            >
+              Switch Account
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-[#090A0F] text-[#ECEEF5] font-sans relative overflow-x-hidden selection:bg-[#D91B5C] selection:text-white">
       {/* Background Gradients */}
@@ -515,13 +497,13 @@ export default function PresidentConsolePage() {
             <Star fill="#F7A81B" size={11}/> Club President
           </div>
           <button
-            onClick={() => alert('Executive HQ Opened')}
+            onClick={() => setIsExecutiveHqModalOpen(true)}
             className="hidden sm:flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#4361EE]/10 hover:bg-[#4361EE]/20 border border-[#4361EE]/25 text-[#4361EE] text-xs font-semibold transition-colors cursor-pointer"
           >
             <BarChart2 size={12}/> Executive HQ
           </button>
           <button
-            onClick={() => alert('Add Member modal trigger')}
+            onClick={() => setIsAddMemberModalOpen(true)}
             className="flex items-center pl-4 pr-0 h-9 rounded-full bg-gradient-to-r from-[#D91B5C] to-[#7C3AED] text-white text-xs font-bold shadow-[0_0_20px_rgba(217,27,92,0.25)] hover:opacity-95 transition-all overflow-hidden cursor-pointer"
           >
             <span className="mr-3">Add Member</span>
@@ -534,57 +516,58 @@ export default function PresidentConsolePage() {
 
       {/* Main Container */}
       <main className="relative z-10 max-w-[1400px] mx-auto px-7 py-6">
-        {/* Metric Cards Bar */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-6">
+        {/* Metric Cards Bar - With Generous Padding & Visual Breathing Room */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 mb-8">
           {/* Total members */}
-          <div className="p-4.5 rounded-2xl bg-white/[0.04] border border-white/[0.07] backdrop-blur-xl shadow-lg">
-            <div className="text-[10px] font-semibold text-[#ECEEF5]/40 tracking-wider uppercase mb-2.5">
+          <div className="p-6 sm:p-7 rounded-2xl bg-white/[0.04] border border-white/[0.07] backdrop-blur-xl shadow-lg flex flex-col justify-between">
+            <div className="text-[11px] font-bold text-[#ECEEF5]/50 tracking-[0.14em] uppercase mb-3">
               Total members
             </div>
-            <div className="text-[26px] font-extrabold leading-none bg-gradient-to-r from-[#D91B5C] to-[#7C3AED] bg-clip-text text-transparent">
+            <div className="text-3xl sm:text-4xl font-black leading-none bg-gradient-to-r from-[#D91B5C] to-[#7C3AED] bg-clip-text text-transparent my-1">
               {totalCount}
             </div>
-            <div className="text-[10px] text-[#ECEEF5]/50 mt-1.5">
+            <div className="text-xs text-[#ECEEF5]/50 mt-2 flex items-center gap-1.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#22C55E]" />
               16 active on projects
             </div>
           </div>
 
           {/* Dues cleared */}
-          <div className="p-4.5 rounded-2xl bg-white/[0.04] border border-white/[0.07] backdrop-blur-xl shadow-lg">
-            <div className="text-[10px] font-semibold text-[#ECEEF5]/40 tracking-wider uppercase mb-2.5">
+          <div className="p-6 sm:p-7 rounded-2xl bg-white/[0.04] border border-white/[0.07] backdrop-blur-xl shadow-lg flex flex-col justify-between">
+            <div className="text-[11px] font-bold text-[#ECEEF5]/50 tracking-[0.14em] uppercase mb-3">
               Dues cleared
             </div>
-            <div className="text-[26px] font-extrabold leading-none text-[#D91B5C]">
+            <div className="text-3xl sm:text-4xl font-black leading-none text-[#D91B5C] my-1">
               {duesClearedPercentage}%
             </div>
-            <div className="text-[10px] text-[#ECEEF5]/50 mt-1.5">
-              {clearedCount} / {totalCount} members
+            <div className="text-xs text-[#ECEEF5]/50 mt-2">
+              {clearedCount} / {totalCount} members cleared
             </div>
           </div>
 
           {/* Avg attendance */}
-          <div className="p-4.5 rounded-2xl bg-white/[0.04] border border-white/[0.07] backdrop-blur-xl shadow-lg">
-            <div className="text-[10px] font-semibold text-[#ECEEF5]/40 tracking-wider uppercase mb-2.5">
+          <div className="p-6 sm:p-7 rounded-2xl bg-white/[0.04] border border-white/[0.07] backdrop-blur-xl shadow-lg flex flex-col justify-between">
+            <div className="text-[11px] font-bold text-[#ECEEF5]/50 tracking-[0.14em] uppercase mb-3">
               Avg attendance
             </div>
-            <div className="text-[26px] font-extrabold leading-none text-[#22C55E]">
+            <div className="text-3xl sm:text-4xl font-black leading-none text-[#22C55E] my-1">
               {attendanceRatePercentage}%
             </div>
-            <div className="text-[10px] text-[#ECEEF5]/50 mt-1.5">
-              {presentAttendeesCount} Present at last meeting
+            <div className="text-xs text-[#ECEEF5]/50 mt-2">
+              {presentAttendeesCount} present at last meeting
             </div>
           </div>
 
           {/* Overdue payments */}
-          <div className="p-4.5 rounded-2xl bg-white/[0.04] border border-white/[0.07] backdrop-blur-xl shadow-lg">
-            <div className="text-[10px] font-semibold text-[#ECEEF5]/40 tracking-wider uppercase mb-2.5">
+          <div className="p-6 sm:p-7 rounded-2xl bg-white/[0.04] border border-white/[0.07] backdrop-blur-xl shadow-lg flex flex-col justify-between">
+            <div className="text-[11px] font-bold text-[#ECEEF5]/50 tracking-[0.14em] uppercase mb-3">
               Overdue payments
             </div>
-            <div className="text-[26px] font-extrabold leading-none text-[#EF4444]">
+            <div className="text-3xl sm:text-4xl font-black leading-none text-[#EF4444] my-1">
               {overdueCount}
             </div>
-            <div className="text-[10px] text-[#ECEEF5]/50 mt-1.5">
-              {overdueCount} need follow-up
+            <div className="text-xs text-[#EF4444]/80 mt-2">
+              {overdueCount} member{overdueCount === 1 ? '' : 's'} need follow-up
             </div>
           </div>
         </div>
@@ -1374,6 +1357,214 @@ export default function PresidentConsolePage() {
           </div>
         )}
       </main>
+
+      {/* ================= ADD MEMBER MODAL ================= */}
+      {isAddMemberModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fadeIn">
+          <div className="relative w-full max-w-lg rounded-3xl bg-[#0F121C] border border-white/10 p-6 sm:p-8 shadow-2xl space-y-6 text-[#ECEEF5]">
+            <div className="flex items-center justify-between border-b border-white/10 pb-4">
+              <div className="flex items-center gap-2.5">
+                <div className="p-2 rounded-xl bg-gradient-to-r from-[#D91B5C] to-[#7C3AED] text-white">
+                  <UserPlus size={18} />
+                </div>
+                <div>
+                  <h3 className="text-base sm:text-lg font-black text-white">Induct New Club Member</h3>
+                  <p className="text-[11px] text-[#ECEEF5]/50">Direct club register roster onboarding</p>
+                </div>
+              </div>
+              <button
+                onClick={() => setIsAddMemberModalOpen(false)}
+                className="p-2 rounded-full hover:bg-white/10 text-[#ECEEF5]/60 hover:text-white transition-colors"
+              >
+                <X size={18} />
+              </button>
+            </div>
+
+            <form onSubmit={handleAddMember} className="space-y-4 font-sans">
+              <div>
+                <label className="text-[10px] font-bold uppercase tracking-wider text-[#ECEEF5]/60 mb-1.5 block">
+                  Full Name
+                </label>
+                <input
+                  type="text"
+                  required
+                  placeholder="e.g. Oladimeji Victor Adeyemi"
+                  value={newMemberForm.name}
+                  onChange={(e) => setNewMemberForm(prev => ({ ...prev, name: e.target.value }))}
+                  className="w-full px-4 py-2.5 rounded-xl bg-white/[0.05] border border-white/10 text-xs text-white placeholder:text-white/30 outline-none focus:border-[#D91B5C] transition-all"
+                />
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="text-[10px] font-bold uppercase tracking-wider text-[#ECEEF5]/60 mb-1.5 block">
+                    Email Address
+                  </label>
+                  <input
+                    type="email"
+                    required
+                    placeholder="v.adeyemi@rotaract9126.org"
+                    value={newMemberForm.email}
+                    onChange={(e) => setNewMemberForm(prev => ({ ...prev, email: e.target.value }))}
+                    className="w-full px-4 py-2.5 rounded-xl bg-white/[0.05] border border-white/10 text-xs text-white placeholder:text-white/30 outline-none focus:border-[#D91B5C] transition-all"
+                  />
+                </div>
+
+                <div>
+                  <label className="text-[10px] font-bold uppercase tracking-wider text-[#ECEEF5]/60 mb-1.5 block">
+                    Phone Number
+                  </label>
+                  <input
+                    type="tel"
+                    placeholder="+234 800 000 0000"
+                    value={newMemberForm.phone}
+                    onChange={(e) => setNewMemberForm(prev => ({ ...prev, phone: e.target.value }))}
+                    className="w-full px-4 py-2.5 rounded-xl bg-white/[0.05] border border-white/10 text-xs text-white placeholder:text-white/30 outline-none focus:border-[#D91B5C] transition-all"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="text-[10px] font-bold uppercase tracking-wider text-[#ECEEF5]/60 mb-1.5 block">
+                    Assigned Role
+                  </label>
+                  <select
+                    value={newMemberForm.role}
+                    onChange={(e) => setNewMemberForm(prev => ({ ...prev, role: e.target.value as any }))}
+                    className="w-full px-4 py-2.5 rounded-xl bg-[#090A0F] border border-white/10 text-xs text-white outline-none focus:border-[#D91B5C] transition-all"
+                  >
+                    <option value="Member">General Member</option>
+                    <option value="Director">Board Director</option>
+                    <option value="Treasurer">Club Treasurer</option>
+                    <option value="Secretary">Club Secretary</option>
+                    <option value="Vice President">Vice President</option>
+                    <option value="President">Club President</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="text-[10px] font-bold uppercase tracking-wider text-[#ECEEF5]/60 mb-1.5 block">
+                    Initial Dues Status
+                  </label>
+                  <select
+                    value={newMemberForm.duesStatus}
+                    onChange={(e) => setNewMemberForm(prev => ({ ...prev, duesStatus: e.target.value as any }))}
+                    className="w-full px-4 py-2.5 rounded-xl bg-[#090A0F] border border-white/10 text-xs text-white outline-none focus:border-[#D91B5C] transition-all"
+                  >
+                    <option value="cleared">Cleared (Fully Paid)</option>
+                    <option value="pending">Pending Payment</option>
+                    <option value="overdue">Overdue / Arrears</option>
+                  </select>
+                </div>
+              </div>
+
+              <div className="pt-4 border-t border-white/10 flex items-center justify-end gap-3">
+                <button
+                  type="button"
+                  onClick={() => setIsAddMemberModalOpen(false)}
+                  className="px-4 py-2 rounded-xl bg-white/[0.05] hover:bg-white/10 text-white/70 hover:text-white text-xs font-semibold transition-all"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-gradient-to-r from-[#D91B5C] to-[#7C3AED] hover:opacity-95 text-white text-xs font-bold shadow-[0_0_20px_rgba(217,27,92,0.3)] transition-all cursor-pointer"
+                >
+                  <UserPlus size={14} /> Complete Induction
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* ================= EXECUTIVE HQ MODAL ================= */}
+      {isExecutiveHqModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fadeIn">
+          <div className="relative w-full max-w-2xl rounded-3xl bg-[#0F121C] border border-white/10 p-6 sm:p-8 shadow-2xl space-y-6 text-[#ECEEF5]">
+            <div className="flex items-center justify-between border-b border-white/10 pb-4">
+              <div className="flex items-center gap-2.5">
+                <div className="p-2.5 rounded-xl bg-[#4361EE]/20 text-[#4361EE] border border-[#4361EE]/30">
+                  <BarChart2 size={20} />
+                </div>
+                <div>
+                  <h3 className="text-lg font-black text-white flex items-center gap-2">
+                    Executive HQ Strategic Centre
+                    <span className="px-2 py-0.5 rounded-full text-[9px] font-black uppercase bg-[#F7A81B]/15 text-[#F7A81B] border border-[#F7A81B]/30">
+                      Tier 2 Sovereign
+                    </span>
+                  </h3>
+                  <p className="text-[11px] text-[#ECEEF5]/50">Rotaract Club of Ibadan Central · District 9126</p>
+                </div>
+              </div>
+              <button
+                onClick={() => setIsExecutiveHqModalOpen(false)}
+                className="p-2 rounded-full hover:bg-white/10 text-[#ECEEF5]/60 hover:text-white transition-colors"
+              >
+                <X size={18} />
+              </button>
+            </div>
+
+            {/* Strategic KPI Matrix */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <div className="p-4 rounded-2xl bg-white/[0.03] border border-white/[0.07]">
+                <div className="flex items-center gap-2 text-xs font-bold text-[#4361EE] mb-1">
+                  <Award size={14} /> Citation Goal
+                </div>
+                <div className="text-xl font-black text-white">85% Achieved</div>
+                <div className="text-[10px] text-white/50 mt-1">17 / 20 District Goals Completed</div>
+              </div>
+
+              <div className="p-4 rounded-2xl bg-white/[0.03] border border-white/[0.07]">
+                <div className="flex items-center gap-2 text-xs font-bold text-[#22C55E] mb-1">
+                  <Target size={14} /> Health Outreach
+                </div>
+                <div className="text-xl font-black text-white">₦240,000</div>
+                <div className="text-[10px] text-white/50 mt-1">Raised for Maternal Outreach</div>
+              </div>
+
+              <div className="p-4 rounded-2xl bg-white/[0.03] border border-white/[0.07]">
+                <div className="flex items-center gap-2 text-xs font-bold text-[#D91B5C] mb-1">
+                  <Briefcase size={14} /> Capitation
+                </div>
+                <div className="text-xl font-black text-white">Q1 Remitted</div>
+                <div className="text-[10px] text-white/50 mt-1">District Secretariat Cleared</div>
+              </div>
+            </div>
+
+            {/* Executive Directives */}
+            <div className="p-4.5 rounded-2xl bg-white/[0.02] border border-white/[0.06] space-y-2.5">
+              <div className="text-xs font-black uppercase tracking-wider text-white/70">
+                Presidential Directives & Action Items
+              </div>
+              <ul className="text-xs text-white/70 space-y-2">
+                <li className="flex items-center gap-2">
+                  <CheckCircle2 size={14} className="text-[#22C55E] shrink-0" />
+                  <span>Verify member ID cards with District Secretariat by end of month.</span>
+                </li>
+                <li className="flex items-center gap-2">
+                  <CheckCircle2 size={14} className="text-[#22C55E] shrink-0" />
+                  <span>Finalize orientation schedule for 4 newly enrolled prospects.</span>
+                </li>
+                <li className="flex items-center gap-2">
+                  <Clock size={14} className="text-[#F7A81B] shrink-0" />
+                  <span>Submit Q2 Rotary Foundation matching grant proposal.</span>
+                </li>
+              </ul>
+            </div>
+
+            <div className="pt-2 border-t border-white/10 flex justify-end gap-3">
+              <button
+                onClick={() => setIsExecutiveHqModalOpen(false)}
+                className="px-5 py-2.5 rounded-xl bg-[#4361EE] hover:bg-[#324bcf] text-white text-xs font-bold transition-all shadow-lg"
+              >
+                Close Executive HQ
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

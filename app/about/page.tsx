@@ -236,6 +236,18 @@ const currentTeam: LeaderMember[] = [
     email: 'advisor@rotaractdistrict9126.com.ng',
     phone: '+234 800 912 6006',
     bio: '15th and final DRR of District 9125. Provides high-level strategic guidance, Rotary Foundation partnerships, and inter-district alliances.'
+  },
+  {
+    id: 'director-ict',
+    name: 'Rtr. Yusuf Mahfooz Adewale',
+    role: 'District Director of ICT & Director',
+    tooltip: 'PHF',
+    image: '/images/leaders/leader-ict-director-mafooz.jpg',
+    fallbackImage: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=480&h=580&fit=crop&auto=format',
+    dept: 'ICT & Digital Transformation',
+    email: 'ict@rotaractdistrict9126.com.ng',
+    phone: '+234 800 912 6008',
+    bio: 'District Director of ICT & Director for Rotary District 9126. Directs the district sovereign web portal, verified digital member IDs, automated portal infrastructure, and technological innovation.'
   }
 ];
 
@@ -297,7 +309,7 @@ export default function AboutPage() {
   const [selectedDept, setSelectedDept] = useState('All');
   const [selectedLeaderModal, setSelectedLeaderModal] = useState<LeaderMember | null>(null);
 
-  const departments = ['All', 'Executive Office', 'Advisory Council', 'Secretariat', 'Finance & Accounts', 'Service Projects', 'Strategy & Governance'];
+  const departments = ['All', 'Executive Office', 'ICT & Digital Transformation', 'Advisory Council', 'Secretariat', 'Finance & Accounts', 'Service Projects', 'Strategy & Governance'];
 
   const filteredTeam = useMemo(() => {
     return currentTeam.filter((member) => {

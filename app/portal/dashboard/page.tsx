@@ -344,16 +344,18 @@ export default function MemberDashboardPage() {
             </div>
           </div>
 
-          {/* Management Console CTA */}
-          <div className="pt-2">
-            <Link 
-              className="w-full flex items-center gap-2 px-3 py-2 rounded-xl bg-[#981132] text-white text-xs font-semibold shadow-md shadow-[#981132]/30 hover:bg-[#A70C43] transition-all" 
-              href="/portal/president"
-            >
-              <LayoutGrid size={14}/>
-              {!sidebarCollapsed && <span>Management Console</span>}
-            </Link>
-          </div>
+          {/* Management Console CTA (Only accessible to Club Presidents / District Admins) */}
+          {(currentUser.role === 'club_president' || currentUser.role === 'district_admin' || currentUser.occupation?.toLowerCase().includes('president')) && (
+            <div className="pt-2">
+              <Link 
+                className="w-full flex items-center gap-2 px-3 py-2 rounded-xl bg-gradient-to-r from-[#981132] to-[#7C3AED] text-white text-xs font-semibold shadow-md shadow-[#981132]/30 hover:opacity-95 transition-all" 
+                href="/portal/president"
+              >
+                <LayoutGrid size={14}/>
+                {!sidebarCollapsed && <span>President Console</span>}
+              </Link>
+            </div>
+          )}
         </nav>
 
         {/* Exec Promo Banner */}
