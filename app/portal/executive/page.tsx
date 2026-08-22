@@ -33,7 +33,12 @@ import {
   X,
   CheckSquare,
   Square,
-  Building
+  Building,
+  Download,
+  Printer,
+  Eye,
+  HeartHandshake,
+  ShieldCheck
 } from 'lucide-react';
 import { 
   AreaChart, 
@@ -388,7 +393,196 @@ export default function DistrictExecutiveDashboardPage() {
 
         {/* Scroll Content */}
         <div className="flex-1 overflow-y-auto p-6 space-y-5">
-          {navActive === 'Verification Console' ? (
+          {navActive === 'Impact Metrics' ? (
+            /* DEDICATED IMPACT METRICS SUB-VIEW */
+            <div className="space-y-4 font-sans">
+              <div className="flex items-center justify-between gap-4 flex-wrap">
+                <div>
+                  <h1 className="text-xl font-extrabold text-[#1C1C1E] tracking-tight">
+                    District Impact & Humanitarian Registry
+                  </h1>
+                  <p className="text-xs text-black/40 mt-0.5">
+                    District-wide humanitarian projects, SDG alignments, and community outreach telemetry.
+                  </p>
+                </div>
+                <button
+                  onClick={() => alert('Exporting Official Impact Registry PDF...')}
+                  className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-[#981132] text-white text-xs font-bold shadow-sm hover:opacity-95 transition-all"
+                >
+                  <Download size={13} />
+                  <span>Download Impact Report</span>
+                </button>
+              </div>
+
+              {/* 4 Impact Pillars */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+                <div className="p-4.5 rounded-2xl bg-white/75 border border-black/[0.08] backdrop-blur-xl shadow-sm">
+                  <div className="text-[10px] font-semibold text-black/40 uppercase tracking-wider mb-2">
+                    Beneficiaries Reached
+                  </div>
+                  <div className="text-[26px] font-bold text-[#1C1C1E] leading-none mb-1">
+                    42,500+
+                  </div>
+                  <div className="text-[10px] text-green-600 font-medium mt-1">
+                    ▲ +28% vs last year
+                  </div>
+                </div>
+
+                <div className="p-4.5 rounded-2xl bg-white/75 border border-black/[0.08] backdrop-blur-xl shadow-sm">
+                  <div className="text-[10px] font-semibold text-black/40 uppercase tracking-wider mb-2">
+                    Completed Outreaches
+                  </div>
+                  <div className="text-[26px] font-bold text-[#1C1C1E] leading-none mb-1">
+                    184
+                  </div>
+                  <div className="text-[10px] text-green-600 font-medium mt-1">
+                    Across 7 States
+                  </div>
+                </div>
+
+                <div className="p-4.5 rounded-2xl bg-white/75 border border-black/[0.08] backdrop-blur-xl shadow-sm">
+                  <div className="text-[10px] font-semibold text-black/40 uppercase tracking-wider mb-2">
+                    Volunteer Hours Logged
+                  </div>
+                  <div className="text-[26px] font-bold text-[#D91B5C] leading-none mb-1">
+                    18,420 hrs
+                  </div>
+                  <div className="text-[10px] text-black/40 font-medium mt-1">
+                    92% club participation
+                  </div>
+                </div>
+
+                <div className="p-4.5 rounded-2xl bg-white/75 border border-black/[0.08] backdrop-blur-xl shadow-sm">
+                  <div className="text-[10px] font-semibold text-black/40 uppercase tracking-wider mb-2">
+                    Direct Grant Deployed
+                  </div>
+                  <div className="text-[26px] font-bold text-[#B8860B] leading-none mb-1">
+                    ₦4.85M
+                  </div>
+                  <div className="text-[10px] text-green-600 font-medium mt-1">
+                    100% verified audit
+                  </div>
+                </div>
+              </div>
+
+              {/* Flagship Projects Detail Table */}
+              <div className="p-5 rounded-2xl bg-white/75 border border-black/[0.08] backdrop-blur-xl shadow-sm space-y-3">
+                <div className="flex items-center justify-between">
+                  <div className="text-xs font-bold text-[#1C1C1E]">
+                    Flagship District Projects
+                  </div>
+                  <span className="text-[10px] text-black/40">2026/2027 Rotary Year</span>
+                </div>
+
+                <div className="overflow-x-auto">
+                  <table className="w-full text-left text-xs">
+                    <thead>
+                      <tr className="border-b border-black/[0.06] text-[10px] font-bold uppercase tracking-wider text-black/40">
+                        <th className="pb-2.5">Project Name</th>
+                        <th className="pb-2.5">Lead Club</th>
+                        <th className="pb-2.5">State</th>
+                        <th className="pb-2.5">Focus Area</th>
+                        <th className="pb-2.5">Beneficiaries</th>
+                        <th className="pb-2.5 text-right">Status</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-black/[0.04]">
+                      {[
+                        { name: 'Operation Vaccinate 500', club: 'RAC LAUTECH', state: 'Oyo', focus: 'Disease Prevention', count: '500 Children', status: 'Completed' },
+                        { name: 'Digital Skills Academy', club: 'RAC Ibadan Central', state: 'Oyo', focus: 'Youth Empowerment', count: '2,400 Youth', status: 'Active' },
+                        { name: 'Clean Water Borehole Offa', club: 'RAC Offa Metro', state: 'Kwara', focus: 'WASH', count: '1,200 Families', status: 'Completed' },
+                        { name: 'Reforest Ondo Initiative', club: 'RAC Akure', state: 'Ondo', focus: 'Environment', count: '10,000 Trees', status: 'Active' },
+                        { name: 'Maternal Health Clinic Drive', club: 'RAC Lokoja CB', state: 'Kogi', focus: 'Maternal & Child', count: '350 Mothers', status: 'In Review' },
+                      ].map((proj) => (
+                        <tr key={proj.name} className="hover:bg-black/[0.015]">
+                          <td className="py-2.5 font-bold text-[#1C1C1E]">{proj.name}</td>
+                          <td className="py-2.5 text-black/70">{proj.club}</td>
+                          <td className="py-2.5 text-black/60">{proj.state}</td>
+                          <td className="py-2.5">
+                            <span className="px-2 py-0.5 rounded-md bg-[#981132]/10 text-[#981132] text-[10px] font-semibold">
+                              {proj.focus}
+                            </span>
+                          </td>
+                          <td className="py-2.5 font-semibold text-[#1C1C1E]">{proj.count}</td>
+                          <td className="py-2.5 text-right">
+                            <span className={`px-2 py-0.5 rounded-full text-[9.5px] font-bold ${
+                              proj.status === 'Completed' ? 'bg-green-100 text-green-700' : proj.status === 'Active' ? 'bg-blue-100 text-blue-700' : 'bg-amber-100 text-amber-700'
+                            }`}>
+                              {proj.status}
+                            </span>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          ) : navActive === 'Executive Reports' ? (
+            /* DEDICATED EXECUTIVE REPORTS SUB-VIEW */
+            <div className="space-y-4 font-sans">
+              <div className="flex items-center justify-between gap-4 flex-wrap">
+                <div>
+                  <h1 className="text-xl font-extrabold text-[#1C1C1E] tracking-tight">
+                    District Executive Reports & Audits
+                  </h1>
+                  <p className="text-xs text-black/40 mt-0.5">
+                    Official quarterly audits, DRR administrative briefs, and chartered club performance dossiers.
+                  </p>
+                </div>
+                <button
+                  onClick={() => alert('Compiling Annual District Dossier...')}
+                  className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-[#981132] text-white text-xs font-bold shadow-sm hover:opacity-95 transition-all"
+                >
+                  <FileText size={13} />
+                  <span>Generate Full Dossier</span>
+                </button>
+              </div>
+
+              {/* Report Documents Grid */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                {[
+                  { title: 'Q2 2026 Comprehensive District Audit', date: 'Jul 30, 2026', size: '2.4 MB', type: 'Financial & Compliance Audit', author: 'Folake Adesanya (Dir. Finance)' },
+                  { title: 'District Membership & Club Census 2026', date: 'Jul 15, 2026', size: '1.8 MB', type: 'Demographic Report', author: 'Babajide Olawale (Dir. Membership)' },
+                  { title: 'Mid-Year Humanitarian Impact Review', date: 'Jun 28, 2026', size: '3.1 MB', type: 'Project Assessment', author: 'Chukwuemeka Obi (Dir. Service)' },
+                  { title: 'District Conference (DISCON) Logistics Dossier', date: 'May 14, 2026', size: '4.2 MB', type: 'Event Blueprint', author: 'Conference Planning Committee' },
+                  { title: 'ICT Transformation & Digital Portal Rollout', date: 'Apr 02, 2026', size: '1.2 MB', type: 'Technical Brief', author: 'Yusuf Mahfooz Adewale (Dir. ICT)' },
+                  { title: 'D9126 Charter Lineage & Policy Guidelines', date: 'Jan 10, 2026', size: '890 KB', type: 'Governance & Constitution', author: 'District Legal & Policy Bureau' },
+                ].map((rep) => (
+                  <div key={rep.title} className="p-4.5 rounded-2xl bg-white/75 border border-black/[0.08] backdrop-blur-xl shadow-sm flex flex-col justify-between space-y-3">
+                    <div className="space-y-1.5">
+                      <div className="flex items-center justify-between text-[10px] text-black/40">
+                        <span className="font-bold text-[#981132] uppercase tracking-wider">{rep.type}</span>
+                        <span>{rep.size}</span>
+                      </div>
+                      <h3 className="text-xs font-bold text-[#1C1C1E] leading-snug">{rep.title}</h3>
+                      <p className="text-[10.5px] text-black/50">{rep.author}</p>
+                    </div>
+
+                    <div className="pt-2 border-t border-black/[0.06] flex items-center justify-between text-xs">
+                      <span className="text-[10px] text-black/40">{rep.date}</span>
+                      <div className="flex items-center gap-1.5">
+                        <button
+                          onClick={() => alert(`Opening preview for ${rep.title}`)}
+                          className="p-1.5 rounded-lg bg-black/[0.04] hover:bg-black/[0.08] text-black/60 transition-colors"
+                          title="Preview Document"
+                        >
+                          <Eye size={13} />
+                        </button>
+                        <button
+                          onClick={() => alert(`Downloading ${rep.title}`)}
+                          className="p-1.5 rounded-lg bg-[#981132]/10 hover:bg-[#981132]/20 text-[#981132] font-bold transition-colors"
+                          title="Download PDF"
+                        >
+                          <Download size={13} />
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ) : navActive === 'Verification Console' ? (
             /* DEDICATED VERIFICATION CONSOLE SUB-VIEW */
             <div className="space-y-4 font-sans pb-24 relative">
               
