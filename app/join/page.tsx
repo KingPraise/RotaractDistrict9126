@@ -57,6 +57,10 @@ function getPresidentPhoto(club: Club, index: number = 0): string {
 
 // Generate formatted Nigerian WhatsApp contact number per club
 function getClubPresWhatsapp(club: Club): { number: string; rawNumber: string } {
+  if (club.presidentPhone) {
+    const raw = club.presidentPhone.replace(/\D/g, '');
+    return { number: club.presidentPhone, rawNumber: raw };
+  }
   const lastDigits = club.rotaryId ? club.rotaryId.slice(-4) : '9126';
   const prefix = club.state === 'Oyo' ? '803' : club.state === 'Osun' ? '814' : club.state === 'Ondo' ? '816' : club.state === 'Ekiti' ? '813' : '802';
   const display = `+234 ${prefix} ${lastDigits.slice(0, 3)} ${lastDigits.slice(3) || '912'}`;
@@ -167,7 +171,7 @@ function JoinClubContent() {
                 </div>
 
                 <h2 className="text-2xl sm:text-3xl font-black text-white tracking-tight leading-tight drop-shadow-md">
-                  Rtr. Pres. {presidentName}
+                  Rtr. {presidentName}
                 </h2>
 
                 <p className="text-white/70 text-xs font-medium">
