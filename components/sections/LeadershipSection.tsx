@@ -14,6 +14,13 @@ export default function LeadershipSection() {
       fallbackImage: "https://images.unsplash.com/photo-1644152993066-9b9ee687930d?w=480&h=580&fit=crop&auto=format"
     },
     {
+      name: "Rtr. Oluwatofunmi Tejumola",
+      role: "Assistant District Rotaract Rep",
+      tooltip: "ADRR",
+      image: "/images/leaders/adrr-oluwatofunmi-tejumola.jpg",
+      fallbackImage: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=480&h=580&fit=crop&auto=format"
+    },
+    {
       name: "Rtr. PP Raji Abeeb Adekola",
       role: "Immediate Past DRR",
       tooltip: "IPDRR",

@@ -207,6 +207,33 @@ export default function DRRSpotlightSection() {
               </div>
             </div>
 
+            {/* ADRR Profile Card */}
+            <div className="p-4 sm:p-5 rounded-2xl bg-white border border-[#D91B5C]/20 shadow-md flex items-center gap-4 text-left">
+              <div className="relative shrink-0">
+                <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl p-0.5 bg-gradient-to-tr from-[#981132] to-[#D4A520] shadow-md overflow-hidden">
+                  <img
+                    src="/images/leaders/adrr-oluwatofunmi-tejumola.jpg"
+                    alt="Rtr. Oluwatofunmi Tejumola"
+                    className="w-full h-full rounded-2xl object-cover object-top"
+                  />
+                </div>
+                <div className="absolute -bottom-1.5 -right-1.5 px-2 py-0.5 rounded-full bg-[#981132] text-[8.5px] font-extrabold text-white shadow-xs">
+                  ADRR
+                </div>
+              </div>
+              <div className="min-w-0 flex-1">
+                <span className="text-[9.5px] font-bold text-[#D91B5C] uppercase tracking-wider">
+                  Assistant District Rotaract Representative
+                </span>
+                <h4 className="text-base sm:text-lg font-bold text-[#1C1C1E] truncate">
+                  Rtr. Oluwatofunmi Tejumola
+                </h4>
+                <p className="text-xs text-gray-500 mt-0.5">
+                  Supporting executive governance, regional club synchronization, and district initiatives.
+                </p>
+              </div>
+            </div>
+
             {/* Strategic Priorities Pillars */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-left">
               <div className="p-3.5 rounded-xl bg-white/80 border border-black/[0.06] shadow-sm">

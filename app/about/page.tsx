@@ -166,6 +166,18 @@ const currentTeam: LeaderMember[] = [
     bio: 'Presiding 3rd District Rotaract Representative for the 2026/2027 Rotary Year. Steering digital transformation, member verified credentials, and flagship maternal & child health outreach across 7 states.'
   },
   {
+    id: 'adrr',
+    name: 'Rtr. Oluwatofunmi Tejumola',
+    role: 'Assistant District Rotaract Representative',
+    tooltip: 'ADRR',
+    image: '/images/leaders/adrr-oluwatofunmi-tejumola.jpg',
+    fallbackImage: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=480&h=580&fit=crop&auto=format',
+    dept: 'Executive Office',
+    email: 'adrr@rotaractdistrict9126.com.ng',
+    phone: '+234 800 912 6004',
+    bio: 'Assistant District Rotaract Representative assisting in regional club coordination, executive policy implementation, and district-wide program monitoring across all seven states.'
+  },
+  {
     id: 'ipdrr',
     name: 'Rtr. PP Raji Abeeb Adekola',
     role: 'Immediate Past DRR',
