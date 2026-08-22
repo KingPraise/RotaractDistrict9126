@@ -328,7 +328,133 @@ export default function DistrictExecutiveDashboardPage() {
 
         {/* Scroll Content */}
         <div className="flex-1 overflow-y-auto p-6 space-y-5">
-          {navActive === 'Membership Growth' ? (
+          {navActive === 'Financial Overview' ? (
+            /* DEDICATED FINANCIAL OVERVIEW SUB-VIEW */
+            <div className="space-y-4 font-sans">
+              
+              {/* 1. 4-Card Financial Metric Matrix */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+                {/* Total Dues Collected */}
+                <div className="p-4.5 rounded-2xl bg-white/75 border border-black/[0.08] backdrop-blur-xl shadow-sm flex flex-col justify-between">
+                  <div className="text-[10px] font-semibold text-black/40 uppercase tracking-wider mb-2">
+                    Total Dues Collected
+                  </div>
+                  <div className="text-[26px] font-bold text-[#1C1C1E] leading-none mb-1">
+                    ₦285K
+                  </div>
+                  <div className="text-[10px] text-green-600 font-medium mt-1">
+                    +12% vs last quarter
+                  </div>
+                </div>
+
+                {/* Project Grants */}
+                <div className="p-4.5 rounded-2xl bg-white/75 border border-black/[0.08] backdrop-blur-xl shadow-sm flex flex-col justify-between">
+                  <div className="text-[10px] font-semibold text-black/40 uppercase tracking-wider mb-2">
+                    Project Grants
+                  </div>
+                  <div className="text-[26px] font-bold text-[#1C1C1E] leading-none mb-1">
+                    ₦124K
+                  </div>
+                  <div className="text-[10px] text-green-600 font-medium mt-1">
+                    +6% vs last quarter
+                  </div>
+                </div>
+
+                {/* District Reserves */}
+                <div className="p-4.5 rounded-2xl bg-white/75 border border-black/[0.08] backdrop-blur-xl shadow-sm flex flex-col justify-between">
+                  <div className="text-[10px] font-semibold text-black/40 uppercase tracking-wider mb-2">
+                    District Reserves
+                  </div>
+                  <div className="text-[26px] font-bold text-green-600 leading-none mb-1">
+                    ₦76K
+                  </div>
+                  <div className="text-[10px] text-green-600 font-medium mt-1">
+                    +3% vs last quarter
+                  </div>
+                </div>
+
+                {/* Outstanding Dues */}
+                <div className="p-4.5 rounded-2xl bg-white/75 border border-black/[0.08] backdrop-blur-xl shadow-sm flex flex-col justify-between">
+                  <div className="text-[10px] font-semibold text-black/40 uppercase tracking-wider mb-2">
+                    Outstanding Dues
+                  </div>
+                  <div className="text-[26px] font-bold text-[#D91B5C] leading-none mb-1">
+                    ₦18K
+                  </div>
+                  <div className="text-[10px] text-[#D91B5C] font-medium mt-1">
+                    -8% vs last quarter
+                  </div>
+                </div>
+              </div>
+
+              {/* 2. Bottom Split: District Fund Aggregate (2-Span) + Impact by Category (1-Span) */}
+              <div className="flex flex-col lg:flex-row gap-3">
+                {/* District Fund Aggregate Area Chart */}
+                <div className="flex-[2] p-5 rounded-2xl bg-white/75 border border-black/[0.08] backdrop-blur-xl shadow-sm">
+                  <div className="text-xs font-bold text-[#1C1C1E]">District Fund Aggregate</div>
+                  <div className="text-[10px] text-black/40 mb-3">Monthly accumulation, NGN</div>
+                  
+                  <div className="flex items-baseline gap-2 mb-3">
+                    <span className="text-2xl font-bold text-[#B8860B] leading-none">₦485K</span>
+                    <span className="text-[10px] text-green-600 font-semibold">▲ +8.5%</span>
+                  </div>
+
+                  <div className="h-30 w-full">
+                    <ResponsiveContainer width="100%" height="100%">
+                      <AreaChart data={FUND_SPARKLINE} margin={{ top: 4, right: 0, left: -20, bottom: 0 }}>
+                        <defs>
+                          <linearGradient id="fin-fund-grad" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0%" stopColor="#D91B5C" stopOpacity={0.4} />
+                            <stop offset="100%" stopColor="#A855F7" stopOpacity={0} />
+                          </linearGradient>
+                        </defs>
+                        <CartesianGrid stroke="rgba(0,0,0,0.06)" vertical={false} />
+                        <XAxis dataKey="month" axisLine={false} tickLine={false} tick={{ fill: 'rgba(28,28,30,0.35)', fontSize: 9, fontFamily: 'Inter' }} />
+                        <Area type="monotone" dataKey="value" stroke="#D91B5C" strokeWidth={2.5} fill="url(#fin-fund-grad)" />
+                      </AreaChart>
+                    </ResponsiveContainer>
+                  </div>
+                </div>
+
+                {/* Impact by Category Donut */}
+                <div className="flex-1 p-5 rounded-2xl bg-white/75 border border-black/[0.08] backdrop-blur-xl shadow-sm flex flex-col justify-between min-w-[280px]">
+                  <div>
+                    <div className="text-xs font-bold text-[#1C1C1E]">Impact by Category</div>
+                    <div className="text-[10px] text-black/40 mb-3">Project distribution, all 47 clubs</div>
+                  </div>
+
+                  <div className="flex items-center gap-4">
+                    <div className="w-28 h-28 shrink-0">
+                      <ResponsiveContainer width="100%" height="100%">
+                        <PieChart>
+                          <Pie data={CATEGORY_DATA} dataKey="value" innerRadius={30} outerRadius={52} paddingAngle={2}>
+                            {CATEGORY_DATA.map((entry, index) => (
+                              <Cell key={`cell-${index}`} fill={entry.color} />
+                            ))}
+                          </Pie>
+                        </PieChart>
+                      </ResponsiveContainer>
+                    </div>
+
+                    <div className="flex-1 space-y-2">
+                      {CATEGORY_DATA.map((cat) => (
+                        <div key={cat.name} className="flex items-center gap-2">
+                          <span className="w-2 h-2 rounded-xs shrink-0" style={{ background: cat.color }} />
+                          <span className="text-[10px] text-black/60 flex-1">{cat.name}</span>
+                          <span className="text-[10px] font-bold" style={{ color: cat.color }}>{cat.value}%</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="pt-3 border-t border-black/[0.06] text-[10px] text-black/40">
+                    180+ active verified projects on District Registry
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          ) : navActive === 'Membership Growth' ? (
             /* DEDICATED MEMBERSHIP GROWTH ANALYTICS SUB-VIEW */
             <div className="space-y-4 font-sans">
               
