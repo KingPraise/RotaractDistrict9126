@@ -422,9 +422,20 @@ export default function MemberDashboardPage() {
         {/* Top App Header */}
         <header className="px-6 py-4 border-b border-black/[0.06] bg-white/95 backdrop-blur-md flex items-center justify-between gap-4 shrink-0">
           <div>
-            <h1 className="text-xl md:text-2xl font-black text-[#1C1C1E] leading-tight">
-              Welcome back, {currentUser.firstName} 👋
-            </h1>
+            <div className="flex items-center gap-2.5">
+              <h1 className="text-xl md:text-2xl font-black text-[#1C1C1E] leading-tight">
+                Welcome back, {currentUser.firstName} 👋
+              </h1>
+              <span className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider ${
+                currentUser.role === 'district_admin'
+                  ? 'bg-[#981132]/10 text-[#981132] border border-[#981132]/25'
+                  : currentUser.role === 'club_president' || currentUser.role === 'president'
+                  ? 'bg-[#D4A520]/15 text-[#B8860B] border border-[#D4A520]/30'
+                  : 'bg-[#22C55E]/10 text-[#16A34A] border border-[#22C55E]/20'
+              }`}>
+                {currentUser.role === 'district_admin' ? 'District Admin' : currentUser.role === 'club_president' || currentUser.role === 'president' ? 'Club President' : 'Active Member'}
+              </span>
+            </div>
             <p className="text-[10px] text-black/40 mt-0.5">
               {currentUser.clubName} · {currentUser.state} · Rotary Year 2026/2027
             </p>

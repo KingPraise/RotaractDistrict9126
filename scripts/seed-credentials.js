@@ -15,100 +15,154 @@ if (!admin.apps.length) {
 const auth = admin.auth();
 const db = admin.firestore();
 
-const usersToSeed = [
+// FRESH REALISTIC USERS FOR EACH ROLE
+const freshUsers = [
   {
-    uid: 'seed-president',
-    email: 'president.ibadan@rotaractdistrict9126.com.ng',
-    password: 'President2026!',
-    displayName: 'Ibadan President',
-    role: 'president',
-    firstName: 'Ibadan',
-    lastName: 'President',
-    clubId: 'club-ibadan-central',
-    duesStatus: 'cleared',
-    rotaryId: 'ROT-9126-PRES'
-  },
-  {
-    uid: 'seed-member',
-    email: 'member.tunde@rotaractdistrict9126.com.ng',
-    password: 'Member2026!',
-    displayName: 'Tunde Member',
-    role: 'member',
-    firstName: 'Tunde',
-    lastName: 'Member',
-    clubId: 'club-ibadan-central',
-    duesStatus: 'cleared',
-    rotaryId: 'ROT-9126-2026'
-  },
-  {
-    uid: 'seed-admin',
-    email: 'admin@rotaractdistrict9126.com.ng',
+    uid: 'usr-district-admin',
+    email: 'admin.femi@rotaractdistrict9126.com.ng',
     password: 'DistrictAdmin2026!',
-    displayName: 'District Admin',
+    displayName: 'Oluwafemi Adeleke',
+    firstName: 'Oluwafemi',
+    lastName: 'Adeleke',
     role: 'district_admin',
-    firstName: 'District',
-    lastName: 'Admin',
-    clubId: 'club-ibadan-central',
+    clubId: 'club-ibadan-ring-road',
+    clubName: 'RAC Ibadan Ring Road',
     duesStatus: 'cleared',
-    rotaryId: 'ROT-9126-ADMIN'
+    rotaryId: 'ROT-9126-DRR01',
+    state: 'Oyo State',
+    region: 'South-West',
+    phone: '+234 802 345 6789',
+    avatarUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&auto=format'
+  },
+  {
+    uid: 'usr-club-president',
+    email: 'president.timi@rotaractdistrict9126.com.ng',
+    password: 'President2026!',
+    displayName: 'Peleyeju Timileyin',
+    firstName: 'Peleyeju',
+    lastName: 'Timileyin',
+    role: 'club_president',
+    clubId: 'club-ibadan-ring-road',
+    clubName: 'RAC Ibadan Ring Road',
+    duesStatus: 'cleared',
+    rotaryId: 'ROT-9126-PRES01',
+    state: 'Oyo State',
+    region: 'South-West',
+    phone: '+234 902 115 5714',
+    avatarUrl: '/images/presidents/peleyeju-timileyin-omotayo.jpg'
+  },
+  {
+    uid: 'usr-active-member',
+    email: 'member.ayomide@rotaractdistrict9126.com.ng',
+    password: 'Member2026!',
+    displayName: 'Ayomide Balogun',
+    firstName: 'Ayomide',
+    lastName: 'Balogun',
+    role: 'member',
+    clubId: 'club-ui-ibadan',
+    clubName: 'RAC University of Ibadan',
+    duesStatus: 'cleared',
+    rotaryId: 'ROT-9126-MEM01',
+    state: 'Oyo State',
+    region: 'South-West',
+    phone: '+234 813 456 7890',
+    avatarUrl: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&h=150&fit=crop&auto=format'
+  },
+  {
+    uid: 'usr-dues-overdue-member',
+    email: 'member.chinedu@rotaractdistrict9126.com.ng',
+    password: 'Member2026!',
+    displayName: 'Chinedu Eze',
+    firstName: 'Chinedu',
+    lastName: 'Eze',
+    role: 'member',
+    clubId: 'club-osogbo',
+    clubName: 'RAC Osogbo',
+    duesStatus: 'overdue',
+    rotaryId: 'ROT-9126-MEM02',
+    state: 'Osun State',
+    region: 'South-West',
+    phone: '+234 809 123 4567',
+    avatarUrl: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&auto=format'
   }
 ];
 
-async function seedUsers() {
-  console.log('Seeding credentials to Firebase...');
-  
-  for (const user of usersToSeed) {
-    try {
-      // 1. Create or Update Auth User
-      try {
-        await auth.updateUser(user.uid, {
-          email: user.email,
-          password: user.password,
-          displayName: user.displayName
-        });
-        console.log(`Updated auth for: ${user.email}`);
-      } catch (err) {
-        if (err.code === 'auth/user-not-found') {
-          await auth.createUser({
-            uid: user.uid,
-            email: user.email,
-            password: user.password,
-            displayName: user.displayName
-          });
-          console.log(`Created auth for: ${user.email}`);
-        } else {
-          throw err;
-        }
+async function resetAndSeed() {
+  console.log('🔄 Step 1: Deleting existing Firebase Auth users...');
+  try {
+    let pageToken;
+    do {
+      const listUsersResult = await auth.listUsers(1000, pageToken);
+      const uids = listUsersResult.users.map(u => u.uid);
+      if (uids.length > 0) {
+        const deleteResult = await auth.deleteUsers(uids);
+        console.log(`Deleted ${deleteResult.successCount} auth users.`);
       }
+      pageToken = listUsersResult.pageToken;
+    } while (pageToken);
+  } catch (err) {
+    console.error('Error deleting auth users:', err.message);
+  }
+
+  console.log('🔄 Step 2: Clearing Firestore user collections...');
+  try {
+    for (const col of ['users', 'auth_users', 'members']) {
+      const snap = await db.collection(col).get();
+      const batch = db.batch();
+      snap.docs.forEach(doc => batch.delete(doc.ref));
+      await batch.commit();
+      console.log(`Cleared collection: ${col} (${snap.size} documents)`);
+    }
+  } catch (err) {
+    console.error('Error clearing Firestore:', err.message);
+  }
+
+  console.log('✨ Step 3: Creating fresh role accounts...');
+  for (const user of freshUsers) {
+    try {
+      // 1. Create Auth User
+      await auth.createUser({
+        uid: user.uid,
+        email: user.email,
+        password: user.password,
+        displayName: user.displayName,
+      });
+      console.log(`✅ Auth created: ${user.email} (${user.role})`);
 
       // 2. Set Firestore Documents
       const timestamp = admin.firestore.FieldValue.serverTimestamp();
-      
       const userData = {
         userId: user.uid,
+        uid: user.uid,
         email: user.email,
         firstName: user.firstName,
         lastName: user.lastName,
         displayName: user.displayName,
         role: user.role,
         clubId: user.clubId,
+        clubName: user.clubName,
         duesStatus: user.duesStatus,
         rotaryId: user.rotaryId,
+        state: user.state,
+        region: user.region,
+        phone: user.phone,
+        avatarUrl: user.avatarUrl,
         createdAt: timestamp,
         updatedAt: timestamp
       };
 
-      await db.collection('auth_users').doc(user.uid).set(userData, { merge: true });
-      await db.collection('users').doc(user.uid).set(userData, { merge: true });
-      
-      console.log(`Synced Firestore profiles for: ${user.email}`);
-    } catch (error) {
-      console.error(`Error processing ${user.email}:`, error);
+      await db.collection('auth_users').doc(user.uid).set(userData);
+      await db.collection('users').doc(user.uid).set(userData);
+      await db.collection('members').doc(user.uid).set(userData);
+      console.log(`✅ Firestore synced: ${user.displayName}`);
+    } catch (err) {
+      console.error(`❌ Error creating ${user.email}:`, err.message);
     }
   }
-  
-  console.log('Seeding complete!');
+
+  console.log('🎉 Reset and seeding complete!');
   process.exit(0);
 }
 
-seedUsers();
+resetAndSeed();
+
