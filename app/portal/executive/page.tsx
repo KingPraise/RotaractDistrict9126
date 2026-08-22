@@ -25,7 +25,10 @@ import {
   Calendar, 
   TrendingUp,
   Clock,
-  Send
+  Send,
+  Share2,
+  Target,
+  CheckCircle2
 } from 'lucide-react';
 import { 
   AreaChart, 
@@ -330,7 +333,329 @@ export default function DistrictExecutiveDashboardPage() {
 
         {/* Scroll Content */}
         <div className="flex-1 overflow-y-auto p-6 space-y-5">
-          {navActive === 'Newsletter Deploy' ? (
+          {navActive === 'Executive Analytics' ? (
+            /* DEDICATED EXECUTIVE ANALYTICS SUB-VIEW */
+            <div className="space-y-4 font-sans pb-24 relative">
+              
+              {/* 1. Header & Greeting */}
+              <div className="flex items-center justify-between gap-4 flex-wrap">
+                <div>
+                  <button
+                    onClick={() => setNavActive('Overview')}
+                    className="flex items-center gap-1 text-[10px] text-black/40 hover:text-black mb-2 transition-colors"
+                  >
+                    <ChevronRight className="rotate-180" size={10} />
+                    <span>Executive HQ · Overview</span>
+                  </button>
+                  <h1 className="text-2xl font-extrabold text-[#1C1C1E] tracking-tight">
+                    Good afternoon, Oluwafemi
+                  </h1>
+                  <p className="text-xs text-black/40 mt-0.5">
+                    Here&apos;s what&apos;s happening across District 9126 today.
+                  </p>
+                </div>
+
+                <div className="flex items-center gap-2">
+                  <button className="w-8.5 h-8.5 rounded-lg bg-black/[0.04] border border-black/[0.08] text-black/40 hover:text-black flex items-center justify-center transition-colors">
+                    <Share2 size={13} />
+                  </button>
+                  <button className="w-8.5 h-8.5 rounded-lg bg-black/[0.04] border border-black/[0.08] text-black/40 hover:text-black flex items-center justify-center relative transition-colors">
+                    <Bell size={13} />
+                    <span className="absolute top-1.5 right-1.5 w-1.5 h-1.5 rounded-full bg-[#D91B5C] border border-white" />
+                  </button>
+                  <div className="flex items-center gap-2 p-1.5 pr-2.5 rounded-xl bg-black/[0.04] border border-black/[0.08]">
+                    <div className="w-7 h-7 rounded-full p-[1.5px] bg-gradient-to-tr from-[#D91B5C] to-[#A855F7]">
+                      <img
+                        src="https://images.unsplash.com/photo-1642257859842-c95f9fa8121d?w=200&h=200&fit=crop&crop=faces&auto=format"
+                        alt="DRR"
+                        className="w-full h-full rounded-full object-cover"
+                      />
+                    </div>
+                    <div className="leading-tight">
+                      <div className="text-[10.5px] font-bold text-[#1C1C1E]">Oluwafemi A.</div>
+                      <div className="text-[8.5px] text-black/40">DRR · 2024–25</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* 2. District Milestone & Tier 2 Growth Hero Card */}
+              <div className="p-6 rounded-2xl bg-white/75 border border-black/[0.08] backdrop-blur-xl shadow-sm flex flex-col md:flex-row items-stretch gap-6">
+                {/* Left Progress Section */}
+                <div className="flex-1 flex flex-col justify-between space-y-4">
+                  <div className="flex items-center gap-2">
+                    <div className="w-7 h-7 rounded-lg bg-[#D91B5C]/10 border border-[#D91B5C]/20 flex items-center justify-center text-[#D91B5C]">
+                      <Target size={13} />
+                    </div>
+                    <span className="text-[10px] font-bold text-black/40 tracking-wider uppercase">
+                      District Milestone · Tier 2 Growth
+                    </span>
+                  </div>
+
+                  <div className="flex items-baseline gap-2.5 flex-wrap">
+                    <span className="text-4xl font-extrabold text-[#B8860B] leading-none">3,247</span>
+                    <span className="text-lg text-black/40">/ 5,000 members</span>
+                    <span className="text-xs font-bold text-green-600">▲ +12% this year</span>
+                  </div>
+
+                  <div>
+                    <div className="h-2 rounded-full bg-black/[0.08] overflow-hidden mb-2">
+                      <div className="h-full rounded-full bg-[#D91B5C] transition-all duration-500 w-[65%]" />
+                    </div>
+                    <div className="flex justify-between text-[9.5px] text-black/40">
+                      <span>3,247 enrolled</span>
+                      <span>65% complete · 1,753 remaining</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="w-px bg-black/[0.08] hidden md:block" />
+
+                {/* Right Mini-Stats */}
+                <div className="w-full md:w-50 flex flex-col justify-center gap-2.5">
+                  <div className="flex items-center gap-3 p-3 rounded-xl bg-black/[0.024] border border-black/[0.08]">
+                    <div className="w-8 h-8 rounded-lg bg-[#D91B5C]/10 border border-[#D91B5C]/20 flex items-center justify-center text-[#D91B5C] shrink-0">
+                      <Zap size={14} />
+                    </div>
+                    <div>
+                      <div className="text-lg font-bold text-[#B8860B] leading-none">12</div>
+                      <div className="text-[9.5px] text-black/40 mt-0.5">Active Projects</div>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-3 p-3 rounded-xl bg-black/[0.024] border border-black/[0.08]">
+                    <div className="w-8 h-8 rounded-lg bg-[#A855F7]/10 border border-[#A855F7]/20 flex items-center justify-center text-[#A855F7] shrink-0">
+                      <DollarSign size={14} />
+                    </div>
+                    <div>
+                      <div className="text-lg font-bold text-[#B8860B] leading-none">₦93.87K</div>
+                      <div className="text-[9.5px] text-black/40 mt-0.5">Pending Disbursement</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* 3. 6-Card Analytical Metric Matrix */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                {/* 1. Clubs Engaged */}
+                <div className="p-4.5 rounded-2xl bg-white/75 border border-black/[0.08] backdrop-blur-xl shadow-sm flex flex-col justify-between">
+                  <div className="flex items-start justify-between mb-3">
+                    <div>
+                      <div className="text-[10px] font-bold text-black/60 uppercase tracking-wider mb-1">Clubs Engaged</div>
+                      <div className="h-0.5 w-7 rounded-full bg-gradient-to-r from-[#D91B5C] to-[#A855F7]" />
+                    </div>
+                    <div className="w-7.5 h-7.5 rounded-lg bg-[#D91B5C]/10 border border-[#D91B5C]/20 flex items-center justify-center text-[#D91B5C]">
+                      <Award size={13} />
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2 mb-4">
+                    <span className="text-3xl font-extrabold text-[#1C1C1E] leading-none">47</span>
+                    <span className="flex items-center gap-0.5 px-1.5 py-0.5 rounded bg-green-50 text-green-700 text-[9.5px] font-bold">
+                      <ArrowUpRight size={9} /> +3
+                    </span>
+                  </div>
+                  <div className="space-y-1.5 divide-y divide-black/[0.06] text-xs">
+                    <div className="flex justify-between pt-1 text-black/40">
+                      <span>Oyo State</span>
+                      <span className="font-semibold text-black/70">14 clubs <span className="text-green-600 font-bold">+2</span></span>
+                    </div>
+                    <div className="flex justify-between pt-1 text-black/40">
+                      <span>Ondo State</span>
+                      <span className="font-semibold text-black/70">9 clubs <span className="text-green-600 font-bold">+1</span></span>
+                    </div>
+                    <div className="flex justify-between pt-1 text-black/40">
+                      <span>Osun State</span>
+                      <span className="font-semibold text-black/70">8 clubs <span className="text-black/30">—</span></span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* 2. Dues Compliance */}
+                <div className="p-4.5 rounded-2xl bg-white/75 border border-black/[0.08] backdrop-blur-xl shadow-sm flex flex-col justify-between">
+                  <div className="flex items-start justify-between mb-3">
+                    <div>
+                      <div className="text-[10px] font-bold text-black/60 uppercase tracking-wider mb-1">Dues Compliance</div>
+                      <div className="h-0.5 w-7 rounded-full bg-gradient-to-r from-[#D91B5C] to-[#A855F7]" />
+                    </div>
+                    <div className="w-7.5 h-7.5 rounded-lg bg-[#D91B5C]/10 border border-[#D91B5C]/20 flex items-center justify-center text-[#D91B5C]">
+                      <CheckCircle2 size={13} />
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2 mb-4">
+                    <span className="text-3xl font-extrabold text-[#1C1C1E] leading-none">76%</span>
+                    <span className="flex items-center gap-0.5 px-1.5 py-0.5 rounded bg-green-50 text-green-700 text-[9.5px] font-bold">
+                      <ArrowUpRight size={9} /> +4%
+                    </span>
+                  </div>
+                  <div className="space-y-1.5 divide-y divide-black/[0.06] text-xs">
+                    <div className="flex justify-between pt-1 text-black/40">
+                      <span>On-time</span>
+                      <span className="font-semibold text-black/70">61% <span className="text-green-600 font-bold">↑ +5%</span></span>
+                    </div>
+                    <div className="flex justify-between pt-1 text-black/40">
+                      <span>Late</span>
+                      <span className="font-semibold text-black/70">15% <span className="text-green-600 font-bold">↓ -2%</span></span>
+                    </div>
+                    <div className="flex justify-between pt-1 text-black/40">
+                      <span>Overdue</span>
+                      <span className="font-semibold text-black/70">24% <span className="text-[#D91B5C] font-bold">↑ +1%</span></span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* 3. Projects Completed */}
+                <div className="p-4.5 rounded-2xl bg-white/75 border border-black/[0.08] backdrop-blur-xl shadow-sm flex flex-col justify-between">
+                  <div className="flex items-start justify-between mb-3">
+                    <div>
+                      <div className="text-[10px] font-bold text-black/60 uppercase tracking-wider mb-1">Projects Completed</div>
+                      <div className="h-0.5 w-7 rounded-full bg-gradient-to-r from-[#D91B5C] to-[#A855F7]" />
+                    </div>
+                    <div className="w-7.5 h-7.5 rounded-lg bg-[#D91B5C]/10 border border-[#D91B5C]/20 flex items-center justify-center text-[#D91B5C]">
+                      <Zap size={13} />
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2 mb-4">
+                    <span className="text-3xl font-extrabold text-[#1C1C1E] leading-none">34</span>
+                    <span className="flex items-center gap-0.5 px-1.5 py-0.5 rounded bg-green-50 text-green-700 text-[9.5px] font-bold">
+                      <ArrowUpRight size={9} /> +6
+                    </span>
+                  </div>
+                  <div className="space-y-1.5 divide-y divide-black/[0.06] text-xs">
+                    <div className="flex justify-between pt-1 text-black/40">
+                      <span>Healthcare</span>
+                      <span className="font-semibold text-black/70">12 <span className="text-green-600 font-bold">+3</span></span>
+                    </div>
+                    <div className="flex justify-between pt-1 text-black/40">
+                      <span>Education</span>
+                      <span className="font-semibold text-black/70">9 <span className="text-green-600 font-bold">+2</span></span>
+                    </div>
+                    <div className="flex justify-between pt-1 text-black/40">
+                      <span>Environment</span>
+                      <span className="font-semibold text-black/70">8 <span className="text-green-600 font-bold">+1</span></span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* 4. Fund Utilization */}
+                <div className="p-4.5 rounded-2xl bg-white/75 border border-black/[0.08] backdrop-blur-xl shadow-sm flex flex-col justify-between">
+                  <div className="flex items-start justify-between mb-3">
+                    <div>
+                      <div className="text-[10px] font-bold text-black/60 uppercase tracking-wider mb-1">Fund Utilization</div>
+                      <div className="h-0.5 w-7 rounded-full bg-gradient-to-r from-[#D91B5C] to-[#A855F7]" />
+                    </div>
+                    <div className="w-7.5 h-7.5 rounded-lg bg-[#D91B5C]/10 border border-[#D91B5C]/20 flex items-center justify-center text-[#D91B5C]">
+                      <DollarSign size={13} />
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2 mb-4">
+                    <span className="text-3xl font-extrabold text-[#1C1C1E] leading-none">₦485K</span>
+                    <span className="flex items-center gap-0.5 px-1.5 py-0.5 rounded bg-green-50 text-green-700 text-[9.5px] font-bold">
+                      <ArrowUpRight size={9} /> +8.5%
+                    </span>
+                  </div>
+                  <div className="space-y-1.5 divide-y divide-black/[0.06] text-xs">
+                    <div className="flex justify-between pt-1 text-black/40">
+                      <span>Programs</span>
+                      <span className="font-semibold text-black/70">₦312K <span className="text-green-600 font-bold">+12%</span></span>
+                    </div>
+                    <div className="flex justify-between pt-1 text-black/40">
+                      <span>Admin</span>
+                      <span className="font-semibold text-black/70">₦98K <span className="text-green-600 font-bold">+3%</span></span>
+                    </div>
+                    <div className="flex justify-between pt-1 text-black/40">
+                      <span>Reserves</span>
+                      <span className="font-semibold text-black/70">₦75K <span className="text-[#D91B5C] font-bold">-5%</span></span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* 5. New Prospects */}
+                <div className="p-4.5 rounded-2xl bg-white/75 border border-black/[0.08] backdrop-blur-xl shadow-sm flex flex-col justify-between">
+                  <div className="flex items-start justify-between mb-3">
+                    <div>
+                      <div className="text-[10px] font-bold text-black/60 uppercase tracking-wider mb-1">New Prospects</div>
+                      <div className="h-0.5 w-7 rounded-full bg-gradient-to-r from-[#D91B5C] to-[#A855F7]" />
+                    </div>
+                    <div className="w-7.5 h-7.5 rounded-lg bg-[#D91B5C]/10 border border-[#D91B5C]/20 flex items-center justify-center text-[#D91B5C]">
+                      <UserCheck size={13} />
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2 mb-4">
+                    <span className="text-3xl font-extrabold text-[#1C1C1E] leading-none">156</span>
+                    <span className="flex items-center gap-0.5 px-1.5 py-0.5 rounded bg-green-50 text-green-700 text-[9.5px] font-bold">
+                      <ArrowUpRight size={9} /> +23%
+                    </span>
+                  </div>
+                  <div className="space-y-1.5 divide-y divide-black/[0.06] text-xs">
+                    <div className="flex justify-between pt-1 text-black/40">
+                      <span>Club Finder</span>
+                      <span className="font-semibold text-black/70">89 <span className="text-green-600 font-bold">+18%</span></span>
+                    </div>
+                    <div className="flex justify-between pt-1 text-black/40">
+                      <span>Referral</span>
+                      <span className="font-semibold text-black/70">42 <span className="text-green-600 font-bold">+8%</span></span>
+                    </div>
+                    <div className="flex justify-between pt-1 text-black/40">
+                      <span>Events</span>
+                      <span className="font-semibold text-black/70">25 <span className="text-green-600 font-bold">+5%</span></span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* 6. Active Volunteers */}
+                <div className="p-4.5 rounded-2xl bg-white/75 border border-black/[0.08] backdrop-blur-xl shadow-sm flex flex-col justify-between">
+                  <div className="flex items-start justify-between mb-3">
+                    <div>
+                      <div className="text-[10px] font-bold text-black/60 uppercase tracking-wider mb-1">Active Volunteers</div>
+                      <div className="h-0.5 w-7 rounded-full bg-gradient-to-r from-[#D91B5C] to-[#A855F7]" />
+                    </div>
+                    <div className="w-7.5 h-7.5 rounded-lg bg-[#D91B5C]/10 border border-[#D91B5C]/20 flex items-center justify-center text-[#D91B5C]">
+                      <Users size={13} />
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2 mb-4">
+                    <span className="text-3xl font-extrabold text-[#1C1C1E] leading-none">2,847</span>
+                    <span className="flex items-center gap-0.5 px-1.5 py-0.5 rounded bg-green-50 text-green-700 text-[9.5px] font-bold">
+                      <ArrowUpRight size={9} /> +11%
+                    </span>
+                  </div>
+                  <div className="space-y-1.5 divide-y divide-black/[0.06] text-xs">
+                    <div className="flex justify-between pt-1 text-black/40">
+                      <span>Oyo State</span>
+                      <span className="font-semibold text-black/70">1,240 <span className="text-green-600 font-bold">+9%</span></span>
+                    </div>
+                    <div className="flex justify-between pt-1 text-black/40">
+                      <span>Ondo State</span>
+                      <span className="font-semibold text-black/70">580 <span className="text-green-600 font-bold">+15%</span></span>
+                    </div>
+                    <div className="flex justify-between pt-1 text-black/40">
+                      <span>Osun State</span>
+                      <span className="font-semibold text-black/70">470 <span className="text-green-600 font-bold">+7%</span></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* 4. Floating Executive Report Dock */}
+              <div className="fixed bottom-7 left-64 z-50 p-3.5 px-4.5 rounded-2xl bg-white/95 backdrop-blur-2xl border border-black/15 shadow-2xl flex items-center gap-6">
+                <div>
+                  <div className="text-[8.5px] font-bold text-black/40 uppercase tracking-widest">Fund Aggregate</div>
+                  <div className="text-xl font-bold text-[#1C1C1E]">₦485,000</div>
+                </div>
+
+                <button
+                  onClick={() => alert('Generating District Analytical Report PDF...')}
+                  className="flex items-center gap-3 px-4 py-2 rounded-xl bg-[#D91B5C] hover:bg-[#A70C43] text-white text-xs font-bold shadow-[0_4px_16px_rgba(217,27,92,0.3)] transition-all"
+                >
+                  <span>Generate District Report</span>
+                  <div className="w-5 h-5 rounded-full bg-black/20 flex items-center justify-center">
+                    <ArrowRight size={11} />
+                  </div>
+                </button>
+              </div>
+
+            </div>
+          ) : navActive === 'Newsletter Deploy' ? (
             /* DEDICATED NEWSLETTER DEPLOYMENT CANVAS VIEW */
             <div className="-mt-6 -mx-6 flex flex-col font-sans">
               
