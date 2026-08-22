@@ -23,7 +23,9 @@ import {
   Zap, 
   AlertCircle, 
   Calendar, 
-  TrendingUp 
+  TrendingUp,
+  Clock,
+  Send
 } from 'lucide-react';
 import { 
   AreaChart, 
@@ -328,7 +330,247 @@ export default function DistrictExecutiveDashboardPage() {
 
         {/* Scroll Content */}
         <div className="flex-1 overflow-y-auto p-6 space-y-5">
-          {navActive === 'Financial Overview' ? (
+          {navActive === 'Newsletter Deploy' ? (
+            /* DEDICATED NEWSLETTER DEPLOYMENT CANVAS VIEW */
+            <div className="-mt-6 -mx-6 flex flex-col font-sans">
+              
+              {/* 1. Sticky Action Sub-Header */}
+              <div className="sticky top-0 z-40 px-6 py-3 bg-white/95 backdrop-blur-xl border-b border-black/[0.08] flex items-center justify-between gap-3 flex-wrap">
+                <input
+                  type="text"
+                  defaultValue="District 9126 — July Impact Bulletin"
+                  className="flex-1 min-w-[200px] text-sm font-bold text-[#1C1C1E] bg-transparent outline-none caret-[#981132]"
+                />
+
+                <div className="flex items-center gap-2 px-2.5 py-1.5 rounded-lg bg-black/[0.04] border border-black/[0.08] text-xs">
+                  <Users className="text-black/40" size={12} />
+                  <span className="font-semibold text-black/60">All Members</span>
+                  <span className="text-black/30">·</span>
+                  <span className="font-bold text-[#981132]">1,247</span>
+                </div>
+
+                <div className="flex items-center gap-3">
+                  <span className="text-[10px] text-black/30 hidden sm:inline">Draft saved 2 min ago</span>
+                  <button
+                    onClick={() => alert('Newsletter draft saved successfully')}
+                    className="px-3.5 py-1.5 rounded-lg bg-black/[0.04] hover:bg-black/[0.08] border border-black/[0.08] text-xs font-semibold text-black/60 transition-colors"
+                  >
+                    Save Draft
+                  </button>
+                  <button
+                    onClick={() => alert('Dispatching newsletter to 1,247 members...')}
+                    className="inline-flex items-center gap-2 pl-4 pr-1.5 py-1.5 rounded-full bg-[#981132] text-white text-xs font-bold shadow-[0_4px_18px_rgba(152,17,50,0.3)] hover:opacity-95 transition-all"
+                  >
+                    <span>Send Newsletter</span>
+                    <span className="w-6 h-6 rounded-full bg-black/20 flex items-center justify-center">
+                      <Send size={11} />
+                    </span>
+                  </button>
+                </div>
+              </div>
+
+              {/* 2. Collapsible Subject & Preheader Accordion */}
+              <div className="bg-[#F4F1F0]/70 border-b border-black/[0.08] px-6 py-3 space-y-2">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  <div>
+                    <label className="block text-[9.5px] font-bold text-black/40 uppercase tracking-wider mb-1">
+                      Subject Line
+                    </label>
+                    <input
+                      type="text"
+                      defaultValue="District 9126 — July Impact Bulletin 🌍"
+                      className="w-full px-3 py-1.5 rounded-lg bg-white border border-black/[0.08] text-xs text-[#1C1C1E] outline-none focus:border-[#981132]"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-[9.5px] font-bold text-black/40 uppercase tracking-wider mb-1">
+                      Preheader Text <span className="font-normal text-black/30 lowercase">(inbox preview text)</span>
+                    </label>
+                    <input
+                      type="text"
+                      defaultValue="500 children vaccinated, 2,400 youth trained, and more from across our 7 states."
+                      className="w-full px-3 py-1.5 rounded-lg bg-white border border-black/[0.08] text-xs text-[#1C1C1E] outline-none focus:border-[#981132]"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* 3. Document Workspace + Right Delivery Rail */}
+              <div className="flex flex-col lg:flex-row">
+                
+                {/* Editor Canvas */}
+                <div className="flex-1 bg-[#F0EFF0] p-6 lg:p-10 flex flex-col items-center">
+                  {/* Formatting Toolbar */}
+                  <div className="w-full max-w-[680px] mb-4 px-3 py-2 rounded-xl bg-white/90 border border-black/[0.08] shadow-sm flex items-center gap-1 flex-wrap text-xs text-black/50">
+                    <button className="p-1.5 hover:bg-black/[0.05] rounded font-bold">B</button>
+                    <button className="p-1.5 hover:bg-black/[0.05] rounded italic">I</button>
+                    <button className="p-1.5 hover:bg-black/[0.05] rounded underline">U</button>
+                    <div className="w-px h-4 bg-black/10 mx-1" />
+                    <button className="px-2 py-1 hover:bg-black/[0.05] rounded font-bold">H1</button>
+                    <button className="px-2 py-1 hover:bg-black/[0.05] rounded font-bold">H2</button>
+                    <button className="px-2 py-1 hover:bg-black/[0.05] rounded">¶</button>
+                    <div className="w-px h-4 bg-black/10 mx-1" />
+                    <span className="w-3.5 h-3.5 rounded-full bg-[#981132] inline-block cursor-pointer" />
+                    <span className="w-3.5 h-3.5 rounded-full bg-[#0891B2] inline-block cursor-pointer" />
+                    <span className="w-3.5 h-3.5 rounded-full bg-[#16A34A] inline-block cursor-pointer" />
+                    <span className="w-3.5 h-3.5 rounded-full bg-[#B8860B] inline-block cursor-pointer" />
+                    <span className="ml-auto text-[10px] text-black/30">Select a block to format</span>
+                  </div>
+
+                  {/* Paper Sheet Canvas */}
+                  <div className="w-full max-w-[680px] bg-white rounded-2xl border border-black/[0.08] shadow-2xl p-8 sm:p-12 space-y-6">
+                    {/* Main Title Block */}
+                    <div
+                      contentEditable
+                      suppressContentEditableWarning
+                      className="text-2xl sm:text-3xl font-extrabold text-center text-[#1C1C1E] outline-none tracking-tight leading-tight"
+                    >
+                      District 9126 — July Impact Bulletin
+                    </div>
+
+                    {/* Salutation Block */}
+                    <div
+                      contentEditable
+                      suppressContentEditableWarning
+                      className="text-xs sm:text-sm text-black/70 leading-relaxed outline-none"
+                    >
+                      Dear Fellow Rotaractors,
+                      <br /><br />
+                      This July, we continue to set new standards for community service across our seven states. From the vaccination drives in Ogbomoso to the reforestation efforts across Ibadan, your impact is being felt — and celebrated.
+                    </div>
+
+                    {/* Image Block */}
+                    <div className="space-y-1 text-center">
+                      <img
+                        src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=680&h=340&fit=crop&auto=format"
+                        alt="Leadership Summit"
+                        className="w-full rounded-xl object-cover"
+                      />
+                      <div className="text-[10px] italic text-black/40">
+                        District Leadership Summit 2026 — 400+ Rotaractors gather in Ibadan
+                      </div>
+                    </div>
+
+                    {/* Section Heading */}
+                    <div
+                      contentEditable
+                      suppressContentEditableWarning
+                      className="text-lg font-bold text-[#1C1C1E] outline-none pt-2"
+                    >
+                      This Month&apos;s Highlights
+                    </div>
+
+                    {/* 2-Column Highlight Cards */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div className="p-4 rounded-xl bg-black/[0.024] border border-black/[0.08] text-xs leading-relaxed">
+                        <strong className="text-[#1C1C1E] block mb-1">Operation Vaccinate 500</strong>
+                        500 children immunised across Ogbomoso by RC LAUTECH volunteers in partnership with the Oyo State Ministry of Health.
+                      </div>
+                      <div className="p-4 rounded-xl bg-black/[0.024] border border-black/[0.08] text-xs leading-relaxed">
+                        <strong className="text-[#1C1C1E] block mb-1">Digital Skills Academy</strong>
+                        2,400 youth trained. 94% job placement rate. 8 active training centres across Ibadan Central.
+                      </div>
+                    </div>
+
+                    {/* CTA Button Block */}
+                    <div className="text-center pt-2">
+                      <button className="px-7 py-3 rounded-full bg-[#981132] text-white text-xs font-bold shadow-[0_6px_24px_rgba(152,17,50,0.3)]">
+                        Read Full Impact Report
+                      </button>
+                    </div>
+
+                    {/* Divider */}
+                    <div className="h-px bg-gradient-to-r from-transparent via-black/15 to-transparent my-4" />
+
+                    {/* Sign-off */}
+                    <div className="text-center text-xs text-black/60 leading-relaxed">
+                      With fellowship and purpose,
+                      <br /><br />
+                      <strong className="text-[#1C1C1E]">Oluwafemi Adeleke</strong><br />
+                      District Rotaract Representative · D9126 · 2024–25
+                    </div>
+                  </div>
+                </div>
+
+                {/* Right Delivery Configuration Rail (280px) */}
+                <div className="w-full lg:w-[280px] p-4 bg-[#F4F1F0]/60 border-l border-black/[0.08] space-y-3 shrink-0">
+                  
+                  {/* Insights Card */}
+                  <div className="p-4 rounded-xl bg-white/75 border border-black/[0.08] backdrop-blur-xl shadow-xs space-y-2.5">
+                    <div className="text-[9px] font-bold text-black/40 uppercase tracking-wider">
+                      Newsletter Insights
+                    </div>
+                    <div className="flex items-center justify-between p-2 rounded-lg bg-black/[0.02] border border-black/[0.06] text-xs">
+                      <span className="flex items-center gap-1.5 text-black/60">
+                        <Clock className="text-[#0891B2]" size={12} /> Estimated read
+                      </span>
+                      <span className="font-bold text-[#1C1C1E]">1 min</span>
+                    </div>
+                    <div className="flex items-center justify-between p-2 rounded-lg bg-black/[0.02] border border-black/[0.06] text-xs">
+                      <span className="flex items-center gap-1.5 text-black/60">
+                        <Users className="text-[#981132]" size={12} /> Recipients
+                      </span>
+                      <span className="font-bold text-[#1C1C1E]">1,247</span>
+                    </div>
+                    <div className="p-2 rounded-lg bg-[#981132]/[0.05] border border-[#981132]/15 text-[10px] text-black/50">
+                      Sending to <strong className="text-[#1C1C1E]">1,247 members</strong> across <strong className="text-[#1C1C1E]">7 states</strong>
+                    </div>
+                  </div>
+
+                  {/* Audience Segment Card */}
+                  <div className="p-4 rounded-xl bg-white/75 border border-black/[0.08] backdrop-blur-xl shadow-xs space-y-2">
+                    <div className="text-[9px] font-bold text-black/40 uppercase tracking-wider">
+                      Audience Segment
+                    </div>
+                    <select className="w-full px-3 py-2 rounded-lg bg-white border border-black/[0.08] text-xs text-[#1C1C1E] font-medium outline-none">
+                      <option>All Members (1,247)</option>
+                      <option>Club Presidents (47)</option>
+                      <option>Executive Council (16)</option>
+                    </select>
+                  </div>
+
+                  {/* Send Options Card */}
+                  <div className="p-4 rounded-xl bg-white/75 border border-black/[0.08] backdrop-blur-xl shadow-xs space-y-2.5">
+                    <div className="text-[9px] font-bold text-black/40 uppercase tracking-wider">
+                      Send Options
+                    </div>
+                    <div className="grid grid-cols-2 gap-2">
+                      <button className="py-1.5 text-xs font-bold rounded-lg bg-[#981132]/10 border border-[#981132]/25 text-[#981132]">
+                        Send Now
+                      </button>
+                      <button className="py-1.5 text-xs text-black/50 rounded-lg bg-black/[0.03] border border-black/[0.08]">
+                        Schedule
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Past Performance Card */}
+                  <div className="p-4 rounded-xl bg-white/75 border border-black/[0.08] backdrop-blur-xl shadow-xs space-y-2">
+                    <div className="text-[9px] font-bold text-black/40 uppercase tracking-wider">
+                      Past Performance
+                    </div>
+                    <div className="space-y-1.5 text-xs">
+                      <div className="flex justify-between p-1.5 rounded bg-black/[0.02]">
+                        <span className="text-black/50">Avg. Open Rate</span>
+                        <span className="font-bold text-green-600">48.2%</span>
+                      </div>
+                      <div className="flex justify-between p-1.5 rounded bg-black/[0.02]">
+                        <span className="text-black/50">Avg. Click Rate</span>
+                        <span className="font-bold text-[#0891B2]">12.7%</span>
+                      </div>
+                      <div className="flex justify-between p-1.5 rounded bg-black/[0.02]">
+                        <span className="text-black/50">Newsletters Sent</span>
+                        <span className="font-bold text-black/70">3</span>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+
+              </div>
+
+            </div>
+          ) : navActive === 'Financial Overview' ? (
             /* DEDICATED FINANCIAL OVERVIEW SUB-VIEW */
             <div className="space-y-4 font-sans">
               
