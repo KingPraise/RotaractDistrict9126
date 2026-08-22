@@ -54,6 +54,13 @@ export default function LeadershipSection() {
       tooltip: "PHF+1",
       image: "/images/leaders/drr-adebayo-sodiq.jpg",
       fallbackImage: "https://images.unsplash.com/photo-1602009786436-96b827675d32?w=480&h=580&fit=crop&auto=format"
+    },
+    {
+      name: "Rtr. Yusuf Mahfooz Adewale",
+      role: "District Director of ICT & Director",
+      tooltip: "PHF",
+      image: "/images/leaders/leader-ict-director-mafooz.jpg",
+      fallbackImage: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=480&h=580&fit=crop&auto=format"
     }
   ];
 
@@ -102,8 +109,8 @@ export default function LeadershipSection() {
           </p>
         </motion.div>
 
-        {/* 7-Column Responsive Grid with Staggered Cascading Animation */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7 gap-4">
+        {/* 8-Leader Responsive Grid with Staggered Cascading Animation */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-4 sm:gap-5">
           {leaders.map((leader, idx) => (
             <motion.div 
               key={idx} 
