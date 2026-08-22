@@ -496,12 +496,12 @@ export default function PresidentConsolePage() {
           <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#F7A81B]/[0.08] border border-[#F7A81B]/20 text-[#F7A81B] text-[10px] font-bold">
             <Star fill="#F7A81B" size={11}/> Club President
           </div>
-          <button
-            onClick={() => setIsExecutiveHqModalOpen(true)}
-            className="hidden sm:flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#4361EE]/10 hover:bg-[#4361EE]/20 border border-[#4361EE]/25 text-[#4361EE] text-xs font-semibold transition-colors cursor-pointer"
+          <Link
+            href="/portal/executive"
+            className="hidden sm:flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#4361EE]/10 hover:bg-[#4361EE]/20 border border-[#4361EE]/25 text-[#4361EE] text-xs font-semibold transition-colors"
           >
-            <BarChart2 size={12}/> Executive HQ
-          </button>
+            <BarChart2 size={12} /> Executive HQ
+          </Link>
           <button
             onClick={() => setIsAddMemberModalOpen(true)}
             className="flex items-center pl-4 pr-0 h-9 rounded-full bg-gradient-to-r from-[#D91B5C] to-[#7C3AED] text-white text-xs font-bold shadow-[0_0_20px_rgba(217,27,92,0.25)] hover:opacity-95 transition-all overflow-hidden cursor-pointer"
