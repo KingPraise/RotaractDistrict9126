@@ -142,9 +142,9 @@ export default function GlobalSearch({ isOpen, onClose }: GlobalSearchProps) {
             <div className="absolute -bottom-20 right-10 w-[250px] h-[120px] bg-[#D4A520]/15 blur-[60px] pointer-events-none rounded-full" />
 
             {/* Search Input Bar */}
-            <div className="relative flex items-center px-6 py-4.5 border-b border-white/[0.08] gap-3.5">
-              <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#981132] to-[#D91B5C] flex items-center justify-center text-white shadow-[0_4px_12px_rgba(152,17,50,0.4)] shrink-0">
-                <Search className="h-4.5 w-4.5" />
+            <div className="relative flex items-center px-7 py-5 border-b border-white/[0.08] gap-4">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#981132] to-[#D91B5C] flex items-center justify-center text-white shadow-[0_4px_12px_rgba(152,17,50,0.4)] shrink-0">
+                <Search className="h-5 w-5" />
               </div>
               <input
                 type="text"
@@ -157,9 +157,9 @@ export default function GlobalSearch({ isOpen, onClose }: GlobalSearchProps) {
               {query && (
                 <button
                   onClick={() => setQuery('')}
-                  className="p-1.5 rounded-lg bg-white/[0.06] hover:bg-white/[0.12] text-white/50 hover:text-white transition-colors"
+                  className="p-2 rounded-lg bg-white/[0.06] hover:bg-white/[0.12] text-white/50 hover:text-white transition-colors"
                 >
-                  <X className="h-3.5 w-3.5" />
+                  <X className="h-4 w-4" />
                 </button>
               )}
               <kbd className="hidden sm:inline-flex items-center px-2.5 py-1 rounded-lg bg-white/[0.06] text-[10.5px] font-mono font-bold text-white/40 border border-white/[0.08] shadow-inner">
@@ -169,9 +169,9 @@ export default function GlobalSearch({ isOpen, onClose }: GlobalSearchProps) {
 
             {/* Quick Filter Chips */}
             {!query && (
-              <div className="px-6 py-3 border-b border-white/[0.06] bg-black/20 flex items-center gap-2 overflow-x-auto text-xs scrollbar-none">
-                <span className="text-[10px] uppercase font-bold tracking-wider text-[#D4A520] flex items-center gap-1 shrink-0">
-                  <Sparkles size={11} /> Quick:
+              <div className="px-7 py-3.5 border-b border-white/[0.06] bg-black/20 flex items-center gap-2.5 overflow-x-auto text-xs scrollbar-none">
+                <span className="text-[10px] uppercase font-bold tracking-wider text-[#D4A520] flex items-center gap-1 shrink-0 mr-1">
+                  <Sparkles size={12} /> Quick:
                 </span>
                 {QUICK_CHIPS.map((chip) => {
                   const ChipIcon = chip.icon;
@@ -179,9 +179,9 @@ export default function GlobalSearch({ isOpen, onClose }: GlobalSearchProps) {
                     <button
                       key={chip.label}
                       onClick={() => setQuery(chip.label)}
-                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#981132]/15 hover:bg-[#981132]/30 text-white/80 hover:text-white text-[11px] font-semibold shrink-0 border border-[#981132]/30 hover:border-[#981132]/60 transition-all shadow-xs"
+                      className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-[#981132]/15 hover:bg-[#981132]/30 text-white/80 hover:text-white text-[11.5px] font-semibold shrink-0 border border-[#981132]/30 hover:border-[#981132]/60 transition-all shadow-xs"
                     >
-                      <ChipIcon size={10} className="text-[#D91B5C]" />
+                      <ChipIcon size={11} className="text-[#D91B5C]" />
                       <span>{chip.label}</span>
                     </button>
                   );
@@ -190,7 +190,7 @@ export default function GlobalSearch({ isOpen, onClose }: GlobalSearchProps) {
             )}
 
             {/* Results Directory Feed */}
-            <div className="p-3.5 max-h-[400px] overflow-y-auto space-y-2">
+            <div className="p-5 max-h-[430px] overflow-y-auto space-y-3">
               {filteredItems.map((item) => {
                 const Icon = item.icon;
                 return (
@@ -198,36 +198,36 @@ export default function GlobalSearch({ isOpen, onClose }: GlobalSearchProps) {
                     key={item.title}
                     href={item.href}
                     onClick={onClose}
-                    className="flex items-start gap-4 p-3.5 rounded-2xl bg-white/[0.02] hover:bg-white/[0.06] border border-white/[0.04] hover:border-[#981132]/40 transition-all duration-200 group text-left relative overflow-hidden"
+                    className="flex items-center gap-4.5 p-4 rounded-2xl bg-white/[0.02] hover:bg-white/[0.06] border border-white/[0.04] hover:border-[#981132]/40 transition-all duration-200 group text-left relative overflow-hidden"
                   >
                     {/* Hover Left Accent Indicator */}
                     <div className="absolute left-0 inset-y-0 w-1 bg-gradient-to-b from-[#981132] to-[#D91B5C] opacity-0 group-hover:opacity-100 transition-opacity" />
 
-                    <div className={`h-10 w-10 rounded-2xl bg-gradient-to-br ${item.color} text-white flex items-center justify-center shrink-0 shadow-md shadow-black/30 group-hover:scale-105 transition-transform`}>
+                    <div className={`h-11 w-11 rounded-2xl bg-gradient-to-br ${item.color} text-white flex items-center justify-center shrink-0 shadow-md shadow-black/30 group-hover:scale-105 transition-transform`}>
                       <Icon className="h-5 w-5" />
                     </div>
 
-                    <div className="flex-1 min-w-0">
+                    <div className="flex-1 min-w-0 pr-2">
                       <div className="flex items-center justify-between gap-2">
-                        <h4 className="text-xs sm:text-sm font-bold text-white group-hover:text-[#F87171] transition truncate">
+                        <h4 className="text-sm sm:text-[15px] font-bold text-white group-hover:text-[#F87171] transition truncate">
                           {item.title}
                         </h4>
-                        <span className="text-[9.5px] font-extrabold px-2 py-0.5 rounded-full bg-[#981132]/20 border border-[#981132]/30 text-[#F43F5E] uppercase tracking-wider shrink-0">
+                        <span className="text-[9.5px] font-extrabold px-2.5 py-0.5 rounded-full bg-[#981132]/20 border border-[#981132]/30 text-[#F43F5E] uppercase tracking-wider shrink-0">
                           {item.badge}
                         </span>
                       </div>
-                      <p className="text-[11.5px] text-white/50 mt-1 leading-relaxed truncate">{item.desc}</p>
+                      <p className="text-xs text-white/50 mt-1 leading-relaxed truncate">{item.desc}</p>
                     </div>
 
-                    <div className="w-7 h-7 rounded-xl bg-white/[0.04] group-hover:bg-[#981132] text-white/30 group-hover:text-white flex items-center justify-center shrink-0 mt-1.5 transition-all">
-                      <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
+                    <div className="w-8 h-8 rounded-xl bg-white/[0.04] group-hover:bg-[#981132] text-white/30 group-hover:text-white flex items-center justify-center shrink-0 transition-all">
+                      <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
                     </div>
                   </Link>
                 );
               })}
 
               {filteredItems.length === 0 && (
-                <div className="py-14 text-center text-white/40 text-xs space-y-2">
+                <div className="py-16 text-center text-white/40 text-xs space-y-2.5">
                   <div className="w-12 h-12 rounded-full bg-white/[0.04] border border-white/[0.08] flex items-center justify-center mx-auto text-white/30">
                     <Search size={20} />
                   </div>
@@ -238,11 +238,11 @@ export default function GlobalSearch({ isOpen, onClose }: GlobalSearchProps) {
             </div>
 
             {/* Keyboard Shortcuts & District Registry Status Footer */}
-            <div className="px-6 py-3.5 bg-black/40 border-t border-white/[0.08] flex items-center justify-between text-[11px] text-white/40 flex-wrap gap-2">
-              <div className="flex items-center gap-3">
-                <span className="flex items-center gap-1"><kbd className="px-1.5 py-0.5 rounded bg-white/10 text-[9px] font-mono text-white/60">↑↓</kbd> Navigate</span>
-                <span className="flex items-center gap-1"><kbd className="px-1.5 py-0.5 rounded bg-white/10 text-[9px] font-mono text-white/60">↵</kbd> Select</span>
-                <span className="flex items-center gap-1"><kbd className="px-1.5 py-0.5 rounded bg-white/10 text-[9px] font-mono text-white/60">ESC</kbd> Close</span>
+            <div className="px-7 py-4 bg-black/40 border-t border-white/[0.08] flex items-center justify-between text-[11px] text-white/40 flex-wrap gap-3">
+              <div className="flex items-center gap-3.5">
+                <span className="flex items-center gap-1.5"><kbd className="px-1.5 py-0.5 rounded bg-white/10 text-[9.5px] font-mono text-white/60">↑↓</kbd> Navigate</span>
+                <span className="flex items-center gap-1.5"><kbd className="px-1.5 py-0.5 rounded bg-white/10 text-[9.5px] font-mono text-white/60">↵</kbd> Select</span>
+                <span className="flex items-center gap-1.5"><kbd className="px-1.5 py-0.5 rounded bg-white/10 text-[9.5px] font-mono text-white/60">ESC</kbd> Close</span>
               </div>
               <div className="flex items-center gap-2">
                 <span className="relative flex h-2 w-2">
