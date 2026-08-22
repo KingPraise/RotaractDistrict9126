@@ -28,7 +28,12 @@ import {
   Send,
   Share2,
   Target,
-  CheckCircle2
+  CheckCircle2,
+  Check,
+  X,
+  CheckSquare,
+  Square,
+  Building
 } from 'lucide-react';
 import { 
   AreaChart, 
@@ -124,6 +129,56 @@ export default function DistrictExecutiveDashboardPage() {
   const [navActive, setNavActive] = useState('Overview');
   const [membershipTab, setMembershipTab] = useState<'Total' | 'Prospective' | 'Engaged'>('Total');
   const [searchQuery, setSearchQuery] = useState('');
+
+  // Verification Console States & Handlers
+  const [verificationTab, setVerificationTab] = useState<'members' | 'clubs'>('members');
+  const [selectedQueue, setSelectedQueue] = useState<string[]>([]);
+  const [pendingMembersList, setPendingMembersList] = useState([
+    { id: '1', name: 'Femi Adeleke', email: 'f.adeleke@rotaract9126.org', club: 'Rotaract Club of Ibadan Central', state: 'Oyo', date: 'Jul 21, 2026', status: 'Pending', avatar: 'https://images.unsplash.com/photo-1617440431587-138ca5c563ec?w=80&h=80&fit=crop&auto=format' },
+    { id: '2', name: 'Amina Garba', email: 'a.garba@rotaract9126.org', club: 'Rotaract Club of Minna', state: 'Niger', date: 'Jul 22, 2026', status: 'Pending', avatar: 'https://images.unsplash.com/photo-1747614736574-b1e56e7d7e20?w=80&h=80&fit=crop&auto=format' },
+    { id: '3', name: 'Seun Popoola', email: 's.popoola@rotaract9126.org', club: 'Rotaract Club of LAUTECH', state: 'Oyo', date: 'Jul 23, 2026', status: 'Flagged', avatar: 'https://images.unsplash.com/photo-1646658104783-2eec2433c1d1?w=80&h=80&fit=crop&auto=format' },
+    { id: '4', name: 'Ngozi Okafor', email: 'n.okafor@rotaract9126.org', club: 'Rotaract Club of Lokoja', state: 'Kogi', date: 'Jul 24, 2026', status: 'Pending', avatar: 'https://images.unsplash.com/photo-1598547461182-45d03f6661e4?w=80&h=80&fit=crop&auto=format' },
+    { id: '5', name: 'Taiwo Adesanya', email: 't.adesanya@rotaract9126.org', club: 'RC of University of Ibadan', state: 'Oyo', date: 'Jul 25, 2026', status: 'Pending', avatar: 'https://images.unsplash.com/photo-1659422440915-d516c6dc932e?w=80&h=80&fit=crop&auto=format' },
+    { id: '6', name: 'Kunle Olatunji', email: 'k.olatunji@rotaract9126.org', club: 'Rotaract Club of OAU Ile-Ife', state: 'Osun', date: 'Jul 26, 2026', status: 'Pending', avatar: 'https://images.unsplash.com/photo-1614023342667-6f060e9d1e04?w=80&h=80&fit=crop&auto=format' },
+    { id: '7', name: 'Rashida Musa', email: 'r.musa@rotaract9126.org', club: 'Rotaract Club of Osogbo', state: 'Osun', date: 'Jul 27, 2026', status: 'Flagged', avatar: 'https://images.unsplash.com/photo-1657218380188-40c56bfdf97f?w=80&h=80&fit=crop&auto=format' },
+    { id: '8', name: 'Olabisi Afolabi', email: 'o.afolabi@rotaract9126.org', club: 'Rotaract Club of Ado-Ekiti', state: 'Ekiti', date: 'Jul 28, 2026', status: 'Pending', avatar: 'https://images.unsplash.com/photo-1609371497456-3a55a205d5eb?w=80&h=80&fit=crop&auto=format' },
+    { id: '9', name: 'Emeka Chukwuemeka', email: 'e.chukwuemeka@rotaract9126.org', club: 'Rotaract Club of Minna', state: 'Niger', date: 'Jul 29, 2026', status: 'Pending', avatar: 'https://images.unsplash.com/photo-1631824925667-28632e135463?w=80&h=80&fit=crop&auto=format' },
+    { id: '10', name: 'Blessing Adeyinka', email: 'b.adeyinka@rotaract9126.org', club: 'Rotaract Club of Ilorin', state: 'Kwara', date: 'Jul 29, 2026', status: 'Flagged', avatar: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=80&h=80&fit=crop&auto=format' },
+    { id: '11', name: 'Chidinma Okonkwo', email: 'c.okonkwo@rotaract9126.org', club: 'Rotaract Club of Lokoja', state: 'Kogi', date: 'Jul 30, 2026', status: 'Pending', avatar: 'https://images.unsplash.com/photo-1573497491765-dccce02b29df?w=80&h=80&fit=crop&auto=format' },
+    { id: '12', name: 'Adewale Ogunleye', email: 'a.ogunleye@rotaract9126.org', club: 'Rotaract Club of Akure', state: 'Ondo', date: 'Aug 1, 2026', status: 'Pending', avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop&auto=format' }
+  ]);
+
+  const handleApproveMember = (id: string) => {
+    setPendingMembersList(prev => prev.filter(m => m.id !== id));
+    setSelectedQueue(prev => prev.filter(mId => mId !== id));
+  };
+
+  const handleRejectMember = (id: string) => {
+    setPendingMembersList(prev => prev.filter(m => m.id !== id));
+    setSelectedQueue(prev => prev.filter(mId => mId !== id));
+  };
+
+  const toggleQueueItem = (id: string) => {
+    setSelectedQueue(prev => prev.includes(id) ? prev.filter(mId => mId !== id) : [...prev, id]);
+  };
+
+  const toggleSelectAllQueue = () => {
+    if (selectedQueue.length === pendingMembersList.length) {
+      setSelectedQueue([]);
+    } else {
+      setSelectedQueue(pendingMembersList.map(m => m.id));
+    }
+  };
+
+  const handleBatchApprove = () => {
+    setPendingMembersList(prev => prev.filter(m => !selectedQueue.includes(m.id)));
+    setSelectedQueue([]);
+  };
+
+  const handleBatchReject = () => {
+    setPendingMembersList(prev => prev.filter(m => !selectedQueue.includes(m.id)));
+    setSelectedQueue([]);
+  };
 
   return (
     <div className="min-h-screen bg-white text-[#1C1C1E] font-sans flex relative overflow-x-hidden">
@@ -333,7 +388,197 @@ export default function DistrictExecutiveDashboardPage() {
 
         {/* Scroll Content */}
         <div className="flex-1 overflow-y-auto p-6 space-y-5">
-          {navActive === 'Executive Analytics' ? (
+          {navActive === 'Verification Console' ? (
+            /* DEDICATED VERIFICATION CONSOLE SUB-VIEW */
+            <div className="space-y-4 font-sans pb-24 relative">
+              
+              {/* Header & Metric Counter */}
+              <div className="flex items-center justify-between gap-4 flex-wrap">
+                <div>
+                  <h1 className="text-xl font-extrabold text-[#1C1C1E] tracking-tight">
+                    Member & Club Verification Queue
+                  </h1>
+                  <p className="text-xs text-black/40 mt-0.5">
+                    Review and authorize pending district inductions and charter verifications.
+                  </p>
+                </div>
+
+                <div className="flex items-center gap-2">
+                  <span className="px-3 py-1 rounded-full bg-[#D91B5C]/10 border border-[#D91B5C]/20 text-[#D91B5C] text-xs font-bold">
+                    {pendingMembersList.length} Pending Approvals
+                  </span>
+                </div>
+              </div>
+
+              {/* Sub-Navigation Tabs */}
+              <div className="flex items-center gap-2 border-b border-black/[0.08] pb-1">
+                <button
+                  onClick={() => setVerificationTab('members')}
+                  className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all ${
+                    verificationTab === 'members'
+                      ? 'bg-black/[0.06] text-[#1C1C1E]'
+                      : 'text-black/40 hover:text-black/70 hover:bg-black/[0.02]'
+                  }`}
+                >
+                  <Users size={14} />
+                  <span>Pending Members ({pendingMembersList.length})</span>
+                </button>
+                <button
+                  onClick={() => setVerificationTab('clubs')}
+                  className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all ${
+                    verificationTab === 'clubs'
+                      ? 'bg-black/[0.06] text-[#1C1C1E]'
+                      : 'text-black/40 hover:text-black/70 hover:bg-black/[0.02]'
+                  }`}
+                >
+                  <Building size={14} />
+                  <span>Chartered Clubs (0)</span>
+                </button>
+              </div>
+
+              {/* Table Container */}
+              <div className="p-1 rounded-2xl bg-white/75 border border-black/[0.08] backdrop-blur-xl shadow-sm overflow-hidden">
+                <div className="overflow-x-auto">
+                  <table className="w-full text-left text-xs">
+                    <thead>
+                      <tr className="border-b border-black/[0.06] bg-black/[0.015] text-[10px] font-bold uppercase tracking-wider text-black/40">
+                        <th className="py-3 px-4 w-10">
+                          <button
+                            onClick={toggleSelectAllQueue}
+                            className="text-black/40 hover:text-black transition-colors"
+                          >
+                            {selectedQueue.length === pendingMembersList.length && pendingMembersList.length > 0 ? (
+                              <CheckSquare size={14} className="text-[#D91B5C]" />
+                            ) : (
+                              <Square size={14} />
+                            )}
+                          </button>
+                        </th>
+                        <th className="py-3 px-4">Member</th>
+                        <th className="py-3 px-4">Club & State</th>
+                        <th className="py-3 px-4">Application Date</th>
+                        <th className="py-3 px-4">Status</th>
+                        <th className="py-3 px-4 text-right">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-black/[0.04]">
+                      {pendingMembersList.length === 0 ? (
+                        <tr>
+                          <td colSpan={6} className="py-12 text-center text-black/40">
+                            No pending verifications in the queue. All submissions have been processed!
+                          </td>
+                        </tr>
+                      ) : (
+                        pendingMembersList.map((member) => {
+                          const isSelected = selectedQueue.includes(member.id);
+                          return (
+                            <tr
+                              key={member.id}
+                              className={`transition-colors hover:bg-black/[0.02] ${
+                                isSelected ? 'bg-[#D91B5C]/[0.03]' : ''
+                              }`}
+                            >
+                              <td className="py-3 px-4">
+                                <button
+                                  onClick={() => toggleQueueItem(member.id)}
+                                  className="text-black/40 hover:text-black transition-colors"
+                                >
+                                  {isSelected ? (
+                                    <CheckSquare size={14} className="text-[#D91B5C]" />
+                                  ) : (
+                                    <Square size={14} />
+                                  )}
+                                </button>
+                              </td>
+
+                              <td className="py-3 px-4">
+                                <div className="flex items-center gap-3">
+                                  <img
+                                    src={member.avatar}
+                                    alt={member.name}
+                                    className="w-8 h-8 rounded-full object-cover border border-black/10 shrink-0"
+                                  />
+                                  <div>
+                                    <div className="font-bold text-[#1C1C1E]">{member.name}</div>
+                                    <div className="text-[10px] text-black/40">{member.email}</div>
+                                  </div>
+                                </div>
+                              </td>
+
+                              <td className="py-3 px-4">
+                                <div className="font-semibold text-[#1C1C1E]">{member.club}</div>
+                                <div className="text-[10px] text-black/40">{member.state} State</div>
+                              </td>
+
+                              <td className="py-3 px-4 text-black/60 font-medium">
+                                {member.date}
+                              </td>
+
+                              <td className="py-3 px-4">
+                                {member.status === 'Flagged' ? (
+                                  <span className="px-2 py-0.5 rounded-md bg-amber-500/10 border border-amber-500/20 text-amber-700 text-[10px] font-bold">
+                                    Flagged
+                                  </span>
+                                ) : (
+                                  <span className="px-2 py-0.5 rounded-md bg-blue-500/10 border border-blue-500/20 text-blue-700 text-[10px] font-bold">
+                                    Pending Review
+                                  </span>
+                                )}
+                              </td>
+
+                              <td className="py-3 px-4 text-right">
+                                <div className="flex items-center justify-end gap-1.5">
+                                  <button
+                                    onClick={() => handleApproveMember(member.id)}
+                                    title="Approve Member"
+                                    className="p-1.5 rounded-lg bg-green-600/10 hover:bg-green-600/20 text-green-700 transition-colors"
+                                  >
+                                    <Check size={13} />
+                                  </button>
+                                  <button
+                                    onClick={() => handleRejectMember(member.id)}
+                                    title="Reject Member"
+                                    className="p-1.5 rounded-lg bg-red-600/10 hover:bg-red-600/20 text-red-700 transition-colors"
+                                  >
+                                    <X size={13} />
+                                  </button>
+                                </div>
+                              </td>
+                            </tr>
+                          );
+                        })
+                      )}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              {/* Floating Batch Actions Bar */}
+              {selectedQueue.length > 0 && (
+                <div className="fixed bottom-7 left-64 z-50 p-3 px-5 rounded-2xl bg-[#090A0F]/90 backdrop-blur-2xl border border-white/15 text-white shadow-2xl flex items-center gap-6">
+                  <div className="text-xs font-bold">
+                    <span className="text-[#D91B5C] font-extrabold">{selectedQueue.length}</span> member{selectedQueue.length > 1 ? 's' : ''} selected
+                  </div>
+
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={handleBatchApprove}
+                      className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-green-600 hover:bg-green-500 text-white text-xs font-bold transition-all shadow-sm"
+                    >
+                      <Check size={12} /> Approve Selected
+                    </button>
+                    <button
+                      onClick={handleBatchReject}
+                      className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-red-600 hover:bg-red-500 text-white text-xs font-bold transition-all shadow-sm"
+                    >
+                      <X size={12} /> Reject Selected
+                    </button>
+                  </div>
+                </div>
+              )}
+
+            </div>
+          ) : navActive === 'Executive Analytics' ? (
             /* DEDICATED EXECUTIVE ANALYTICS SUB-VIEW */
             <div className="space-y-4 font-sans pb-24 relative">
               
