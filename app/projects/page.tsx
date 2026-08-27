@@ -224,7 +224,7 @@ export default function ProjectsPage() {
                           ))}
 
                           <Link
-                            href="/#impact"
+                            href={`/projects/${p.id}`}
                             className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#981132] hover:bg-[#A70C43] text-white text-[11.5px] font-bold tracking-wide shadow-md transition-all font-sans ml-auto group"
                           >
                             View Project
@@ -437,7 +437,7 @@ export default function ProjectsPage() {
                       <div className="flex items-center justify-between mt-3 pt-3 border-t border-white/10">
                         <span className="text-[10px] text-white/40 font-sans">D9126 Project</span>
                         <Link 
-                          href="/#impact" 
+                          href={`/projects/${p.id}`} 
                           className="flex items-center gap-1 text-xs font-bold transition-colors hover:text-white"
                           style={{ color: theme.text }}
                         >

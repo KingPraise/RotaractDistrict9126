@@ -1,38 +1,116 @@
-'use client';
+const fs = require('fs');
+const path = require('path');
+const crypto = require('crypto');
 
-import { db } from '@/lib/firebase/client';
-import {
-  collection,
-  doc,
-  getDocs,
-  setDoc,
-  updateDoc,
-  deleteDoc,
-  onSnapshot,
-  query,
-  orderBy,
-  serverTimestamp,
-} from 'firebase/firestore';
-
-export interface ProjectItem {
-  id: string;
-  title: string;
-  category: string;
-  year: string;
-  club: string;
-  location: string;
-  image: string;
-  height?: string;
-  description?: string;
-  status: 'In Progress' | 'Completed' | 'Upcoming';
-  progress: number;
-  statNumber?: string;
-  statLabel?: string;
-  stats?: Array<{ icon: string; value: string; label: string }>;
-  createdAt?: string;
+// Load environment variables from .env.local
+function loadEnv() {
+  const envPath = path.resolve(process.cwd(), '.env.local');
+  if (fs.existsSync(envPath)) {
+    const envContent = fs.readFileSync(envPath, 'utf-8');
+    envContent.split('\n').forEach((line) => {
+      const trimmed = line.trim();
+      if (!trimmed || trimmed.startsWith('#')) return;
+      const equalsIdx = trimmed.indexOf('=');
+      if (equalsIdx > 0) {
+        const key = trimmed.substring(0, equalsIdx).trim();
+        let val = trimmed.substring(equalsIdx + 1).trim();
+        if ((val.startsWith('"') && val.endsWith('"')) || (val.startsWith("'") && val.endsWith("'"))) {
+          val = val.substring(1, val.length - 1);
+        }
+        process.env[key] = val;
+      }
+    });
+  }
 }
 
-export const INITIAL_PROJECTS: ProjectItem[] = [
+loadEnv();
+
+const PROJECT_ID = process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID || process.env.FIREBASE_PROJECT_ID || 'rotaract-district-9126';
+const CLIENT_EMAIL = process.env.FIREBASE_CLIENT_EMAIL;
+let PRIVATE_KEY = process.env.FIREBASE_PRIVATE_KEY;
+
+if (PRIVATE_KEY) {
+  PRIVATE_KEY = PRIVATE_KEY.replace(/\\n/g, '\n');
+}
+
+/**
+ * Generate Google OAuth2 Bearer Access Token from Service Account
+ */
+async function getGoogleAccessToken() {
+  const now = Math.floor(Date.now() / 1000);
+  const header = { alg: 'RS256', typ: 'JWT' };
+  const claimSet = {
+    iss: CLIENT_EMAIL,
+    scope: 'https://www.googleapis.com/auth/datastore https://www.googleapis.com/auth/cloud-platform',
+    aud: 'https://oauth2.googleapis.com/token',
+    exp: now + 3600,
+    iat: now,
+  };
+
+  const encodeBase64Url = (obj) =>
+    Buffer.from(JSON.stringify(obj))
+      .toString('base64')
+      .replace(/=/g, '')
+      .replace(/\+/g, '-')
+      .replace(/\//g, '_');
+
+  const unsignedToken = `${encodeBase64Url(header)}.${encodeBase64Url(claimSet)}`;
+
+  const signer = crypto.createSign('RSA-SHA256');
+  signer.update(unsignedToken);
+  const signature = signer.sign(PRIVATE_KEY, 'base64')
+    .replace(/=/g, '')
+    .replace(/\+/g, '-')
+    .replace(/\//g, '_');
+
+  const jwt = `${unsignedToken}.${signature}`;
+
+  const tokenRes = await fetch('https://oauth2.googleapis.com/token', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: new URLSearchParams({
+      grant_type: 'urn:ietf:params:oauth:grant-type:jwt-bearer',
+      assertion: jwt,
+    }),
+  });
+
+  if (!tokenRes.ok) {
+    const err = await tokenRes.text();
+    throw new Error(`Failed to obtain Google access token: ${err}`);
+  }
+
+  const tokenData = await tokenRes.json();
+  return tokenData.access_token;
+}
+
+function toFirestoreValue(val) {
+  if (typeof val === 'string') return { stringValue: val };
+  if (typeof val === 'number') {
+    return Number.isInteger(val) ? { integerValue: val.toString() } : { doubleValue: val };
+  }
+  if (typeof val === 'boolean') return { booleanValue: val };
+  if (Array.isArray(val)) {
+    return { arrayValue: { values: val.map(toFirestoreValue) } };
+  }
+  if (val && typeof val === 'object') {
+    const fields = {};
+    for (const [k, v] of Object.entries(val)) {
+      fields[k] = toFirestoreValue(v);
+    }
+    return { mapValue: { fields } };
+  }
+  return { nullValue: null };
+}
+
+function toFirestoreFields(obj) {
+  const fields = {};
+  for (const [key, value] of Object.entries(obj)) {
+    fields[key] = toFirestoreValue(value);
+  }
+  return fields;
+}
+
+const OFFICIAL_PROJECTS = [
   {
     id: 'proj-osogbo-maternal-wellness',
     title: 'Maternal Wellness Outreach & PHC Support',
@@ -175,162 +253,37 @@ export const INITIAL_PROJECTS: ProjectItem[] = [
   }
 ];
 
-const STORAGE_KEY = 'district_9126_projects_db';
-const EVENT_NAME = 'district_9126_projects_updated';
+async function seedAdminRest() {
+  const BASE_URL = `https://firestore.googleapis.com/v1/projects/${PROJECT_ID}/databases/(default)/documents`;
+  console.log('🔐 Authenticating Service Account via Google OAuth2...');
+  const token = await getGoogleAccessToken();
+  console.log('✅ Access Token acquired. Seeding official projects to Firestore collection `projects`...');
 
-// Get current projects from persistent storage or default
-export function getStoredProjects(): ProjectItem[] {
-  if (typeof window === 'undefined') return INITIAL_PROJECTS;
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (!raw) {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(INITIAL_PROJECTS));
-      return INITIAL_PROJECTS;
-    }
-    const parsed = JSON.parse(raw);
-    // If cache has old initial project IDs (e.g. 'proj-1') or fewer projects, refresh with latest official INITIAL_PROJECTS
-    const hasOldData = Array.isArray(parsed) && parsed.some((p: any) => p.id === 'proj-1' || p.id === 'proj-2');
-    if (hasOldData || !Array.isArray(parsed) || parsed.length < INITIAL_PROJECTS.length) {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(INITIAL_PROJECTS));
-      return INITIAL_PROJECTS;
-    }
-    return parsed;
-  } catch {
-    return INITIAL_PROJECTS;
-  }
-}
-
-// Save a new project with Firestore sync & Local Storage cache
-export function saveProject(project: Omit<ProjectItem, 'id' | 'createdAt'>): ProjectItem {
-  const current = getStoredProjects();
-  const id = `proj-${Date.now()}`;
-  const createdAt = new Date().toISOString();
-
-  const newProject: ProjectItem = {
-    ...project,
-    id,
-    createdAt,
-    statNumber: project.statNumber || (project.progress === 100 ? '100%' : `${project.progress}%`),
-    statLabel: project.statLabel || 'Project Milestone'
-  };
-
-  const updated = [newProject, ...current];
-  if (typeof window !== 'undefined') {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
-    window.dispatchEvent(new Event(EVENT_NAME));
-  }
-
-  // Background Firestore sync
-  try {
-    const projectRef = doc(db, 'projects', id);
-    setDoc(projectRef, {
-      ...newProject,
-      createdAtServer: serverTimestamp(),
-    }).catch((err) => console.warn('Firestore project write warning:', err));
-  } catch (err) {
-    console.warn('Firestore project write failed:', err);
-  }
-
-  return newProject;
-}
-
-// Update existing project
-export function updateProject(id: string, updates: Partial<ProjectItem>): ProjectItem | null {
-  const current = getStoredProjects();
-  let updatedItem: ProjectItem | null = null;
-  const updated = current.map((p) => {
-    if (p.id === id) {
-      updatedItem = { ...p, ...updates };
-      return updatedItem;
-    }
-    return p;
-  });
-
-  if (typeof window !== 'undefined') {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
-    window.dispatchEvent(new Event(EVENT_NAME));
-  }
-
-  // Background Firestore update
-  try {
-    const projectRef = doc(db, 'projects', id);
-    updateDoc(projectRef, {
-      ...updates,
-      updatedAtServer: serverTimestamp(),
-    }).catch(() => {
-      if (updatedItem) {
-        setDoc(projectRef, updatedItem, { merge: true }).catch(() => {});
-      }
+  for (const project of OFFICIAL_PROJECTS) {
+    const url = `${BASE_URL}/projects/${project.id}`;
+    const body = JSON.stringify({
+      fields: toFirestoreFields(project)
     });
-  } catch (err) {
-    console.warn('Firestore project update warning:', err);
-  }
 
-  return updatedItem;
-}
-
-// Delete project
-export function deleteProject(id: string): boolean {
-  const current = getStoredProjects();
-  const filtered = current.filter((p) => p.id !== id);
-  if (typeof window !== 'undefined') {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(filtered));
-    window.dispatchEvent(new Event(EVENT_NAME));
-  }
-
-  // Background Firestore deletion
-  try {
-    const projectRef = doc(db, 'projects', id);
-    deleteDoc(projectRef).catch((err) => console.warn('Firestore delete warning:', err));
-  } catch (err) {
-    console.warn('Firestore delete failed:', err);
-  }
-
-  return true;
-}
-
-// Subscribe to real-time project updates across components/tabs & Firestore
-export function subscribeToProjects(callback: (projects: ProjectItem[]) => void): () => void {
-  if (typeof window === 'undefined') return () => {};
-
-  const handler = () => {
-    callback(getStoredProjects());
-  };
-
-  window.addEventListener(EVENT_NAME, handler);
-  window.addEventListener('storage', handler);
-
-  // Firestore real-time snapshot subscription
-  let unsubFirestore = () => {};
-  try {
-    const q = query(collection(db, 'projects'));
-    unsubFirestore = onSnapshot(
-      q,
-      (snapshot) => {
-        if (!snapshot.empty) {
-          const remoteItems = snapshot.docs.map((d) => ({
-            id: d.id,
-            ...d.data(),
-          })) as ProjectItem[];
-
-          if (remoteItems.length > 0) {
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(remoteItems));
-            callback(remoteItems);
-          }
-        }
+    const res = await fetch(url, {
+      method: 'PATCH',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json'
       },
-      (error) => {
-        // Fallback to local
-        console.info('Firestore project subscription notice:', error);
-      }
-    );
-  } catch (err) {
-    console.info('Firestore onSnapshot init notice:', err);
+      body
+    });
+
+    if (!res.ok) {
+      const err = await res.text();
+      console.error(`❌ Error writing ${project.id}:`, err);
+    } else {
+      console.log(`✅ Seeded to Firestore: ${project.title}`);
+    }
   }
 
-  return () => {
-    window.removeEventListener(EVENT_NAME, handler);
-    window.removeEventListener('storage', handler);
-    unsubFirestore();
-  };
+  console.log('🎉 All exact projects successfully written to Firebase Firestore DB!');
+  process.exit(0);
 }
+
+seedAdminRest().catch(console.error);
