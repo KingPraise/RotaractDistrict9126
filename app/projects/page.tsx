@@ -190,6 +190,9 @@ export default function ProjectsPage() {
                       <img 
                         src={p.image} 
                         alt={p.title} 
+                        onError={(e) => {
+                          e.currentTarget.src = 'https://images.unsplash.com/photo-1509099836639-18ba1795216d?w=900&h=700&fit=crop&auto=format';
+                        }}
                         className="w-full object-cover" 
                         style={{ height: 'clamp(240px, 38vw, 420px)' }}
                       />
@@ -372,6 +375,9 @@ export default function ProjectsPage() {
                     <img 
                       src={p.image} 
                       alt={p.title} 
+                      onError={(e) => {
+                        e.currentTarget.src = 'https://images.unsplash.com/photo-1509099836639-18ba1795216d?w=900&h=700&fit=crop&auto=format';
+                      }}
                       className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                     />
 

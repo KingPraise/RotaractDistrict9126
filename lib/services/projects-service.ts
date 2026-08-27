@@ -187,7 +187,14 @@ export function getStoredProjects(): ProjectItem[] {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(INITIAL_PROJECTS));
       return INITIAL_PROJECTS;
     }
-    return JSON.parse(raw);
+    const parsed = JSON.parse(raw);
+    // If cache has old initial project IDs (e.g. 'proj-1') or fewer projects, refresh with latest official INITIAL_PROJECTS
+    const hasOldData = Array.isArray(parsed) && parsed.some((p: any) => p.id === 'proj-1' || p.id === 'proj-2');
+    if (hasOldData || !Array.isArray(parsed) || parsed.length < INITIAL_PROJECTS.length) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(INITIAL_PROJECTS));
+      return INITIAL_PROJECTS;
+    }
+    return parsed;
   } catch {
     return INITIAL_PROJECTS;
   }
