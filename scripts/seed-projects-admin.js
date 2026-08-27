@@ -232,22 +232,22 @@ const OFFICIAL_PROJECTS = [
     createdAt: new Date().toISOString()
   },
   {
-    id: 'proj-district-strategic-projects',
-    title: 'Official District 9126 Strategic Projects Portfolio (₦10.85M)',
-    category: 'Education',
+    id: 'proj-ilorin-gra-four-way-test',
+    title: 'The 4-Way Test Presentation & Maternal Health Outreach',
+    category: 'Peacebuilding',
     year: '2026',
-    club: 'District 9126 Executive Council',
-    location: 'District-wide (7 States)',
-    image: '/images/projects/district-strategic-projects-docket.jpg',
-    description: 'The official 2026/2027 District Flagship Projects portfolio including Smart School Makeovers (₦6.5M), Soft Skill Scholarships (₦700K), ABIAMO Maternal Project (₦500K), Project Shield (₦700K), and Enterprise Grants (₦2M).',
-    status: 'In Progress',
-    progress: 75,
-    statNumber: '₦10.85M',
-    statLabel: 'Total Strategic Budget',
+    club: 'Rotaract Club of Ilorin GRA',
+    location: 'Ilorin, Kwara State',
+    image: '/images/projects/ilorin-gra-four-way-test.jpg',
+    description: 'High-level peacebuilding and ethical leadership outreach promoting the Rotary 4-Way Test alongside maternal wellness packs and healthcare supplies distribution to local community healthcare beneficiaries.',
+    status: 'Completed',
+    progress: 100,
+    statNumber: '120+',
+    statLabel: 'Community Members Reached',
     stats: [
-      { icon: 'zap', value: '₦10.85M', label: 'Total Budget' },
-      { icon: 'book', value: '7 Projects', label: 'Flagship Portfolio' },
-      { icon: 'pin', value: '7 States', label: 'Jurisdiction' }
+      { icon: 'leaf', value: '4-Way Test', label: 'Ethical Leadership' },
+      { icon: 'heart', value: '120+', label: 'Beneficiaries' },
+      { icon: 'pin', value: 'Ilorin GRA', label: 'Kwara State' }
     ],
     createdAt: new Date().toISOString()
   }
