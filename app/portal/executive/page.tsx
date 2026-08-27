@@ -488,11 +488,13 @@ export default function DistrictExecutiveDashboardPage() {
                     </thead>
                     <tbody className="divide-y divide-black/[0.04]">
                       {[
-                        { name: 'Operation Vaccinate 500', club: 'RAC LAUTECH', state: 'Oyo', focus: 'Disease Prevention', count: '500 Children', status: 'Completed' },
-                        { name: 'Digital Skills Academy', club: 'RAC Ibadan Central', state: 'Oyo', focus: 'Youth Empowerment', count: '2,400 Youth', status: 'Active' },
-                        { name: 'Clean Water Borehole Offa', club: 'RAC Offa Metro', state: 'Kwara', focus: 'WASH', count: '1,200 Families', status: 'Completed' },
-                        { name: 'Reforest Ondo Initiative', club: 'RAC Akure', state: 'Ondo', focus: 'Environment', count: '10,000 Trees', status: 'Active' },
-                        { name: 'Maternal Health Clinic Drive', club: 'RAC Lokoja CB', state: 'Kogi', focus: 'Maternal & Child', count: '350 Mothers', status: 'In Review' },
+                        { name: 'Smart School Makeover Project', club: 'District 9126 Executive Initiative', state: 'All 7 States', focus: 'Basic Education & Literacy', budget: '₦6.50M', count: '500+ Students', status: 'Active' },
+                        { name: 'Acquire a Soft Skill Scholarship', club: 'District Human Capital Dev', state: 'Virtual / 7 States', focus: 'Economic & Community Dev', budget: '₦700K', count: '100 Rotaractors', status: 'Active' },
+                        { name: 'ABIAMO Maternal Health Project', club: 'RAC Lead City & Health Team', state: 'Oyo State', focus: 'Maternal & Child Health', budget: '₦500K', count: '170+ Mothers', status: 'Active' },
+                        { name: 'Project Shield: Cervical Cancer', club: 'RAC Osogbo & Health Wing', state: 'Osun State', focus: 'Disease Prevention', budget: '₦700K', count: '350+ Screened', status: 'Active' },
+                        { name: 'Rotaract Enterprise Grant', club: 'District Vocational Wing', state: 'All 7 States', focus: 'Economic & Community Dev', budget: '₦2.00M', count: '8 Startups', status: 'Active' },
+                        { name: 'The 4-Way Test Advocacy', club: 'DRR Executive Office', state: '7 State Secretariats', focus: 'Peacebuilding & Governance', budget: '₦350K', count: '7 First Ladies', status: 'Active' },
+                        { name: '100 Acts of Service Campaign', club: '77 Chartered Clubs', state: 'District-wide', focus: 'Community Service', budget: '₦100K', count: '100 Impacts', status: 'Active' },
                       ].map((proj) => (
                         <tr key={proj.name} className="hover:bg-black/[0.015]">
                           <td className="py-2.5 font-bold text-[#1C1C1E]">{proj.name}</td>

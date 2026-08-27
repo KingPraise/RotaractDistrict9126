@@ -24,8 +24,12 @@ import { getStoredProjects, subscribeToProjects, ProjectItem } from '@/lib/servi
 
 const categoryColors: Record<string, { bg: string; border: string; text: string }> = {
   Healthcare: { bg: 'rgba(217, 27, 92, 0.133)', border: 'rgba(217, 27, 92, 0.267)', text: '#D91B5C' },
+  'Maternal & Child Health': { bg: 'rgba(217, 27, 92, 0.133)', border: 'rgba(217, 27, 92, 0.267)', text: '#D91B5C' },
   WASH: { bg: 'rgba(27, 140, 217, 0.133)', border: 'rgba(27, 140, 217, 0.267)', text: '#1B8CD9' },
   Education: { bg: 'rgba(212, 165, 32, 0.133)', border: 'rgba(212, 165, 32, 0.267)', text: '#D4A520' },
+  Peacebuilding: { bg: 'rgba(59, 130, 246, 0.133)', border: 'rgba(59, 130, 246, 0.267)', text: '#3B82F6' },
+  'Economic Development': { bg: 'rgba(249, 115, 22, 0.133)', border: 'rgba(249, 115, 22, 0.267)', text: '#F97316' },
+  'Community Service': { bg: 'rgba(16, 185, 129, 0.133)', border: 'rgba(16, 185, 129, 0.267)', text: '#10B981' },
   Environment: { bg: 'rgba(34, 197, 94, 0.133)', border: 'rgba(34, 197, 94, 0.267)', text: '#22C55E' },
   'Food Security': { bg: 'rgba(249, 115, 22, 0.133)', border: 'rgba(249, 115, 22, 0.267)', text: '#F97316' },
   Empowerment: { bg: 'rgba(168, 85, 247, 0.133)', border: 'rgba(168, 85, 247, 0.267)', text: '#A855F7' }
@@ -45,7 +49,16 @@ export default function ProjectsPage() {
     return unsubscribe;
   }, []);
 
-  const categories = ['All', 'Healthcare', 'WASH', 'Education', 'Environment', 'Food Security', 'Empowerment'];
+  const categories = [
+    'All',
+    'Education',
+    'Maternal & Child Health',
+    'Healthcare',
+    'Economic Development',
+    'Empowerment',
+    'Peacebuilding',
+    'Community Service'
+  ];
 
   const featuredProjects = useMemo(() => projectsList.slice(0, 3), [projectsList]);
 
