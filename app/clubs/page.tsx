@@ -3,7 +3,7 @@
 import React, { useState, useMemo } from 'react';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
-import { Search, MapPin, Clock, Users, List, Map as MapIcon } from 'lucide-react';
+import { Search, MapPin, Clock, Users, List, Map as MapIcon, Phone } from 'lucide-react';
 import Navbar from '@/components/layout/Navbar';
 import { clubsData } from '@/lib/clubs-data';
 
@@ -175,16 +175,29 @@ export default function ClubsPage() {
                         : 'bg-white/80 backdrop-blur-[20px] border border-black/[0.07] shadow-[0_2px_12px_rgba(0,0,0,0.06)] hover:bg-white hover:shadow-[0_4px_16px_rgba(0,0,0,0.08)]'
                     }`}
                   >
-                    {/* Top Row: Rotaract Logo & Title */}
+                    {/* Top Row: Rotaract Logo / President Avatar & Title */}
                     <div className="flex items-start gap-3 mb-3">
                       <div className="relative shrink-0">
-                        <div className="w-[46px] h-[46px] rounded-full bg-white border border-black/10 shadow-xs flex items-center justify-center p-1.5 overflow-hidden shrink-0">
-                          <img
-                            src="/images/rotaract-logo.png"
-                            alt="Rotaract District 9126"
-                            className="w-full h-full object-contain"
-                          />
-                        </div>
+                        {club.presidentAvatar ? (
+                          <div className="w-[48px] h-[48px] rounded-full bg-white border-2 border-[#981132]/20 shadow-sm overflow-hidden shrink-0">
+                            <img
+                              src={club.presidentAvatar}
+                              alt={club.president || club.name}
+                              className="w-full h-full object-cover object-top"
+                              onError={(e) => {
+                                (e.target as HTMLElement).style.display = 'none';
+                              }}
+                            />
+                          </div>
+                        ) : (
+                          <div className="w-[46px] h-[46px] rounded-full bg-white border border-black/10 shadow-xs flex items-center justify-center p-1.5 overflow-hidden shrink-0">
+                            <img
+                              src="/images/rotaract-logo.png"
+                              alt="Rotaract District 9126"
+                              className="w-full h-full object-contain"
+                            />
+                          </div>
+                        )}
                         <div className="absolute bottom-0 right-0 w-[11px] h-[11px] rounded-full bg-emerald-500 border-2 border-white" />
                       </div>
 
@@ -192,9 +205,23 @@ export default function ClubsPage() {
                         <div className="text-[14.5px] font-bold text-[#1C1C1E] leading-tight truncate font-sans">
                           {club.name}
                         </div>
-                        <div className="text-[11.5px] text-gray-500 mt-0.5 truncate font-sans">
-                          {club.president ? `Pres. ${club.president}` : `ID: ${club.rotaryId || 'District 9126'}`}
+                        <div className="text-[11.5px] text-gray-600 mt-0.5 truncate font-sans font-medium flex items-center gap-1.5">
+                          {club.president ? (
+                            <span>Pres. {club.president}</span>
+                          ) : (
+                            <span>ID: {club.rotaryId || 'District 9126'}</span>
+                          )}
                         </div>
+                        {club.presidentPhone && (
+                          <a
+                            href={`tel:${club.presidentPhone.replace(/\s+/g, '')}`}
+                            onClick={(e) => e.stopPropagation()}
+                            className="inline-flex items-center gap-1 text-[11px] text-[#981132] font-semibold hover:underline mt-0.5"
+                          >
+                            <Phone size={10} className="shrink-0" />
+                            {club.presidentPhone}
+                          </a>
+                        )}
                       </div>
 
                       <div className="flex flex-col items-end gap-1 shrink-0">
