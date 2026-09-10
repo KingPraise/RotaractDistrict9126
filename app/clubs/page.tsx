@@ -178,11 +178,11 @@ export default function ClubsPage() {
                     {/* Top Row: Rotaract Logo & Title */}
                     <div className="flex items-start gap-3 mb-3">
                       <div className="relative shrink-0">
-                        <div className="w-[46px] h-[46px] rounded-full p-[2px] bg-gradient-to-tr from-[#D91B5C] to-[#D4A520] shrink-0 shadow-sm flex items-center justify-center bg-white">
+                        <div className="w-[46px] h-[46px] rounded-full bg-white border border-black/10 shadow-xs flex items-center justify-center p-1.5 overflow-hidden shrink-0">
                           <img
                             src="/images/rotaract-logo.png"
                             alt="Rotaract District 9126"
-                            className="w-full h-full rounded-full object-contain p-1.5"
+                            className="w-full h-full object-contain"
                           />
                         </div>
                         <div className="absolute bottom-0 right-0 w-[11px] h-[11px] rounded-full bg-emerald-500 border-2 border-white" />
