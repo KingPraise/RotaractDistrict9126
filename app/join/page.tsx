@@ -119,7 +119,7 @@ function JoinClubContent() {
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-black/[0.08] text-xs font-bold text-[#1C1C1E] hover:bg-[#981132] hover:text-white hover:border-[#981132] shadow-sm transition-all group"
           >
             <ArrowLeft size={14} className="transition-transform group-hover:-translate-x-1" />
-            <span>Browse All 77 Clubs on Map</span>
+            <span>Browse All 78 Clubs on Map</span>
           </Link>
 
           <div className="flex items-center gap-2">
