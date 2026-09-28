@@ -4,6 +4,7 @@ import HeroSection from '@/components/sections/HeroSection';
 import ImpactSection from '@/components/sections/ImpactSection';
 import WhoWeAreSection from '@/components/sections/WhoWeAreSection';
 import DistrictGovernorSection from '@/components/sections/DistrictGovernorSection';
+import DRRSpotlightSection from '@/components/sections/DRRSpotlightSection';
 import ExperienceSection from '@/components/sections/ExperienceSection';
 import LeadershipSection from '@/components/sections/LeadershipSection';
 import ProjectsSection from '@/components/sections/ProjectsSection';
@@ -18,6 +19,7 @@ export default function HomePage() {
         <ImpactSection />
         <WhoWeAreSection />
         <DistrictGovernorSection />
+        <DRRSpotlightSection />
         <ExperienceSection />
         <LeadershipSection />
         <ProjectsSection />

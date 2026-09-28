@@ -424,14 +424,7 @@ export default function AboutPage() {
       </section>
 
       {/* ================= SECTION -1: DISTRICT GOVERNOR PATRON SECTION ================= */}
-      {(activeTab === 'overview' || activeTab === 'team') && (
-        <DistrictGovernorSection />
-      )}
 
-      {/* ================= SECTION 0: DRR SPOTLIGHT & 4-PHOTO CAROUSEL ================= */}
-      {(activeTab === 'overview' || activeTab === 'team') && (
-        <DRRSpotlightSection />
-      )}
 
       {/* ================= SECTION 1: DETAILED HISTORY & REDISTRICTING ================= */}
       {(activeTab === 'overview' || activeTab === 'history') && (
