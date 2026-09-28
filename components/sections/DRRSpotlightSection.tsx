@@ -43,7 +43,7 @@ export default function DRRSpotlightSection() {
                 <motion.img
                   key={img.id}
                   src={img.src}
-                  alt={\DRR Portrait \\}
+                  alt={`DRR Portrait ${idx + 1}`}
                   initial={{ opacity: 0, scale: 1.05 }}
                   animate={{ opacity: activeIdx === idx ? 1 : 0, scale: activeIdx === idx ? 1 : 1.05 }}
                   transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
@@ -77,10 +77,12 @@ export default function DRRSpotlightSection() {
                 <button
                   key={img.id}
                   onClick={() => { setIsAutoPlaying(false); setActiveIdx(idx); }}
-                  aria-label={\Select photo \\}
-                  className={\elative aspect-[3/4] rounded-xl overflow-hidden border-2 transition-all cursor-pointer \\}
+                  aria-label={`Select photo ${idx + 1}`}
+                  className={`relative aspect-[3/4] rounded-xl overflow-hidden border-2 transition-all cursor-pointer ${
+                    activeIdx === idx ? 'border-[#981132] scale-105 shadow-md shadow-[#981132]/30 ring-2 ring-[#981132]/20' : 'border-black/10 opacity-60 hover:opacity-100 hover:border-black/30'
+                  }`}
                 >
-                  <img src={img.src} alt={\Thumbnail \\} className="w-full h-full object-cover object-top" />
+                  <img src={img.src} alt={`Thumbnail ${idx + 1}`} className="w-full h-full object-cover object-top" />
                 </button>
               ))}
             </div>
