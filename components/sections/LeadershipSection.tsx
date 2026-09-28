@@ -2,7 +2,6 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import RotaryTooltip from '@/components/ui/RotaryTooltip';
 
 export default function LeadershipSection() {
   const mainLeaders = [
@@ -31,7 +30,7 @@ export default function LeadershipSection() {
     { name: "PP Abubakar Aminat Abiodun", role: "Zone 3", tooltip: "ADRR", image: "/images/leaders/aminat abiodun.jpeg" }
   ];
 
-  const LeaderGrid = ({ leaders, title, subtitle }) => (
+  const LeaderGrid = ({ leaders, title, subtitle }: { leaders: any[], title: string, subtitle: string }) => (
     <div className="mb-24">
       <motion.div 
         initial={{ opacity: 0, y: 25 }}
