@@ -95,7 +95,7 @@ export default function DRRSpotlightSection() {
                 Rtr. PP Adaramoye Iyanuoluwa
               </h3>
               <p className="text-xs sm:text-sm font-bold text-[#D91B5C] uppercase tracking-widest mt-1">
-                Sitting 3rd District Rotaract Representative ï District 9126
+                Sitting 3rd District Rotaract Representative ‚Ä¢ District 9126
               </p>
             </div>
 
@@ -107,13 +107,13 @@ export default function DRRSpotlightSection() {
               </div>
               <div className="p-6 overflow-y-auto custom-scrollbar text-sm text-gray-700 space-y-4 leading-relaxed font-sans">
                 <p>
-                  <strong>ROTARACTOR Adaramoye Iyanuoluwa AdukeAdee</strong> is a dynamic, visionary, and transformational leader born on the 20th of March over two decades ago. An indigene of Akure, Ondo State, she is a proud Christian whose life reflects purpose, excellence, and service. She holds a Bachelorís degree in Biology and Education from Adeyemi Federal University of Education, Ondo.
+                  <strong>ROTARACTOR Adaramoye Iyanuoluwa AdukeAdee</strong> is a dynamic, visionary, and transformational leader born on the 20th of March over two decades ago. An indigene of Akure, Ondo State, she is a proud Christian whose life reflects purpose, excellence, and service. She holds a Bachelor‚Äôs degree in Biology and Education from Adeyemi Federal University of Education, Ondo.
                 </p>
                 <p>
-                  Her inspiring journey into the Rotary family began in 2018 under the Rotary theme ìBe the Inspiration.î Introduced by her mother, Rtn. Tomilola Olawuni, PHF, she embraced service not merely as an activity but as a lifelong calling. Since then, AdukeAdee has emerged as a beacon of hope, an epitome of resilience, and a shining light within Rotaract and beyond.
+                  Her inspiring journey into the Rotary family began in 2018 under the Rotary theme ‚ÄúBe the Inspiration.‚Äù Introduced by her mother, Rtn. Tomilola Olawuni, PHF, she embraced service not merely as an activity but as a lifelong calling. Since then, AdukeAdee has emerged as a beacon of hope, an epitome of resilience, and a shining light within Rotaract and beyond.
                 </p>
                 <p>
-                  AdukeAdee is a passionate public health enthusiast whose perspective was profoundly shaped during her NYSC year at the Department of Public Health, Nasarawa State Ministry of Health. This defining experience has ignited in her a strong desire to pursue a Masterís degree in Public Health and to become a transformational force in advancing healthcare delivery. Her special interest lies in Reproductive, Maternal, and Child Health, where she is committed to improving health outcomes for women and children.
+                  AdukeAdee is a passionate public health enthusiast whose perspective was profoundly shaped during her NYSC year at the Department of Public Health, Nasarawa State Ministry of Health. This defining experience has ignited in her a strong desire to pursue a Master‚Äôs degree in Public Health and to become a transformational force in advancing healthcare delivery. Her special interest lies in Reproductive, Maternal, and Child Health, where she is committed to improving health outcomes for women and children.
                 </p>
                 <p>
                   Beyond service, she is a vibrant creative entrepreneur and the founder of VIBE Beads and Accessories, a flourishing brand through which she has served hundreds of satisfied customers.
@@ -121,58 +121,58 @@ export default function DRRSpotlightSection() {
                 <div className="my-6 p-4 bg-gray-50 border-l-4 border-[#D4A520] rounded-r-lg">
                   <h5 className="font-bold text-[#1C1C1E] mb-2 uppercase tracking-wide">Club Level Leadership</h5>
                   <ul className="list-disc pl-5 space-y-1 text-xs">
-                    <li>Club Secretary, RAC AFUED (2019ñ2020)</li>
-                    <li>President, RAC AFUED (2020ñ2021) ó <em>Increased club membership and engagement by 250%</em></li>
-                    <li>Club Trainer, RAC AFUED Ondo (2021ñ2022)</li>
-                    <li>Director, Membership Retention and Extension, RAC AFUED (2022ñ2023)</li>
-                    <li>Club Trainer, Rotaract e-Club Mighty (2023ñ2024)</li>
-                    <li>Membership Director, Rotaract e-Club Mighty (2023ñ2025)</li>
+                    <li>Club Secretary, RAC AFUED (2019‚Äì2020)</li>
+                    <li>President, RAC AFUED (2020‚Äì2021) ‚Äî <em>Increased club membership and engagement by 250%</em></li>
+                    <li>Club Trainer, RAC AFUED Ondo (2021‚Äì2022)</li>
+                    <li>Director, Membership Retention and Extension, RAC AFUED (2022‚Äì2023)</li>
+                    <li>Club Trainer, Rotaract e-Club Mighty (2023‚Äì2024)</li>
+                    <li>Membership Director, Rotaract e-Club Mighty (2023‚Äì2025)</li>
                     <li>Club Service Project Director, Rotaract e-Club Mighty (2025-2026)</li>
                   </ul>
                 </div>
                 <div className="my-6 p-4 bg-gray-50 border-l-4 border-purple-600 rounded-r-lg">
                   <h5 className="font-bold text-[#1C1C1E] mb-2 uppercase tracking-wide">Zonal Level (Ondo & Ekiti State)</h5>
                   <ul className="list-disc pl-5 space-y-1 text-xs">
-                    <li>Media and Publicity Director (2020ñ2021)</li>
-                    <li>Zonal Administrator, Ondo and Ekiti State (2021ñ2022)</li>
-                    <li>Chairperson, Dinner and Award Night, Ondo and Ekiti State (2021ñ2022)</li>
-                    <li>Deputy Zonal Trainer, Ondo and Ekiti State (2022ñ2023)</li>
-                    <li>The Rotary Foundation Chairperson (2023ñ2024)</li>
-                    <li>Rotaract Ondo State Learning Facilitator (2024ñ2025)</li>
+                    <li>Media and Publicity Director (2020‚Äì2021)</li>
+                    <li>Zonal Administrator, Ondo and Ekiti State (2021‚Äì2022)</li>
+                    <li>Chairperson, Dinner and Award Night, Ondo and Ekiti State (2021‚Äì2022)</li>
+                    <li>Deputy Zonal Trainer, Ondo and Ekiti State (2022‚Äì2023)</li>
+                    <li>The Rotary Foundation Chairperson (2023‚Äì2024)</li>
+                    <li>Rotaract Ondo State Learning Facilitator (2024‚Äì2025)</li>
                   </ul>
                 </div>
                 <div className="my-6 p-4 bg-gray-50 border-l-4 border-[#981132] rounded-r-lg">
                   <h5 className="font-bold text-[#1C1C1E] mb-2 uppercase tracking-wide">District Level</h5>
                   <ul className="list-disc pl-5 space-y-1 text-xs">
-                    <li>District Quiz Team Lead (2020ñ2021)</li>
-                    <li>Secretary, Rotary District 9125 Polio Plus Committee (2020ñ2021)</li>
-                    <li>Deputy District Project Director, Rotaract District 9125 (2021ñ2022) ó <em>Co-launched the Digi-Hands initiative</em></li>
-                    <li>Secretary, District International Service Committee (2022ñ2023)</li>
-                    <li>Secretary, Rotary Girl Child Initiative Committee (2022ñ2023)</li>
-                    <li>Chair, District Water, Sanitation and Hygiene Activities (2022ñ2023) ó <em>Championed ONE ZONE, ONE MARKET CLEAN UP</em></li>
-                    <li>Chairperson, District Training Seminar, Rotaract District 9125 (2023ñ2024)</li>
-                    <li>Secretary, District 9126 Bylaw Review Committee (2024ñ2025)</li>
-                    <li>District Secretary, Rotaract District 9126 (2024ñ2025)</li>
-                    <li>District Rotaract Representative Nominee (2024ñ2025)</li>
-                    <li>District Rotaract Representative-Elect (2025ñ2026)</li>
+                    <li>District Quiz Team Lead (2020‚Äì2021)</li>
+                    <li>Secretary, Rotary District 9125 Polio Plus Committee (2020‚Äì2021)</li>
+                    <li>Deputy District Project Director, Rotaract District 9125 (2021‚Äì2022) ‚Äî <em>Co-launched the Digi-Hands initiative</em></li>
+                    <li>Secretary, District International Service Committee (2022‚Äì2023)</li>
+                    <li>Secretary, Rotary Girl Child Initiative Committee (2022‚Äì2023)</li>
+                    <li>Chair, District Water, Sanitation and Hygiene Activities (2022‚Äì2023) ‚Äî <em>Championed ONE ZONE, ONE MARKET CLEAN UP</em></li>
+                    <li>Chairperson, District Training Seminar, Rotaract District 9125 (2023‚Äì2024)</li>
+                    <li>Secretary, District 9126 Bylaw Review Committee (2024‚Äì2025)</li>
+                    <li>District Secretary, Rotaract District 9126 (2024‚Äì2025)</li>
+                    <li>District Rotaract Representative Nominee (2024‚Äì2025)</li>
+                    <li>District Rotaract Representative-Elect (2025‚Äì2026)</li>
                     <li>District Rotaract Representative (2026-2027)</li>
                   </ul>
                 </div>
                 <div className="my-6 p-4 bg-gray-50 border-l-4 border-blue-600 rounded-r-lg">
                   <h5 className="font-bold text-[#1C1C1E] mb-2 uppercase tracking-wide">National & Continental Level</h5>
                   <ul className="list-disc pl-5 space-y-1 text-xs">
-                    <li>Secretary, NIGEROTA Committee (2022ñ2023)</li>
-                    <li>Treasurer, Rotaract Nigeria (2024ñ2025)</li>
-                    <li>Rotaract Africa Secretary-Elect (2024ñ2025)</li>
-                    <li>Rotaract Africa Secretary (2025ñ2026)</li>
-                    <li>Chairperson, NIGEROTA 2026 ó <em>Hosted ~500 Rotaractors</em></li>
+                    <li>Secretary, NIGEROTA Committee (2022‚Äì2023)</li>
+                    <li>Treasurer, Rotaract Nigeria (2024‚Äì2025)</li>
+                    <li>Rotaract Africa Secretary-Elect (2024‚Äì2025)</li>
+                    <li>Rotaract Africa Secretary (2025‚Äì2026)</li>
+                    <li>Chairperson, NIGEROTA 2026 ‚Äî <em>Hosted ~500 Rotaractors</em></li>
                   </ul>
                 </div>
                 <p>
                   A passionate tennis enthusiast and a lover of pounded yam with correct soup, AdukeAdee beautifully balances excellence with humility, strength with warmth, and ambition with service.
                 </p>
                 <p className="font-black text-center text-[#981132] pt-4">
-                  AdukeAdee is an OMOL⁄¿BÕ, fully prepared to Create Lasting Impact. <br/><br/>
+                  AdukeAdee is an OMOL√ö√ÄB√ç, fully prepared to Create Lasting Impact. <br/><br/>
                   LADIES AND GENTLEMEN, I PRESENT TO YOU ROTARACTOR, ADARAMOYE IYANUOLUWA ADUKEADEE, PHF<br/>
                   THE THIRD AND FIRST FEMALE DISTRICT ROTARACT REPRESENTATIVE, ROTARACT DISTRICT 9126 NIGERIA.
                 </p>
