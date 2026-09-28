@@ -28,8 +28,6 @@ import {
 import { motion, AnimatePresence } from 'framer-motion';
 import RotaryTooltip from '@/components/ui/RotaryTooltip';
 import CountUp from '@/components/ui/CountUp';
-import DistrictGovernorSection from '@/components/sections/DistrictGovernorSection';
-import DRRSpotlightSection from '@/components/sections/DRRSpotlightSection';
 import InteractiveTimelineStack from '@/components/sections/InteractiveTimelineStack';
 
 const redistrictingTimeline = [
