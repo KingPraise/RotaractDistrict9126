@@ -22,12 +22,12 @@ export default function LeadershipSection() {
     { name: "Rtr. Shittu Ifedolapo PHF", role: "District Rotaract Rep Nominee", tooltip: "DRRN (Dolapo)", image: "/images/leaders/drrn-shittu-ifedolapo.jpg" }
   ];
 
-  const adrrs = [
-    { name: "PP Alfa Musa", role: "Zone 5, Kogi State", tooltip: "ADRR", image: "/images/leaders/alfa musa.jpeg" },
+    const adrrs = [
+    { name: "PP Oluwatofunmi Tejumola", role: "Zone 1, Oyo State (Editor in Chief)", tooltip: "ADRR", image: "/images/leaders/Oluwatofunmi tejumola ADRR.jpeg" },
+    { name: "PP Aderibigbe Kehinde David", role: "Zone 2, Osun State", tooltip: "ADRR", image: "/images/leaders/kehinde david.jpeg" },
+    { name: "PP Abubakar Aminat Abiodun", role: "Zone 3, Kwara & Niger State", tooltip: "ADRR", image: "/images/leaders/aminat abiodun.jpeg" },
     { name: "PP Ijalana Oluwatobi", role: "Zone 4, Ondo & Ekiti", tooltip: "ADRR", image: "/images/leaders/Ijanala oluwatobi.jpeg" },
-    { name: "PP Oluwatofunmi Tejumola", role: "Editor in Chief", tooltip: "ADRR", image: "/images/leaders/Oluwatofunmi tejumola ADRR.jpeg" },
-    { name: "PP Aderibigbe Kehinde David", role: "Zone 2", tooltip: "ADRR", image: "/images/leaders/kehinde david.jpeg" },
-    { name: "PP Abubakar Aminat Abiodun", role: "Zone 3", tooltip: "ADRR", image: "/images/leaders/aminat abiodun.jpeg" }
+    { name: "PP Alfa Musa", role: "Zone 5, Kogi State", tooltip: "ADRR", image: "/images/leaders/alfa musa.jpeg" }
   ];
 
   const LeaderGrid = ({ leaders, title, subtitle }: { leaders: any[], title: string, subtitle: string }) => (
