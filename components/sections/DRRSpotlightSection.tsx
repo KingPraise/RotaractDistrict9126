@@ -90,8 +90,8 @@ export default function DRRSpotlightSection() {
 
           <div className="lg:col-span-7 space-y-6 text-center lg:text-left flex flex-col h-full">
             <div>
-              <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#981132]/10 text-[#981132] text-xs font-bold uppercase tracking-wider mb-3">
-                <Award size={14} /> Theme: &quot;Create Lasting Impact&quot;
+              <div className="mb-6">
+                <img src="/images/theme-logo-2026.jpg" alt="Create Lasting Impact Theme" className="w-auto h-20 sm:h-24 lg:h-32 object-contain mx-auto lg:mx-0 mix-blend-multiply drop-shadow-sm" />
               </div>
               <h3 className="text-3xl sm:text-4xl lg:text-5xl font-black text-[#1C1C1E] tracking-tight leading-tight font-sans">
                 Rtr. PP Adaramoye Iyanuoluwa PHF
