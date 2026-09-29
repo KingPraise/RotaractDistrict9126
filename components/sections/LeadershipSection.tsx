@@ -3,7 +3,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
-export default function LeadershipSection() {
+export default function LeadershipSection({ showOnly = "all" }: { showOnly?: "team" | "succession" | "all" }) {
   const mainLeaders = [
     { name: "Rtr. PP Adaramoye Iyanuoluwa PHF", role: "District Rotaract Representative", tooltip: "DRR", image: "/images/leaders/drr-adaramoye-iyanuoluwa.jpg" },
     { name: "Rtr. PP Faleye Ifeoluwa", role: "District Secretary", tooltip: "DS", image: "/images/leaders/leader-secretary-faleye.jpg" },
@@ -80,9 +80,9 @@ export default function LeadershipSection() {
   return (
     <section id="leadership" className="relative py-24 lg:py-32 overflow-hidden bg-[#F8F5F2]">
       <div className="max-w-7xl mx-auto px-6 lg:px-10 relative z-10">
-        <LeaderGrid leaders={mainLeaders} title="Meet the Leadership" subtitle="The District 9126 executive council driving impact across seven Nigerian states" />
-        <LeaderGrid leaders={successionWall} title="District 9126 Succession Wall" subtitle="Honoring our past, present, and future District Rotaract Representatives" />
-        <LeaderGrid leaders={adrrs} title="Assistant District Rotaract Representatives" subtitle="Coordinating efforts across our diverse zones and clubs" />
+        {(showOnly === "all" || showOnly === "team") && (        <LeaderGrid leaders={mainLeaders} title="Meet the Leadership" subtitle="The District 9126 executive council driving impact across seven Nigerian states" />)}
+        {(showOnly === "all" || showOnly === "succession") && (        <LeaderGrid leaders={successionWall} title="District 9126 Succession Wall" subtitle="Honoring our past, present, and future District Rotaract Representatives" />)}
+        {(showOnly === "all" || showOnly === "team") && (        <LeaderGrid leaders={adrrs} title="Assistant District Rotaract Representatives" subtitle="Coordinating efforts across our diverse zones and clubs" />)}
       </div>
     </section>
   );
