@@ -18,7 +18,7 @@ export default function LeadershipSection() {
     { name: "Rtr. PP Oyewumi Kamaldeen", role: "Inaugural 1st DRR", tooltip: "PDR (Kamal)", image: "/images/leaders/drr-oyewumi-kamaldeen.jpg" },
     { name: "Rtr. PP Raji Abeeb Adekola", role: "Immediate Past DRR", tooltip: "IPDR (Youngest)", image: "/images/leaders/drr-raji-abeeb.jpg" },
     { name: "Rtr. PP Adaramoye Iyanuoluwa", role: "District Rotaract Representative", tooltip: "DRR (Adukee)", image: "/images/leaders/drr-adaramoye-iyanuoluwa.jpg" },
-    { name: "Rtr. Oluwatofunmi Tejumola", role: "District Rotaract Rep Elect", tooltip: "DRRE (Tofii)", image: "/images/leaders/adrr-oluwatofunmi-tejumola.jpg" },
+    { name: "Rtr. Oluwatofunmi Tejumola", role: "District Rotaract Rep Elect", tooltip: "DRRE (Toffy)", image: "/images/leaders/adrr-oluwatofunmi-tejumola.jpg" },
     { name: "Rtr. Shittu Ifedolapo PHF", role: "District Rotaract Rep Nominee", tooltip: "DRRN (Dolapo)", image: "/images/leaders/drrn-shittu-ifedolapo.jpg" }
   ];
 
