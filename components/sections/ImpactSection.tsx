@@ -8,21 +8,21 @@ export default function ImpactSection() {
     {
       stat: "500+",
       title: "Children Vaccinated",
-      subtitle: "Health Outreach · Oyo State",
+      subtitle: "Health Outreach Â· Oyo State",
       image: "https://images.unsplash.com/photo-1509099836639-18ba1795216d?w=900&h=700&fit=crop&auto=format",
       accent: "rgb(217, 27, 92)" // Cranberry
     },
     {
       stat: "2,400",
       title: "Youth Trained",
-      subtitle: "Digital Skills Academy · Ibadan",
+      subtitle: "Digital Skills Academy Â· Ibadan",
       image: "https://images.unsplash.com/photo-1620829813573-7c9e1877706f?w=900&h=700&fit=crop&auto=format",
       accent: "rgb(139, 27, 217)" // Purple
     },
     {
       stat: "47 Clubs",
       title: "7 States United",
-      subtitle: "Ondo · Ekiti · Osun · Oyo · Kogi · Niger · Kwara",
+      subtitle: "Ondo Â· Ekiti Â· Osun Â· Oyo Â· Kogi Â· Niger Â· Kwara",
       image: "https://images.unsplash.com/photo-1604212561903-5ca7f041c58b?w=900&h=700&fit=crop&auto=format",
       accent: "rgb(27, 140, 217)" // Blue
     },
@@ -75,7 +75,7 @@ export default function ImpactSection() {
             Impact in Motion
           </h2>
           <p className="mt-3 max-w-xl font-sans text-base text-black/80">
-            Real moments from across District 9126 — seven states, one movement, measured in lives changed.
+            Real moments from across District 9126 â€” seven states, one movement, measured in lives changed.
           </p>
         </motion.div>
       </div>
@@ -148,6 +148,27 @@ export default function ImpactSection() {
         {/* Spacer for right edge scrolling */}
         <div className="shrink-0 w-6 lg:w-10" />
       </div>
-    </section>
+          {/* MONTHLY IMPACT METERS */}
+      <div className="max-w-7xl mx-auto px-6 lg:px-10 mt-20 relative z-10">
+        <motion.div 
+          initial={{ opacity: 0, y: 25 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-60px' }}
+          transition={{ duration: 0.6, ease: 'easeOut' }}
+        >
+          <h3 className="font-black text-2xl sm:text-3xl font-sans text-center mb-10 text-[#D91B5C]">
+            Our 2026/2027 Journey So Far
+          </h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 items-center justify-center">
+            <div className="rounded-3xl overflow-hidden shadow-[0_16px_40px_rgba(0,0,0,0.1)] border border-black/[0.05] bg-white group cursor-pointer transition-transform duration-500 hover:-translate-y-2">
+              <img src="/images/reports/july-impact-meter.png" alt="July Impact Meter" className="w-full h-auto object-cover" />
+            </div>
+            <div className="rounded-3xl overflow-hidden shadow-[0_16px_40px_rgba(0,0,0,0.1)] border border-black/[0.05] bg-white group cursor-pointer transition-transform duration-500 hover:-translate-y-2">
+              <img src="/images/reports/august-impact-meter.png" alt="August Impact Meter" className="w-full h-auto object-cover" />
+            </div>
+          </div>
+        </motion.div>
+      </div>
+      </section>
   );
 }

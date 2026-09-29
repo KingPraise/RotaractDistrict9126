@@ -127,7 +127,7 @@ export default function ProjectsPage() {
               </span>
             </h1>
             <p className="max-w-xl mx-auto text-black/60 leading-relaxed px-4 text-[clamp(0.95rem,1.5vw,1.1rem)] font-sans">
-              Every photo tells a story of real change. Explore the documented legacy of District 9126 — from boreholes to blockchains, from classrooms to clinics.
+              Every photo tells a story of real change. Explore the documented legacy of District 9126 â€” from boreholes to blockchains, from classrooms to clinics.
             </p>
           </div>
         </div>
@@ -330,7 +330,7 @@ export default function ProjectsPage() {
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={14}/>
                 <input 
                   type="text"
-                  placeholder="Search projects…"
+                  placeholder="Search projectsâ€¦"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="w-full pl-9 pr-4 py-2.5 rounded-xl text-sm bg-white border border-black/10 text-[#1C1C1E] placeholder-gray-400 outline-none focus:border-[#981132] transition-colors font-sans"
@@ -362,12 +362,12 @@ export default function ProjectsPage() {
           </div>
 
           {/* CSS Masonry Columns with Original Sliding Drawer Hover Effect */}
-          <div className="columns-1 sm:columns-2 lg:columns-3 gap-5" style={{ columnFill: 'balance' }}>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredProjects.map((p) => {
               const theme = categoryColors[p.category] || categoryColors.Healthcare;
 
               return (
-                <div key={p.id} className="break-inside-avoid mb-5">
+                <div key={p.id} className="h-full">
                   <div 
                     className={`relative overflow-hidden rounded-2xl cursor-pointer group shadow-lg ${p.height || 'h-[300px]'}`}
                     style={{ border: '1px solid rgba(0, 0, 0, 0.08)' }}
