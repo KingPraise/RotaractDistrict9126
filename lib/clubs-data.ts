@@ -1174,4 +1174,4 @@ export const clubsData: Club[] = [
     president: 'Zainab Danjuma',
     coordinates: { lat: 7.2571, lng: 5.2058 },
   },
-];
+].sort((a, b) => (b.presidentPhone ? 1 : 0) - (a.presidentPhone ? 1 : 0));
