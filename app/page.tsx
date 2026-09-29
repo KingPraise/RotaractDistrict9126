@@ -18,10 +18,10 @@ export default function HomePage() {
         <HeroSection />
         <ImpactSection />
         <WhoWeAreSection />
-        <DistrictGovernorSection />
         <DRRSpotlightSection />
         <ExperienceSection />
         <LeadershipSection />
+        <DistrictGovernorSection />
         <ProjectsSection />
         <CTASection />
       </main>
