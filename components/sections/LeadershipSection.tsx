@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 
 export default function LeadershipSection() {
   const mainLeaders = [
-    { name: "Rtr. PP Adaramoye Iyanuoluwa", role: "District Rotaract Representative", tooltip: "DRR", image: "/images/leaders/drr-adaramoye-iyanuoluwa.jpg" },
+    { name: "Rtr. PP Adaramoye Iyanuoluwa PHF", role: "District Rotaract Representative", tooltip: "DRR", image: "/images/leaders/drr-adaramoye-iyanuoluwa.jpg" },
     { name: "Rtr. PP Faleye Ifeoluwa", role: "District Secretary", tooltip: "DS", image: "/images/leaders/leader-secretary-faleye.jpg" },
     { name: "Rtr. Hussain Abdulhakeem", role: "District Admin / Chief of Staff", tooltip: "DA", image: "/images/leaders/leader-chief-of-staff.jpg" },
     { name: "Rtr. PP Odufuwa Omotoke", role: "District Treasurer", tooltip: "DT", image: "/images/leaders/leader-treasurer-odufuwa.jpg" },
@@ -15,9 +15,9 @@ export default function LeadershipSection() {
   ];
 
   const successionWall = [
-    { name: "Rtr. PP Oyewumi Kamaldeen", role: "Inaugural 1st DRR", tooltip: "PDR (Kamal)", image: "/images/leaders/drr-oyewumi-kamaldeen.jpg" },
+    { name: "Rtr. PP Oyewumi Kamaldeen PHF", role: "Inaugural 1st DRR", tooltip: "PDR (Kamal)", image: "/images/leaders/drr-oyewumi-kamaldeen.jpg" },
     { name: "Rtr. PP Raji Abeeb Adekola", role: "Immediate Past DRR", tooltip: "IPDR (Youngest)", image: "/images/leaders/drr-raji-abeeb.jpg" },
-    { name: "Rtr. PP Adaramoye Iyanuoluwa", role: "District Rotaract Representative", tooltip: "DRR (Adukee)", image: "/images/leaders/drr-adaramoye-iyanuoluwa.jpg" },
+    { name: "Rtr. PP Adaramoye Iyanuoluwa PHF", role: "District Rotaract Representative", tooltip: "DRR (Adukee)", image: "/images/leaders/drr-adaramoye-iyanuoluwa.jpg" },
     { name: "Rtr. Oluwatofunmi Tejumola", role: "District Rotaract Rep Elect", tooltip: "DRRE (Toffy)", image: "/images/leaders/adrr-oluwatofunmi-tejumola.jpg" },
     { name: "Rtr. Shittu Ifedolapo PHF", role: "District Rotaract Rep Nominee", tooltip: "DRRN (Dolapo)", image: "/images/leaders/drrn-shittu-ifedolapo.jpg" }
   ];

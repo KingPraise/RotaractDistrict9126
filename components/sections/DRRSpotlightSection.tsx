@@ -94,7 +94,7 @@ export default function DRRSpotlightSection() {
                 <Award size={14} /> Theme: &quot;Create Lasting Impact&quot;
               </div>
               <h3 className="text-3xl sm:text-4xl lg:text-5xl font-black text-[#1C1C1E] tracking-tight leading-tight font-sans">
-                Rtr. PP Adaramoye Iyanuoluwa
+                Rtr. PP Adaramoye Iyanuoluwa PHF
               </h3>
               <p className="text-xs sm:text-sm font-bold text-[#D91B5C] uppercase tracking-widest mt-1">
                 Sitting 3rd District Rotaract Representative - District 9126
