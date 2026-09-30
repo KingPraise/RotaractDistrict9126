@@ -97,7 +97,7 @@ export default function DRRSpotlightSection() {
                 Rtr. PP Adaramoye Iyanuoluwa PHF
               </h3>
               <p className="text-xs sm:text-sm font-bold text-[#D91B5C] uppercase tracking-widest mt-1">
-                Sitting 3rd District Rotaract Representative - District 9126
+                3rd District Rotaract Representative - District 9126
               </p>
             </div>
 
