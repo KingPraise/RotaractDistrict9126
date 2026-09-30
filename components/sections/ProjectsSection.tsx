@@ -9,6 +9,7 @@ import { MapPin, ArrowRight } from 'lucide-react';
 import { getStoredProjects, subscribeToProjects, ProjectItem } from '@/lib/services/projects-service';
 
 export default function ProjectsSection() {
+  const router = useRouter();
   const [projects, setProjects] = useState<ProjectItem[]>([]);
 
   useEffect(() => {
