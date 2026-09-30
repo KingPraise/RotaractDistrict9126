@@ -157,7 +157,25 @@ export default function ClubMap({ clubs, activeClubId, onSelectClub }: ClubMapPr
     };
   }, [clubs]);
 
-  // Handle zooming/panning when an active club is selected from the list
+  
+    // Auto-resize handler for container changes (like mobile tabs)
+    useEffect(() => {
+      if (!mapContainerRef.current) return;
+      
+      const resizeObserver = new ResizeObserver(() => {
+        if (mapRef.current) {
+          mapRef.current.invalidateSize();
+        }
+      });
+      
+      resizeObserver.observe(mapContainerRef.current);
+      
+      return () => {
+        resizeObserver.disconnect();
+      };
+    }, []);
+
+    // Handle zooming/panning when an active club is selected from the list
   useEffect(() => {
     if (!mapRef.current || !activeClubId) return;
 
