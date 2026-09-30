@@ -314,7 +314,8 @@ export default function DistrictExecutiveDashboardPage() {
               {[
                 { name: 'Executive Reports', icon: FileText },
                 { name: 'Executive Analytics', icon: Activity },
-                { name: 'Verification Console', icon: ClipboardList }
+                { name: 'Verification Console', icon: ClipboardList },
+                { name: 'Project CMS', icon: Target }
               ].map((item) => {
                 const Icon = item.icon;
                 const isActive = navActive === item.name;
@@ -773,6 +774,43 @@ export default function DistrictExecutiveDashboardPage() {
                 </div>
               )}
 
+            </div>
+                    ) : navActive === 'Project CMS' ? (
+            /* DEDICATED PROJECT CMS VIEW */
+            <div className="space-y-6 font-sans pb-24 relative">
+              <div className="flex items-center justify-between mb-8">
+                <div>
+                  <h2 className="text-2xl font-black text-[#1C1C1E]">Project Management (CMS)</h2>
+                  <p className="text-sm text-black/60 mt-1">Upload, edit, and manage flagship projects across District 9126.</p>
+                </div>
+                <button className="flex items-center gap-2 px-4 py-2 bg-[#D91B5C] text-white rounded-lg text-sm font-semibold hover:bg-[#B8154D] transition-colors shadow-md">
+                  <span className="font-black text-lg leading-none">+</span> Add New Project
+                </button>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {[
+                  { title: "Maternal and Child Health Project", status: "Published", img: "/images/projects/new project image 1.jpeg" },
+                  { title: "Smart School Makeover", status: "Draft", img: "/images/projects/smart-school-makeover.jpg" },
+                  { title: "Rotaract Enterprise Grant", status: "Published", img: "/images/projects/enterprise-grant.jpg" }
+                ].map((proj, idx) => (
+                  <div key={idx} className="bg-white rounded-2xl border border-black/10 overflow-hidden shadow-sm group">
+                    <div className="h-40 bg-gray-100 relative overflow-hidden">
+                      <img src={proj.img} className="w-full h-full object-cover group-hover:scale-105 transition-transform" />
+                      <div className="absolute top-3 left-3 px-2 py-1 bg-white/90 backdrop-blur-sm rounded-md text-[10px] font-bold">
+                        {proj.status}
+                      </div>
+                    </div>
+                    <div className="p-4 space-y-3">
+                      <h3 className="font-bold text-sm text-[#1C1C1E] line-clamp-1">{proj.title}</h3>
+                      <div className="flex items-center justify-between pt-2 border-t border-black/5">
+                        <button className="text-xs font-semibold text-[#D91B5C] hover:underline">Edit Entry</button>
+                        <button className="text-xs font-semibold text-black/40 hover:text-red-500 transition-colors">Delete</button>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
           ) : navActive === 'Executive Analytics' ? (
             /* DEDICATED EXECUTIVE ANALYTICS SUB-VIEW */
