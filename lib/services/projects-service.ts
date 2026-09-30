@@ -22,6 +22,8 @@ export interface ProjectItem {
   club: string;
   location: string;
   image: string;
+  gallery?: string[];
+  video?: string;
   height?: string;
   description?: string;
   status: 'In Progress' | 'Completed' | 'Upcoming';
@@ -33,6 +35,37 @@ export interface ProjectItem {
 }
 
 export const INITIAL_PROJECTS: ProjectItem[] = [
+  {
+    id: 'proj-maternal-child-health-2026',
+    title: 'Maternal and Child Health Project',
+    category: 'Maternal & Child Health',
+    year: '2026',
+    club: 'District 9126 Initiatives',
+    location: 'District-wide',
+    image: '/images/projects/new project image 1.jpeg',
+    gallery: [
+      '/images/projects/new project image 1.jpeg',
+      '/images/projects/new project image 2.jpeg',
+      '/images/projects/new project image 3.jpeg',
+      '/images/projects/new project image 4.jpeg',
+      '/images/projects/new project image 5.jpeg',
+      '/images/projects/new project image 6.jpeg',
+      '/images/projects/new project image 7.jpeg',
+      '/images/projects/new project image 8.jpeg',
+      '/images/projects/new project image 9.jpeg',
+      '/images/projects/new project image 10.jpeg'
+    ],
+    video: '/images/projects/new project video.mp4',
+    description: 'A comprehensive Maternal and Child Health project designed to provide medical outreach, wellness kits, and health education to mothers and children across the district.',
+    status: 'Completed',
+    progress: 100,
+    statNumber: '10+',
+    statLabel: 'Communities Reached',
+    stats: [
+      { icon: 'heart', value: '10+', label: 'Communities' },
+      { icon: 'users', value: '500+', label: 'Mothers Assisted' }
+    ]
+  },
   {
     id: 'proj-osogbo-maternal-wellness',
     title: 'Maternal Wellness Outreach & PHC Support',

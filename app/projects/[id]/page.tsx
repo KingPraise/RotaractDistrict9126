@@ -146,7 +146,7 @@ export default function ProjectDetailPage() {
                   <ShieldCheck className="text-[#D4A520]" size={16} />
                   {project.club}
                 </span>
-                <span className="text-white/40">·</span>
+                <span className="text-white/40">Â·</span>
                 <span className="inline-flex items-center gap-1.5 text-white/80">
                   <MapPin className="text-[#D91B5C]" size={14} />
                   {project.location}
@@ -233,6 +233,31 @@ export default function ProjectDetailPage() {
               </div>
             </div>
 
+            {project.video && (
+              <div className="mb-10">
+                <h3 className="text-xl font-black text-[#1C1C1E] mb-4">Project Video Documentary</h3>
+                <div className="w-full aspect-video rounded-3xl overflow-hidden border border-black/[0.08] shadow-sm bg-black">
+                  <video controls className="w-full h-full object-cover">
+                    <source src={project.video} type="video/mp4" />
+                    Your browser does not support the video tag.
+                  </video>
+                </div>
+              </div>
+            )}
+
+            {project.gallery && project.gallery.length > 0 && (
+              <div className="mb-10">
+                <h3 className="text-xl font-black text-[#1C1C1E] mb-4">Project Gallery</h3>
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                  {project.gallery.map((img, idx) => (
+                    <div key={idx} className="aspect-square rounded-2xl overflow-hidden border border-black/[0.08] shadow-sm">
+                      <img src={img} alt={"Project Gallery image "} className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
             {/* Rotary 4-Way Test Guarantee */}
             <div className="p-6 rounded-3xl bg-gradient-to-br from-[#981132] to-[#750b24] text-white shadow-lg space-y-3">
               <div className="text-xs font-bold uppercase tracking-widest text-[#D4A520]">
@@ -242,7 +267,7 @@ export default function ProjectDetailPage() {
                 The 4-Way Test of the Things We Think, Say or Do
               </h3>
               <p className="text-xs text-white/80 leading-relaxed">
-                1. Is it the TRUTH? · 2. Is it FAIR to all concerned? · 3. Will it build GOODWILL and BETTER FRIENDSHIPS? · 4. Will it be BENEFICIAL to all concerned?
+                1. Is it the TRUTH? Â· 2. Is it FAIR to all concerned? Â· 3. Will it build GOODWILL and BETTER FRIENDSHIPS? Â· 4. Will it be BENEFICIAL to all concerned?
               </p>
             </div>
 

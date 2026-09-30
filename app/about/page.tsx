@@ -27,7 +27,7 @@ import InteractiveTimelineStack from '@/components/sections/InteractiveTimelineS
 
 const redistrictingTimeline = [
   {
-    year: '2009 â€“ 2024',
+    year: '2009 Ã¢â‚¬â€œ 2024',
     badge: '15-Year Legacy',
     title: 'The Era of District 9125',
     desc: 'For 15 years, Rotaract District 9125 served as a unified powerhouse comprising 23 states plus the Federal Capital Territory (FCT), nurturing generations of leaders across Nigeria.'
@@ -51,13 +51,13 @@ const redistrictingTimeline = [
     desc: 'District 9126 officially began its sovereign journey, establishing autonomous governance over 7 constituent states: Osun, Oyo, Ondo, Ekiti, Kwara, Niger, and Kogi.'
   },
   {
-    year: '2024 â€“ 2025',
+    year: '2024 Ã¢â‚¬â€œ 2025',
     badge: 'Inaugural Year',
     title: 'Foundation Era (DRR Oyewumi Kamaldeen)',
     desc: 'The 1st administration under "The Magic of Rotary" established district infrastructure, governance protocols, and inter-state club alignment.'
   },
   {
-    year: '2026 â€“ 2027',
+    year: '2026 Ã¢â‚¬â€œ 2027',
     badge: 'Sitting Era',
     title: 'Creating Lasting Impact (DRR Adaramoye Iyanuoluwa)',
     desc: 'Today, the 3rd administration coordinates 77 chartered clubs and ~700 Rotaractors with verified digital IDs, automated dues, and flagship humanitarian programs.'
@@ -66,7 +66,7 @@ const redistrictingTimeline = [
 
 const pastLeaders = [
   {
-    tenure: '2023â€“2024',
+    tenure: '2023Ã¢â‚¬â€œ2024',
     order: 'Transition Architect',
     eraNumber: '00',
     title: '15th & Final DRR (District 9125 Transition Era)',
@@ -77,12 +77,12 @@ const pastLeaders = [
     highlights: ['RI Board Approval of D9126', '7-State Boundary Demarcation', 'The Genesis Bridge Administration'],
     image: '/images/leaders/drr-adebayo-sodiq.jpg',
     fallbackImage: 'https://images.unsplash.com/photo-1602009786436-96b827675d32?w=480&h=580&fit=crop&auto=format',
-    badge: 'The Genesis Â· Transition Architect',
+    badge: 'The Genesis Ã‚Â· Transition Architect',
     accentColor: '#6366F1',
     glowColor: 'rgba(99, 102, 241, 0.25)'
   },
   {
-    tenure: '2024â€“2025',
+    tenure: '2024Ã¢â‚¬â€œ2025',
     order: '1st DRR',
     eraNumber: '01',
     title: 'Inaugural 1st District Rotaract Representative',
@@ -93,12 +93,12 @@ const pastLeaders = [
     highlights: ['Inaugural District Bylaws', 'First 77-Club Assembly', 'Foundational Secretariat Setup'],
     image: '/images/leaders/drr-oyewumi-kamaldeen.jpg',
     fallbackImage: 'https://images.unsplash.com/photo-1533108344127-a586d2b02479?w=480&h=580&fit=crop&auto=format',
-    badge: '1st DRR Â· Inaugural Foundation Era',
+    badge: '1st DRR Ã‚Â· Inaugural Foundation Era',
     accentColor: '#981132',
     glowColor: 'rgba(152, 17, 50, 0.25)'
   },
   {
-    tenure: '2025â€“2026',
+    tenure: '2025Ã¢â‚¬â€œ2026',
     order: '2nd DRR',
     eraNumber: '02',
     title: '2nd District Rotaract Representative',
@@ -109,12 +109,12 @@ const pastLeaders = [
     highlights: ['Youth Leadership Institutes', 'Automated Financial Reconciliation', 'District Membership Expansion'],
     image: '/images/leaders/drr-raji-abeeb.jpg',
     fallbackImage: 'https://images.unsplash.com/photo-1629145810320-aec9e63dd798?w=480&h=580&fit=crop&auto=format',
-    badge: '2nd DRR Â· Consolidation Era',
+    badge: '2nd DRR Ã‚Â· Consolidation Era',
     accentColor: '#D91B5C',
     glowColor: 'rgba(217, 27, 92, 0.25)'
   },
   {
-    tenure: '2026â€“2027',
+    tenure: '2026Ã¢â‚¬â€œ2027',
     order: '3rd DRR (Sitting)',
     eraNumber: '03',
     title: 'Sitting 3rd District Rotaract Representative',
@@ -125,7 +125,7 @@ const pastLeaders = [
     highlights: ['Verified Digital Member IDs', '7-State Maternal Health Outreach', 'Youth Innovation Academy'],
     image: '/images/leaders/drr-adaramoye-iyanuoluwa.jpg',
     fallbackImage: 'https://images.unsplash.com/photo-1644152993066-9b9ee687930d?w=480&h=580&fit=crop&auto=format',
-    badge: '3rd DRR Â· Sitting Administration',
+    badge: '3rd DRR Ã‚Â· Sitting Administration',
     accentColor: '#D4A520',
     glowColor: 'rgba(212, 165, 32, 0.25)',
     isCurrent: true
@@ -249,7 +249,7 @@ export default function AboutPage() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="max-w-3xl mx-auto text-slate-300 text-base md:text-lg leading-relaxed mb-10 font-sans"
           >
-            One District. One Leadership Team. One Shared Vision â€” Uniting 77 chartered clubs and ~700 young changemakers across Oyo, Osun, Ondo, Ekiti, Kwara, Kogi, and Niger states.
+            One District. One Leadership Team. One Shared Vision Ã¢â‚¬â€ Uniting 77 chartered clubs and ~700 young changemakers across Oyo, Osun, Ondo, Ekiti, Kwara, Kogi, and Niger states.
           </motion.p>
 
           {/* Quick Navigation Segmented Control */}
@@ -467,9 +467,43 @@ export default function AboutPage() {
       )}
 
       {/* ================= SECTION 3 & 4: LEADERSHIP & SUCCESSION ================= */}
-      {activeTab === 'overview' && <LeadershipSection showOnly="all" />}
-        {activeTab === 'team' && <LeadershipSection showOnly="team" />}
-        {activeTab === 'past-leaders' && <LeadershipSection showOnly="succession" />}
+      {activeTab === 'overview' && (
+        <>
+          <LeadershipSection showOnly="all" />
+          <section className="py-16 max-w-7xl mx-auto px-6 lg:px-10">
+            <h3 className="text-3xl font-black text-center mb-8 text-[#1C1C1E]">District Team Memories</h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <img src="/images/leaders/district team collage 1.jpeg" className="w-full h-auto rounded-3xl shadow-sm object-cover" alt="District Team Collage 1" />
+              <img src="/images/leaders/district team collage 2.jpeg" className="w-full h-auto rounded-3xl shadow-sm object-cover" alt="District Team Collage 2" />
+              <img src="/images/leaders/district team collage 3.jpeg" className="w-full h-auto rounded-3xl shadow-sm object-cover" alt="District Team Collage 3" />
+            </div>
+            <h3 className="text-3xl font-black text-center mb-8 mt-16 text-[#1C1C1E]">Council of Past DRRs from District 9125</h3>
+            <img src="/images/leaders/DRR council Collage.jpeg" className="w-full max-w-4xl mx-auto h-auto rounded-3xl shadow-sm object-cover" alt="Council of Past DRRs Collage" />
+          </section>
+        </>
+      )}
+      {activeTab === 'team' && (
+        <>
+          <LeadershipSection showOnly="team" />
+          <section className="py-16 max-w-7xl mx-auto px-6 lg:px-10">
+            <h3 className="text-3xl font-black text-center mb-8 text-[#1C1C1E]">District Team Memories</h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <img src="/images/leaders/district team collage 1.jpeg" className="w-full h-auto rounded-3xl shadow-sm object-cover" alt="District Team Collage 1" />
+              <img src="/images/leaders/district team collage 2.jpeg" className="w-full h-auto rounded-3xl shadow-sm object-cover" alt="District Team Collage 2" />
+              <img src="/images/leaders/district team collage 3.jpeg" className="w-full h-auto rounded-3xl shadow-sm object-cover" alt="District Team Collage 3" />
+            </div>
+          </section>
+        </>
+      )}
+      {activeTab === 'past-leaders' && (
+        <>
+          <LeadershipSection showOnly="succession" />
+          <section className="py-16 max-w-7xl mx-auto px-6 lg:px-10">
+            <h3 className="text-3xl font-black text-center mb-8 text-[#1C1C1E]">Council of Past DRRs from District 9125</h3>
+            <img src="/images/leaders/DRR council Collage.jpeg" className="w-full max-w-4xl mx-auto h-auto rounded-3xl shadow-sm object-cover" alt="Council of Past DRRs Collage" />
+          </section>
+        </>
+      )}
 
       {/* ================= FINAL INSPIRATIONAL CREED ================= */}
       <section className="py-16 bg-[#111111] text-white text-center">
