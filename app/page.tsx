@@ -20,8 +20,8 @@ export default function HomePage() {
         <WhoWeAreSection />
         <DRRSpotlightSection />
         <ExperienceSection />
-        <LeadershipSection />
         <DistrictGovernorSection />
+        <LeadershipSection />
         <ProjectsSection />
         <CTASection />
       </main>
