@@ -2,6 +2,7 @@
 
 import React, { useState, useMemo, useEffect } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { 
   Search, 
   MapPin, 
@@ -367,7 +368,7 @@ export default function ProjectsPage() {
               const theme = categoryColors[p.category] || categoryColors.Healthcare;
 
               return (
-                <div key={p.id} className="h-full">
+                  <div key={p.id} className="h-full" onClick={() => router.push(`/projects/${p.id}`)}>
                   <div 
                     className={`relative overflow-hidden rounded-2xl cursor-pointer group shadow-lg ${p.height || 'h-[300px]'}`}
                     style={{ border: '1px solid rgba(0, 0, 0, 0.08)' }}

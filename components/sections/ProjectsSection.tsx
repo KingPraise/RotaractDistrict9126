@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { MapPin, ArrowRight } from 'lucide-react';
@@ -79,7 +80,8 @@ export default function ProjectsSection() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {displayProjects.map((proj, idx) => (
             <motion.div 
-              key={idx} 
+              key={idx}
+              onClick={() => router.push(`/projects/${proj.id}`)} 
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-40px' }}
