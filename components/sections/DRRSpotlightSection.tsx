@@ -173,11 +173,7 @@ export default function DRRSpotlightSection() {
                 <p>
                   A passionate tennis enthusiast and a lover of pounded yam with correct soup, AdukeAdee beautifully balances excellence with humility, strength with warmth, and ambition with service.
                 </p>
-                <p className="font-black text-center text-[#981132] pt-4">
-                  AdukeAdee is an OMOLUABI, fully prepared to Create Lasting Impact. <br/><br/>
-                  LADIES AND GENTLEMEN, I PRESENT TO YOU ROTARACTOR, ADARAMOYE IYANUOLUWA ADUKEADEE, PHF<br/>
-                  THE THIRD AND FIRST FEMALE DISTRICT ROTARACT REPRESENTATIVE, ROTARACT DISTRICT 9126 NIGERIA.
-                </p>
+                
               </div>
             </div>
 
