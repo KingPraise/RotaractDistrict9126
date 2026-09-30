@@ -23,7 +23,7 @@ export default function LeadershipSection({ showOnly = "all" }: { showOnly?: "te
   ];
 
     const adrrs = [
-    { name: "PP Oluwatofunmi Tejumola", role: "Zone 1, Oyo State (Editor in Chief)", tooltip: "ADRR", image: "/images/leaders/Oluwatofunmi tejumola ADRR.jpeg" },
+    { name: "PP Oluwatofunmi Tejumola", role: "Zone 1, Oyo State", tooltip: "ADRR", image: "/images/leaders/Oluwatofunmi tejumola ADRR.jpeg" },
     { name: "PP Aderibigbe Kehinde David", role: "Zone 2, Osun State", tooltip: "ADRR", image: "/images/leaders/kehinde david.jpeg" },
     { name: "PP Abubakar Aminat Abiodun", role: "Zone 3, Kwara & Niger State", tooltip: "ADRR", image: "/images/leaders/aminat abiodun.jpeg" },
     { name: "PP Ijalana Oluwatobi", role: "Zone 4, Ondo & Ekiti", tooltip: "ADRR", image: "/images/leaders/Ijanala oluwatobi.jpeg" },
