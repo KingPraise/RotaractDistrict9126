@@ -18,9 +18,9 @@ export default function HomePage() {
         <HeroSection />
         <ImpactSection />
         <WhoWeAreSection />
+        <DistrictGovernorSection />
         <DRRSpotlightSection />
         <ExperienceSection />
-        <DistrictGovernorSection />
         <LeadershipSection />
         <ProjectsSection />
         <CTASection />
