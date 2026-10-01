@@ -1125,7 +1125,9 @@ export const clubsData: Club[] = [
     region: 'North-Central',
     meetingVenue: 'Online Assembly (Zoom & Discord)',
     meetingSchedule: 'Every 2nd & 4th Thursday  -  8:00 PM',
-    president: 'Ifeoma Okafor',
+    president: 'TAIYE Abdulrasheed',
+    presidentAvatar: '/images/leaders/taiye-abdulrasheed.jpeg',
+    presidentPhone: '08161228257',
     coordinates: { lat: 8.4842, lng: 4.6728 },
   },
   {
