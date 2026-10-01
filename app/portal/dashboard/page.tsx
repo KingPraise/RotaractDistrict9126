@@ -52,6 +52,7 @@ import {
   MemberDashboardState, 
   ClubMemberRecord 
 } from '@/lib/services/dashboard-service';
+import { clubsData } from '@/lib/clubs-data';
 
 export default function MemberDashboardPage() {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
@@ -106,20 +107,21 @@ export default function MemberDashboardPage() {
 
   // Live User & Dashboard State
   const [currentUser, setCurrentUser] = useState<MemberDashboardState['member']>({
-    userId: 'usr-default',
-    firstName: 'Tunde',
-    lastName: 'Adeyemi',
-    email: 't.adeyemi@rotaract9126.org',
-    rotaryId: 'ROT-9126-2026',
-    clubId: 'club-ibadan-central',
-    clubName: 'Rotaract Club of Ibadan Central',
-    state: 'Oyo State',
-    region: 'South-West',
+    userId: '',
+    firstName: '',
+    lastName: '',
+    email: '',
+    rotaryId: '',
+    riNumber: '',
+    clubId: '',
+    clubName: '',
+    state: '',
+    region: '',
     role: 'member',
-    duesStatus: 'cleared',
-    avatarUrl: 'https://images.unsplash.com/photo-1614023342667-6f060e9d1e04?w=80&h=80&fit=crop&auto=format',
-    occupation: 'Active Member',
-    phoneNumber: '+234 800 123 4567'
+    duesStatus: 'pending',
+    avatarUrl: '',
+    occupation: '',
+    phoneNumber: ''
   });
 
   const [metrics, setMetrics] = useState({
@@ -225,18 +227,12 @@ export default function MemberDashboardPage() {
       >
         {/* Brand Lockup */}
         <div className="flex items-center justify-between p-4 border-b border-black/[0.08]">
-          <Link href="/" className="flex items-center gap-2.5 overflow-hidden">
+          <Link href="/" className="flex items-center overflow-hidden">
             <img 
-              src="/images/rotary-wheel.png" 
-              alt="Rotaract" 
-              className="w-8 h-8 object-contain shrink-0 drop-shadow-[0_0_6px_rgba(152,17,50,0.45)]"
+              src="/images/rotaract-logo.png" 
+              alt="Rotaract District 9126" 
+              className={`object-contain shrink-0 transition-all duration-300 ${sidebarCollapsed ? 'h-8 w-8' : 'h-11 w-auto max-w-[140px]'}`}
             />
-            {!sidebarCollapsed && (
-              <div className="leading-tight">
-                <div className="text-xs font-black tracking-wider uppercase text-[#1C1C1E]">Rotaract</div>
-                <div className="text-[8px] text-black/40 uppercase tracking-widest font-semibold">District 9126</div>
-              </div>
-            )}
           </Link>
 
           <button 
@@ -489,19 +485,21 @@ export default function MemberDashboardPage() {
                       </label>
                       <input
                         type="text"
-                        defaultValue="Tunde"
+                        value={currentUser.firstName}
+                        readOnly
                         className="w-full px-3.5 py-2.5 rounded-xl bg-black/[0.04] border border-black/[0.08] text-xs text-[#1C1C1E] outline-none focus:border-[#981132] focus:bg-white transition-all font-sans"
                       />
                     </div>
 
-                    {/* Full Name */}
+                    {/* Last Name */}
                     <div className="flex flex-col gap-1.5">
                       <label className="text-[9.5px] font-semibold text-black/40 tracking-wider uppercase">
-                        Full Name
+                        Last Name
                       </label>
                       <input
                         type="text"
-                        defaultValue="Tunde Adeyemi"
+                        value={currentUser.lastName}
+                        readOnly
                         className="w-full px-3.5 py-2.5 rounded-xl bg-black/[0.04] border border-black/[0.08] text-xs text-[#1C1C1E] outline-none focus:border-[#981132] focus:bg-white transition-all font-sans"
                       />
                     </div>
@@ -513,7 +511,8 @@ export default function MemberDashboardPage() {
                       </label>
                       <input
                         type="email"
-                        defaultValue="t.adeyemi@rotaract9126.org"
+                        value={currentUser.email}
+                        readOnly
                         className="w-full px-3.5 py-2.5 rounded-xl bg-black/[0.04] border border-black/[0.08] text-xs text-[#1C1C1E] outline-none focus:border-[#981132] focus:bg-white transition-all font-sans"
                       />
                     </div>
@@ -525,21 +524,54 @@ export default function MemberDashboardPage() {
                       </label>
                       <input
                         type="tel"
-                        defaultValue="+234 800 123 4567"
+                        value={currentUser.phoneNumber}
+                        readOnly
                         className="w-full px-3.5 py-2.5 rounded-xl bg-black/[0.04] border border-black/[0.08] text-xs text-[#1C1C1E] outline-none focus:border-[#981132] focus:bg-white transition-all font-sans"
                       />
                     </div>
 
-                    {/* Club (Full Width) */}
+                    {/* RI Number */}
+                    <div className="flex flex-col gap-1.5">
+                      <label className="text-[9.5px] font-semibold text-black/40 tracking-wider uppercase">
+                        RI Number
+                      </label>
+                      <input
+                        type="text"
+                        value={currentUser.riNumber || ''}
+                        readOnly
+                        placeholder="Not assigned"
+                        className="w-full px-3.5 py-2.5 rounded-xl bg-black/[0.04] border border-black/[0.08] text-xs text-[#1C1C1E] outline-none focus:border-[#981132] focus:bg-white transition-all font-sans placeholder-black/30"
+                      />
+                    </div>
+
+                    {/* Rotary ID */}
+                    <div className="flex flex-col gap-1.5">
+                      <label className="text-[9.5px] font-semibold text-black/40 tracking-wider uppercase">
+                        Rotary ID
+                      </label>
+                      <input
+                        type="text"
+                        value={currentUser.rotaryId}
+                        readOnly
+                        className="w-full px-3.5 py-2.5 rounded-xl bg-black/[0.04] border border-black/[0.08] text-xs text-[#1C1C1E] outline-none focus:border-[#981132] focus:bg-white transition-all font-sans"
+                      />
+                    </div>
+
+                    {/* Club (Full Width - Dropdown) */}
                     <div className="sm:col-span-2 flex flex-col gap-1.5">
                       <label className="text-[9.5px] font-semibold text-black/40 tracking-wider uppercase">
                         Club
                       </label>
-                      <input
-                        type="text"
-                        defaultValue="Rotaract Club of Ibadan Central"
-                        className="w-full px-3.5 py-2.5 rounded-xl bg-black/[0.04] border border-black/[0.08] text-xs text-[#1C1C1E] outline-none focus:border-[#981132] focus:bg-white transition-all font-sans"
-                      />
+                      <select
+                        value={currentUser.clubName}
+                        disabled
+                        className="w-full px-3.5 py-2.5 rounded-xl bg-black/[0.04] border border-black/[0.08] text-xs text-[#1C1C1E] outline-none focus:border-[#981132] focus:bg-white transition-all font-sans appearance-none"
+                      >
+                        <option value="">Select a club</option>
+                        {clubsData.map((club) => (
+                          <option key={club.id} value={club.name}>{club.name}</option>
+                        ))}
+                      </select>
                     </div>
                   </div>
 
@@ -1367,6 +1399,10 @@ export default function MemberDashboardPage() {
                       boxShadow: 'rgba(255, 255, 255, 0.1) 0px 0px 0px 1px, rgba(255, 255, 255, 0.12) 0px 1px 0px inset, rgba(0, 0, 0, 0.7) 0px 24px 60px'
                     }}
                   >
+                    {/* Rotaract Logo Watermark */}
+                    <div className="absolute inset-0 flex items-center justify-center opacity-15 pointer-events-none z-0">
+                      <img src="/images/rotaract-logo.png" alt="Rotaract Logo Watermark" className="w-60 h-auto object-contain filter invert brightness-200 contrast-200" />
+                    </div>
                     {/* Top Header Row */}
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2">
@@ -1673,6 +1709,11 @@ export default function MemberDashboardPage() {
 
             {/* Digital ID Card Preview */}
             <div className="w-full bg-gradient-to-br from-[#1E1B4B] via-[#0F1624] to-[#312E81] rounded-2xl p-5 text-white shadow-xl border border-white/20 relative overflow-hidden">
+              {/* Rotaract Logo Watermark Background */}
+              <div className="absolute inset-0 flex items-center justify-center opacity-15 pointer-events-none z-0">
+                <img src="/images/rotaract-logo.png" alt="Rotaract Logo Watermark" className="w-48 h-auto object-contain filter invert brightness-200 contrast-200" />
+              </div>
+
               {/* Decorative glows */}
               <div className="absolute top-0 right-0 h-32 w-32 bg-[#D91B5C]/25 rounded-full blur-xl pointer-events-none" />
               <div className="absolute bottom-0 left-0 h-28 w-28 bg-[#4338CA]/30 rounded-full blur-xl pointer-events-none" />
@@ -1685,7 +1726,7 @@ export default function MemberDashboardPage() {
                   </div>
                   <div>
                     <div className="text-[11px] font-black tracking-wider text-white">ROTARACT D9126</div>
-                    <div className="text-[8px] text-[#D91B5C] font-semibold">NIGERIA � CHARTERED</div>
+                    <div className="text-[8px] text-[#D91B5C] font-semibold">NIGERIA • CHARTERED</div>
                   </div>
                 </div>
                 <Award className="h-5 w-5 text-[#D4A520]" />
@@ -1694,20 +1735,27 @@ export default function MemberDashboardPage() {
               {/* Member Profile Block */}
               <div className="flex items-center gap-3 mb-4 relative z-10">
                 <img
-                  src="https://images.unsplash.com/photo-1614023342667-6f060e9d1e04?w=80&h=80&fit=crop&auto=format"
-                  alt="Tunde"
+                  src={currentUser.avatarUrl || "https://images.unsplash.com/photo-1614023342667-6f060e9d1e04?w=80&h=80&fit=crop&auto=format"}
+                  onError={(e) => { e.currentTarget.src = 'https://images.unsplash.com/photo-1614023342667-6f060e9d1e04?w=80&h=80&fit=crop&auto=format'; }}
+                  alt={currentUser.firstName || "Member"}
                   className="h-14 w-14 rounded-xl object-cover border border-[#D91B5C] shadow-md shrink-0"
                 />
                 <div className="min-w-0">
-                  <h3 className="text-sm font-black text-white truncate">Tunde Adeyemi</h3>
-                  <p className="text-[10px] text-[#D4A520] font-semibold truncate">Co-DRR & Lead Architect</p>
+                  <h3 className="text-sm font-black text-white truncate">
+                    {currentUser.firstName && currentUser.lastName 
+                      ? `${currentUser.firstName} ${currentUser.lastName}` 
+                      : (currentUser.firstName || currentUser.email || 'Member')}
+                  </h3>
+                  <p className="text-[10px] text-[#D4A520] font-semibold truncate">
+                    {currentUser.occupation || (currentUser.role === 'club_president' ? 'Club President' : currentUser.role === 'district_admin' ? 'District Administrator' : 'Active Member')}
+                  </p>
                   <div className="mt-0.5 flex items-center gap-1 text-[9.5px] text-slate-300">
-                    <Building2 className="h-2.5 w-2.5 text-slate-400" />
-                    <span className="truncate">RAC Ibadan Central</span>
+                    <Building2 className="h-2.5 w-2.5 text-slate-400 shrink-0" />
+                    <span className="truncate">{currentUser.clubName || 'Rotaract District 9126'}</span>
                   </div>
                   <div className="flex items-center gap-1 text-[9.5px] text-slate-400">
-                    <MapPin className="h-2.5 w-2.5 text-[#D91B5C]" />
-                    <span>Oyo State � South-West</span>
+                    <MapPin className="h-2.5 w-2.5 text-[#D91B5C] shrink-0" />
+                    <span>{currentUser.state || 'District 9126'}{currentUser.region ? ` • ${currentUser.region}` : ''}</span>
                   </div>
                 </div>
               </div>
@@ -1715,8 +1763,12 @@ export default function MemberDashboardPage() {
               {/* Verified QR + Rotary ID Details */}
               <div className="flex items-center justify-between bg-black/40 rounded-xl p-3 border border-white/10 relative z-10">
                 <div>
-                  <div className="text-[8px] uppercase font-bold text-slate-400">Rotary Member ID</div>
-                  <div className="text-xs font-mono font-bold text-white tracking-widest">ROT-9126-2026</div>
+                  <div className="text-[8px] uppercase font-bold text-slate-400">
+                    {currentUser.riNumber ? 'RI Number / Rotary ID' : 'Rotary Member ID'}
+                  </div>
+                  <div className="text-xs font-mono font-bold text-white tracking-widest">
+                    {currentUser.riNumber || currentUser.rotaryId || 'ROT-9126'}
+                  </div>
 
                   <div className="mt-1 text-[8px] uppercase font-bold text-slate-400">Verification Seal</div>
                   <div className="text-[10px] font-semibold text-emerald-400 flex items-center gap-1">

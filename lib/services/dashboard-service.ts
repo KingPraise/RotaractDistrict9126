@@ -20,6 +20,7 @@ export interface MemberDashboardState {
     lastName: string;
     email: string;
     rotaryId: string;
+    riNumber: string;
     clubId: string;
     clubName: string;
     state: string;
@@ -95,6 +96,7 @@ export async function getMemberDashboardData(userId: string, localAuthUser?: any
     const lastName = userData?.lastName || localAuthUser?.lastName || 'Adeyemi';
     const email = userData?.email || localAuthUser?.email || 'tunde.adeyemi@rotaractdistrict9126.com.ng';
     const rotaryId = userData?.rotaryId || 'ROT-9126-2026';
+    const riNumber = userData?.riNumber || '';
     const clubId = userData?.clubId || 'club-ibadan-central';
     const role = userData?.role || localAuthUser?.role || 'member';
     const duesStatus: DuesStatus = userData?.duesStatus === 'cleared' || localAuthUser?.duesStatus === 'cleared' ? 'cleared' : 'pending';
@@ -213,6 +215,7 @@ export async function getMemberDashboardData(userId: string, localAuthUser?: any
         lastName,
         email,
         rotaryId,
+        riNumber,
         clubId,
         clubName,
         state,
@@ -242,6 +245,7 @@ export async function getMemberDashboardData(userId: string, localAuthUser?: any
         lastName: localAuthUser?.lastName || 'Adeyemi',
         email: localAuthUser?.email || 'tunde.adeyemi@rotaractdistrict9126.com.ng',
         rotaryId: 'ROT-9126-2026',
+        riNumber: '',
         clubId: 'club-ibadan-central',
         clubName: 'RAC Ibadan Central',
         state: 'Oyo State',

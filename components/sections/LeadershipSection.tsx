@@ -93,7 +93,7 @@ export default function LeadershipSection({ showOnly = "all" }: { showOnly?: "te
     <section id="leadership" className="relative py-24 lg:py-32 overflow-hidden bg-[#F8F5F2]">
       <div className="max-w-7xl mx-auto px-6 lg:px-10 relative z-10">
         {(showOnly === "all" || showOnly === "team") && (
-          <LeaderGrid leaders={mainLeaders} title="Meet the Leadership" subtitle="The District 9126 executive council driving impact across seven Nigerian states" highlightFirst={true} />
+          <LeaderGrid leaders={mainLeaders} title="Meet the Leadership" subtitle="The District 9126 executive council driving impact across seven Nigerian states" />
         )}
         {(showOnly === "all" || showOnly === "succession") && (
           <LeaderGrid leaders={successionWall} title="District 9126 Succession Wall" subtitle="Honoring our past, present, and future District Rotaract Representatives" />
