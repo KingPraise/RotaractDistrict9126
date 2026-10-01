@@ -157,7 +157,7 @@ export default function ProjectDetailPage() {
                   <ShieldCheck className="text-[#D4A520]" size={16} />
                   {project.club}
                 </span>
-                <span className="text-white/40">Â·</span>
+                <span className="text-white/40">Ã‚Â·</span>
                 <span className="inline-flex items-center gap-1.5 text-white/80">
                   <MapPin className="text-[#D91B5C]" size={14} />
                   {project.location}
@@ -202,7 +202,7 @@ export default function ProjectDetailPage() {
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="p-4.5 rounded-2xl bg-black/[0.02] border border-black/[0.06] space-y-2">
+                <div className="p-5 rounded-2xl bg-black/[0.02] border border-black/[0.06] space-y-2">
                   <div className="w-8 h-8 rounded-xl bg-[#981132]/10 text-[#981132] flex items-center justify-center font-bold text-xs">
                     01
                   </div>
@@ -212,7 +212,7 @@ export default function ProjectDetailPage() {
                   </p>
                 </div>
 
-                <div className="p-4.5 rounded-2xl bg-black/[0.02] border border-black/[0.06] space-y-2">
+                <div className="p-5 rounded-2xl bg-black/[0.02] border border-black/[0.06] space-y-2">
                   <div className="w-8 h-8 rounded-xl bg-[#981132]/10 text-[#981132] flex items-center justify-center font-bold text-xs">
                     02
                   </div>
@@ -222,7 +222,7 @@ export default function ProjectDetailPage() {
                   </p>
                 </div>
 
-                <div className="p-4.5 rounded-2xl bg-black/[0.02] border border-black/[0.06] space-y-2">
+                <div className="p-5 rounded-2xl bg-black/[0.02] border border-black/[0.06] space-y-2">
                   <div className="w-8 h-8 rounded-xl bg-[#981132]/10 text-[#981132] flex items-center justify-center font-bold text-xs">
                     03
                   </div>
@@ -232,7 +232,7 @@ export default function ProjectDetailPage() {
                   </p>
                 </div>
 
-                <div className="p-4.5 rounded-2xl bg-black/[0.02] border border-black/[0.06] space-y-2">
+                <div className="p-5 rounded-2xl bg-black/[0.02] border border-black/[0.06] space-y-2">
                   <div className="w-8 h-8 rounded-xl bg-[#981132]/10 text-[#981132] flex items-center justify-center font-bold text-xs">
                     04
                   </div>
@@ -278,7 +278,7 @@ export default function ProjectDetailPage() {
                 The 4-Way Test of the Things We Think, Say or Do
               </h3>
               <p className="text-xs text-white/80 leading-relaxed">
-                1. Is it the TRUTH? Â· 2. Is it FAIR to all concerned? Â· 3. Will it build GOODWILL and BETTER FRIENDSHIPS? Â· 4. Will it be BENEFICIAL to all concerned?
+                1. Is it the TRUTH? Ã‚Â· 2. Is it FAIR to all concerned? Ã‚Â· 3. Will it build GOODWILL and BETTER FRIENDSHIPS? Ã‚Â· 4. Will it be BENEFICIAL to all concerned?
               </p>
             </div>
 
