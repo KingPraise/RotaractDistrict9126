@@ -157,7 +157,7 @@ export default function ProjectDetailPage() {
                   <ShieldCheck className="text-[#D4A520]" size={16} />
                   {project.club}
                 </span>
-                <span className="text-white/40">Ã‚Â·</span>
+                <span className="text-white/40">&bull;</span>
                 <span className="inline-flex items-center gap-1.5 text-white/80">
                   <MapPin className="text-[#D91B5C]" size={14} />
                   {project.location}
@@ -278,7 +278,7 @@ export default function ProjectDetailPage() {
                 The 4-Way Test of the Things We Think, Say or Do
               </h3>
               <p className="text-xs text-white/80 leading-relaxed">
-                1. Is it the TRUTH? Ã‚Â· 2. Is it FAIR to all concerned? Ã‚Â· 3. Will it build GOODWILL and BETTER FRIENDSHIPS? Ã‚Â· 4. Will it be BENEFICIAL to all concerned?
+                1. Is it the TRUTH? Ãƒâ€šÃ‚Â· 2. Is it FAIR to all concerned? Ãƒâ€šÃ‚Â· 3. Will it build GOODWILL and BETTER FRIENDSHIPS? Ãƒâ€šÃ‚Â· 4. Will it be BENEFICIAL to all concerned?
               </p>
             </div>
 

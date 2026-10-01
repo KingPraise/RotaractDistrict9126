@@ -13,7 +13,7 @@ export default function ExperienceSection() {
     },
     {
       title: "Community Service",
-      desc: "Hands-on impact â€” boreholes, vaccines, classrooms, meals",
+      desc: "Hands-on impact - boreholes, vaccines, classrooms, meals",
       image: "https://images.unsplash.com/photo-1509099836639-18ba1795216d?w=600&h=720&fit=crop&auto=format",
     },
     {
