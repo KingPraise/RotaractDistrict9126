@@ -99,7 +99,7 @@ export default function RotaryTooltip({ acronym, term, children, className = '' 
         </span>
       </button>
 
-      {/* Clean Centered Modal Portal � Never clipped, never obscures card */}
+      {/* Clean Centered Modal Portal  -  Never clipped, never obscures card */}
       {mounted && isOpen && createPortal(
         <AnimatePresence>
           <div className="fixed inset-0 z-[99999] flex items-center justify-center p-4">

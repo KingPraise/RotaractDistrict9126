@@ -41,7 +41,7 @@ function WhatsAppIcon({ className = 'w-4 h-4' }: { className?: string }) {
 
 // Preset dynamic photography collection for presidential portrayals
 const CURATED_PRESIDENT_PHOTOS = [
-  'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=800&h=1000&fit=crop&auto=format&q=85',
+  'https://images.unsplash.com/photo-1534528741775 - 53994a69daeb?w=800&h=1000&fit=crop&auto=format&q=85',
   'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&h=1000&fit=crop&auto=format&q=85',
   'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800&h=1000&fit=crop&auto=format&q=85',
   'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=800&h=1000&fit=crop&auto=format&q=85',
@@ -125,7 +125,7 @@ function JoinClubContent() {
           <div className="flex items-center gap-2">
             <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#981132]/10 border border-[#981132]/20 text-[#981132] text-[11px] font-black uppercase tracking-wider">
               <ShieldCheck size={12} />
-              {selectedClub.state} State � D9126
+              {selectedClub.state} State  -  D9126
             </span>
           </div>
         </div>
@@ -176,7 +176,7 @@ function JoinClubContent() {
                 </h2>
 
                 <p className="text-white/70 text-xs font-medium">
-                  Presiding Officer � {selectedClub.name}
+                  Presiding Officer  -  {selectedClub.name}
                 </p>
               </div>
             </div>
@@ -239,7 +239,7 @@ function JoinClubContent() {
                       Meeting Schedule
                     </div>
                     <div className="text-xs font-bold text-[#1C1C1E] mt-0.5">
-                      {selectedClub.meetingSchedule || 'Every 1st & 3rd Sunday � 4:00 PM'}
+                      {selectedClub.meetingSchedule || 'Every 1st & 3rd Sunday  -  4:00 PM'}
                     </div>
                     <div className="text-[11px] text-gray-500 mt-0.5">
                       Bi-monthly fellowship
@@ -299,9 +299,9 @@ function JoinClubContent() {
                   <span className="flex items-center gap-1">
                     <ShieldCheck size={13} className="text-[#22C55E]" /> Official D9126 Channel
                   </span>
-                  <span>�</span>
+                  <span> - </span>
                   <span>Instant Response</span>
-                  <span>�</span>
+                  <span> - </span>
                   <span>Zero Membership Application Fees</span>
                 </div>
               </div>
@@ -375,7 +375,7 @@ function JoinClubContent() {
                     <div className="pt-4 border-t border-black/[0.06] mt-4 flex items-center justify-between">
                       <span className="text-[10px] font-mono text-gray-400">{pPhone}</span>
                       <span className="text-xs font-bold text-[#981132] flex items-center gap-1 group-hover:translate-x-1 transition-transform">
-                        Select Club →
+                        Select Club &rarr;
                       </span>
                     </div>
                   </Link>

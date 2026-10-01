@@ -107,7 +107,7 @@ export default function Navbar() {
               <Search className="h-3.5 w-3.5" />
               <span className="text-[11.5px] font-medium">Search</span>
               <kbd className="text-[10px] font-mono bg-white px-1.5 py-0.5 rounded text-slate-500 border border-black/10">
-                ⌘K
+                Ctrl K
               </kbd>
             </button>
 
@@ -190,7 +190,7 @@ export default function Navbar() {
                 onClick={() => setIsMobileOpen(false)}
                 className="bg-[#981132] text-white text-center text-xs font-bold py-2.5 rounded-full"
               >
-                Join a Club ↗
+                Join a Club
               </Link>
             </div>
           </div>

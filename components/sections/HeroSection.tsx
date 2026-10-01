@@ -137,7 +137,7 @@ export default function HeroSection() {
           className="max-w-2xl leading-relaxed mb-8 sm:mb-10 font-sans px-2" 
           style={{ fontSize: 'clamp(0.95rem, 1.6vw, 1.2rem)', color: 'rgb(255, 255, 255)' }}
         >
-          Rotaract District 9126 unites thousands of young leaders across Ondo, Ekiti, Osun, Oyo, Kogi, Niger, and Kwara in a relentless pursuit of community transformation � from grassroots action to global connection.
+          Rotaract District 9126 unites thousands of young leaders across Ondo, Ekiti, Osun, Oyo, Kogi, Niger, and Kwara in a relentless pursuit of community transformation  -  from grassroots action to global connection.
         </motion.p>
 
         <motion.div 

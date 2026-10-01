@@ -304,7 +304,7 @@ function AuthForm({ initialMode = 'login' }: AuthContainerProps) {
                       </span>
                       <input
                         type={showPassword ? 'text' : 'password'}
-                        placeholder={mode === 'login' ? '••••••••' : 'Min. 8 characters'}
+                        placeholder={mode === 'login' ? ' - ' : 'Min. 8 characters'}
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         autoComplete={mode === 'login' ? 'current-password' : 'new-password'}
@@ -392,7 +392,7 @@ function AuthForm({ initialMode = 'login' }: AuthContainerProps) {
                   disabled={isLoading}
                   className="w-full inline-flex items-center justify-center gap-2 py-2.5 px-5 rounded-full bg-[#981132] hover:bg-[#A70C43] text-white text-[13.5px] font-bold tracking-wide shadow-[0_4px_20px_rgba(152,17,50,0.32)] transition-all mt-1 disabled:opacity-70 font-sans cursor-pointer"
                 >
-                  {isLoading ? 'Processing…' : (
+                  {isLoading ? 'Processing...' : (
                     mode === 'login' ? 'Sign In' : mode === 'register' ? 'Create Account' : 'Send Reset Link'
                   )}
                   <span className="w-[26px] h-[26px] rounded-full bg-black/35 backdrop-blur-sm inline-flex items-center justify-center border border-white/15 shrink-0">
@@ -450,7 +450,7 @@ function AuthForm({ initialMode = 'login' }: AuthContainerProps) {
       >
         <ShieldCheck size={12} strokeWidth={2} />
         <span className="text-[10px] tracking-[0.1em] font-semibold uppercase">
-          SECURED � DISTRICT 9126 IDENTITY SYSTEM � TLS 1.3
+          SECURED  -  DISTRICT 9126 IDENTITY SYSTEM  -  TLS 1.3
         </span>
       </div>
 

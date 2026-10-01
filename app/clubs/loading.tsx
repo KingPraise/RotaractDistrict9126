@@ -47,7 +47,7 @@ export default function ClubsLoading() {
             <div className="relative z-10 flex flex-col items-center gap-2 text-slate-400">
               <div className="w-8 h-8 rounded-full border-2 border-[#981132] border-t-transparent animate-spin" />
               <span className="text-xs font-bold uppercase tracking-widest text-[#981132] font-sans">
-                Loading District Map…
+                Loading District Map...
               </span>
             </div>
           </div>

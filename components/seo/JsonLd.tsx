@@ -10,7 +10,7 @@ export default function JsonLd() {
     logo: 'https://rotaractdistrict9126.com.ng/images/rotaract-logo.png',
     image: 'https://rotaractdistrict9126.com.ng/images/rotaract-logo.png',
     description:
-      'Official digital platform for Rotaract District 9126 � uniting 78 chartered clubs and over 700 young leaders across Oyo, Osun, Ondo, Ekiti, Kwara, Kogi, and Niger states for humanitarian service, youth leadership, and professional development.',
+      'Official digital platform for Rotaract District 9126  -  uniting 78 chartered clubs and over 700 young leaders across Oyo, Osun, Ondo, Ekiti, Kwara, Kogi, and Niger states for humanitarian service, youth leadership, and professional development.',
     foundingDate: '2009',
     parentOrganization: {
       '@type': 'NGO',

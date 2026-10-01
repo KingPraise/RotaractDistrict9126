@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Impact Blog & News Hub � Rotaract District 9126',
+  title: 'Impact Blog & News Hub  -  Rotaract District 9126',
   description:
     'Explore the latest impact reports, community stories, club spotlights, leadership summits, and district announcements across Rotaract District 9126 Nigeria.',
   alternates: {

@@ -41,7 +41,7 @@ export const INITIAL_ARTICLES: ArticleItem[] = [
       image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop&auto=format',
       role: 'District Public Image Committee'
     },
-    image: 'https://images.unsplash.com/photo-1621353880071-4752fa42cbc7?w=1200&h=800&fit=crop&auto=format',
+    image: 'https://images.unsplash.com/photo-1621353880071 - 4752fa42cbc7?w=1200&h=800&fit=crop&auto=format',
     tags: ['#Healthcare', '#Outreach', '#Record'],
     featured: true,
   },
@@ -78,13 +78,13 @@ export const INITIAL_ARTICLES: ArticleItem[] = [
   {
     id: 'art-4',
     title: 'From Iwo Road to Agodi: How One Club Rebuilt a Primary School Library',
-    excerpt: 'The Rotaract Club of Ibadan Iwo Road spent eight months fundraising, sourcing books, and training teachers � a story of persistence that district leaders are calling a model for replication.',
+    excerpt: 'The Rotaract Club of Ibadan Iwo Road spent eight months fundraising, sourcing books, and training teachers  -  a story of persistence that district leaders are calling a model for replication.',
     category: 'Community Stories',
     date: 'Jul 3, 2026',
     readTime: '7 min read',
     author: {
       name: 'Kayode Faleye',
-      image: 'https://images.unsplash.com/photo-1631824925667-28632e135463?w=80&h=80&fit=crop&auto=format',
+      image: 'https://images.unsplash.com/photo-1631824925667 - 28632e135463?w=80&h=80&fit=crop&auto=format',
       role: 'Literacy Director'
     },
     image: 'https://images.unsplash.com/photo-1632215861513-130b66fe97f4?w=1200&h=800&fit=crop&auto=format',
@@ -117,7 +117,7 @@ export const INITIAL_ARTICLES: ArticleItem[] = [
       image: 'https://images.unsplash.com/photo-1573497491765-dccce02b29df?w=80&h=80&fit=crop&auto=format',
       role: 'District Executive Secretary'
     },
-    image: 'https://images.unsplash.com/photo-1561489396-888724a1543d?w=1200&h=800&fit=crop&auto=format',
+    image: 'https://images.unsplash.com/photo-1561489396 - 888724a1543d?w=1200&h=800&fit=crop&auto=format',
     tags: ['#Award', '#Excellence'],
   },
 ];

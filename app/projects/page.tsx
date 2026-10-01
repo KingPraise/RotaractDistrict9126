@@ -129,7 +129,7 @@ export default function ProjectsPage() {
               </span>
             </h1>
             <p className="max-w-xl mx-auto text-black/60 leading-relaxed px-4 text-[clamp(0.95rem,1.5vw,1.1rem)] font-sans">
-              Every photo tells a story of real change. Explore the documented legacy of District 9126 — from boreholes to blockchains, from classrooms to clinics.
+              Every photo tells a story of real change. Explore the documented legacy of District 9126 - from boreholes to blockchains, from classrooms to clinics.
             </p>
           </div>
         </div>
@@ -332,7 +332,7 @@ export default function ProjectsPage() {
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={14}/>
                 <input 
                   type="text"
-                  placeholder="Search projectsÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¦"
+                  placeholder="Search projects..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="w-full pl-9 pr-4 py-2.5 rounded-xl text-sm bg-white border border-black/10 text-[#1C1C1E] placeholder-gray-400 outline-none focus:border-[#981132] transition-colors font-sans"

@@ -123,50 +123,50 @@ export default function DRRSpotlightSection() {
                 <div className="my-6 p-4 bg-gray-50 border-l-4 border-[#D4A520] rounded-r-lg">
                   <h5 className="font-bold text-[#1C1C1E] mb-2 uppercase tracking-wide">Club Level Leadership</h5>
                   <ul className="list-disc pl-5 space-y-1 text-xs">
-                    <li>Club Secretary, RAC AFUED (2019-2020)</li>
-                    <li>President, RAC AFUED (2020-2021) - <em>Increased club membership and engagement by 250%</em></li>
-                    <li>Club Trainer, RAC AFUED Ondo (2021-2022)</li>
-                    <li>Director, Membership Retention and Extension, RAC AFUED (2022-2023)</li>
-                    <li>Club Trainer, Rotaract e-Club Mighty (2023-2024)</li>
-                    <li>Membership Director, Rotaract e-Club Mighty (2023-2025)</li>
-                    <li>Club Service Project Director, Rotaract e-Club Mighty (2025-2026)</li>
+                    <li>Club Secretary, RAC AFUED (2019 - 2020)</li>
+                    <li>President, RAC AFUED (2020 - 2021) - <em>Increased club membership and engagement by 250%</em></li>
+                    <li>Club Trainer, RAC AFUED Ondo (2021 - 2022)</li>
+                    <li>Director, Membership Retention and Extension, RAC AFUED (2022 - 2023)</li>
+                    <li>Club Trainer, Rotaract e-Club Mighty (2023 - 2024)</li>
+                    <li>Membership Director, Rotaract e-Club Mighty (2023 - 2025)</li>
+                    <li>Club Service Project Director, Rotaract e-Club Mighty (2025 - 2026)</li>
                   </ul>
                 </div>
                 <div className="my-6 p-4 bg-gray-50 border-l-4 border-purple-600 rounded-r-lg">
                   <h5 className="font-bold text-[#1C1C1E] mb-2 uppercase tracking-wide">Zonal Level (Ondo &amp; Ekiti State)</h5>
                   <ul className="list-disc pl-5 space-y-1 text-xs">
-                    <li>Media and Publicity Director (2020-2021)</li>
-                    <li>Zonal Administrator, Ondo and Ekiti State (2021-2022)</li>
-                    <li>Chairperson, Dinner and Award Night, Ondo and Ekiti State (2021-2022)</li>
-                    <li>Deputy Zonal Trainer, Ondo and Ekiti State (2022-2023)</li>
-                    <li>The Rotary Foundation Chairperson (2023-2024)</li>
-                    <li>Rotaract Ondo State Learning Facilitator (2024-2025)</li>
+                    <li>Media and Publicity Director (2020 - 2021)</li>
+                    <li>Zonal Administrator, Ondo and Ekiti State (2021 - 2022)</li>
+                    <li>Chairperson, Dinner and Award Night, Ondo and Ekiti State (2021 - 2022)</li>
+                    <li>Deputy Zonal Trainer, Ondo and Ekiti State (2022 - 2023)</li>
+                    <li>The Rotary Foundation Chairperson (2023 - 2024)</li>
+                    <li>Rotaract Ondo State Learning Facilitator (2024 - 2025)</li>
                   </ul>
                 </div>
                 <div className="my-6 p-4 bg-gray-50 border-l-4 border-[#981132] rounded-r-lg">
                   <h5 className="font-bold text-[#1C1C1E] mb-2 uppercase tracking-wide">District Level</h5>
                   <ul className="list-disc pl-5 space-y-1 text-xs">
-                    <li>District Quiz Team Lead (2020-2021)</li>
-                    <li>Secretary, Rotary District 9125 Polio Plus Committee (2020-2021)</li>
-                    <li>Deputy District Project Director, Rotaract District 9125 (2021-2022) - <em>Co-launched the Digi-Hands initiative</em></li>
-                    <li>Secretary, District International Service Committee (2022-2023)</li>
-                    <li>Secretary, Rotary Girl Child Initiative Committee (2022-2023)</li>
-                    <li>Chair, District Water, Sanitation and Hygiene Activities (2022-2023) - <em>Championed ONE ZONE, ONE MARKET CLEAN UP</em></li>
-                    <li>Chairperson, District Training Seminar, Rotaract District 9125 (2023-2024)</li>
-                    <li>Secretary, District 9126 Bylaw Review Committee (2024-2025)</li>
-                    <li>District Secretary, Rotaract District 9126 (2024-2025)</li>
-                    <li>District Rotaract Representative Nominee (2024-2025)</li>
-                    <li>District Rotaract Representative-Elect (2025-2026)</li>
-                    <li>District Rotaract Representative (2026-2027)</li>
+                    <li>District Quiz Team Lead (2020 - 2021)</li>
+                    <li>Secretary, Rotary District 9125 Polio Plus Committee (2020 - 2021)</li>
+                    <li>Deputy District Project Director, Rotaract District 9125 (2021 - 2022) - <em>Co-launched the Digi-Hands initiative</em></li>
+                    <li>Secretary, District International Service Committee (2022 - 2023)</li>
+                    <li>Secretary, Rotary Girl Child Initiative Committee (2022 - 2023)</li>
+                    <li>Chair, District Water, Sanitation and Hygiene Activities (2022 - 2023) - <em>Championed ONE ZONE, ONE MARKET CLEAN UP</em></li>
+                    <li>Chairperson, District Training Seminar, Rotaract District 9125 (2023 - 2024)</li>
+                    <li>Secretary, District 9126 Bylaw Review Committee (2024 - 2025)</li>
+                    <li>District Secretary, Rotaract District 9126 (2024 - 2025)</li>
+                    <li>District Rotaract Representative Nominee (2024 - 2025)</li>
+                    <li>District Rotaract Representative-Elect (2025 - 2026)</li>
+                    <li>District Rotaract Representative (2026 - 2027)</li>
                   </ul>
                 </div>
                 <div className="my-6 p-4 bg-gray-50 border-l-4 border-blue-600 rounded-r-lg">
                   <h5 className="font-bold text-[#1C1C1E] mb-2 uppercase tracking-wide">National &amp; Continental Level</h5>
                   <ul className="list-disc pl-5 space-y-1 text-xs">
-                    <li>Secretary, NIGEROTA Committee (2022-2023)</li>
-                    <li>Treasurer, Rotaract Nigeria (2024-2025)</li>
-                    <li>Rotaract Africa Secretary-Elect (2024-2025)</li>
-                    <li>Rotaract Africa Secretary (2025-2026)</li>
+                    <li>Secretary, NIGEROTA Committee (2022 - 2023)</li>
+                    <li>Treasurer, Rotaract Nigeria (2024 - 2025)</li>
+                    <li>Rotaract Africa Secretary-Elect (2024 - 2025)</li>
+                    <li>Rotaract Africa Secretary (2025 - 2026)</li>
                     <li>Chairperson, NIGEROTA 2026 - <em>Hosted ~500 Rotaractors</em></li>
                   </ul>
                 </div>

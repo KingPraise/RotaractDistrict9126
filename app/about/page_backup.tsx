@@ -32,7 +32,7 @@ import InteractiveTimelineStack from '@/components/sections/InteractiveTimelineS
 
 const redistrictingTimeline = [
   {
-    year: '2009 – 2024',
+    year: '2009 - 2024',
     badge: '15-Year Legacy',
     title: 'The Era of District 9125',
     desc: 'For 15 years, Rotaract District 9125 served as a unified powerhouse comprising 23 states plus the Federal Capital Territory (FCT), nurturing generations of leaders across Nigeria.'
@@ -56,13 +56,13 @@ const redistrictingTimeline = [
     desc: 'District 9126 officially began its sovereign journey, establishing autonomous governance over 7 constituent states: Osun, Oyo, Ondo, Ekiti, Kwara, Niger, and Kogi.'
   },
   {
-    year: '2024 – 2025',
+    year: '2024 - 2025',
     badge: 'Inaugural Year',
     title: 'Foundation Era (DRR Oyewumi Kamaldeen)',
     desc: 'The 1st administration under "The Magic of Rotary" established district infrastructure, governance protocols, and inter-state club alignment.'
   },
   {
-    year: '2026 – 2027',
+    year: '2026 - 2027',
     badge: 'Sitting Era',
     title: 'Creating Lasting Impact (DRR Adaramoye Iyanuoluwa)',
     desc: 'Today, the 3rd administration coordinates 77 chartered clubs and ~700 Rotaractors with verified digital IDs, automated dues, and flagship humanitarian programs.'
@@ -71,7 +71,7 @@ const redistrictingTimeline = [
 
 const pastLeaders = [
   {
-    tenure: '2023–2024',
+    tenure: '2023 - 2024',
     order: 'Transition Architect',
     eraNumber: '00',
     title: '15th & Final DRR (District 9125 Transition Era)',
@@ -82,12 +82,12 @@ const pastLeaders = [
     highlights: ['RI Board Approval of D9126', '7-State Boundary Demarcation', 'The Genesis Bridge Administration'],
     image: '/images/leaders/drr-adebayo-sodiq.jpg',
     fallbackImage: 'https://images.unsplash.com/photo-1602009786436-96b827675d32?w=480&h=580&fit=crop&auto=format',
-    badge: 'The Genesis � Transition Architect',
+    badge: 'The Genesis  -  Transition Architect',
     accentColor: '#6366F1',
     glowColor: 'rgba(99, 102, 241, 0.25)'
   },
   {
-    tenure: '2024–2025',
+    tenure: '2024 - 2025',
     order: '1st DRR',
     eraNumber: '01',
     title: 'Inaugural 1st District Rotaract Representative',
@@ -98,12 +98,12 @@ const pastLeaders = [
     highlights: ['Inaugural District Bylaws', 'First 77-Club Assembly', 'Foundational Secretariat Setup'],
     image: '/images/leaders/drr-oyewumi-kamaldeen.jpg',
     fallbackImage: 'https://images.unsplash.com/photo-1533108344127-a586d2b02479?w=480&h=580&fit=crop&auto=format',
-    badge: '1st DRR � Inaugural Foundation Era',
+    badge: '1st DRR  -  Inaugural Foundation Era',
     accentColor: '#981132',
     glowColor: 'rgba(152, 17, 50, 0.25)'
   },
   {
-    tenure: '2025–2026',
+    tenure: '2025 - 2026',
     order: '2nd DRR',
     eraNumber: '02',
     title: '2nd District Rotaract Representative',
@@ -114,12 +114,12 @@ const pastLeaders = [
     highlights: ['Youth Leadership Institutes', 'Automated Financial Reconciliation', 'District Membership Expansion'],
     image: '/images/leaders/drr-raji-abeeb.jpg',
     fallbackImage: 'https://images.unsplash.com/photo-1629145810320-aec9e63dd798?w=480&h=580&fit=crop&auto=format',
-    badge: '2nd DRR � Consolidation Era',
+    badge: '2nd DRR  -  Consolidation Era',
     accentColor: '#D91B5C',
     glowColor: 'rgba(217, 27, 92, 0.25)'
   },
   {
-    tenure: '2026–2027',
+    tenure: '2026 - 2027',
     order: '3rd DRR (Sitting)',
     eraNumber: '03',
     title: 'Sitting 3rd District Rotaract Representative',
@@ -130,7 +130,7 @@ const pastLeaders = [
     highlights: ['Verified Digital Member IDs', '7-State Maternal Health Outreach', 'Youth Innovation Academy'],
     image: '/images/leaders/drr-adaramoye-iyanuoluwa.jpg',
     fallbackImage: 'https://images.unsplash.com/photo-1644152993066-9b9ee687930d?w=480&h=580&fit=crop&auto=format',
-    badge: '3rd DRR � Sitting Administration',
+    badge: '3rd DRR  -  Sitting Administration',
     accentColor: '#D4A520',
     glowColor: 'rgba(212, 165, 32, 0.25)',
     isCurrent: true
@@ -229,7 +229,7 @@ const currentTeam: LeaderMember[] = [
     role: 'Chief of Staff / District Administrator',
     tooltip: 'PHF',
     image: '/images/leaders/leader-chief-of-staff.jpg',
-    fallbackImage: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=480&h=580&fit=crop&auto=format',
+    fallbackImage: 'https://images.unsplash.com/photo-1534528741775 - 53994a69daeb?w=480&h=580&fit=crop&auto=format',
     dept: 'Executive Office / Administration',
     email: 'chiefofstaff@rotaractdistrict9126.com.ng',
     phone: '+234 800 912 6007',
@@ -380,7 +380,7 @@ export default function AboutPage() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="max-w-3xl mx-auto text-slate-300 text-base md:text-lg leading-relaxed mb-10 font-sans"
           >
-            One District. One Leadership Team. One Shared Vision � Uniting 77 chartered clubs and ~700 young changemakers across Oyo, Osun, Ondo, Ekiti, Kwara, Kogi, and Niger states.
+            One District. One Leadership Team. One Shared Vision  -  Uniting 77 chartered clubs and ~700 young changemakers across Oyo, Osun, Ondo, Ekiti, Kwara, Kogi, and Niger states.
           </motion.p>
 
           {/* Quick Navigation Segmented Control */}
@@ -743,7 +743,7 @@ export default function AboutPage() {
             className="text-center mb-16"
           >
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#D4A520]/10 border border-[#D4A520]/25 text-[#D4A520] text-xs font-bold uppercase tracking-widest mb-3">
-              <Award size={14} /> The Hall of DRR Leadership � District 9126
+              <Award size={14} /> The Hall of DRR Leadership  -  District 9126
             </div>
             
             <h2 className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight text-[#1C1C1E] mt-1 mb-4 font-sans">
@@ -920,7 +920,7 @@ export default function AboutPage() {
                           {leader.name}
                         </h3>
                         <div className="text-xs sm:text-sm font-bold text-[#D91B5C] uppercase tracking-wider mt-1 font-sans">
-                          {leader.title} � <span className="text-slate-500 font-medium">{leader.credentials}</span>
+                          {leader.title}  -  <span className="text-slate-500 font-medium">{leader.credentials}</span>
                         </div>
                       </div>
 

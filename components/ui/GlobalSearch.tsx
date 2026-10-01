@@ -240,8 +240,8 @@ export default function GlobalSearch({ isOpen, onClose }: GlobalSearchProps) {
             {/* Keyboard Shortcuts & District Registry Status Footer */}
             <div className="px-7 py-4 bg-black/40 border-t border-white/[0.08] flex items-center justify-between text-[11px] text-white/40 flex-wrap gap-3">
               <div className="flex items-center gap-3.5">
-                <span className="flex items-center gap-1.5"><kbd className="px-1.5 py-0.5 rounded bg-white/10 text-[9.5px] font-mono text-white/60">↑↓</kbd> Navigate</span>
-                <span className="flex items-center gap-1.5"><kbd className="px-1.5 py-0.5 rounded bg-white/10 text-[9.5px] font-mono text-white/60">↵</kbd> Select</span>
+                <span className="flex items-center gap-1.5"><kbd className="px-1.5 py-0.5 rounded bg-white/10 text-[9.5px] font-mono text-white/60">UpDown</kbd> Navigate</span>
+                <span className="flex items-center gap-1.5"><kbd className="px-1.5 py-0.5 rounded bg-white/10 text-[9.5px] font-mono text-white/60">Enter</kbd> Select</span>
                 <span className="flex items-center gap-1.5"><kbd className="px-1.5 py-0.5 rounded bg-white/10 text-[9.5px] font-mono text-white/60">ESC</kbd> Close</span>
               </div>
               <div className="flex items-center gap-2">

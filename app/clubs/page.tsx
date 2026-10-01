@@ -14,7 +14,7 @@ const ClubMap = dynamic(() => import('@/components/clubs/ClubMap'), {
     <div className="w-full h-full min-h-[450px] flex flex-col items-center justify-center bg-[#F8F5F2] text-gray-400 gap-3">
       <div className="w-8 h-8 rounded-full border-2 border-[#981132] border-t-transparent animate-spin" />
       <span className="text-xs font-semibold uppercase tracking-widest text-[#981132] font-sans">
-        Loading Interactive Map…
+        Loading Interactive Map...
       </span>
     </div>
   ),
@@ -90,7 +90,7 @@ export default function ClubsPage() {
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={13} strokeWidth={2}/>
                 <input
                   type="text"
-                  placeholder="Search by name, area, or Rotary ID…"
+                  placeholder="Search by name, area, or Rotary ID..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="w-full pl-9 pr-4 py-2.5 rounded-xl bg-white/85 border border-black/10 text-[#1C1C1E] text-xs font-sans outline-none focus:border-[#981132] transition-colors"
@@ -312,7 +312,7 @@ export default function ClubsPage() {
             <div className="absolute bottom-7 left-7 z-[400] px-3 py-1.5 rounded-xl bg-white/95 backdrop-blur-md border border-black/10 shadow-md flex items-center gap-2 pointer-events-none">
               <span className="w-1.5 h-1.5 rounded-full bg-[#981132] animate-pulse" />
               <span className="text-[9px] font-bold uppercase tracking-widest text-[#1C1C1E] font-sans">
-                D9126 � 7 STATES ACTIVE � {filteredClubs.length} LOCATIONS
+                D9126  -  7 STATES ACTIVE  -  {filteredClubs.length} LOCATIONS
               </span>
             </div>
           </div>

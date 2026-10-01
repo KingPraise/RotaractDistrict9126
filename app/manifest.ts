@@ -5,7 +5,7 @@ export default function manifest(): MetadataRoute.Manifest {
     name: 'Rotaract District 9126',
     short_name: 'Rotaract 9126',
     description:
-      'Official platform for Rotaract District 9126 � Fellowship, Leadership & Service across 7 Nigerian States.',
+      'Official platform for Rotaract District 9126  -  Fellowship, Leadership & Service across 7 Nigerian States.',
     start_url: '/',
     display: 'standalone',
     background_color: '#F8F5F2',

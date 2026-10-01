@@ -157,7 +157,7 @@ export default function MemberDashboardPage() {
       name: 'Tunde Adeyemi',
       club: 'RAC Ibadan Central',
       status: 'Cleared',
-      period: 'Jan – Jun 2026',
+      period: 'Jan  -  Jun 2026',
       avatar: 'https://images.unsplash.com/photo-1614023342667-6f060e9d1e04?w=80&h=80&fit=crop&auto=format'
     }
   ]);
@@ -391,7 +391,7 @@ export default function MemberDashboardPage() {
               <div className="w-8 h-8 rounded-full p-[1.5px] bg-gradient-to-tr from-[#D91B5C] to-[#A855F7]">
                 <img 
                   src={currentUser.avatarUrl} 
-                  onError={(e) => { e.currentTarget.src = 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=80&h=80&fit=crop&auto=format'; }}
+                  onError={(e) => { e.currentTarget.src = 'https://images.unsplash.com/photo-1534528741775 - 53994a69daeb?w=80&h=80&fit=crop&auto=format'; }}
                   alt={currentUser.firstName} 
                   className="w-full h-full rounded-full object-cover"
                 />
@@ -433,7 +433,7 @@ export default function MemberDashboardPage() {
               </span>
             </div>
             <p className="text-[10px] text-black/40 mt-0.5">
-              {currentUser.clubName} � {currentUser.state} � Rotary Year 2026/2027
+              {currentUser.clubName}  -  {currentUser.state}  -  Rotary Year 2026/2027
             </p>
           </div>
 
@@ -687,7 +687,7 @@ export default function MemberDashboardPage() {
                         statusStyle: m.duesStatus === 'cleared'
                           ? 'text-green-700 bg-green-500/[0.08] border-green-500/[0.16]'
                           : 'text-black/60 bg-black/[0.04] border-black/[0.08]',
-                        avatar: m.avatarUrl || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=80&h=80&fit=crop&auto=format'
+                        avatar: m.avatarUrl || 'https://images.unsplash.com/photo-1534528741775 - 53994a69daeb?w=80&h=80&fit=crop&auto=format'
                       }))
                     : [
                         {
@@ -713,7 +713,7 @@ export default function MemberDashboardPage() {
                     >
                       <img
                         src={member.avatar}
-                        onError={(e) => { e.currentTarget.src = 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=80&h=80&fit=crop&auto=format'; }}
+                        onError={(e) => { e.currentTarget.src = 'https://images.unsplash.com/photo-1534528741775 - 53994a69daeb?w=80&h=80&fit=crop&auto=format'; }}
                         alt={member.name}
                         className="w-10 h-10 rounded-full object-cover shrink-0 border-[1.5px] border-black/[0.08]"
                       />
@@ -802,7 +802,7 @@ export default function MemberDashboardPage() {
                       Payment History
                     </span>
                     <button 
-                      onClick={() => alert('Exporting Payment Receipts…')}
+                      onClick={() => alert('Exporting Payment Receipts...')}
                       className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-black/[0.04] border border-black/[0.08] text-[11px] text-black/70 hover:bg-black/[0.08] transition-colors cursor-pointer"
                     >
                       <Download size={12}/> Export
@@ -1359,7 +1359,7 @@ export default function MemberDashboardPage() {
                           </button>
                         ) : ev.actionType === 'pay' ? (
                           <button 
-                            onClick={() => alert('Redirecting to Dues payment portal…')}
+                            onClick={() => alert('Redirecting to Dues payment portal...')}
                             className="px-3.5 py-1.5 rounded-lg bg-[#981132] text-white font-bold text-[11px] hover:bg-[#A70C43] shadow-xs whitespace-nowrap transition-all cursor-pointer"
                           >
                             Pay Now
@@ -1408,7 +1408,7 @@ export default function MemberDashboardPage() {
                       <div className="flex items-center gap-2">
                         <img 
                           src={currentUser.avatarUrl}
-                          onError={(e) => { e.currentTarget.src = 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=80&h=80&fit=crop&auto=format'; }}
+                          onError={(e) => { e.currentTarget.src = 'https://images.unsplash.com/photo-1534528741775 - 53994a69daeb?w=80&h=80&fit=crop&auto=format'; }}
                           alt={`${currentUser.firstName} ${currentUser.lastName}`}
                           className="w-9 h-9 rounded-full object-cover border-2 border-white/20"
                         />
@@ -1484,7 +1484,7 @@ export default function MemberDashboardPage() {
                       District Jurisdiction
                     </div>
                     <div className="text-xs font-semibold text-[#1C1C1E]">
-                      District 9126 � {currentUser.state}
+                      District 9126  -  {currentUser.state}
                     </div>
                   </div>
 
@@ -1726,7 +1726,7 @@ export default function MemberDashboardPage() {
                   </div>
                   <div>
                     <div className="text-[11px] font-black tracking-wider text-white">ROTARACT D9126</div>
-                    <div className="text-[8px] text-[#D91B5C] font-semibold">NIGERIA • CHARTERED</div>
+                    <div className="text-[8px] text-[#D91B5C] font-semibold">NIGERIA  -  CHARTERED</div>
                   </div>
                 </div>
                 <Award className="h-5 w-5 text-[#D4A520]" />
@@ -1755,7 +1755,7 @@ export default function MemberDashboardPage() {
                   </div>
                   <div className="flex items-center gap-1 text-[9.5px] text-slate-400">
                     <MapPin className="h-2.5 w-2.5 text-[#D91B5C] shrink-0" />
-                    <span>{currentUser.state || 'District 9126'}{currentUser.region ? ` • ${currentUser.region}` : ''}</span>
+                    <span>{currentUser.state || 'District 9126'}{currentUser.region ? `  -  ${currentUser.region}` : ''}</span>
                   </div>
                 </div>
               </div>
@@ -1791,7 +1791,7 @@ export default function MemberDashboardPage() {
               {/* Security Strip */}
               <div className="mt-3 pt-2 border-t border-white/10 flex items-center justify-between text-[8px] text-slate-500 relative z-10">
                 <span>ROTARY INTERNATIONAL D9126</span>
-                <span className="font-mono">TLS 1.3 � VERIFIED</span>
+                <span className="font-mono">TLS 1.3  -  VERIFIED</span>
               </div>
             </div>
 

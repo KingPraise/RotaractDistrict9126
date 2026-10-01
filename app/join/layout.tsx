@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Join a Rotaract Club � Prospective Member Registration',
+  title: 'Join a Rotaract Club  -  Prospective Member Registration',
   description:
     'Begin your leadership and community service journey with Rotaract District 9126. Submit your intake application to connect with a club in your city or university.',
   alternates: {

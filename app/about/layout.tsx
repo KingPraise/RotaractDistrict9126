@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'About District 9126 � Heritage, History & Leadership Council',
+  title: 'About District 9126  -  Heritage, History & Leadership Council',
   description:
     'Discover the history, founding charter, and leadership structure of Rotaract District 9126 across Oyo, Osun, Ondo, Ekiti, Kwara, Kogi, and Niger states.',
   alternates: {

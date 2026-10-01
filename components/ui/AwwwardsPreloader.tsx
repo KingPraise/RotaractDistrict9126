@@ -6,7 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 const PRELOADER_WORDS = [
   { word: 'FELLOWSHIP', subtitle: '78 Chartered Clubs Across Nigeria', img: '/images/hero-bg.jpg', tag: 'D9126 FELLOWSHIP' },
   { word: 'LEADERSHIP', subtitle: '700+ Dynamic Young Changemakers', img: '/images/collage-leadership.jpg', tag: 'YOUTH LEADERSHIP' },
-  { word: 'SERVICE', subtitle: 'Oyo • Osun • Ondo • Ekiti • Kwara • Kogi • Niger', img: '/images/impact-vaccination.jpg', tag: 'HUMANITARIAN SERVICE' },
+  { word: 'SERVICE', subtitle: 'Oyo  -  Osun  -  Ondo  -  Ekiti  -  Kwara  -  Kogi  -  Niger', img: '/images/impact-vaccination.jpg', tag: 'HUMANITARIAN SERVICE' },
   { word: 'IMPACT', subtitle: '50,000+ Documented Beneficiaries', img: '/images/project-water.jpg', tag: 'COMMUNITY TRANSFORMATION' },
   { word: 'ROTARACT 9126', subtitle: 'Rotary International District 9126', img: '/images/pillar-events.jpg', tag: 'ROTARY HERITAGE' },
 ];
@@ -110,19 +110,19 @@ export default function AwwwardsPreloader() {
                 </div>
                 <div>
                   <span className="font-bold text-white tracking-widest text-[11px] sm:text-xs">ROTARACT 9126</span>
-                  <span className="hidden sm:inline text-slate-500 ml-2 text-[10px]">ï¿½ DISTRICT INITIALIZATION</span>
+                  <span className="hidden sm:inline text-slate-500 ml-2 text-[10px]">DISTRICT INITIALIZATION</span>
                 </div>
               </div>
 
               <div className="flex items-center gap-3 sm:gap-4">
                 <span className="hidden md:inline font-mono text-[11px] text-slate-500">
-                  LAT 7.3775Â° N ï¿½ LNG 3.9470Â° E
+                  LAT 7.3775 N | LNG 3.9470 E
                 </span>
                 <button
                   onClick={handleSkip}
                   className="px-3 sm:px-4 py-1.5 rounded-full bg-white/10 hover:bg-white/20 text-white text-[10px] sm:text-[11px] font-bold tracking-wider transition-all border border-white/15 cursor-pointer active:scale-95"
                 >
-                  SKIP INTRO â†µ
+                  SKIP INTRO
                 </button>
               </div>
             </div>

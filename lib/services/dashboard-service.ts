@@ -95,7 +95,7 @@ export async function getMemberDashboardData(userId: string, localAuthUser?: any
     const firstName = userData?.firstName || localAuthUser?.firstName || 'Tunde';
     const lastName = userData?.lastName || localAuthUser?.lastName || 'Adeyemi';
     const email = userData?.email || localAuthUser?.email || 'tunde.adeyemi@rotaractdistrict9126.com.ng';
-    const rotaryId = userData?.rotaryId || 'ROT-9126-2026';
+    const rotaryId = userData?.rotaryId || 'ROT-9126 - 2026';
     const riNumber = userData?.riNumber || '';
     const clubId = userData?.clubId || 'club-ibadan-central';
     const role = userData?.role || localAuthUser?.role || 'member';
@@ -145,7 +145,7 @@ export async function getMemberDashboardData(userId: string, localAuthUser?: any
           name: `${firstName} ${lastName}`,
           club: clubName,
           status: (data.status === 'cleared' || data.status === 'Cleared' ? 'Cleared' : data.status === 'defaulted' ? 'Defaulted' : 'Pending') as 'Cleared' | 'Pending' | 'Defaulted',
-          period: data.period || 'Jan – Jun 2026',
+          period: data.period || 'Jan  -  Jun 2026',
           amount: data.amount || 7500,
           avatar: avatarUrl,
         };
@@ -158,7 +158,7 @@ export async function getMemberDashboardData(userId: string, localAuthUser?: any
           name: `${firstName} ${lastName}`,
           club: clubName,
           status: duesStatus === 'cleared' ? 'Cleared' : 'Pending',
-          period: 'Jan – Jun 2026',
+          period: 'Jan  -  Jun 2026',
           amount: 7500,
           avatar: avatarUrl,
         },
@@ -244,7 +244,7 @@ export async function getMemberDashboardData(userId: string, localAuthUser?: any
         firstName: localAuthUser?.firstName || 'Tunde',
         lastName: localAuthUser?.lastName || 'Adeyemi',
         email: localAuthUser?.email || 'tunde.adeyemi@rotaractdistrict9126.com.ng',
-        rotaryId: 'ROT-9126-2026',
+        rotaryId: 'ROT-9126 - 2026',
         riNumber: '',
         clubId: 'club-ibadan-central',
         clubName: 'RAC Ibadan Central',
@@ -269,7 +269,7 @@ export async function getMemberDashboardData(userId: string, localAuthUser?: any
           name: 'Tunde Adeyemi',
           club: 'RAC Ibadan Central',
           status: 'Cleared',
-          period: 'Jan – Jun 2026',
+          period: 'Jan  -  Jun 2026',
           amount: 7500,
           avatar: 'https://images.unsplash.com/photo-1614023342667-6f060e9d1e04?w=80&h=80&fit=crop&auto=format',
         },
@@ -347,7 +347,7 @@ export async function getClubRoster(clubId: string): Promise<ClubMemberRecord[]>
           memberType: data.memberType || (data.status === 'alumni' ? 'Alumni' : 'Active'),
           avatarUrl:
             data.avatarUrl ||
-            'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&auto=format&fit=crop&q=80',
+            'https://images.unsplash.com/photo-1534528741775 - 53994a69daeb?w=400&auto=format&fit=crop&q=80',
           occupation: data.occupation || 'Professional Member',
           phoneNumber: data.phoneNumber || '',
           joinedDate: data.createdAt || data.joinedDate,
@@ -362,7 +362,7 @@ export async function getClubRoster(clubId: string): Promise<ClubMemberRecord[]>
         firstName: 'Tolu',
         lastName: 'Adeleke',
         email: 'president@rotaractdistrict9126.com.ng',
-        rotaryId: 'ROT-9126-1002',
+        rotaryId: 'ROT-9126 - 1002',
         clubId,
         role: 'president',
         duesStatus: 'cleared',
@@ -376,12 +376,12 @@ export async function getClubRoster(clubId: string): Promise<ClubMemberRecord[]>
         firstName: 'Chidinma',
         lastName: 'Okafor',
         email: 'chidinma.o@example.com',
-        rotaryId: 'ROT-9126-2045',
+        rotaryId: 'ROT-9126 - 2045',
         clubId,
         role: 'member',
         duesStatus: 'cleared',
         memberType: 'Active',
-        avatarUrl: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&auto=format&fit=crop&q=80',
+        avatarUrl: 'https://images.unsplash.com/photo-1534528741775 - 53994a69daeb?w=400&auto=format&fit=crop&q=80',
         occupation: 'Pharmacist',
         phoneNumber: '+2348034567812',
       },
@@ -390,7 +390,7 @@ export async function getClubRoster(clubId: string): Promise<ClubMemberRecord[]>
         firstName: 'Kayode',
         lastName: 'Balogun',
         email: 'kayode.b@example.com',
-        rotaryId: 'ROT-9126-2089',
+        rotaryId: 'ROT-9126 - 2089',
         clubId,
         role: 'member',
         duesStatus: 'pending',
@@ -404,7 +404,7 @@ export async function getClubRoster(clubId: string): Promise<ClubMemberRecord[]>
         firstName: 'Folashade',
         lastName: 'Adebayo',
         email: 'folashade.a@example.com',
-        rotaryId: 'ROT-9126-2104',
+        rotaryId: 'ROT-9126 - 2104',
         clubId,
         role: 'member',
         duesStatus: 'cleared',

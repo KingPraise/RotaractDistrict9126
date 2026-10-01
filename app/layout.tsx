@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     template: '%s | Rotaract District 9126',
   },
   description:
-    'Official digital platform for Rotaract District 9126 � uniting 78 chartered clubs and 700+ young leaders across Oyo, Osun, Ondo, Ekiti, Kwara, Kogi, and Niger states for humanitarian service, youth leadership, and community impact.',
+    'Official digital platform for Rotaract District 9126  -  uniting 78 chartered clubs and 700+ young leaders across Oyo, Osun, Ondo, Ekiti, Kwara, Kogi, and Niger states for humanitarian service, youth leadership, and community impact.',
   applicationName: 'Rotaract District 9126',
   authors: [{ name: 'Rotaract District 9126 Secretariat', url: 'https://rotaractdistrict9126.com.ng' }],
   creator: 'Rotaract District 9126',
