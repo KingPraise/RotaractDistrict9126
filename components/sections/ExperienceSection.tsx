@@ -9,12 +9,12 @@ export default function ExperienceSection() {
     {
       title: "Club Life",
       desc: "Weekly meetings, new friendships, and a community that shows up",
-      image: "https://images.unsplash.com/photo-1627423893729-3a79f48ff473?w=600&h=720&fit=crop&auto=format",
+      image: "/images/leaders/IMG_0713.JPG",
     },
     {
       title: "Community Service",
       desc: "Hands-on impact - boreholes, vaccines, classrooms, meals",
-      image: "https://images.unsplash.com/photo-1509099836639-18ba1795216d?w=600&h=720&fit=crop&auto=format",
+      image: "/images/leaders/IMG_0737.JPG",
     },
     {
       title: "Leadership Training",
@@ -24,7 +24,7 @@ export default function ExperienceSection() {
     {
       title: "District Events",
       desc: "Conferences, award nights, and district-wide celebrations of impact",
-      image: "https://images.unsplash.com/photo-1652664845183-c6083bc286fc?w=600&h=720&fit=crop&auto=format",
+      image: "/images/leaders/IMG_0811.JPG",
     }
   ];
 

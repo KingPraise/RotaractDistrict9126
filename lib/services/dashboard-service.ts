@@ -347,7 +347,7 @@ export async function getClubRoster(clubId: string): Promise<ClubMemberRecord[]>
           memberType: data.memberType || (data.status === 'alumni' ? 'Alumni' : 'Active'),
           avatarUrl:
             data.avatarUrl ||
-            'https://images.unsplash.com/photo-1534528741775 - 53994a69daeb?w=400&auto=format&fit=crop&q=80',
+            'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&auto=format&fit=crop&q=80',
           occupation: data.occupation || 'Professional Member',
           phoneNumber: data.phoneNumber || '',
           joinedDate: data.createdAt || data.joinedDate,
@@ -381,7 +381,7 @@ export async function getClubRoster(clubId: string): Promise<ClubMemberRecord[]>
         role: 'member',
         duesStatus: 'cleared',
         memberType: 'Active',
-        avatarUrl: 'https://images.unsplash.com/photo-1534528741775 - 53994a69daeb?w=400&auto=format&fit=crop&q=80',
+        avatarUrl: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&auto=format&fit=crop&q=80',
         occupation: 'Pharmacist',
         phoneNumber: '+2348034567812',
       },

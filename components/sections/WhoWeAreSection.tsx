@@ -5,9 +5,9 @@ import { motion } from 'framer-motion';
 
 export default function WhoWeAreSection() {
   const images = [
-    "https://images.unsplash.com/photo-1627423893729-3a79f48ff473?w=800&h=560&fit=crop&auto=format",
-    "https://images.unsplash.com/photo-1780847615151-5f6397829786?w=800&h=560&fit=crop&auto=format",
-    "https://images.unsplash.com/photo-1639283056436-17ce5f04976a?w=800&h=560&fit=crop&auto=format"
+    "/images/leaders/IMG_0575.JPG",
+    "/images/leaders/IMG_0576.JPG",
+    "/images/leaders/IMG_0696.JPG"
   ];
 
   return (

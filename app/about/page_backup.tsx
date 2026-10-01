@@ -65,7 +65,7 @@ const redistrictingTimeline = [
     year: '2026 - 2027',
     badge: 'Sitting Era',
     title: 'Creating Lasting Impact (DRR Adaramoye Iyanuoluwa)',
-    desc: 'Today, the 3rd administration coordinates 77 chartered clubs and ~700 Rotaractors with verified digital IDs, automated dues, and flagship humanitarian programs.'
+    desc: 'Today, the 3rd administration coordinates 78 chartered clubs and ~700 Rotaractors with verified digital IDs, automated dues, and flagship humanitarian programs.'
   }
 ];
 
@@ -94,8 +94,8 @@ const pastLeaders = [
     name: 'Rtr. PP Oyewumi Kamaldeen Adeshina',
     credentials: 'PHF, FEIPA, Past President',
     theme: 'The Magic of Rotary',
-    roleNote: 'Inaugural Founding DRR who established the sovereign governance structure, codified district bylaws, inaugurated the executive council, and organized the first 77-club district assembly.',
-    highlights: ['Inaugural District Bylaws', 'First 77-Club Assembly', 'Foundational Secretariat Setup'],
+    roleNote: 'Inaugural Founding DRR who established the sovereign governance structure, codified district bylaws, inaugurated the executive council, and organized the first 78-club district assembly.',
+    highlights: ['Inaugural District Bylaws', 'First 78-Club Assembly', 'Foundational Secretariat Setup'],
     image: '/images/leaders/drr-oyewumi-kamaldeen.jpg',
     fallbackImage: 'https://images.unsplash.com/photo-1533108344127-a586d2b02479?w=480&h=580&fit=crop&auto=format',
     badge: '1st DRR  -  Inaugural Foundation Era',
@@ -209,7 +209,7 @@ const currentTeam: LeaderMember[] = [
     dept: 'Secretariat',
     email: 'secretary@rotaractdistrict9126.com.ng',
     phone: '+234 800 912 6004',
-    bio: 'Manages the district secretariat, official records, administrative correspondence, and inter-club communication across all 77 chartered clubs.'
+    bio: 'Manages the district secretariat, official records, administrative correspondence, and inter-club communication across all 78 chartered clubs.'
   },
   {
     id: 'treasurer',
@@ -229,7 +229,7 @@ const currentTeam: LeaderMember[] = [
     role: 'Chief of Staff / District Administrator',
     tooltip: 'PHF',
     image: '/images/leaders/leader-chief-of-staff.jpg',
-    fallbackImage: 'https://images.unsplash.com/photo-1534528741775 - 53994a69daeb?w=480&h=580&fit=crop&auto=format',
+    fallbackImage: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=480&h=580&fit=crop&auto=format',
     dept: 'Executive Office / Administration',
     email: 'chiefofstaff@rotaractdistrict9126.com.ng',
     phone: '+234 800 912 6007',
@@ -380,7 +380,7 @@ export default function AboutPage() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="max-w-3xl mx-auto text-slate-300 text-base md:text-lg leading-relaxed mb-10 font-sans"
           >
-            One District. One Leadership Team. One Shared Vision  -  Uniting 77 chartered clubs and ~700 young changemakers across Oyo, Osun, Ondo, Ekiti, Kwara, Kogi, and Niger states.
+            One District. One Leadership Team. One Shared Vision  -  Uniting 78 chartered clubs and ~700 young changemakers across Oyo, Osun, Ondo, Ekiti, Kwara, Kogi, and Niger states.
           </motion.p>
 
           {/* Quick Navigation Segmented Control */}
@@ -466,7 +466,7 @@ export default function AboutPage() {
               {[
                 { icon: History, value: 15, suffix: '+ Years', label: 'Legacy under District 9125' },
                 { icon: Globe, value: 7, suffix: ' States', label: 'Constituent Regional Scope' },
-                { icon: Shield, value: 77, suffix: ' Clubs', label: 'Active Chartered Units' },
+                { icon: Shield, value: 78, suffix: ' Clubs', label: 'Active Chartered Units' },
                 { icon: HeartHandshake, value: 50000, suffix: '+', label: 'Documented Beneficiaries' }
               ].map((card, idx) => {
                 const Icon = card.icon;
@@ -578,7 +578,7 @@ export default function AboutPage() {
                   District Aggregate
                 </span>
                 <h3 className="text-xl font-black text-white mt-1 mb-2 font-sans">
-                  77 Chartered Clubs
+                  78 Chartered Clubs
                 </h3>
                 <p className="text-xs text-white/80 leading-relaxed font-sans">
                   Campus, community-based, and electronic clubs driving synchronized humanitarian projects under the Four-Way Test.
@@ -589,7 +589,7 @@ export default function AboutPage() {
                 href="/clubs"
                 className="mt-4 inline-flex items-center justify-between text-xs font-bold text-white bg-white/15 hover:bg-white/25 px-3.5 py-2 rounded-lg transition-colors font-sans"
               >
-                <span>Browse All 77 Clubs</span>
+                <span>Browse All 78 Clubs</span>
                 <ArrowRight size={13} />
               </a>
             </motion.div>
@@ -615,7 +615,7 @@ export default function AboutPage() {
               The Sitting Leadership Team
             </h2>
             <p className="max-w-xl mx-auto text-gray-600 text-sm md:text-base font-sans">
-              The executive board coordinating the strategy, service programs, and member support across all 77 clubs.
+              The executive board coordinating the strategy, service programs, and member support across all 78 clubs.
             </p>
           </motion.div>
 

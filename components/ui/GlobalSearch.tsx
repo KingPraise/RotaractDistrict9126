@@ -41,7 +41,7 @@ const SEARCH_DIRECTORIES = [
     href: '/clubs',
     icon: Building2,
     desc: 'Browse 78 chartered clubs across 7 constituent states',
-    badge: '77 Clubs',
+    badge: '78 Clubs',
     color: 'from-[#981132] to-[#D91B5C]',
   },
   {

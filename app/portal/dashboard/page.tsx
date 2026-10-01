@@ -35,6 +35,7 @@ import {
   Trash2,
   Image as ImageIcon,
   X,
+  Globe,
   Upload
 } from 'lucide-react';
 import { 
@@ -244,6 +245,18 @@ export default function MemberDashboardPage() {
           </button>
         </div>
 
+        {/* Quick Link: Return to Public Site */}
+        <div className="px-2 pt-2 pb-1 border-b border-black/[0.06]">
+          <Link
+            href="/"
+            className="flex items-center gap-2 px-2.5 py-1.5 rounded-xl text-xs font-semibold text-black/70 hover:text-[#981132] hover:bg-black/[0.04] transition-all"
+            title="Return to Website"
+          >
+            <Globe size={14} className="text-[#981132] shrink-0" />
+            {!sidebarCollapsed && <span>Back to Website</span>}
+          </Link>
+        </div>
+
         {/* Navigation Categories */}
         <nav className="flex-1 overflow-y-auto py-2.5 px-2 space-y-4">
           
@@ -391,7 +404,7 @@ export default function MemberDashboardPage() {
               <div className="w-8 h-8 rounded-full p-[1.5px] bg-gradient-to-tr from-[#D91B5C] to-[#A855F7]">
                 <img 
                   src={currentUser.avatarUrl} 
-                  onError={(e) => { e.currentTarget.src = 'https://images.unsplash.com/photo-1534528741775 - 53994a69daeb?w=80&h=80&fit=crop&auto=format'; }}
+                  onError={(e) => { e.currentTarget.src = 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=80&h=80&fit=crop&auto=format'; }}
                   alt={currentUser.firstName} 
                   className="w-full h-full rounded-full object-cover"
                 />
@@ -438,6 +451,14 @@ export default function MemberDashboardPage() {
           </div>
 
           <div className="flex items-center gap-2">
+            <Link
+              href="/"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-black/[0.04] border border-black/[0.08] text-xs font-semibold text-[#1C1C1E] hover:bg-black/[0.08] transition-all shadow-sm"
+              title="Return to website"
+            >
+              <Globe size={13} className="text-[#981132]" />
+              <span>Back to Website</span>
+            </Link>
             <button className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-black/[0.04] border border-black/[0.08] text-xs text-black/70 hover:bg-black/[0.08] cursor-pointer">
               Manage Events
             </button>
@@ -687,7 +708,7 @@ export default function MemberDashboardPage() {
                         statusStyle: m.duesStatus === 'cleared'
                           ? 'text-green-700 bg-green-500/[0.08] border-green-500/[0.16]'
                           : 'text-black/60 bg-black/[0.04] border-black/[0.08]',
-                        avatar: m.avatarUrl || 'https://images.unsplash.com/photo-1534528741775 - 53994a69daeb?w=80&h=80&fit=crop&auto=format'
+                        avatar: m.avatarUrl || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=80&h=80&fit=crop&auto=format'
                       }))
                     : [
                         {
@@ -713,7 +734,7 @@ export default function MemberDashboardPage() {
                     >
                       <img
                         src={member.avatar}
-                        onError={(e) => { e.currentTarget.src = 'https://images.unsplash.com/photo-1534528741775 - 53994a69daeb?w=80&h=80&fit=crop&auto=format'; }}
+                        onError={(e) => { e.currentTarget.src = 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=80&h=80&fit=crop&auto=format'; }}
                         alt={member.name}
                         className="w-10 h-10 rounded-full object-cover shrink-0 border-[1.5px] border-black/[0.08]"
                       />
@@ -1408,7 +1429,7 @@ export default function MemberDashboardPage() {
                       <div className="flex items-center gap-2">
                         <img 
                           src={currentUser.avatarUrl}
-                          onError={(e) => { e.currentTarget.src = 'https://images.unsplash.com/photo-1534528741775 - 53994a69daeb?w=80&h=80&fit=crop&auto=format'; }}
+                          onError={(e) => { e.currentTarget.src = 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=80&h=80&fit=crop&auto=format'; }}
                           alt={`${currentUser.firstName} ${currentUser.lastName}`}
                           className="w-9 h-9 rounded-full object-cover border-2 border-white/20"
                         />

@@ -89,8 +89,8 @@ const pastLeaders = [
     name: 'Rtr. PP Oyewumi Kamaldeen Adeshina',
     credentials: 'PHF, FEIPA, Past President',
     theme: 'The Magic of Rotary',
-    roleNote: 'Inaugural Founding DRR who established the sovereign governance structure, codified district bylaws, inaugurated the executive council, and organized the first 77-club district assembly.',
-    highlights: ['Inaugural District Bylaws', 'First 77-Club Assembly', 'Foundational Secretariat Setup'],
+    roleNote: 'Inaugural Founding DRR who established the sovereign governance structure, codified district bylaws, inaugurated the executive council, and organized the first 78-club district assembly.',
+    highlights: ['Inaugural District Bylaws', 'First 78-Club Assembly', 'Foundational Secretariat Setup'],
     image: '/images/leaders/drr-oyewumi-kamaldeen.jpg',
     fallbackImage: 'https://images.unsplash.com/photo-1533108344127-a586d2b02479?w=480&h=580&fit=crop&auto=format',
     badge: '1st DRR - Inaugural Foundation Era',
@@ -335,7 +335,7 @@ export default function AboutPage() {
               {[
                 { icon: History, value: 15, suffix: '+ Years', label: 'Legacy under District 9125' },
                 { icon: Globe, value: 7, suffix: ' States', label: 'Constituent Regional Scope' },
-                { icon: Shield, value: 77, suffix: ' Clubs', label: 'Active Chartered Units' },
+                { icon: Shield, value: 78, suffix: ' Clubs', label: 'Active Chartered Units' },
                 { icon: HeartHandshake, value: 50000, suffix: '+', label: 'Documented Beneficiaries' }
               ].map((card, idx) => {
                 const Icon = card.icon;
@@ -447,7 +447,7 @@ export default function AboutPage() {
                   District Aggregate
                 </span>
                 <h3 className="text-xl font-black text-white mt-1 mb-2 font-sans">
-                  77 Chartered Clubs
+                  78 Chartered Clubs
                 </h3>
                 <p className="text-xs text-white/80 leading-relaxed font-sans">
                   Campus, community-based, and electronic clubs driving synchronized humanitarian projects under the Four-Way Test.
@@ -458,7 +458,7 @@ export default function AboutPage() {
                 href="/clubs"
                 className="mt-4 inline-flex items-center justify-between text-xs font-bold text-white bg-white/15 hover:bg-white/25 px-3.5 py-2 rounded-lg transition-colors font-sans"
               >
-                <span>Browse All 77 Clubs</span>
+                <span>Browse All 78 Clubs</span>
                 <ArrowRight size={13} />
               </a>
             </motion.div>

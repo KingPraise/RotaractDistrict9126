@@ -222,7 +222,7 @@ export async function signUpWithEmail(
           clubId: 'club-ibadan-central',
           role: assignedRole === 'club_president' ? 'president' : assignedRole === 'district_admin' ? 'district_admin' : 'member',
           duesStatus: 'pending',
-          avatarUrl: `https://images.unsplash.com/photo-1534528741775 - 53994a69daeb?w=400&auto=format&fit=crop&q=80`,
+          avatarUrl: `https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&auto=format&fit=crop&q=80`,
           occupation: 'Member',
           phoneNumber: '',
           createdAt: new Date().toISOString(),

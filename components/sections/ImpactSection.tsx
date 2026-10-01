@@ -9,28 +9,28 @@ export default function ImpactSection() {
       stat: "500+",
       title: "Children Vaccinated",
       subtitle: "Health Outreach  -  Oyo State",
-      image: "https://images.unsplash.com/photo-1509099836639-18ba1795216d?w=900&h=700&fit=crop&auto=format",
+      image: "/images/leaders/IMG_0043.JPG",
       accent: "rgb(217, 27, 92)" // Cranberry
     },
     {
       stat: "2,400",
       title: "Youth Trained",
       subtitle: "Digital Skills Academy  -  Ibadan",
-      image: "https://images.unsplash.com/photo-1620829813573-7c9e1877706f?w=900&h=700&fit=crop&auto=format",
+      image: "/images/leaders/IMG_0488.JPG",
       accent: "rgb(139, 27, 217)" // Purple
     },
     {
       stat: "78 Clubs",
       title: "7 States United",
       subtitle: "Ondo  -  Ekiti  -  Osun  -  Oyo  -  Kogi  -  Niger  -  Kwara",
-      image: "https://images.unsplash.com/photo-1604212561903-5ca7f041c58b?w=900&h=700&fit=crop&auto=format",
+      image: "/images/leaders/IMG_0501.JPG",
       accent: "rgb(27, 140, 217)" // Blue
     },
     {
       stat: "400+",
       title: "Rotaractors United",
       subtitle: "District Leadership Summit 2026",
-      image: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=900&h=700&fit=crop&auto=format",
+      image: "/images/leaders/IMG_0569.JPG",
       accent: "rgb(217, 27, 92)" // Cranberry
     }
   ];

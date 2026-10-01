@@ -90,7 +90,7 @@ const TIMELINE_ERAS: EraCardData[] = [
     year: '2026 - 2027',
     badge: 'Sitting Era',
     title: 'Create Lasting Impact (DRR Adaramoye Iyanuoluwa)',
-    desc: 'Today, the 3rd administration coordinates 77 chartered clubs and ~700 Rotaractors with verified sovereign digital IDs, automated dues, maternal health outreach, and flagship innovation institutes.',
+    desc: 'Today, the 3rd administration coordinates 78 chartered clubs and ~700 Rotaractors with verified sovereign digital IDs, automated dues, maternal health outreach, and flagship innovation institutes.',
     theme: 'Create Lasting Impact',
     leader: 'Rtr. PP Adaramoye Iyanuoluwa (Sitting DRR)',
     stats: '700+ Verified Members  -  7 States',

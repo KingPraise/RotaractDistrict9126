@@ -19,6 +19,14 @@ export default function Navbar() {
   const [activeLink, setActiveLink] = useState('');
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    try {
+      const user = localStorage.getItem('rotaract_auth_user');
+      if (user) setIsLoggedIn(true);
+    } catch {}
+  }, []);
 
   // Scroll Progress indicator
   const { scrollYProgress } = useScroll();

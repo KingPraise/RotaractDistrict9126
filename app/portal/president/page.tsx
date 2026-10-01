@@ -93,7 +93,7 @@ const INITIAL_MEMBERS: MemberRecord[] = [
     duesStatus: 'cleared',
     clearedDate: 'Jul 3',
     lastActive: 'Today',
-    avatar: 'https://images.unsplash.com/photo-1534528741775 - 53994a69daeb?w=80&h=80&fit=crop&auto=format'
+    avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=80&h=80&fit=crop&auto=format'
   },
   {
     id: '3',
@@ -354,7 +354,7 @@ export default function PresidentConsolePage() {
       duesStatus: newMemberForm.duesStatus,
       clearedDate: newMemberForm.duesStatus === 'cleared' ? 'Today' : ' - ',
       lastActive: 'Just registered',
-      avatar: 'https://images.unsplash.com/photo-1534528741775 - 53994a69daeb?w=80&h=80&fit=crop&auto=format'
+      avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=80&h=80&fit=crop&auto=format'
     };
 
     setMembers(prev => [newRecord, ...prev]);

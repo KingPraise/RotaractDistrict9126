@@ -41,7 +41,7 @@ function WhatsAppIcon({ className = 'w-4 h-4' }: { className?: string }) {
 
 // Preset dynamic photography collection for presidential portrayals
 const CURATED_PRESIDENT_PHOTOS = [
-  'https://images.unsplash.com/photo-1534528741775 - 53994a69daeb?w=800&h=1000&fit=crop&auto=format&q=85',
+  'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=800&h=1000&fit=crop&auto=format&q=85',
   'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&h=1000&fit=crop&auto=format&q=85',
   'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800&h=1000&fit=crop&auto=format&q=85',
   'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=800&h=1000&fit=crop&auto=format&q=85',
