@@ -9,17 +9,17 @@ export default function ExperienceSection() {
     {
       title: "Club Life",
       desc: "Weekly meetings, new friendships, and a community that shows up",
-      image: "/images/leaders/IMG_0713.JPG",
+      image: "/images/leaders/club-life-meeting.jpg",
     },
     {
       title: "Community Service",
       desc: "Hands-on impact - boreholes, vaccines, classrooms, meals",
-      image: "/images/leaders/IMG_0737.JPG",
+      image: "/images/projects/new project image 5.jpeg",
     },
     {
       title: "Leadership Training",
       desc: "Workshops, summits, and mentorships that sharpen the next generation",
-      image: "/images/projects/new project image 5.jpeg",
+      image: "/images/leaders/IMG_0696.JPG",
     },
     {
       title: "District Events",
