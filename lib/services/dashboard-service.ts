@@ -92,35 +92,38 @@ export async function getMemberDashboardData(userId: string, localAuthUser?: any
       }
     }
 
-    const firstName = userData?.firstName || localAuthUser?.firstName || 'Tunde';
-    const lastName = userData?.lastName || localAuthUser?.lastName || 'Adeyemi';
-    const email = userData?.email || localAuthUser?.email || 'tunde.adeyemi@rotaractdistrict9126.com.ng';
-    const rotaryId = userData?.rotaryId || 'ROT-9126 - 2026';
-    const riNumber = userData?.riNumber || '';
-    const clubId = userData?.clubId || 'club-ibadan-central';
+    const firstName = userData?.firstName || localAuthUser?.firstName || localAuthUser?.displayName?.split(' ')[0] || '';
+    const lastName = userData?.lastName || localAuthUser?.lastName || localAuthUser?.displayName?.split(' ').slice(1).join(' ') || '';
+    const email = userData?.email || localAuthUser?.email || '';
+    const rotaryId = userData?.rotaryId || (userData?.riNumber ? `RI-${userData.riNumber}` : 'ROT-9126');
+    const riNumber = userData?.riNumber || localAuthUser?.riNumber || '';
+    const clubId = userData?.clubId || localAuthUser?.clubId || '';
     const role = userData?.role || localAuthUser?.role || 'member';
     const duesStatus: DuesStatus = userData?.duesStatus === 'cleared' || localAuthUser?.duesStatus === 'cleared' ? 'cleared' : 'pending';
     const avatarUrl =
       userData?.avatarUrl ||
-      'https://images.unsplash.com/photo-1614023342667-6f060e9d1e04?w=80&h=80&fit=crop&auto=format';
-    const occupation = userData?.occupation || 'Lead Architect & Member';
-    const phoneNumber = userData?.phoneNumber || '+2348012345678';
+      localAuthUser?.avatarUrl ||
+      '';
+    const occupation = userData?.occupation || localAuthUser?.occupation || (role === 'club_president' ? 'Club President' : role === 'district_admin' ? 'District Administrator' : 'Active Member');
+    const phoneNumber = userData?.phoneNumber || localAuthUser?.phoneNumber || '';
 
     // 2. Fetch club details to resolve clubName, state, region
-    let clubName = 'RAC Ibadan Central';
-    let state = 'Oyo State';
-    let region = 'South-West';
+    let clubName = userData?.clubName || localAuthUser?.clubName || 'Rotaract District 9126';
+    let state = userData?.state || localAuthUser?.state || 'District 9126';
+    let region = userData?.region || localAuthUser?.region || '';
 
-    try {
-      const clubDoc = await getDoc(doc(db, 'clubs', clubId));
-      if (clubDoc.exists()) {
-        const clubData = clubDoc.data();
-        clubName = clubData.name || clubName;
-        state = `${clubData.state || 'Oyo'} State`;
-        region = clubData.region || region;
+    if (clubId) {
+      try {
+        const clubDoc = await getDoc(doc(db, 'clubs', clubId));
+        if (clubDoc.exists()) {
+          const clubData = clubDoc.data();
+          clubName = clubData.name || clubName;
+          state = clubData.state ? `${clubData.state} State` : state;
+          region = clubData.region || region;
+        }
+      } catch {
+        // Use user clubName
       }
-    } catch {
-      // Use defaults if club resolution fails
     }
 
     // 3. Query `dues_payments` where memberId == userId
@@ -142,23 +145,23 @@ export async function getMemberDashboardData(userId: string, localAuthUser?: any
         const data = docSnap.data();
         return {
           id: docSnap.id,
-          name: `${firstName} ${lastName}`,
+          name: `${firstName} ${lastName}`.trim(),
           club: clubName,
           status: (data.status === 'cleared' || data.status === 'Cleared' ? 'Cleared' : data.status === 'defaulted' ? 'Defaulted' : 'Pending') as 'Cleared' | 'Pending' | 'Defaulted',
-          period: data.period || 'Jan  -  Jun 2026',
+          period: data.period || '2026/2027',
           amount: data.amount || 7500,
           avatar: avatarUrl,
         };
       });
-    } else {
-      // Default initial dues display record for member
+    } else if (firstName) {
+      // Dues record reflecting active user status
       duesRecords = [
         {
           id: `PAY-D9126-${rotaryId.replace(/[^0-9]/g, '').slice(-3) || '001'}`,
-          name: `${firstName} ${lastName}`,
+          name: `${firstName} ${lastName}`.trim(),
           club: clubName,
           status: duesStatus === 'cleared' ? 'Cleared' : 'Pending',
-          period: 'Jan  -  Jun 2026',
+          period: '2026/2027',
           amount: 7500,
           avatar: avatarUrl,
         },
@@ -241,39 +244,29 @@ export async function getMemberDashboardData(userId: string, localAuthUser?: any
     return {
       member: {
         userId,
-        firstName: localAuthUser?.firstName || 'Tunde',
-        lastName: localAuthUser?.lastName || 'Adeyemi',
-        email: localAuthUser?.email || 'tunde.adeyemi@rotaractdistrict9126.com.ng',
-        rotaryId: 'ROT-9126 - 2026',
+        firstName: localAuthUser?.firstName || '',
+        lastName: localAuthUser?.lastName || '',
+        email: localAuthUser?.email || '',
+        rotaryId: `ROT-9126-${userId.slice(0, 4)}`,
         riNumber: '',
-        clubId: 'club-ibadan-central',
-        clubName: 'RAC Ibadan Central',
-        state: 'Oyo State',
-        region: 'South-West',
+        clubId: (localAuthUser as any)?.clubId || '',
+        clubName: (localAuthUser as any)?.clubName || '',
+        state: (localAuthUser as any)?.state || 'District 9126',
+        region: (localAuthUser as any)?.region || '',
         role: localAuthUser?.role || 'member',
-        duesStatus: 'cleared',
-        avatarUrl: 'https://images.unsplash.com/photo-1614023342667-6f060e9d1e04?w=80&h=80&fit=crop&auto=format',
-        occupation: 'Lead Architect & Member',
-        phoneNumber: '+2348012345678',
+        duesStatus: (localAuthUser?.duesStatus as DuesStatus) || 'pending',
+        avatarUrl: (localAuthUser as any)?.avatarUrl || '',
+        occupation: localAuthUser?.role === 'club_president' ? 'Club President' : localAuthUser?.role === 'district_admin' ? 'District Administrator' : 'Active Member',
+        phoneNumber: (localAuthUser as any)?.phoneNumber || '',
       },
       metrics: {
-        impactPoints: 1240,
-        eventsAttended: 12,
-        projectsJoined: 4,
-        volunteerHours: 24,
+        impactPoints: 0,
+        eventsAttended: 0,
+        projectsJoined: 0,
+        volunteerHours: 0,
       },
       monthlyActivity: DEFAULT_MONTHLY_DATA,
-      duesRecords: [
-        {
-          id: 'PAY-D9126-001',
-          name: 'Tunde Adeyemi',
-          club: 'RAC Ibadan Central',
-          status: 'Cleared',
-          period: 'Jan  -  Jun 2026',
-          amount: 7500,
-          avatar: 'https://images.unsplash.com/photo-1614023342667-6f060e9d1e04?w=80&h=80&fit=crop&auto=format',
-        },
-      ],
+      duesRecords: [],
     };
   }
 }
@@ -329,6 +322,7 @@ export async function updateMemberDuesStatus(
  */
 export async function getClubRoster(clubId: string): Promise<ClubMemberRecord[]> {
   try {
+    if (!clubId) return [];
     const usersQuery = query(collection(db, 'users'), where('clubId', '==', clubId));
     const snapshot = await getDocs(usersQuery);
 
@@ -355,65 +349,7 @@ export async function getClubRoster(clubId: string): Promise<ClubMemberRecord[]>
       });
     }
 
-    // Default sample roster if collection has not been seeded for this specific club
-    return [
-      {
-        userId: 'user-pres-01',
-        firstName: 'Tolu',
-        lastName: 'Adeleke',
-        email: 'president@rotaractdistrict9126.com.ng',
-        rotaryId: 'ROT-9126 - 1002',
-        clubId,
-        role: 'president',
-        duesStatus: 'cleared',
-        memberType: 'Active',
-        avatarUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&auto=format&fit=crop&q=80',
-        occupation: 'Brand Designer',
-        phoneNumber: '+2348023456789',
-      },
-      {
-        userId: 'user-mem-01',
-        firstName: 'Chidinma',
-        lastName: 'Okafor',
-        email: 'chidinma.o@example.com',
-        rotaryId: 'ROT-9126 - 2045',
-        clubId,
-        role: 'member',
-        duesStatus: 'cleared',
-        memberType: 'Active',
-        avatarUrl: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&auto=format&fit=crop&q=80',
-        occupation: 'Pharmacist',
-        phoneNumber: '+2348034567812',
-      },
-      {
-        userId: 'user-mem-02',
-        firstName: 'Kayode',
-        lastName: 'Balogun',
-        email: 'kayode.b@example.com',
-        rotaryId: 'ROT-9126 - 2089',
-        clubId,
-        role: 'member',
-        duesStatus: 'pending',
-        memberType: 'Active',
-        avatarUrl: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&auto=format&fit=crop&q=80',
-        occupation: 'Data Scientist',
-        phoneNumber: '+2348098765432',
-      },
-      {
-        userId: 'user-mem-03',
-        firstName: 'Folashade',
-        lastName: 'Adebayo',
-        email: 'folashade.a@example.com',
-        rotaryId: 'ROT-9126 - 2104',
-        clubId,
-        role: 'member',
-        duesStatus: 'cleared',
-        memberType: 'Alumni',
-        avatarUrl: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&auto=format&fit=crop&q=80',
-        occupation: 'Legal Practitioner',
-        phoneNumber: '+2348056781234',
-      },
-    ];
+    return [];
   } catch (error: unknown) {
     console.error('Error in getClubRoster:', error);
     return [];

@@ -53,6 +53,7 @@ import {
   MemberDashboardState, 
   ClubMemberRecord 
 } from '@/lib/services/dashboard-service';
+import { getDistrictEvents, DistrictEvent } from '@/lib/services/events-service';
 import { clubsData } from '@/lib/clubs-data';
 
 export default function MemberDashboardPage() {
@@ -87,8 +88,8 @@ export default function MemberDashboardPage() {
   }>({
     title: '',
     category: 'Healthcare',
-    club: 'Rotaract Club of Ibadan Central',
-    location: 'Ibadan, Oyo State',
+    club: '',
+    location: '',
     year: '2026',
     image: 'https://images.unsplash.com/photo-1509099836639-18ba1795216d?w=900&h=700&fit=crop&auto=format',
     description: '',
@@ -126,22 +127,22 @@ export default function MemberDashboardPage() {
   });
 
   const [metrics, setMetrics] = useState({
-    impactPoints: 1240,
-    eventsAttended: 12,
-    projectsJoined: 4,
-    volunteerHours: 24
+    impactPoints: 0,
+    eventsAttended: 0,
+    projectsJoined: 0,
+    volunteerHours: 0
   });
 
   const [monthlyData, setMonthlyData] = useState([
-    { month: 'Nov', count: 2, height: '18px' },
-    { month: 'Dec', count: 3, height: '28px' },
-    { month: 'Jan', count: 4, height: '37px' },
-    { month: 'Feb', count: 3, height: '28px' },
-    { month: 'Mar', count: 5, height: '46px' },
-    { month: 'Apr', count: 4, height: '37px' },
-    { month: 'May', count: 6, height: '55px' },
-    { month: 'Jun', count: 5, height: '46px' },
-    { month: 'Jul', count: 12, height: '110px', isCurrent: true },
+    { month: 'Nov', count: 0, height: '8px' },
+    { month: 'Dec', count: 0, height: '8px' },
+    { month: 'Jan', count: 0, height: '8px' },
+    { month: 'Feb', count: 0, height: '8px' },
+    { month: 'Mar', count: 0, height: '8px' },
+    { month: 'Apr', count: 0, height: '8px' },
+    { month: 'May', count: 0, height: '8px' },
+    { month: 'Jun', count: 0, height: '8px' },
+    { month: 'Jul', count: 0, height: '8px', isCurrent: true },
   ]);
 
   const [duesRecords, setDuesRecords] = useState<Array<{
@@ -152,21 +153,18 @@ export default function MemberDashboardPage() {
     period: string;
     amount?: number;
     avatar: string;
-  }>>([
-    {
-      id: 'PAY-D9126-001',
-      name: 'Tunde Adeyemi',
-      club: 'RAC Ibadan Central',
-      status: 'Cleared',
-      period: 'Jan  -  Jun 2026',
-      avatar: 'https://images.unsplash.com/photo-1614023342667-6f060e9d1e04?w=80&h=80&fit=crop&auto=format'
-    }
-  ]);
+  }>>([]);
 
   const [directoryMembers, setDirectoryMembers] = useState<ClubMemberRecord[]>([]);
+  const [districtEvents, setDistrictEvents] = useState<DistrictEvent[]>([]);
 
-  // Fetch live user and dashboard data on mount
+  // Fetch live user, events, and dashboard data on mount
   useEffect(() => {
+    // Load live district events
+    getDistrictEvents().then((evs) => {
+      if (evs?.length) setDistrictEvents(evs);
+    });
+
     const authUser = getCurrentUser();
     const targetUid = authUser?.uid || 'usr-default';
 
@@ -198,9 +196,11 @@ export default function MemberDashboardPage() {
         setQrCodeUrl(`https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${qrData}&bgcolor=ffffff&color=080c14&margin=1`);
 
         // Load live club directory roster
-        getClubRoster(data.member.clubId || 'club-ibadan-central').then((roster) => {
-          if (roster?.length) setDirectoryMembers(roster);
-        });
+        if (data.member.clubId) {
+          getClubRoster(data.member.clubId).then((roster) => {
+            if (roster?.length) setDirectoryMembers(roster);
+          });
+        }
       }
     });
   }, []);
@@ -844,34 +844,40 @@ export default function MemberDashboardPage() {
 
                       {/* Rows */}
                       <div className="divide-y divide-black/[0.04]">
-                        {duesRecords.map((row) => (
-                          <div 
-                            key={row.id}
-                            className="grid grid-cols-[1.4fr_1fr_0.8fr_1fr_1fr] items-center px-4 py-3 text-xs hover:bg-black/[0.02] transition-colors"
-                          >
-                            <span className="font-mono text-[10px] text-black/40">
-                              {row.id}
-                            </span>
-                            <span className="text-[11px] text-black/60">
-                              {row.period}
-                            </span>
-                            <span className="font-bold text-[#1C1C1E]">
-                              ₦{row.amount ? row.amount.toLocaleString() : '7,500'}
-                            </span>
-                            <div>
-                              <span className={`inline-block text-[10px] font-semibold px-2.5 py-0.5 rounded-full ${
-                                row.status === 'Cleared'
-                                  ? 'text-green-700 bg-green-50 border border-green-200'
-                                  : 'text-amber-700 bg-amber-50 border border-amber-200'
-                              }`}>
-                                {row.status}
-                              </span>
-                            </div>
-                            <div>
-                              <div className="text-[11px] text-black/60">{row.club}</div>
-                            </div>
+                        {duesRecords.length === 0 ? (
+                          <div className="text-center py-8 text-black/40 text-xs">
+                            No payment records recorded yet. Payments processed via Paystack will be synchronized here automatically.
                           </div>
-                        ))}
+                        ) : (
+                          duesRecords.map((row) => (
+                            <div 
+                              key={row.id}
+                              className="grid grid-cols-[1.4fr_1fr_0.8fr_1fr_1fr] items-center px-4 py-3 text-xs hover:bg-black/[0.02] transition-colors"
+                            >
+                              <span className="font-mono text-[10px] text-black/40">
+                                {row.id}
+                              </span>
+                              <span className="text-[11px] text-black/60">
+                                {row.period}
+                              </span>
+                              <span className="font-bold text-[#1C1C1E]">
+                                ₦{row.amount ? row.amount.toLocaleString() : '7,500'}
+                              </span>
+                              <div>
+                                <span className={`inline-block text-[10px] font-semibold px-2.5 py-0.5 rounded-full ${
+                                  row.status === 'Cleared'
+                                    ? 'text-green-700 bg-green-50 border border-green-200'
+                                    : 'text-amber-700 bg-amber-50 border border-amber-200'
+                                }`}>
+                                  {row.status}
+                                </span>
+                              </div>
+                              <div>
+                                <div className="text-[11px] text-black/60">{row.club}</div>
+                              </div>
+                            </div>
+                          ))
+                        )}
                       </div>
                     </div>
                   </div>
@@ -898,8 +904,8 @@ export default function MemberDashboardPage() {
                       setProjectForm({
                         title: '',
                         category: 'Healthcare',
-                        club: 'Rotaract Club of Ibadan Central',
-                        location: 'Ibadan, Oyo State',
+                        club: currentUser.clubName || '',
+                        location: currentUser.state ? `${currentUser.state}, Nigeria` : '',
                         year: '2026',
                         image: 'https://images.unsplash.com/photo-1509099836639-18ba1795216d?w=900&h=700&fit=crop&auto=format',
                         description: '',
@@ -1242,160 +1248,85 @@ export default function MemberDashboardPage() {
 
                 {/* Event Row Cards */}
                 <div className="flex flex-col gap-2.5">
-                  {[
-                    {
-                      id: 'E1',
-                      title: 'District Leadership Summit',
-                      venue: 'Kakanfo Inn, Ibadan',
-                      date: 'Aug 5, 2026',
-                      time: '9:00 AM',
-                      category: 'District',
-                      tagColor: 'rgb(152, 17, 50)',
-                      tagBg: 'rgba(152, 17, 50, 0.08)',
-                      tagBorder: 'rgba(152, 17, 50, 0.157)',
-                      isRegistered: true,
-                      actionType: 'registered'
-                    },
-                    {
-                      id: 'E2',
-                      title: 'Ibadan Blood Donation Drive',
-                      venue: 'UCH Blood Bank, Ibadan',
-                      date: 'Aug 12, 2026',
-                      time: '8:00 AM',
-                      category: 'Community',
-                      tagColor: 'rgb(34, 197, 94)',
-                      tagBg: 'rgba(34, 197, 94, 0.08)',
-                      tagBorder: 'rgba(34, 197, 94, 0.157)',
-                      isRegistered: true,
-                      actionType: 'registered'
-                    },
-                    {
-                      id: 'E3',
-                      title: 'September Club Meeting',
-                      venue: 'Kakanfo Inn, Ibadan',
-                      date: 'Sep 6, 2026',
-                      time: '6:30 PM',
-                      category: 'Club',
-                      tagColor: 'rgb(124, 58, 237)',
-                      tagBg: 'rgba(124, 58, 237, 0.08)',
-                      tagBorder: 'rgba(124, 58, 237, 0.157)',
-                      isRegistered: false,
-                      actionType: 'register'
-                    },
-                    {
-                      id: 'E4',
-                      title: 'STEM Education Workshop',
-                      venue: 'University of Ibadan',
-                      date: 'Sep 14, 2026',
-                      time: '10:00 AM',
-                      category: 'Community',
-                      tagColor: 'rgb(34, 197, 94)',
-                      tagBg: 'rgba(34, 197, 94, 0.08)',
-                      tagBorder: 'rgba(34, 197, 94, 0.157)',
-                      isRegistered: false,
-                      actionType: 'register'
-                    },
-                    {
-                      id: 'E5',
-                      title: 'Q3 Dues Deadline',
-                      venue: 'Online',
-                      date: 'Aug 31, 2026',
-                      time: '11:59 PM',
-                      category: 'Admin',
-                      tagColor: 'rgb(247, 168, 27)',
-                      tagBg: 'rgba(247, 168, 27, 0.08)',
-                      tagBorder: 'rgba(247, 168, 27, 0.157)',
-                      isRegistered: false,
-                      actionType: 'pay'
-                    },
-                    {
-                      id: 'E6',
-                      title: 'Rotaract Day Celebration',
-                      venue: 'Ibadan City Hall',
-                      date: 'Oct 1, 2026',
-                      time: '10:00 AM',
-                      category: 'District',
-                      tagColor: 'rgb(152, 17, 50)',
-                      tagBg: 'rgba(152, 17, 50, 0.08)',
-                      tagBorder: 'rgba(152, 17, 50, 0.157)',
-                      isRegistered: false,
-                      actionType: 'register'
-                    }
-                  ]
-                    .filter(ev => eventFilter === 'All' || ev.category === eventFilter)
-                    .map((ev) => (
-                    <div 
-                      key={ev.id}
-                      className="grid grid-cols-1 sm:grid-cols-[3fr_1fr_1fr_auto] items-center gap-3 sm:gap-4 p-4 rounded-2xl bg-black/[0.024] border border-black/[0.06] hover:border-black/[0.12] transition-colors"
-                    >
-                      {/* Title & Venue with Indicator Dot */}
-                      <div className="flex items-center gap-3 min-w-0">
-                        <div 
-                          className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0"
-                          style={{ background: ev.tagBg, border: `1px solid ${ev.tagBorder}` }}
-                        >
-                          <div 
-                            className="w-2.5 h-2.5 rounded-full" 
-                            style={{ background: ev.tagColor, boxShadow: `0 0 8px ${ev.tagColor}` }} 
-                          />
-                        </div>
-                        <div className="min-w-0 flex-1">
-                          <div className="text-xs font-semibold text-[#1C1C1E] truncate">
-                            {ev.title}
-                          </div>
-                          <div className="text-[10px] text-black/40 truncate mt-0.5">
-                            {ev.venue}
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* Date & Time */}
-                      <div>
-                        <div className="text-[11px] font-medium text-black/70">
-                          {ev.date}
-                        </div>
-                        <div className="text-[10px] text-black/40">
-                          {ev.time}
-                        </div>
-                      </div>
-
-                      {/* Category Tag */}
-                      <div>
-                        <span 
-                          className="inline-block text-[9.5px] font-semibold px-2.5 py-0.5 rounded-full"
-                          style={{ color: ev.tagColor, background: ev.tagBg, border: `1px solid ${ev.tagBorder}` }}
-                        >
-                          {ev.category}
-                        </span>
-                      </div>
-
-                      {/* Action Button */}
-                      <div className="sm:text-right">
-                        {ev.actionType === 'registered' ? (
-                          <button 
-                            disabled 
-                            className="px-3.5 py-1.5 rounded-lg bg-black/[0.04] border border-black/[0.08] text-[11px] text-black/60 whitespace-nowrap cursor-default"
-                          >
-                            ✓ Registered
-                          </button>
-                        ) : ev.actionType === 'pay' ? (
-                          <button 
-                            onClick={() => alert('Redirecting to Dues payment portal...')}
-                            className="px-3.5 py-1.5 rounded-lg bg-[#981132] text-white font-bold text-[11px] hover:bg-[#A70C43] shadow-xs whitespace-nowrap transition-all cursor-pointer"
-                          >
-                            Pay Now
-                          </button>
-                        ) : (
-                          <button 
-                            onClick={() => alert(`Registered for ${ev.title}`)}
-                            className="px-3.5 py-1.5 rounded-lg bg-black/[0.04] hover:bg-black/[0.08] border border-black/[0.08] text-[11px] text-black/70 font-semibold whitespace-nowrap transition-all cursor-pointer"
-                          >
-                            Register
-                          </button>
-                        )}
-                      </div>
+                  {districtEvents.length === 0 ? (
+                    <div className="text-center py-12 p-6 rounded-2xl bg-black/[0.024] border border-black/[0.06]">
+                      <p className="text-xs text-black/50">No scheduled events at this time.</p>
                     </div>
-                  ))}
+                  ) : (
+                    districtEvents
+                      .filter(ev => eventFilter === 'All' || ev.category.toLowerCase().includes(eventFilter.toLowerCase()))
+                      .map((ev) => {
+                        const tagColor = ev.category === 'Conference' ? 'rgb(152, 17, 50)' : ev.category === 'Training' ? 'rgb(124, 58, 237)' : 'rgb(34, 197, 94)';
+                        const tagBg = ev.category === 'Conference' ? 'rgba(152, 17, 50, 0.08)' : ev.category === 'Training' ? 'rgba(124, 58, 237, 0.08)' : 'rgba(34, 197, 94, 0.08)';
+                        const tagBorder = ev.category === 'Conference' ? 'rgba(152, 17, 50, 0.157)' : ev.category === 'Training' ? 'rgba(124, 58, 237, 0.157)' : 'rgba(34, 197, 94, 0.157)';
+                        return (
+                          <div 
+                            key={ev.id}
+                            className="grid grid-cols-1 sm:grid-cols-[3fr_1fr_1fr_auto] items-center gap-3 sm:gap-4 p-4 rounded-2xl bg-black/[0.024] border border-black/[0.06] hover:border-black/[0.12] transition-colors"
+                          >
+                            {/* Title & Venue with Indicator Dot */}
+                            <div className="flex items-center gap-3 min-w-0">
+                              <div 
+                                className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0"
+                                style={{ background: tagBg, border: `1px solid ${tagBorder}` }}
+                              >
+                                <div 
+                                  className="w-2.5 h-2.5 rounded-full" 
+                                  style={{ background: tagColor, boxShadow: `0 0 8px ${tagColor}` }} 
+                                />
+                              </div>
+                              <div className="min-w-0 flex-1">
+                                <div className="text-xs font-semibold text-[#1C1C1E] truncate">
+                                  {ev.title}
+                                </div>
+                                <div className="text-[10px] text-black/40 truncate mt-0.5">
+                                  {ev.venue}
+                                </div>
+                              </div>
+                            </div>
+
+                            {/* Date & Time */}
+                            <div>
+                              <div className="text-[11px] font-medium text-black/70">
+                                {ev.date}
+                              </div>
+                              <div className="text-[10px] text-black/40">
+                                {ev.time}
+                              </div>
+                            </div>
+
+                            {/* Category Tag */}
+                            <div>
+                              <span 
+                                className="inline-block text-[9.5px] font-semibold px-2.5 py-0.5 rounded-full"
+                                style={{ color: tagColor, background: tagBg, border: `1px solid ${tagBorder}` }}
+                              >
+                                {ev.category}
+                              </span>
+                            </div>
+
+                            {/* Action Button */}
+                            <div className="sm:text-right">
+                              {ev.registrationStatus === 'closed' ? (
+                                <button 
+                                  disabled 
+                                  className="px-3.5 py-1.5 rounded-lg bg-black/[0.04] border border-black/[0.08] text-[11px] text-black/40 whitespace-nowrap cursor-not-allowed"
+                                >
+                                  Closed
+                                </button>
+                              ) : (
+                                <button 
+                                  onClick={() => alert(`Registered for ${ev.title}`)}
+                                  className="px-3.5 py-1.5 rounded-lg bg-[#981132] text-white hover:bg-[#7D0E29] text-[11px] font-semibold whitespace-nowrap transition-all cursor-pointer shadow-xs"
+                                >
+                                  Register
+                                </button>
+                              )}
+                            </div>
+                          </div>
+                        );
+                      })
+                  )}
                 </div>
               </div>
             ) : activeNav === 'Identity Card' ? (
@@ -1670,46 +1601,54 @@ export default function MemberDashboardPage() {
                         </tr>
                       </thead>
                       <tbody className="divide-y divide-black/[0.04]">
-                        {filteredDues.map((row) => (
-                          <tr key={row.id} className="hover:bg-black/[0.02] transition-colors">
-                            <td className="py-3 px-4">
-                              <div className="flex items-center gap-2.5">
-                                <img 
-                                  src={row.avatar} 
-                                  alt={row.name} 
-                                  className="w-7 h-7 rounded-full object-cover shrink-0 border border-black/10"
-                                />
-                                <div>
-                                  <div className="font-bold text-[#1C1C1E]">{row.name}</div>
-                                  <div className="text-[10px] text-black/40 font-mono">{row.id}</div>
-                                </div>
-                              </div>
-                            </td>
-                            <td className="py-3 px-4 text-black/70 font-medium">{row.club}</td>
-                            <td className="py-3 px-4 text-center">
-                              <span 
-                                className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider ${
-                                  row.status === 'Cleared'
-                                    ? 'bg-emerald-50 text-emerald-600 border border-emerald-200'
-                                    : row.status === 'Pending'
-                                    ? 'bg-amber-50 text-amber-600 border border-amber-200'
-                                    : 'bg-rose-50 text-rose-600 border border-rose-200'
-                                }`}
-                              >
-                                {row.status === 'Cleared' && <CheckCircle2 size={10} />}
-                                {row.status === 'Pending' && <Clock size={10} />}
-                                {row.status === 'Defaulted' && <AlertCircle size={10} />}
-                                {row.status}
-                              </span>
-                            </td>
-                            <td className="py-3 px-4 text-black/50 text-[11px] font-mono">{row.period}</td>
-                            <td className="py-3 px-4 text-right">
-                              <button className="p-1 rounded-lg hover:bg-black/[0.06] text-black/40 hover:text-black transition-colors cursor-pointer">
-                                <MoreVertical size={13}/>
-                              </button>
+                        {filteredDues.length === 0 ? (
+                          <tr>
+                            <td colSpan={5} className="py-8 text-center text-xs text-black/40">
+                              No member records found.
                             </td>
                           </tr>
-                        ))}
+                        ) : (
+                          filteredDues.map((row) => (
+                            <tr key={row.id} className="hover:bg-black/[0.02] transition-colors">
+                              <td className="py-3 px-4">
+                                <div className="flex items-center gap-2.5">
+                                  <img 
+                                    src={row.avatar} 
+                                    alt={row.name} 
+                                    className="w-7 h-7 rounded-full object-cover shrink-0 border border-black/10"
+                                  />
+                                  <div>
+                                    <div className="font-bold text-[#1C1C1E]">{row.name}</div>
+                                    <div className="text-[10px] text-black/40 font-mono">{row.id}</div>
+                                  </div>
+                                </div>
+                              </td>
+                              <td className="py-3 px-4 text-black/70 font-medium">{row.club}</td>
+                              <td className="py-3 px-4 text-center">
+                                <span 
+                                  className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider ${
+                                    row.status === 'Cleared'
+                                      ? 'bg-emerald-50 text-emerald-600 border border-emerald-200'
+                                      : row.status === 'Pending'
+                                      ? 'bg-amber-50 text-amber-600 border border-amber-200'
+                                      : 'bg-rose-50 text-rose-600 border border-rose-200'
+                                  }`}
+                                >
+                                  {row.status === 'Cleared' && <CheckCircle2 size={10} />}
+                                  {row.status === 'Pending' && <Clock size={10} />}
+                                  {row.status === 'Defaulted' && <AlertCircle size={10} />}
+                                  {row.status}
+                                </span>
+                              </td>
+                              <td className="py-3 px-4 text-black/50 text-[11px] font-mono">{row.period}</td>
+                              <td className="py-3 px-4 text-right">
+                                <button className="p-1 rounded-lg hover:bg-black/[0.06] text-black/40 hover:text-black transition-colors cursor-pointer">
+                                  <MoreVertical size={13}/>
+                                </button>
+                              </td>
+                            </tr>
+                          ))
+                        )}
                       </tbody>
                     </table>
                   </div>
