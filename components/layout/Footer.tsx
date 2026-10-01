@@ -28,9 +28,9 @@ export default function Footer() {
           {/* Brand Lockup (Left) */}
           <Link href="/" className="flex items-center bg-transparent border-none cursor-pointer group py-1">
             <img 
-              src="/images/Rotaract-Simple_Black.png" 
+              src="/images/rotaract-logo.png" 
               alt="Rotaract District 9126 logo" 
-              className="h-[65px] sm:h-[75px] w-auto max-h-[85px] object-contain shrink-0 transition-transform duration-300 group-hover:scale-105 filter drop-shadow-md brightness-0 invert" 
+              className="h-[60px] sm:h-[70px] w-auto max-h-[80px] object-contain shrink-0 transition-transform duration-300 group-hover:scale-105 filter drop-shadow-md brightness-0 invert" 
             />
           </Link>
 
