@@ -13,13 +13,13 @@ export default function ExperienceSection() {
     },
     {
       title: "Community Service",
-      desc: "Hands-on impact — boreholes, vaccines, classrooms, meals",
+      desc: "Hands-on impact â€” boreholes, vaccines, classrooms, meals",
       image: "https://images.unsplash.com/photo-1509099836639-18ba1795216d?w=600&h=720&fit=crop&auto=format",
     },
     {
       title: "Leadership Training",
       desc: "Workshops, summits, and mentorships that sharpen the next generation",
-      image: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=600&h=720&fit=crop&auto=format",
+      image: "/images/projects/new project image 5.jpeg",
     },
     {
       title: "District Events",
