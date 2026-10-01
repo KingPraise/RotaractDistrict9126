@@ -75,7 +75,7 @@ const DEFAULT_MONTHLY_DATA = [
 /**
  * 1. Fetch comprehensive Member Dashboard Data for UI rendering
  */
-export async function getMemberDashboardData(userId: string): Promise<MemberDashboardState> {
+export async function getMemberDashboardData(userId: string, localAuthUser?: any): Promise<MemberDashboardState> {
   try {
     // 1. Fetch user record from `users` or fallback to `auth_users`
     let userData: any = null;
@@ -91,13 +91,13 @@ export async function getMemberDashboardData(userId: string): Promise<MemberDash
       }
     }
 
-    const firstName = userData?.firstName || 'Tunde';
-    const lastName = userData?.lastName || 'Adeyemi';
-    const email = userData?.email || 'tunde.adeyemi@rotaractdistrict9126.com.ng';
+    const firstName = userData?.firstName || localAuthUser?.firstName || 'Tunde';
+    const lastName = userData?.lastName || localAuthUser?.lastName || 'Adeyemi';
+    const email = userData?.email || localAuthUser?.email || 'tunde.adeyemi@rotaractdistrict9126.com.ng';
     const rotaryId = userData?.rotaryId || 'ROT-9126-2026';
     const clubId = userData?.clubId || 'club-ibadan-central';
-    const role = userData?.role || 'member';
-    const duesStatus: DuesStatus = userData?.duesStatus === 'cleared' ? 'cleared' : 'pending';
+    const role = userData?.role || localAuthUser?.role || 'member';
+    const duesStatus: DuesStatus = userData?.duesStatus === 'cleared' || localAuthUser?.duesStatus === 'cleared' ? 'cleared' : 'pending';
     const avatarUrl =
       userData?.avatarUrl ||
       'https://images.unsplash.com/photo-1614023342667-6f060e9d1e04?w=80&h=80&fit=crop&auto=format';
@@ -238,15 +238,15 @@ export async function getMemberDashboardData(userId: string): Promise<MemberDash
     return {
       member: {
         userId,
-        firstName: 'Tunde',
-        lastName: 'Adeyemi',
-        email: 'tunde.adeyemi@rotaractdistrict9126.com.ng',
+        firstName: localAuthUser?.firstName || 'Tunde',
+        lastName: localAuthUser?.lastName || 'Adeyemi',
+        email: localAuthUser?.email || 'tunde.adeyemi@rotaractdistrict9126.com.ng',
         rotaryId: 'ROT-9126-2026',
         clubId: 'club-ibadan-central',
         clubName: 'RAC Ibadan Central',
         state: 'Oyo State',
         region: 'South-West',
-        role: 'member',
+        role: localAuthUser?.role || 'member',
         duesStatus: 'cleared',
         avatarUrl: 'https://images.unsplash.com/photo-1614023342667-6f060e9d1e04?w=80&h=80&fit=crop&auto=format',
         occupation: 'Lead Architect & Member',

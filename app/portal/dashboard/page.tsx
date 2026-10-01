@@ -181,7 +181,7 @@ export default function MemberDashboardPage() {
     }
 
     // Load from Firestore dashboard service
-    getMemberDashboardData(targetUid).then((data) => {
+    getMemberDashboardData(targetUid, authUser).then((data) => {
       if (data && data.member) {
         setCurrentUser(data.member);
         if (data.metrics) setMetrics(data.metrics);
