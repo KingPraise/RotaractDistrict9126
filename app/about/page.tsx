@@ -60,7 +60,7 @@ const redistrictingTimeline = [
     year: '2026 ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œ 2027',
     badge: 'Sitting Era',
     title: 'Creating Lasting Impact (DRR Adaramoye Iyanuoluwa)',
-    desc: 'Today, the 3rd administration coordinates 77 chartered clubs and ~700 Rotaractors with verified digital IDs, automated dues, and flagship humanitarian programs.'
+    desc: 'Today, the 3rd administration coordinates 78 chartered clubs and ~700 Rotaractors with verified digital IDs, automated dues, and flagship humanitarian programs.'
   }
 ];
 
@@ -93,7 +93,7 @@ const pastLeaders = [
     highlights: ['Inaugural District Bylaws', 'First 77-Club Assembly', 'Foundational Secretariat Setup'],
     image: '/images/leaders/drr-oyewumi-kamaldeen.jpg',
     fallbackImage: 'https://images.unsplash.com/photo-1533108344127-a586d2b02479?w=480&h=580&fit=crop&auto=format',
-    badge: '1st DRR ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â· Inaugural Foundation Era',
+    badge: '1st DRR ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â� Inaugural Foundation Era',
     accentColor: '#981132',
     glowColor: 'rgba(152, 17, 50, 0.25)'
   },
@@ -109,7 +109,7 @@ const pastLeaders = [
     highlights: ['Youth Leadership Institutes', 'Automated Financial Reconciliation', 'District Membership Expansion'],
     image: '/images/leaders/drr-raji-abeeb.jpg',
     fallbackImage: 'https://images.unsplash.com/photo-1629145810320-aec9e63dd798?w=480&h=580&fit=crop&auto=format',
-    badge: '2nd DRR ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â· Consolidation Era',
+    badge: '2nd DRR ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â� Consolidation Era',
     accentColor: '#D91B5C',
     glowColor: 'rgba(217, 27, 92, 0.25)'
   },
@@ -125,7 +125,7 @@ const pastLeaders = [
     highlights: ['Verified Digital Member IDs', '7-State Maternal Health Outreach', 'Youth Innovation Academy'],
     image: '/images/leaders/drr-adaramoye-iyanuoluwa.jpg',
     fallbackImage: 'https://images.unsplash.com/photo-1644152993066-9b9ee687930d?w=480&h=580&fit=crop&auto=format',
-    badge: '3rd DRR ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â· Sitting Administration',
+    badge: '3rd DRR ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â� Sitting Administration',
     accentColor: '#D4A520',
     glowColor: 'rgba(212, 165, 32, 0.25)',
     isCurrent: true
@@ -249,7 +249,7 @@ export default function AboutPage() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="max-w-3xl mx-auto text-slate-300 text-base md:text-lg leading-relaxed mb-10 font-sans"
           >
-            One District. One Leadership Team. One Shared Vision ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â Uniting 77 chartered clubs and ~700 young changemakers across Oyo, Osun, Ondo, Ekiti, Kwara, Kogi, and Niger states.
+            One District. One Leadership Team. One Shared Vision ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â Uniting 78 chartered clubs and ~700 young changemakers across Oyo, Osun, Ondo, Ekiti, Kwara, Kogi, and Niger states.
           </motion.p>
 
           {/* Quick Navigation Segmented Control */}

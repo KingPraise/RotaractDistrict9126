@@ -8,7 +8,7 @@ import { createPortal } from 'react-dom';
 export const ROTARY_ACRONYMS: Record<string, { term: string; definition: string; category?: string }> = {
   DRR: {
     term: 'District Rotaract Representative',
-    definition: 'The chief executive and presiding officer of Rotaract District 9126, coordinating all 77 chartered clubs across the 7 constituent states.',
+    definition: 'The chief executive and presiding officer of Rotaract District 9126, coordinating all 78 chartered clubs across the 7 constituent states.',
     category: 'District Leadership',
   },
   IPDRR: {
@@ -99,7 +99,7 @@ export default function RotaryTooltip({ acronym, term, children, className = '' 
         </span>
       </button>
 
-      {/* Clean Centered Modal Portal — Never clipped, never obscures card */}
+      {/* Clean Centered Modal Portal � Never clipped, never obscures card */}
       {mounted && isOpen && createPortal(
         <AnimatePresence>
           <div className="fixed inset-0 z-[99999] flex items-center justify-center p-4">

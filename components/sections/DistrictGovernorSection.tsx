@@ -11,7 +11,7 @@ const DG_PHOTOS = [
     id: 1,
     src: '/images/leaders/dg-1.jpg',
     caption: 'Official Gubernatorial Portrait',
-    context: 'District Governor · Rotary International District 9126'
+    context: 'District Governor � Rotary International District 9126'
   },
   {
     id: 2,
@@ -35,7 +35,7 @@ const DG_PHOTOS = [
     id: 5,
     src: '/images/leaders/dg-5.jpg',
     caption: 'District Fellowship & Awards',
-    context: 'Celebrating Excellence in Community Service Across 77 Clubs'
+    context: 'Celebrating Excellence in Community Service Across 78 Clubs'
   }
 ];
 
@@ -94,7 +94,7 @@ export default function DistrictGovernorSection() {
           </h2>
           
           <p className="text-slate-300 text-sm sm:text-base mt-3 leading-relaxed font-sans">
-            Our Head, Supervisor, Father & Mentor — steering Rotary International District 9126 with wisdom, dedication, and transformative vision.
+            Our Head, Supervisor, Father & Mentor � steering Rotary International District 9126 with wisdom, dedication, and transformative vision.
           </p>
         </motion.div>
 
@@ -205,7 +205,7 @@ export default function DistrictGovernorSection() {
             <div>
               <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-[#D4A520] mb-1">
                 <span>Rotary International District 9126</span>
-                <span>·</span>
+                <span>�</span>
                 <span>2026/2027</span>
               </div>
               
@@ -214,7 +214,7 @@ export default function DistrictGovernorSection() {
               </h3>
               
               <div className="text-sm font-semibold text-rose-400 mt-1 font-sans">
-                District Governor · Rotary International District 9126
+                District Governor � Rotary International District 9126
               </div>
             </div>
 
@@ -225,7 +225,7 @@ export default function DistrictGovernorSection() {
                 "Our Rotaractors are the dynamic heartbeat of community transformation across our seven states. In every project, every outreach, and every fellowship, you embody the timeless ideal of Service Above Self. As your District Governor, mentor, and father, I stand with you to build lasting impact and create enduring hope."
               </p>
               <div className="mt-4 pt-3 border-t border-white/10 flex items-center justify-between text-xs text-[#D4A520] font-semibold">
-                <span>— Rtn. Olaniyi Amoo Okin</span>
+                <span>� Rtn. Olaniyi Amoo Okin</span>
                 <span className="text-slate-400 font-normal">District Governor 2026/2027</span>
               </div>
             </div>

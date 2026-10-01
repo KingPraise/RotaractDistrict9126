@@ -278,7 +278,7 @@ export default function ProjectDetailPage() {
                 The 4-Way Test of the Things We Think, Say or Do
               </h3>
               <p className="text-xs text-white/80 leading-relaxed">
-                1. Is it the TRUTH? Ãƒâ€šÃ‚Â· 2. Is it FAIR to all concerned? Ãƒâ€šÃ‚Â· 3. Will it build GOODWILL and BETTER FRIENDSHIPS? Ãƒâ€šÃ‚Â· 4. Will it be BENEFICIAL to all concerned?
+                1. Is it the TRUTH? Ãƒâ€šÃ‚Â� 2. Is it FAIR to all concerned? Ãƒâ€šÃ‚Â� 3. Will it build GOODWILL and BETTER FRIENDSHIPS? Ãƒâ€šÃ‚Â� 4. Will it be BENEFICIAL to all concerned?
               </p>
             </div>
 

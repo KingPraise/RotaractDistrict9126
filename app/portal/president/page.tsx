@@ -102,7 +102,7 @@ const INITIAL_MEMBERS: MemberRecord[] = [
     role: 'Secretary',
     attendance: 88,
     duesStatus: 'pending',
-    clearedDate: '—',
+    clearedDate: '�',
     lastActive: 'Yesterday',
     avatar: 'https://images.unsplash.com/photo-1629145810320-aec9e63dd798?w=80&h=80&fit=crop&auto=format'
   },
@@ -146,7 +146,7 @@ const INITIAL_MEMBERS: MemberRecord[] = [
     role: 'Member',
     attendance: 70,
     duesStatus: 'pending',
-    clearedDate: '—',
+    clearedDate: '�',
     lastActive: '5 days ago',
     avatar: 'https://images.unsplash.com/photo-1628157582853-a796fa650a6a?w=80&h=80&fit=crop&auto=format'
   },
@@ -190,7 +190,7 @@ const INITIAL_MEMBERS: MemberRecord[] = [
     role: 'Member',
     attendance: 58,
     duesStatus: 'overdue',
-    clearedDate: '—',
+    clearedDate: '�',
     lastActive: '1 week ago',
     avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=80&h=80&fit=crop&auto=format'
   }
@@ -352,7 +352,7 @@ export default function PresidentConsolePage() {
       role: newMemberForm.role,
       attendance: 100,
       duesStatus: newMemberForm.duesStatus,
-      clearedDate: newMemberForm.duesStatus === 'cleared' ? 'Today' : '—',
+      clearedDate: newMemberForm.duesStatus === 'cleared' ? 'Today' : '�',
       lastActive: 'Just registered',
       avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=80&h=80&fit=crop&auto=format'
     };
@@ -390,7 +390,7 @@ export default function PresidentConsolePage() {
       prev.map((m) => {
         if (m.id !== id) return m;
         if (m.duesStatus === 'cleared') {
-          return { ...m, duesStatus: 'pending', clearedDate: '—' };
+          return { ...m, duesStatus: 'pending', clearedDate: '�' };
         } else {
           return { ...m, duesStatus: 'cleared', clearedDate: 'Just now' };
         }
@@ -486,7 +486,7 @@ export default function PresidentConsolePage() {
               Management Console
             </div>
             <div className="text-[10px] text-black/40 truncate">
-              Rotaract Club of Ibadan Central · Tier 2 Sovereign
+              Rotaract Club of Ibadan Central � Tier 2 Sovereign
             </div>
           </div>
         </div>
@@ -825,7 +825,7 @@ export default function PresidentConsolePage() {
 
                         {/* Cleared Date */}
                         <td className="p-3.5 text-center text-[11px] font-semibold text-[#15803D]">
-                          {member.clearedDate || '—'}
+                          {member.clearedDate || '�'}
                         </td>
 
                         {/* Last Active */}
@@ -843,7 +843,7 @@ export default function PresidentConsolePage() {
                               Remind
                             </button>
                           ) : (
-                            <span className="text-[10px] text-black/20">—</span>
+                            <span className="text-[10px] text-black/20">�</span>
                           )}
                         </td>
                       </tr>
@@ -881,7 +881,7 @@ export default function PresidentConsolePage() {
                   General Fellowship: &quot;Digital Leadership in Community Impact&quot;
                 </h3>
                 <p className="text-xs text-black/60">
-                  Venue: Kakanfo Inn & Conference Centre · Presiding: Rtr. Tunde Adeyemi
+                  Venue: Kakanfo Inn & Conference Centre � Presiding: Rtr. Tunde Adeyemi
                 </p>
               </div>
 
@@ -1327,7 +1327,7 @@ export default function PresidentConsolePage() {
                   <div key={idx} className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3.5 rounded-xl bg-[#F7F4F3] border border-black/[0.06]">
                     <div className="min-w-0">
                       <div className="text-xs font-bold text-[#1C1C1E]">{exec.role}</div>
-                      <div className="text-[11px] text-black/50">{exec.name} · {exec.email}</div>
+                      <div className="text-[11px] text-black/50">{exec.name} � {exec.email}</div>
                     </div>
                     <button
                       onClick={() => {
@@ -1494,7 +1494,7 @@ export default function PresidentConsolePage() {
                       Tier 2 Sovereign
                     </span>
                   </h3>
-                  <p className="text-[11px] text-black/50">Rotaract Club of Ibadan Central · District 9126</p>
+                  <p className="text-[11px] text-black/50">Rotaract Club of Ibadan Central � District 9126</p>
                 </div>
               </div>
               <button

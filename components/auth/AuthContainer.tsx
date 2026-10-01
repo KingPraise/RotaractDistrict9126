@@ -450,7 +450,7 @@ function AuthForm({ initialMode = 'login' }: AuthContainerProps) {
       >
         <ShieldCheck size={12} strokeWidth={2} />
         <span className="text-[10px] tracking-[0.1em] font-semibold uppercase">
-          SECURED · DISTRICT 9126 IDENTITY SYSTEM · TLS 1.3
+          SECURED � DISTRICT 9126 IDENTITY SYSTEM � TLS 1.3
         </span>
       </div>
 

@@ -72,7 +72,7 @@ export async function runAllSuites(options?: {
   const startTime = Date.now();
 
   console.log(`\n${colors.bold}${colors.cyan}══════════════════════════════════════════════════════════════════════════${colors.reset}`);
-  console.log(`${colors.bold}${colors.magenta}   ROTARACT DISTRICT 9126 — E2E TEST RUNNER HARNESS   ${colors.reset}`);
+  console.log(`${colors.bold}${colors.magenta}   ROTARACT DISTRICT 9126 � E2E TEST RUNNER HARNESS   ${colors.reset}`);
   console.log(`${colors.bold}${colors.cyan}══════════════════════════════════════════════════════════════════════════${colors.reset}\n`);
 
   // Discover all test suite directories (tier1-features, tier2-boundaries, tier3-combinations, tier4-scenarios)
@@ -235,7 +235,7 @@ export async function runAllSuites(options?: {
   if (failedSuites === 0 && totalFailed === 0) {
     console.log(`${colors.bold}${colors.bgGreen}${colors.white} ALL TEST SUITES PASSED CLEANLY (100%) ${colors.reset}\n`);
   } else {
-    console.log(`${colors.bold}${colors.bgRed}${colors.white} SOME TESTS FAILED — CHECK LOGS ABOVE ${colors.reset}\n`);
+    console.log(`${colors.bold}${colors.bgRed}${colors.white} SOME TESTS FAILED � CHECK LOGS ABOVE ${colors.reset}\n`);
   }
 
   return {

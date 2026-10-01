@@ -40,7 +40,7 @@ const SEARCH_DIRECTORIES = [
     category: 'District Clubs',
     href: '/clubs',
     icon: Building2,
-    desc: 'Browse 77 chartered clubs across 7 constituent states',
+    desc: 'Browse 78 chartered clubs across 7 constituent states',
     badge: '77 Clubs',
     color: 'from-[#981132] to-[#D91B5C]',
   },

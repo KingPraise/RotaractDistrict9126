@@ -3,7 +3,7 @@ import { Metadata } from 'next';
 export const metadata: Metadata = {
   title: 'Flagship Humanitarian Projects & Community Impact',
   description:
-    'Explore documented legacy projects of Rotaract District 9126 — including Operation Vaccinate 500, Clean Water for Offa, Digital Skills Academy, and Hunger Relief across 7 states.',
+    'Explore documented legacy projects of Rotaract District 9126 � including Operation Vaccinate 500, Clean Water for Offa, Digital Skills Academy, and Hunger Relief across 7 states.',
   alternates: {
     canonical: '/projects',
   },

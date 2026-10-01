@@ -1,5 +1,5 @@
 /**
- * Rotaract District 9126 — Complete TypeScript Domain Models & Schemas
+ * Rotaract District 9126 � Complete TypeScript Domain Models & Schemas
  * Covers: Users, Clubs, Projects, Articles, Events, Prospects, Leadership, Dues, Subscribers, Actions
  */
 

@@ -312,7 +312,7 @@ export default function ClubsPage() {
             <div className="absolute bottom-7 left-7 z-[400] px-3 py-1.5 rounded-xl bg-white/95 backdrop-blur-md border border-black/10 shadow-md flex items-center gap-2 pointer-events-none">
               <span className="w-1.5 h-1.5 rounded-full bg-[#981132] animate-pulse" />
               <span className="text-[9px] font-bold uppercase tracking-widest text-[#1C1C1E] font-sans">
-                D9126 · 7 STATES ACTIVE · {filteredClubs.length} LOCATIONS
+                D9126 � 7 STATES ACTIVE � {filteredClubs.length} LOCATIONS
               </span>
             </div>
           </div>

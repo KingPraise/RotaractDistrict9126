@@ -78,7 +78,7 @@ export const INITIAL_ARTICLES: ArticleItem[] = [
   {
     id: 'art-4',
     title: 'From Iwo Road to Agodi: How One Club Rebuilt a Primary School Library',
-    excerpt: 'The Rotaract Club of Ibadan Iwo Road spent eight months fundraising, sourcing books, and training teachers — a story of persistence that district leaders are calling a model for replication.',
+    excerpt: 'The Rotaract Club of Ibadan Iwo Road spent eight months fundraising, sourcing books, and training teachers � a story of persistence that district leaders are calling a model for replication.',
     category: 'Community Stories',
     date: 'Jul 3, 2026',
     readTime: '7 min read',

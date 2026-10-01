@@ -137,7 +137,7 @@ export default function HeroSection() {
           className="max-w-2xl leading-relaxed mb-8 sm:mb-10 font-sans px-2" 
           style={{ fontSize: 'clamp(0.95rem, 1.6vw, 1.2rem)', color: 'rgb(255, 255, 255)' }}
         >
-          Rotaract District 9126 unites thousands of young leaders across Ondo, Ekiti, Osun, Oyo, Kogi, Niger, and Kwara in a relentless pursuit of community transformation — from grassroots action to global connection.
+          Rotaract District 9126 unites thousands of young leaders across Ondo, Ekiti, Osun, Oyo, Kogi, Niger, and Kwara in a relentless pursuit of community transformation � from grassroots action to global connection.
         </motion.p>
 
         <motion.div 
@@ -193,7 +193,7 @@ export default function HeroSection() {
           
           <div className="flex flex-col items-center gap-1.5 sm:gap-2 px-4 sm:px-6 py-5 sm:py-6 hover:bg-gray-50/80 transition-all duration-300 md:border-r border-black/5 group">
             <span className="font-black tabular-nums font-sans text-[#D4A520] transition-transform duration-300 group-hover:scale-105" style={{ fontSize: 'clamp(2rem, 4vw, 3.5rem)', lineHeight: 1, textShadow: 'rgba(212, 165, 32, 0.35) 0px 0px 30px' }}>
-              <CountUp end={77} duration={2200} />
+              <CountUp end={78} duration={2200} />
             </span>
             <span className="text-[11px] sm:text-xs uppercase tracking-[0.2em] font-sans text-black font-bold">Active Clubs</span>
           </div>

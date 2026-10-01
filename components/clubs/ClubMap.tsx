@@ -115,18 +115,18 @@ export default function ClubMap({ clubs, activeClubId, onSelectClub }: ClubMapPr
       const popupHtml = `
         <div style="font-family: Inter, sans-serif; padding: 12px; background: rgba(15, 22, 36, 0.95); backdrop-filter: blur(12px); border-radius: 14px; color: white; min-width: 220px; box-shadow: 0 10px 30px rgba(0,0,0,0.35);">
           <div style="font-size: 9px; font-weight: 700; color: #D91B5C; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 3px;">
-            ${club.type || 'COMMUNITY BASED'} · ${club.state.toUpperCase()}
+            ${club.type || 'COMMUNITY BASED'} � ${club.state.toUpperCase()}
           </div>
           <div style="font-size: 13.5px; font-weight: 800; color: white; margin-bottom: 4px; line-height: 1.3;">
             ${club.name}
           </div>
           ${club.president ? `
             <div style="font-size: 11px; font-weight: 600; color: #D4A520; margin-bottom: 4px;">
-              Pres. ${club.president} ${club.presidentPhone ? `· <a href="tel:${club.presidentPhone.replace(/\\s+/g, '')}" style="color: #F8F5F2; text-decoration: underline;">${club.presidentPhone}</a>` : ''}
+              Pres. ${club.president} ${club.presidentPhone ? `� <a href="tel:${club.presidentPhone.replace(/\\s+/g, '')}" style="color: #F8F5F2; text-decoration: underline;">${club.presidentPhone}</a>` : ''}
             </div>
           ` : ''}
           <div style="font-size: 10.5px; color: rgba(255,255,255,0.7); margin-bottom: 10px; line-height: 1.4;">
-            📍 ${club.city || club.state} · 🕒 ${club.meetingSchedule || club.meetingDay || 'Weekly Meetings'}
+            📍 ${club.city || club.state} � 🕒 ${club.meetingSchedule || club.meetingDay || 'Weekly Meetings'}
           </div>
           <a href="/join?club=${encodeURIComponent(club.name)}" style="display: block; text-align: center; background: #981132; color: white; padding: 7px 12px; border-radius: 20px; font-size: 11px; font-weight: 700; text-decoration: none; transition: background 0.2s;">
             Express Interest →

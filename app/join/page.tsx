@@ -125,7 +125,7 @@ function JoinClubContent() {
           <div className="flex items-center gap-2">
             <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#981132]/10 border border-[#981132]/20 text-[#981132] text-[11px] font-black uppercase tracking-wider">
               <ShieldCheck size={12} />
-              {selectedClub.state} State · D9126
+              {selectedClub.state} State � D9126
             </span>
           </div>
         </div>
@@ -176,7 +176,7 @@ function JoinClubContent() {
                 </h2>
 
                 <p className="text-white/70 text-xs font-medium">
-                  Presiding Officer · {selectedClub.name}
+                  Presiding Officer � {selectedClub.name}
                 </p>
               </div>
             </div>
@@ -239,7 +239,7 @@ function JoinClubContent() {
                       Meeting Schedule
                     </div>
                     <div className="text-xs font-bold text-[#1C1C1E] mt-0.5">
-                      {selectedClub.meetingSchedule || 'Every 1st & 3rd Sunday · 4:00 PM'}
+                      {selectedClub.meetingSchedule || 'Every 1st & 3rd Sunday � 4:00 PM'}
                     </div>
                     <div className="text-[11px] text-gray-500 mt-0.5">
                       Bi-monthly fellowship
@@ -299,9 +299,9 @@ function JoinClubContent() {
                   <span className="flex items-center gap-1">
                     <ShieldCheck size={13} className="text-[#22C55E]" /> Official D9126 Channel
                   </span>
-                  <span>·</span>
+                  <span>�</span>
                   <span>Instant Response</span>
-                  <span>·</span>
+                  <span>�</span>
                   <span>Zero Membership Application Fees</span>
                 </div>
               </div>

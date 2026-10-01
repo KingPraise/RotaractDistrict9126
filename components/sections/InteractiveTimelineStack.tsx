@@ -28,7 +28,7 @@ const TIMELINE_ERAS: EraCardData[] = [
     desc: 'For 15 years, Rotaract District 9125 served as a unified powerhouse comprising 23 states plus the Federal Capital Territory (FCT), nurturing generations of leaders across Nigeria.',
     theme: 'Foundational Powerhouse',
     leader: 'Pan-Nigerian Joint Council',
-    stats: '23 States + FCT · 150+ Clubs',
+    stats: '23 States + FCT � 150+ Clubs',
     accentColor: '#4361EE',
     bgGradient: 'from-[#0C1222] via-[#080D1A] to-[#050811]',
     glowColor: 'rgba(67, 97, 238, 0.25)'
@@ -80,7 +80,7 @@ const TIMELINE_ERAS: EraCardData[] = [
     desc: 'The 1st administration under "The Magic of Rotary" established district infrastructure, governance protocols, constitution drafting, and inter-state club alignment.',
     theme: 'The Magic of Rotary',
     leader: 'Rtr. PP Oyewumi Kamaldeen Adeshina',
-    stats: '77 Clubs Aligned · First Assembly',
+    stats: '78 Clubs Aligned � First Assembly',
     accentColor: '#981132',
     bgGradient: 'from-[#200A13] via-[#15060C] to-[#0A0306]',
     glowColor: 'rgba(152, 17, 50, 0.25)'
@@ -93,7 +93,7 @@ const TIMELINE_ERAS: EraCardData[] = [
     desc: 'Today, the 3rd administration coordinates 77 chartered clubs and ~700 Rotaractors with verified sovereign digital IDs, automated dues, maternal health outreach, and flagship innovation institutes.',
     theme: 'Create Lasting Impact',
     leader: 'Rtr. PP Adaramoye Iyanuoluwa (Sitting DRR)',
-    stats: '700+ Verified Members · 7 States',
+    stats: '700+ Verified Members � 7 States',
     accentColor: '#D4A520',
     bgGradient: 'from-[#21180A] via-[#161006] to-[#0C0803]',
     glowColor: 'rgba(212, 165, 32, 0.35)',

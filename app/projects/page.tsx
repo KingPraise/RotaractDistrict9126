@@ -293,7 +293,7 @@ export default function ProjectsPage() {
 
           <div className="flex flex-col items-center gap-2 px-6 py-7 hover:bg-gray-50 transition-colors border-r border-black/[0.06]">
             <Globe className="text-[#D91B5C] opacity-80 shrink-0" size={18}/>
-            <span className="font-sans font-black text-3xl text-[#D4A520] leading-none">77</span>
+            <span className="font-sans font-black text-3xl text-[#D4A520] leading-none">78</span>
             <span className="font-sans text-[10px] text-gray-600 uppercase tracking-wider text-center font-medium">
               Active Clubs
             </span>

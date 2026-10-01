@@ -437,7 +437,7 @@ export default function MemberDashboardPage() {
               </span>
             </div>
             <p className="text-[10px] text-black/40 mt-0.5">
-              {currentUser.clubName} · {currentUser.state} · Rotary Year 2026/2027
+              {currentUser.clubName} � {currentUser.state} � Rotary Year 2026/2027
             </p>
           </div>
 
@@ -1448,7 +1448,7 @@ export default function MemberDashboardPage() {
                       District Jurisdiction
                     </div>
                     <div className="text-xs font-semibold text-[#1C1C1E]">
-                      District 9126 · {currentUser.state}
+                      District 9126 � {currentUser.state}
                     </div>
                   </div>
 
@@ -1685,7 +1685,7 @@ export default function MemberDashboardPage() {
                   </div>
                   <div>
                     <div className="text-[11px] font-black tracking-wider text-white">ROTARACT D9126</div>
-                    <div className="text-[8px] text-[#D91B5C] font-semibold">NIGERIA · CHARTERED</div>
+                    <div className="text-[8px] text-[#D91B5C] font-semibold">NIGERIA � CHARTERED</div>
                   </div>
                 </div>
                 <Award className="h-5 w-5 text-[#D4A520]" />
@@ -1707,7 +1707,7 @@ export default function MemberDashboardPage() {
                   </div>
                   <div className="flex items-center gap-1 text-[9.5px] text-slate-400">
                     <MapPin className="h-2.5 w-2.5 text-[#D91B5C]" />
-                    <span>Oyo State · South-West</span>
+                    <span>Oyo State � South-West</span>
                   </div>
                 </div>
               </div>
@@ -1739,7 +1739,7 @@ export default function MemberDashboardPage() {
               {/* Security Strip */}
               <div className="mt-3 pt-2 border-t border-white/10 flex items-center justify-between text-[8px] text-slate-500 relative z-10">
                 <span>ROTARY INTERNATIONAL D9126</span>
-                <span className="font-mono">TLS 1.3 · VERIFIED</span>
+                <span className="font-mono">TLS 1.3 � VERIFIED</span>
               </div>
             </div>
 

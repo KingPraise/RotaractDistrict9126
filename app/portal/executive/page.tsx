@@ -206,7 +206,7 @@ export default function DistrictExecutiveDashboardPage() {
             />
             <div className="leading-tight">
               <div className="text-xs font-bold text-[#1C1C1E] tracking-tight">Executive HQ</div>
-              <div className="text-[9px] text-black/40 tracking-wider">District 9126 · DRR Portal</div>
+              <div className="text-[9px] text-black/40 tracking-wider">District 9126 � DRR Portal</div>
             </div>
           </div>
 
@@ -214,7 +214,7 @@ export default function DistrictExecutiveDashboardPage() {
           <div className="p-3 rounded-xl bg-[#D91B5C]/[0.06] border border-[#D91B5C]/20 backdrop-blur-md shadow-sm flex items-center justify-between gap-2.5">
             <div className="min-w-0 flex-1">
               <div className="text-xs font-bold text-[#1C1C1E] truncate">Adaramoye Iyanuoluwa</div>
-              <div className="text-[9px] text-black/45">DRR · 2026–27</div>
+              <div className="text-[9px] text-black/45">DRR � 2026–27</div>
             </div>
             <div className="relative shrink-0">
               <div className="w-10 h-10 rounded-full p-[2px] bg-gradient-to-tr from-[#D91B5C] to-[#A855F7] shadow-sm">
@@ -354,7 +354,7 @@ export default function DistrictExecutiveDashboardPage() {
         <header className="h-15 shrink-0 border-b border-black/[0.08] bg-white/90 backdrop-blur-xl px-6 flex items-center justify-between gap-4 sticky top-0 z-30">
           <div>
             <span className="text-sm font-bold text-[#1C1C1E]">Overview</span>
-            <span className="text-[10px] text-black/40 ml-2">· District 9126 Executive Dashboard</span>
+            <span className="text-[10px] text-black/40 ml-2">� District 9126 Executive Dashboard</span>
           </div>
 
           <div className="flex items-center gap-3">
@@ -824,7 +824,7 @@ export default function DistrictExecutiveDashboardPage() {
                     className="flex items-center gap-1 text-[10px] text-black/40 hover:text-black mb-2 transition-colors"
                   >
                     <ChevronRight className="rotate-180" size={10} />
-                    <span>Executive HQ · Overview</span>
+                    <span>Executive HQ � Overview</span>
                   </button>
                   <h1 className="text-2xl font-extrabold text-[#1C1C1E] tracking-tight">
                     Good afternoon, Oluwafemi
@@ -852,7 +852,7 @@ export default function DistrictExecutiveDashboardPage() {
                     </div>
                     <div className="leading-tight">
                       <div className="text-[10.5px] font-bold text-[#1C1C1E]">Oluwafemi A.</div>
-                      <div className="text-[8.5px] text-black/40">DRR · 2024–25</div>
+                      <div className="text-[8.5px] text-black/40">DRR � 2024–25</div>
                     </div>
                   </div>
                 </div>
@@ -867,7 +867,7 @@ export default function DistrictExecutiveDashboardPage() {
                       <Target size={13} />
                     </div>
                     <span className="text-[10px] font-bold text-black/40 tracking-wider uppercase">
-                      District Milestone · Tier 2 Growth
+                      District Milestone � Tier 2 Growth
                     </span>
                   </div>
 
@@ -883,7 +883,7 @@ export default function DistrictExecutiveDashboardPage() {
                     </div>
                     <div className="flex justify-between text-[9.5px] text-black/40">
                       <span>3,247 enrolled</span>
-                      <span>65% complete · 1,753 remaining</span>
+                      <span>65% complete � 1,753 remaining</span>
                     </div>
                   </div>
                 </div>
@@ -944,7 +944,7 @@ export default function DistrictExecutiveDashboardPage() {
                     </div>
                     <div className="flex justify-between pt-1 text-black/40">
                       <span>Osun State</span>
-                      <span className="font-semibold text-black/70">8 clubs <span className="text-black/30">—</span></span>
+                      <span className="font-semibold text-black/70">8 clubs <span className="text-black/30">�</span></span>
                     </div>
                   </div>
                 </div>
@@ -1142,14 +1142,14 @@ export default function DistrictExecutiveDashboardPage() {
               <div className="sticky top-0 z-40 px-6 py-3 bg-white/95 backdrop-blur-xl border-b border-black/[0.08] flex items-center justify-between gap-3 flex-wrap">
                 <input
                   type="text"
-                  defaultValue="District 9126 — July Impact Bulletin"
+                  defaultValue="District 9126 � July Impact Bulletin"
                   className="flex-1 min-w-[200px] text-sm font-bold text-[#1C1C1E] bg-transparent outline-none caret-[#981132]"
                 />
 
                 <div className="flex items-center gap-2 px-2.5 py-1.5 rounded-lg bg-black/[0.04] border border-black/[0.08] text-xs">
                   <Users className="text-black/40" size={12} />
                   <span className="font-semibold text-black/60">All Members</span>
-                  <span className="text-black/30">·</span>
+                  <span className="text-black/30">�</span>
                   <span className="font-bold text-[#981132]">1,247</span>
                 </div>
 
@@ -1182,7 +1182,7 @@ export default function DistrictExecutiveDashboardPage() {
                     </label>
                     <input
                       type="text"
-                      defaultValue="District 9126 — July Impact Bulletin 🌍"
+                      defaultValue="District 9126 � July Impact Bulletin 🌍"
                       className="w-full px-3 py-1.5 rounded-lg bg-white border border-black/[0.08] text-xs text-[#1C1C1E] outline-none focus:border-[#981132]"
                     />
                   </div>
@@ -1229,7 +1229,7 @@ export default function DistrictExecutiveDashboardPage() {
                       suppressContentEditableWarning
                       className="text-2xl sm:text-3xl font-extrabold text-center text-[#1C1C1E] outline-none tracking-tight leading-tight"
                     >
-                      District 9126 — July Impact Bulletin
+                      District 9126 � July Impact Bulletin
                     </div>
 
                     {/* Salutation Block */}
@@ -1240,7 +1240,7 @@ export default function DistrictExecutiveDashboardPage() {
                     >
                       Dear Fellow Rotaractors,
                       <br /><br />
-                      This July, we continue to set new standards for community service across our seven states. From the vaccination drives in Ogbomoso to the reforestation efforts across Ibadan, your impact is being felt — and celebrated.
+                      This July, we continue to set new standards for community service across our seven states. From the vaccination drives in Ogbomoso to the reforestation efforts across Ibadan, your impact is being felt � and celebrated.
                     </div>
 
                     {/* Image Block */}
@@ -1251,7 +1251,7 @@ export default function DistrictExecutiveDashboardPage() {
                         className="w-full rounded-xl object-cover"
                       />
                       <div className="text-[10px] italic text-black/40">
-                        District Leadership Summit 2026 — 400+ Rotaractors gather in Ibadan
+                        District Leadership Summit 2026 � 400+ Rotaractors gather in Ibadan
                       </div>
                     </div>
 
@@ -1291,7 +1291,7 @@ export default function DistrictExecutiveDashboardPage() {
                       With fellowship and purpose,
                       <br /><br />
                       <strong className="text-[#1C1C1E]">Oluwafemi Adeleke</strong><br />
-                      District Rotaract Representative · D9126 · 2024–25
+                      District Rotaract Representative � D9126 � 2024–25
                     </div>
                   </div>
                 </div>
@@ -1677,7 +1677,7 @@ export default function DistrictExecutiveDashboardPage() {
             /* DEDICATED CLUB PERFORMANCE DEEP-DIVE VIEW */
             <div className="space-y-4 font-sans">
               <div className="text-xs text-black/40">
-                Club performance deep-dive — all 47 registered clubs
+                Club performance deep-dive � all 47 registered clubs
               </div>
 
               {/* Hero BarChart Canvas */}
@@ -1787,7 +1787,7 @@ export default function DistrictExecutiveDashboardPage() {
                   <AlertCircle size={14} />
                 </div>
                 <span className="text-xs text-black/70 flex-1 leading-relaxed">
-                  <strong className="text-[#D91B5C]">Action required:</strong> 3 clubs have outstanding dues compliance issues — Rasheed Lawal, Taiwo Olabisi, Folake Adewusi.
+                  <strong className="text-[#D91B5C]">Action required:</strong> 3 clubs have outstanding dues compliance issues � Rasheed Lawal, Taiwo Olabisi, Folake Adewusi.
                 </span>
                 <ChevronRight className="text-black/40" size={14} />
               </div>
@@ -1800,7 +1800,7 @@ export default function DistrictExecutiveDashboardPage() {
                   </div>
                   <div>
                     <div className="text-xs font-bold text-[#1C1C1E]">Executive Analytics Dashboard</div>
-                    <div className="text-[10px] text-black/40">Full metrics breakdown across all 47 clubs · 7 states</div>
+                    <div className="text-[10px] text-black/40">Full metrics breakdown across all 47 clubs � 7 states</div>
                   </div>
                 </div>
                 <button 
@@ -1818,28 +1818,28 @@ export default function DistrictExecutiveDashboardPage() {
                     title: 'Total Active Members',
                     value: '3,247',
                     change: '+12%',
-                    desc: 'Across 47 clubs · 7 states',
+                    desc: 'Across 47 clubs � 7 states',
                     icon: Users
                   },
                   {
                     title: 'District Fund Aggregate',
                     value: '₦485K',
                     change: '+8.5%',
-                    desc: 'Q3 2026 · Dues + project grants',
+                    desc: 'Q3 2026 � Dues + project grants',
                     icon: DollarSign
                   },
                   {
                     title: 'Prospective Leads',
                     value: '156',
                     change: '+23%',
-                    desc: 'Active pipeline · 5 stages',
+                    desc: 'Active pipeline � 5 stages',
                     icon: TrendingUp
                   },
                   {
                     title: 'Project Impact Reach',
                     value: '52.4K',
                     change: '+18%',
-                    desc: 'Beneficiaries · 180+ projects',
+                    desc: 'Beneficiaries � 180+ projects',
                     icon: Globe
                   }
                 ].map((card, idx) => {

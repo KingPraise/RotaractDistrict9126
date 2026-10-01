@@ -6,12 +6,12 @@ import { motion } from 'framer-motion';
 export default function LeadershipSection({ showOnly = "all" }: { showOnly?: "team" | "succession" | "all" }) {
   const mainLeaders = [
     { name: "Rtr. PP Adaramoye Iyanuoluwa PHF", role: "District Rotaract Representative", tooltip: "DRR", image: "/images/leaders/drr-adaramoye-iyanuoluwa.jpg" },
-    { name: "Rtn Amusa Adepitan Adesina", role: "District Rotaract Representative Committee Chairman", tooltip: "DRRCC", image: "/images/leaders/Amusa Adepitan Adesina.jpeg" },
     { name: "Rtr. PP Faleye Ifeoluwa", role: "District Secretary", tooltip: "DS", image: "/images/leaders/leader-secretary-faleye.jpg" },
-    { name: "Rtr. Hussain Abdulhakeem", role: "District Admin / Chief of Staff", tooltip: "DA", image: "/images/leaders/leader-chief-of-staff.jpg" },
+    { name: "Rtr. PP Hussain Abdulhakeem PHF", role: "District Admin / Chief of Staff", tooltip: "DA", image: "/images/leaders/leader-chief-of-staff.jpg" },
     { name: "Rtr. PP Odufuwa Omotoke", role: "District Treasurer", tooltip: "DT", image: "/images/leaders/leader-treasurer-odufuwa.jpg" },
+    { name: "Rtn Amusa Adepitan Adesina", role: "District Rotaract Activities Committee Chairman", tooltip: "DRACC", image: "/images/leaders/Amusa Adepitan Adesina.jpeg" },
     { name: "Rotn. Idiat Olamide Ibrahim", role: "District Youth Service Chair", tooltip: "YOUTH CHAIR", image: "/images/leaders/Rotn. Idiat Olamide.jpeg" },
-    { name: "Rtr. PP Adebayo Sodiq", role: "District Learning Facilitator and Chairman Council of PDRRs", tooltip: "PAPA T", image: "/images/leaders/drr-adebayo-sodiq.jpg" },
+    { name: "PDRR Adebayo Sodiq PHF+1", role: "District Learning Facilitator and Chairman Council of PDRRs", tooltip: "PAPA T", image: "/images/leaders/drr-adebayo-sodiq.jpg" },
     { name: "Rtr. Yusuf Mahfooz Adewale", role: "District Director of ICT", tooltip: "MAHFOOZ", image: "/images/leaders/leader-ict-director-mafooz.jpg" }
   ];
 

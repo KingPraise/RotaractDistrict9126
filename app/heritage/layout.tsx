@@ -3,7 +3,7 @@ import { Metadata } from 'next';
 export const metadata: Metadata = {
   title: 'District Heritage & DRR Historical Lineage (2023–2027)',
   description:
-    'Explore the leadership succession and history of Rotaract District 9126 — from District 9125 transition to the inaugural administration and current executive council.',
+    'Explore the leadership succession and history of Rotaract District 9126 � from District 9125 transition to the inaugural administration and current executive council.',
   alternates: {
     canonical: '/heritage',
   },

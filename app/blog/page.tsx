@@ -95,7 +95,7 @@ export default function BlogPage() {
                   style={{ background: 'linear-gradient(rgb(217, 27, 92), rgba(217, 27, 92, 0.3))' }} 
                 />
                 <span className="text-[11px] tracking-[0.25em] uppercase font-semibold text-[#D91B5C]">
-                  District 9126 · News & Impact
+                  District 9126 � News & Impact
                 </span>
               </div>
 
@@ -233,7 +233,7 @@ export default function BlogPage() {
                         {featuredPost.category}
                       </span>
                       <span className="text-xs text-gray-400 font-sans">{featuredPost.date}</span>
-                      <span className="text-xs text-gray-400 font-sans">· {featuredPost.readTime}</span>
+                      <span className="text-xs text-gray-400 font-sans">� {featuredPost.readTime}</span>
                     </div>
 
                     <h2 className="text-2xl lg:text-3xl font-extrabold text-[#111111] leading-tight font-sans group-hover:text-[#981132] transition-colors">
@@ -307,7 +307,7 @@ export default function BlogPage() {
                     <div className="p-7 flex flex-col gap-3">
                       <div className="flex items-center gap-2 text-xs text-gray-400 font-sans">
                         <span>{post.date}</span>
-                        <span>·</span>
+                        <span>�</span>
                         <span>{post.readTime}</span>
                       </div>
 
@@ -385,7 +385,7 @@ export default function BlogPage() {
                         <div className="p-6 flex flex-col gap-2.5">
                           <div className="flex items-center gap-2 text-[11px] text-gray-400 font-sans">
                             <span>{post.date}</span>
-                            <span>·</span>
+                            <span>�</span>
                             <span>{post.readTime}</span>
                           </div>
 

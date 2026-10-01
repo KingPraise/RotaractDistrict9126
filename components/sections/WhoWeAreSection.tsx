@@ -63,7 +63,7 @@ export default function WhoWeAreSection() {
             </h2>
             
             <p className="leading-relaxed font-sans" style={{ fontSize: '1.05rem', color: 'rgb(0, 0, 0)' }}>
-              District 9126 is a constellation of 77 chartered Rotaract clubs and over 700 young leaders united under one banner - creating real, lasting change in communities across seven Nigerian states while developing the next generation of servant leaders.
+              District 9126 is a constellation of 78 chartered Rotaract clubs and over 700 young leaders united under one banner - creating real, lasting change in communities across seven Nigerian states while developing the next generation of servant leaders.
             </p>
           </motion.div>
 

@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Find a Rotaract Club Near You — 77 Chartered Clubs Directory',
+  title: 'Find a Rotaract Club Near You � 78 Chartered Clubs Directory',
   description:
     'Discover and join any of the 77 Rotaract clubs across Oyo, Osun, Ondo, Ekiti, Kwara, Kogi, and Niger states. Explore meeting locations, schedules, and leadership.',
   alternates: {

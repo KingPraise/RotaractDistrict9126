@@ -106,7 +106,7 @@ export async function signInWithEmail(email: string, password: string): Promise<
         setDoc(userDocRef, { lastLoginAt: serverTimestamp() }, { merge: true }).catch(() => {});
       }
     } catch {
-      // Firestore read timed out or permission denied — no problem
+      // Firestore read timed out or permission denied � no problem
     }
 
     const userData: AuthUserData = {
@@ -122,7 +122,7 @@ export async function signInWithEmail(email: string, password: string): Promise<
     saveLocalUser(userData);
     return { success: true, user: userData };
   } catch (firebaseError: any) {
-    // 3. Firebase timed out or errored — fall back to local store
+    // 3. Firebase timed out or errored � fall back to local store
     if (existingLocal) {
       if (existingLocal.password && existingLocal.password !== password) {
         return { success: false, error: 'Invalid password. Please try again.' };
@@ -234,7 +234,7 @@ export async function signUpWithEmail(
     }
   })();
 
-  // 3. Return immediately — user sees instant redirect
+  // 3. Return immediately � user sees instant redirect
   return {
     success: true,
     user: newUserData,
