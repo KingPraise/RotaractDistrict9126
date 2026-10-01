@@ -87,7 +87,7 @@ export default function ProjectsSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-40px' }}
               transition={{ duration: 0.5, delay: idx * 0.12, ease: 'easeOut' }}
-              className="group relative overflow-hidden rounded-2xl cursor-pointer transition-all duration-300 hover:-translate-y-2 shadow-xl hover:shadow-2xl"
+              className="group relative flex flex-col overflow-hidden rounded-2xl cursor-pointer transition-all duration-300 hover:-translate-y-2 shadow-xl hover:shadow-2xl"
               style={{ border: '1px solid rgba(255, 255, 255, 0.07)' }}
             >
               {/* Image Container */}
@@ -101,7 +101,7 @@ export default function ProjectsSection() {
 
               {/* Bottom Glass Panel */}
               <div 
-                className="p-5 font-sans" 
+                className="p-5 font-sans flex-1 flex flex-col justify-between" 
                 style={{ background: 'rgba(15, 22, 36, 0.9)', backdropFilter: 'blur(12px)' }}
               >
                 <h3 className="font-bold text-white text-lg leading-tight group-hover:text-[#D91B5C] transition-colors duration-300 mb-2">
