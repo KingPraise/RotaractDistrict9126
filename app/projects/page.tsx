@@ -129,7 +129,7 @@ export default function ProjectsPage() {
               </span>
             </h1>
             <p className="max-w-xl mx-auto text-black/60 leading-relaxed px-4 text-[clamp(0.95rem,1.5vw,1.1rem)] font-sans">
-              Every photo tells a story of real change. Explore the documented legacy of District 9126 - from boreholes to blockchains, from classrooms to clinics.
+              Every photo tells a story of real change. Explore the documented legacy of District 9126 — from boreholes to blockchains, from classrooms to clinics.
             </p>
           </div>
         </div>
