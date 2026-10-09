@@ -19,12 +19,12 @@ export default function LeadershipSection({ showOnly = "all" }: { showOnly?: "te
     { name: "Rtr. PP Oyewumi Kamaldeen PHF", role: "DRR 2024 - 2025", tooltip: "PDR (Kamal)", image: "/images/leaders/drr-oyewumi-kamaldeen.jpg" },
     { name: "Rtr. PP Raji Abeeb Adekola", role: "DRR 2025 - 2026", tooltip: "IPDR (Youngest)", image: "/images/leaders/drr-raji-abeeb.jpg" },
     { name: "Rtr. PP Adaramoye Iyanuoluwa PHF", role: "DRR 2026 - 2027", tooltip: "DRR (Adukee)", image: "/images/leaders/drr-adaramoye-iyanuoluwa.jpg" },
-    { name: "Rtr. Oluwatofunmi Tejumola", role: "DRR 2027 - 2028", tooltip: "DRRE (Toffy)", image: "/images/leaders/adrr-oluwatofunmi-tejumola.jpg" },
+    { name: "Rtr. Oluwatofunmi Tejumola", role: "DRR 2027 - 2028", tooltip: "DRRE (Toffy)", image: "/images/leaders/toffy-tejumola.png" },
     { name: "Rtr. Shittu Ifedolapo PHF", role: "DRR 2028 - 2029", tooltip: "DRRN (Dolapo)", image: "/images/leaders/drrn-shittu-ifedolapo.jpg" }
   ];
 
   const adrrs = [
-    { name: "PP Oluwatofunmi Tejumola", role: "Zone 1, Oyo State", tooltip: "ADRR", image: "/images/leaders/Oluwatofunmi tejumola ADRR.jpeg" },
+    { name: "PP Oluwatofunmi Tejumola", role: "Zone 1, Oyo State", tooltip: "ADRR", image: "/images/leaders/toffy-tejumola.png" },
     { name: "PP Aderibigbe Kehinde David", role: "Zone 2, Osun State", tooltip: "ADRR", image: "/images/leaders/kehinde david.jpeg" },
     { name: "PP Abubakar Aminat Abiodun", role: "Zone 3, Kwara & Niger State", tooltip: "ADRR", image: "/images/leaders/aminat abiodun.jpeg" },
     { name: "PP Ijalana Oluwatobi", role: "Zone 4, Ondo & Ekiti", tooltip: "ADRR", image: "/images/leaders/Ijanala oluwatobi.jpeg" },
