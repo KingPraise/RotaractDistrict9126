@@ -3,6 +3,8 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
+import InteractiveImpactMeter from '@/components/sections/InteractiveImpactMeter';
+
 export default function ImpactSection() {
   const cards = [
     {
@@ -156,17 +158,19 @@ export default function ImpactSection() {
           viewport={{ once: true, margin: '-60px' }}
           transition={{ duration: 0.6, ease: 'easeOut' }}
         >
-          <h3 className="font-black text-2xl sm:text-3xl font-sans text-center mb-10 text-[#D91B5C]">
-            Our 2026/2027 Journey So Far
-          </h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 items-center justify-center">
-            <div className="rounded-3xl overflow-hidden shadow-[0_16px_40px_rgba(0,0,0,0.1)] border border-black/[0.05] bg-white group cursor-pointer transition-transform duration-500 hover:-translate-y-2">
-              <img src="/images/reports/july-impact-meter.png" alt="July Impact Meter" className="w-full h-auto object-cover" />
-            </div>
-            <div className="rounded-3xl overflow-hidden shadow-[0_16px_40px_rgba(0,0,0,0.1)] border border-black/[0.05] bg-white group cursor-pointer transition-transform duration-500 hover:-translate-y-2">
-              <img src="/images/reports/august-impact-meter.png" alt="August Impact Meter" className="w-full h-auto object-cover" />
-            </div>
+          <div className="text-center mb-10">
+            <span className="text-xs font-semibold tracking-[0.3em] uppercase text-[#D91B5C] font-sans">
+              Verified Monthly Growth
+            </span>
+            <h3 className="font-black text-2xl sm:text-4xl font-sans mt-2 text-[#1C1C1E] tracking-tight">
+              Our 2026/2027 Journey So Far
+            </h3>
+            <p className="mt-2 text-sm text-black/60 font-sans max-w-xl mx-auto">
+              Real-time documented progress across every chartered club in District 9126, verified and audited month-by-month.
+            </p>
           </div>
+
+          <InteractiveImpactMeter />
         </motion.div>
       </div>
       </section>
