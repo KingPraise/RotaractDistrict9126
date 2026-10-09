@@ -79,7 +79,7 @@ const TIMELINE_ERAS: EraCardData[] = [
     title: 'Foundation Era (DRR Oyewumi Kamaldeen)',
     desc: 'The 1st administration under "The Magic of Rotary" established district infrastructure, governance protocols, constitution drafting, and inter-state club alignment.',
     theme: 'The Magic of Rotary',
-    leader: 'Rtr. PP Oyewumi Kamaldeen Adeshina',
+    leader: 'PDRR Oyewumi Kamaldeen Adeshina',
     stats: '78 Clubs Aligned  -  First Assembly',
     accentColor: '#981132',
     bgGradient: 'from-[#200A13] via-[#15060C] to-[#0A0306]',

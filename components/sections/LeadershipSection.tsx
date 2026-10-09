@@ -16,8 +16,8 @@ export default function LeadershipSection({ showOnly = "all" }: { showOnly?: "te
   ];
 
   const successionWall = [
-    { name: "Rtr. PP Oyewumi Kamaldeen PHF", role: "DRR 2024 - 2025", tooltip: "PDR (Kamal)", image: "/images/leaders/drr-oyewumi-kamaldeen.jpg" },
-    { name: "Rtr. PP Raji Abeeb Adekola", role: "DRR 2025 - 2026", tooltip: "IPDR (Youngest)", image: "/images/leaders/drr-raji-abeeb.jpg" },
+    { name: "PDRR Oyewumi Kamaldeen PHF", role: "DRR 2024 - 2025", tooltip: "PDRR (Kamal)", image: "/images/leaders/drr-oyewumi-kamaldeen.jpg" },
+    { name: "PDRR Raji Abeeb Adekola", role: "DRR 2025 - 2026", tooltip: "IPDRR (Youngest)", image: "/images/leaders/drr-raji-abeeb.jpg" },
     { name: "Rtr. PP Adaramoye Iyanuoluwa PHF", role: "DRR 2026 - 2027", tooltip: "DRR (Adukee)", image: "/images/leaders/drr-adaramoye-iyanuoluwa.jpg" },
     { name: "Rtr. Oluwatofunmi Tejumola", role: "DRR 2027 - 2028", tooltip: "DRRE (Toffy)", image: "/images/leaders/toffy-tejumola.png" },
     { name: "Rtr. Shittu Ifedolapo PHF", role: "DRR 2028 - 2029", tooltip: "DRRN (Dolapo)", image: "/images/leaders/drrn-shittu-ifedolapo.jpg" }
