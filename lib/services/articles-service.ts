@@ -30,6 +30,68 @@ export interface ArticleItem {
 
 export const INITIAL_ARTICLES: ArticleItem[] = [
   {
+    id: 'rotaractors-of-the-first-quarter-2026',
+    title: 'Rotaractors of the First Quarter: Celebrating the Faces Behind Our Impact',
+    excerpt: 'Rotaract District 9126 proudly presents the Rotaractors of the First Quarter of the 2026/2027 Rotary Year, two District honourees and five Zonal honourees whose service, consistency and leadership set the pace for the District.',
+    content: `ROTARACTORS OF THE FIRST QUARTER
+Rotary Year 2026/2027
+
+The first quarter of the Rotary Year has come to a close, and what a quarter it has been.
+
+From July to September, clubs across District 9126 planned, served, documented and showed up for their communities. Behind every project report, every beneficiary reached and every man-hour volunteered are individuals who chose to go beyond the minimum.
+
+Today, the Office of the District Rotaract Representative is proud to celebrate seven of them.
+
+DISTRICT HONOUREES
+
+Rtr. Balogun Adedotun Kabirat PHF
+Rotaract E-Club of Harmony
+
+Rtr. Abdul-Kareem Sodeeq
+RAC Felele
+
+These two Rotaractors have been recognised at the District level for their outstanding contribution to the work of District 9126 in the first quarter. Their commitment to service, their support for District initiatives and their willingness to lead by example have made a visible difference across our 78 clubs.
+
+ZONAL HONOUREES
+
+Zone 1: Rtr. Adedokun Saheed, Rotaract Club of UCH
+Zone 2: Rtr. Oladosu Haliyah Damola, RAC UniOsun Osogbo Campus
+Zone 3: Rtr. Gafar Lekan Abdulazeez, RAC Ilorin Fate Neighbourhood
+Zone 4: Rtr. Fakeye Favour, RAC E-Club of Nigeria New Dawn
+Zone 5: Rtr. Audu Mustapha, RAC Dekina CB
+
+Each Zonal honouree stood out within their zone for consistent participation, active involvement in club and inter-club projects, and the kind of quiet dedication that keeps a club moving forward.
+
+WHY THIS MATTERS
+
+Recognition is not just about awards. It is about saying to every Rotaractor: we see you. We see the hours, the planning, the late-night calls, the personal resources and the energy you pour into making your community better.
+
+It is also a reminder of what is possible. Every one of these honourees started where every Rotaractor starts, with a decision to show up and serve.
+
+TO EVERY ROTARACTOR IN DISTRICT 9126
+
+The second quarter is already underway. With the District Assembly, World Polio Day on 24 October and many more opportunities ahead, the next set of honourees could be you.
+
+Plan boldly. Serve intentionally. Collaborate actively. Document your impact.
+
+Congratulations to our Rotaractors of the First Quarter. Thank you for creating lasting impact.
+
+Office of the District Rotaract Representative
+Rtr. Adaramoye Iyanuoluwa AdukeAdee, PHF
+District Rotaract Representative, District 9126`,
+    category: 'Announcements',
+    date: 'Oct 8, 2026',
+    readTime: '3 min read',
+    author: {
+      name: 'Rtr. Adaramoye Iyanuoluwa AdukeAdee, PHF',
+      image: '/images/leaders/drr-adaramoye-iyanuoluwa.jpg',
+      role: 'District Rotaract Representative',
+    },
+    image: '/images/blog/rotaractors-of-the-first-quarter-2026.png',
+    tags: ['#RotaractorsOfTheQuarter', '#Recognition', '#CreateLastingImpact', '#District9126'],
+    featured: true,
+  },
+  {
     id: 'independence-day-2026',
     title: 'Hey, Amazing Nigerian: A Message of Hope on Independence Day',
     excerpt: 'Wherever you are reading this from, I want you to pause for a moment and think about Nigeria. Not just the country we complain about, but the country we are still capable of building.',
@@ -111,7 +173,7 @@ drr9126.2627@gmail.com`,
     },
     image: '/images/blog/independence-day-2026.png',
     tags: ['#IndependenceDay', '#Nigeria', '#Hope', '#District9126'],
-    featured: true,
+    featured: false,
   },
   {
     id: 'district-league-september-2026',
@@ -233,6 +295,11 @@ export async function getBlogArticles(filter?: {
       const hasNewArticles = list.some((a) => a.id === 'independence-day-2026');
       if (!hasNewArticles) {
         list = INITIAL_ARTICLES;
+      } else {
+        // Ensure any canonical articles not yet in Firestore still appear (newest first)
+        const existingIds = new Set(list.map((a) => a.id));
+        const missing = INITIAL_ARTICLES.filter((a) => !existingIds.has(a.id));
+        list = [...missing, ...list];
       }
     } else {
       list = INITIAL_ARTICLES;
