@@ -148,12 +148,12 @@ export default function ClubMap({ clubs, activeClubId, onSelectClub }: ClubMapPr
     });
 
     // Invalidate size on mount to ensure smooth canvas sizing
-    setTimeout(() => {
-      map.invalidateSize();
+    const sizeTimer = window.setTimeout(() => {
+      if (mapRef.current === map) map.invalidateSize();
     }, 200);
 
     return () => {
-      // Map cleanup on unmount
+      window.clearTimeout(sizeTimer);
     };
   }, [clubs]);
 
@@ -179,13 +179,45 @@ export default function ClubMap({ clubs, activeClubId, onSelectClub }: ClubMapPr
   useEffect(() => {
     if (!mapRef.current || !activeClubId) return;
 
+    const map = mapRef.current;
     const marker = markersRef.current[activeClubId];
-    if (marker) {
-      const latLng = marker.getLatLng();
-      mapRef.current.flyTo(latLng, 12, { duration: 1.2 });
-      marker.openPopup();
-    }
+    if (!marker) return;
+
+    // On mobile the map is initialised while hidden (display:none), so Leaflet
+    // caches a 0x0 size. Calling flyTo() with a zero-size map produces NaN
+    // coordinates and throws, crashing the page. Re-measure first, and defer
+    // until the container is actually visible.
+    const focusMarker = () => {
+      try {
+        map.invalidateSize();
+        const size = map.getSize();
+        const latLng = marker.getLatLng();
+        if (size.x > 0 && size.y > 0) {
+          map.flyTo(latLng, 12, { duration: 1.2 });
+          marker.openPopup();
+        } else {
+          map.setView(latLng, 12, { animate: false });
+        }
+      } catch (err) {
+        console.warn('[ClubMap] Unable to focus marker:', err);
+      }
+    };
+
+    const timer = window.setTimeout(focusMarker, 80);
+    return () => window.clearTimeout(timer);
   }, [activeClubId]);
+
+  // Tear down the Leaflet instance on unmount so remounting (e.g. navigating
+  // back to /clubs) starts from a clean state.
+  useEffect(() => {
+    return () => {
+      if (mapRef.current) {
+        mapRef.current.remove();
+        mapRef.current = null;
+        markersRef.current = {};
+      }
+    };
+  }, []);
 
   return (
     <div className="relative w-full h-full min-h-[450px] rounded-2xl overflow-hidden shadow-inner border border-black/10">
