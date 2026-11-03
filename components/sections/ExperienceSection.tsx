@@ -114,36 +114,35 @@ export default function ExperienceSection() {
           transition={{ duration: 0.5, delay: 0.4 }}
           className="flex justify-center"
         >
-          <Link href="/clubs">
-            <button 
-              className="inline-flex items-center gap-2 font-sans whitespace-nowrap transition-all duration-200 hover:scale-105 active:scale-95 group"
+          <Link 
+            href="/clubs"
+            className="inline-flex items-center gap-2 font-sans whitespace-nowrap transition-all duration-200 hover:scale-105 active:scale-95 group"
+            style={{ 
+              padding: '10px 12px 10px 26px', 
+              borderRadius: '999px', 
+              background: 'white', 
+              fontSize: '14px', 
+              fontWeight: 700, 
+              color: 'rgb(152, 17, 50)', 
+              letterSpacing: '0.02em', 
+              boxShadow: 'rgba(0, 0, 0, 0.25) 0px 4px 20px' 
+            }}
+          >
+            Find Your Club
+            <span 
+              className="inline-flex items-center justify-center shrink-0 transition-transform group-hover:translate-x-1"
               style={{ 
-                padding: '10px 12px 10px 26px', 
-                borderRadius: '999px', 
-                background: 'white', 
-                fontSize: '14px', 
-                fontWeight: 700, 
-                color: 'rgb(152, 17, 50)', 
-                letterSpacing: '0.02em', 
-                boxShadow: 'rgba(0, 0, 0, 0.25) 0px 4px 20px' 
+                width: '28px', 
+                height: '28px', 
+                borderRadius: '50%', 
+                background: 'rgba(0, 0, 0, 0.05)', 
+                border: '1px solid rgba(0, 0, 0, 0.08)' 
               }}
             >
-              Find Your Club
-              <span 
-                className="inline-flex items-center justify-center shrink-0 transition-transform group-hover:translate-x-1"
-                style={{ 
-                  width: '28px', 
-                  height: '28px', 
-                  borderRadius: '50%', 
-                  background: 'rgba(0, 0, 0, 0.05)', 
-                  border: '1px solid rgba(0, 0, 0, 0.08)' 
-                }}
-              >
-                <svg width="11" height="11" viewBox="0 0 12 12" fill="none">
-                  <path d="M2.5 9.5L9.5 2.5M9.5 2.5H4.5M9.5 2.5V7.5" stroke="#981132" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-              </span>
-            </button>
+              <svg width="11" height="11" viewBox="0 0 12 12" fill="none">
+                <path d="M2.5 9.5L9.5 2.5M9.5 2.5H4.5M9.5 2.5V7.5" stroke="#981132" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </span>
           </Link>
         </motion.div>
 

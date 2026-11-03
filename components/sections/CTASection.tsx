@@ -84,50 +84,48 @@ export default function CTASection() {
         >
           
           {/* Primary Button */}
-          <Link href="/clubs" className="w-full sm:w-auto">
-            <button 
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 font-sans whitespace-nowrap transition-all duration-200 hover:scale-105 active:scale-95 group"
+          <Link 
+            href="/clubs" 
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 font-sans whitespace-nowrap transition-all duration-200 hover:scale-105 active:scale-95 group"
+            style={{ 
+              padding: '12px 14px 12px 26px', 
+              borderRadius: '999px', 
+              background: 'white', 
+              fontSize: '15px', 
+              fontWeight: 700, 
+              color: 'rgb(152, 17, 50)', 
+              boxShadow: 'rgba(0, 0, 0, 0.2) 0px 4px 20px' 
+            }}
+          >
+            Find a Club Near You
+            <span 
+              className="inline-flex items-center justify-center shrink-0 transition-transform group-hover:translate-x-1"
               style={{ 
-                padding: '12px 14px 12px 26px', 
-                borderRadius: '999px', 
-                background: 'white', 
-                fontSize: '15px', 
-                fontWeight: 700, 
-                color: 'rgb(152, 17, 50)', 
-                boxShadow: 'rgba(0, 0, 0, 0.2) 0px 4px 20px' 
+                width: '30px', 
+                height: '30px', 
+                borderRadius: '50%', 
+                background: 'rgba(0, 0, 0, 0.15)', 
+                border: '1px solid rgba(0, 0, 0, 0.1)' 
               }}
             >
-              Find a Club Near You
-              <span 
-                className="inline-flex items-center justify-center shrink-0 transition-transform group-hover:translate-x-1"
-                style={{ 
-                  width: '30px', 
-                  height: '30px', 
-                  borderRadius: '50%', 
-                  background: 'rgba(0, 0, 0, 0.15)', 
-                  border: '1px solid rgba(0, 0, 0, 0.1)' 
-                }}
-              >
-                <svg width="11" height="11" viewBox="0 0 12 12" fill="none">
-                  <path d="M2.5 9.5L9.5 2.5M9.5 2.5H4.5M9.5 2.5V7.5" stroke="#981132" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-              </span>
-            </button>
+              <svg width="11" height="11" viewBox="0 0 12 12" fill="none">
+                <path d="M2.5 9.5L9.5 2.5M9.5 2.5H4.5M9.5 2.5V7.5" stroke="#981132" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </span>
           </Link>
 
           {/* Secondary Button */}
-          <Link href="/projects" className="w-full sm:w-auto">
-            <button 
-              className="w-full sm:w-auto flex items-center justify-center gap-2 px-8 py-3.5 sm:py-4 rounded-xl font-semibold transition-all duration-200 hover:bg-white/15 hover:scale-105 active:scale-95 font-sans"
-              style={{ 
-                fontSize: '1rem', 
-                color: 'rgba(255, 255, 255, 0.85)', 
-                border: '1px solid rgba(255, 255, 255, 0.4)', 
-                background: 'transparent' 
-              }}
-            >
-              Explore Our Impact
-            </button>
+          <Link 
+            href="/projects" 
+            className="w-full sm:w-auto flex items-center justify-center gap-2 px-8 py-3.5 sm:py-4 rounded-xl font-semibold transition-all duration-200 hover:bg-white/15 hover:scale-105 active:scale-95 font-sans"
+            style={{ 
+              fontSize: '1rem', 
+              color: 'rgba(255, 255, 255, 0.85)', 
+              border: '1px solid rgba(255, 255, 255, 0.4)', 
+              background: 'transparent' 
+            }}
+          >
+            Explore Our Impact
           </Link>
 
         </motion.div>

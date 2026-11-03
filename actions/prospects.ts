@@ -21,7 +21,7 @@ export async function submitProspectLead(
     }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(input.email)) {
+    if (!emailRegex.test(input.email.trim())) {
       return { success: false, error: 'Please provide a valid email address.' };
     }
 
@@ -34,7 +34,7 @@ export async function submitProspectLead(
       fullName: input.fullName.trim(),
       email: input.email.trim().toLowerCase(),
       phone: input.phone.trim(),
-      assignedClubId: input.assignedClubId,
+      assignedClubId: input.assignedClubId.trim(),
       status: 'new',
       createdAt,
       notes: input.notes?.trim() || '',
@@ -47,7 +47,7 @@ export async function submitProspectLead(
     try {
       const resendApiKey = process.env.RESEND_API_KEY;
       if (resendApiKey) {
-        const clubDoc = await adminDb.collection('clubs').doc(input.assignedClubId).get();
+        const clubDoc = await adminDb.collection('clubs').doc(input.assignedClubId.trim()).get();
         const clubName = clubDoc.exists ? clubDoc.data()?.name : input.assignedClubId;
 
         const emailHtml = `
@@ -67,6 +67,9 @@ export async function submitProspectLead(
           </div>
         `;
 
+        const recipientEmail =
+          process.env.DISTRICT_ADMIN_EMAIL || 'rotaractdistrict9126.2026.2027@gmail.com';
+
         const resendRes = await fetch('https://api.resend.com/emails', {
           method: 'POST',
           headers: {
@@ -75,14 +78,14 @@ export async function submitProspectLead(
           },
           body: JSON.stringify({
             from: 'Rotaract 9126 <onboarding@resend.dev>',
-            to: ['kingpraise15@gmail.com'],
+            to: [recipientEmail],
             subject: `New Lead: ${newProspect.fullName} (${clubName})`,
             html: emailHtml,
           }),
         });
 
         if (resendRes.ok) {
-          console.log(`[RESEND EMAIL] Alert sent to kingpraise15@gmail.com for lead ${newProspect.fullName}`);
+          console.log(`[RESEND EMAIL] Alert sent to ${recipientEmail} for lead ${newProspect.fullName}`);
         } else {
           const resendErr = await resendRes.text();
           console.warn('[RESEND EMAIL] Failed to dispatch email:', resendErr);
@@ -112,6 +115,12 @@ export async function submitProspectLead(
 /**
  * Update prospect progression status (Kanban pipeline)
  * Status: 'new' | 'contacted' | 'meeting_attended' | 'inducted'
+ * Security: Caller must be a District Admin OR the President of the assigned club.
+ *
+ * @param prospectId - ID of the prospect lead
+ * @param newStatus - New progression status
+ * @param notes - Optional administrative notes
+ * @param callerToken - Firebase Auth ID token of the user executing the action (MANDATORY)
  */
 export async function updateProspectStatus(
   prospectId: string,
@@ -129,30 +138,46 @@ export async function updateProspectStatus(
       return { success: false, error: 'Invalid status provided.' };
     }
 
-    // RBAC Check
-    if (callerToken) {
-      const decoded = await verifyAuthToken(callerToken);
-      if (!decoded) {
-        return { success: false, error: 'Unauthorized: Invalid authentication session.' };
-      }
+    // 1. Mandatory Token Check
+    if (!callerToken || typeof callerToken !== 'string' || !callerToken.trim()) {
+      return { success: false, error: 'Unauthorized: Authentication required' };
+    }
 
-      const callerProfile = await getUserProfile(decoded.uid);
-      const prospectDoc = await adminDb.collection('prospects').doc(prospectId).get();
-      if (!prospectDoc.exists) {
-        return { success: false, error: 'Prospect not found.' };
-      }
+    // 2. Token Verification
+    const decoded = await verifyAuthToken(callerToken.trim());
+    if (!decoded || !decoded.uid) {
+      return { success: false, error: 'Unauthorized: Invalid authentication session.' };
+    }
 
-      const prospectData = prospectDoc.data() as Prospect;
-      const isDistrictAdmin = callerProfile?.role === 'district_admin';
-      const isAssignedPresident =
-        callerProfile?.role === 'president' && callerProfile.clubId === prospectData.assignedClubId;
+    // 3. Caller Profile Lookup
+    const callerProfile = await getUserProfile(decoded.uid);
+    if (!callerProfile) {
+      return { success: false, error: 'Caller user profile not found.' };
+    }
 
-      if (!isDistrictAdmin && !isAssignedPresident) {
-        return {
-          success: false,
-          error: 'Forbidden: You do not have permission to manage this club’s leads.',
-        };
-      }
+    // 4. Prospect Lookup
+    const prospectDoc = await adminDb.collection('prospects').doc(prospectId).get();
+    if (!prospectDoc.exists) {
+      return { success: false, error: 'Prospect not found.' };
+    }
+
+    const prospectData = prospectDoc.data() as Prospect;
+
+    // 5. RBAC Authorization Check
+    const isDistrictAdmin =
+      callerProfile.role === 'district_admin' ||
+      (decoded as any).role === 'district_admin' ||
+      (decoded as any).admin === true;
+
+    const isAssignedPresident =
+      (callerProfile.role === 'president' || callerProfile.role === 'club_president') &&
+      callerProfile.clubId === prospectData.assignedClubId;
+
+    if (!isDistrictAdmin && !isAssignedPresident) {
+      return {
+        success: false,
+        error: 'Forbidden: You do not have permission to manage this club’s leads.',
+      };
     }
 
     const updatedAt = new Date().toISOString();
@@ -186,27 +211,58 @@ export async function updateProspectStatus(
 }
 
 /**
- * Fetch prospects assigned to a specific club for Kanban view
+ * Fetch prospects assigned to a specific club for Kanban view.
+ * Security: Caller must be a District Admin OR the President of the specified club.
+ *
+ * @param clubId - ID of the club whose leads are being retrieved
+ * @param callerToken - Firebase Auth ID token of the user executing the action (MANDATORY)
  */
 export async function getClubProspects(
   clubId: string,
   callerToken?: string
 ): Promise<ActionResult<Prospect[]>> {
   try {
-    if (!clubId) {
+    if (!clubId || !clubId.trim()) {
       return { success: false, error: 'Club ID is required.' };
     }
 
-    if (callerToken) {
-      const decoded = await verifyAuthToken(callerToken);
-      if (!decoded) {
-        return { success: false, error: 'Unauthorized access.' };
-      }
+    // 1. Mandatory Token Check
+    if (!callerToken || typeof callerToken !== 'string' || !callerToken.trim()) {
+      return { success: false, error: 'Unauthorized: Authentication required' };
+    }
+
+    // 2. Token Verification
+    const decoded = await verifyAuthToken(callerToken.trim());
+    if (!decoded || !decoded.uid) {
+      return { success: false, error: 'Unauthorized: Invalid authentication session.' };
+    }
+
+    // 3. Caller Profile Lookup
+    const callerProfile = await getUserProfile(decoded.uid);
+    if (!callerProfile) {
+      return { success: false, error: 'Caller user profile not found.' };
+    }
+
+    // 4. RBAC Authorization Check
+    const isDistrictAdmin =
+      callerProfile.role === 'district_admin' ||
+      (decoded as any).role === 'district_admin' ||
+      (decoded as any).admin === true;
+
+    const isClubPresident =
+      (callerProfile.role === 'president' || callerProfile.role === 'club_president') &&
+      callerProfile.clubId === clubId.trim();
+
+    if (!isDistrictAdmin && !isClubPresident) {
+      return {
+        success: false,
+        error: 'Forbidden: Insufficient permissions to view this club’s prospects.',
+      };
     }
 
     const snapshot = await adminDb
       .collection('prospects')
-      .where('assignedClubId', '==', clubId)
+      .where('assignedClubId', '==', clubId.trim())
       .orderBy('createdAt', 'desc')
       .get();
 

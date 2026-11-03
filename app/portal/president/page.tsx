@@ -38,6 +38,18 @@ import {
   Briefcase
 } from 'lucide-react';
 import { getCurrentUser } from '@/lib/services/auth-service';
+import {
+  getClubRoster,
+  addClubMemberRecord,
+  updateMemberDuesStatus,
+  getClubFinanceLedger,
+  DISTRICT_ANNUAL_DUES,
+} from '@/lib/services/dashboard-service';
+import {
+  getProspectLeads,
+  submitProspectLead,
+  updateProspectLeadStage,
+} from '@/lib/services/intake-service';
 
 interface MemberRecord {
   id: string;
@@ -72,199 +84,15 @@ interface FinanceTransaction {
   status: 'Completed' | 'Pending' | 'Remitted';
 }
 
-const INITIAL_MEMBERS: MemberRecord[] = [
-  {
-    id: '1',
-    name: 'Adebayo Sodiq Babatunde',
-    email: 'a.babatunde@rotaract9126.org',
-    role: 'President',
-    attendance: 100,
-    duesStatus: 'cleared',
-    clearedDate: 'Jul 1',
-    lastActive: 'Online',
-    avatar: '/images/leaders/drr-adebayo-sodiq.jpg'
-  },
-  {
-    id: '2',
-    name: 'Sola Adebayo',
-    email: 's.adebayo@rotaract9126.org',
-    role: 'Vice President',
-    attendance: 92,
-    duesStatus: 'cleared',
-    clearedDate: 'Jul 3',
-    lastActive: 'Today',
-    avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=80&h=80&fit=crop&auto=format'
-  },
-  {
-    id: '3',
-    name: 'Kayode Faleye',
-    email: 'k.faleye@rotaract9126.org',
-    role: 'Secretary',
-    attendance: 88,
-    duesStatus: 'pending',
-    clearedDate: ' - ',
-    lastActive: 'Yesterday',
-    avatar: 'https://images.unsplash.com/photo-1629145810320-aec9e63dd798?w=80&h=80&fit=crop&auto=format'
-  },
-  {
-    id: '4',
-    name: 'Yetunde Balogun',
-    email: 'y.balogun@rotaract9126.org',
-    role: 'Director',
-    attendance: 96,
-    duesStatus: 'cleared',
-    clearedDate: 'Jul 5',
-    lastActive: 'Today',
-    avatar: 'https://images.unsplash.com/photo-1650490323009-96fc950a959c?w=80&h=80&fit=crop&auto=format'
-  },
-  {
-    id: '5',
-    name: 'Gbemisola Awoyemi',
-    email: 'g.awoyemi@rotaract9126.org',
-    role: 'Director',
-    attendance: 84,
-    duesStatus: 'cleared',
-    clearedDate: 'Jul 4',
-    lastActive: '3 days ago',
-    avatar: 'https://images.unsplash.com/photo-1614023342667-6f060e9d1e04?w=80&h=80&fit=crop&auto=format'
-  },
-  {
-    id: '6',
-    name: 'Victor Adeleke',
-    email: 'v.adeleke@rotaract9126.org',
-    role: 'Member',
-    attendance: 78,
-    duesStatus: 'cleared',
-    clearedDate: 'Jul 10',
-    lastActive: '2 days ago',
-    avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop&auto=format'
-  },
-  {
-    id: '7',
-    name: 'Damilola Ajayi',
-    email: 'd.ajayi@rotaract9126.org',
-    role: 'Member',
-    attendance: 70,
-    duesStatus: 'pending',
-    clearedDate: ' - ',
-    lastActive: '5 days ago',
-    avatar: 'https://images.unsplash.com/photo-1628157582853-a796fa650a6a?w=80&h=80&fit=crop&auto=format'
-  },
-  {
-    id: '8',
-    name: 'Chukwuemeka Obi',
-    email: 'c.obi@rotaract9126.org',
-    role: 'Member',
-    attendance: 82,
-    duesStatus: 'cleared',
-    clearedDate: 'Jul 8',
-    lastActive: 'Today',
-    avatar: 'https://images.unsplash.com/photo-1707343843437-caacff5cfa74?w=80&h=80&fit=crop&auto=format'
-  },
-  {
-    id: '9',
-    name: 'Zainab Alabi',
-    email: 'z.alabi@rotaract9126.org',
-    role: 'Member',
-    attendance: 90,
-    duesStatus: 'cleared',
-    clearedDate: 'Jul 2',
-    lastActive: 'Yesterday',
-    avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=80&h=80&fit=crop&auto=format'
-  },
-  {
-    id: '10',
-    name: 'Tunde Bakare',
-    email: 't.bakare@rotaract9126.org',
-    role: 'Member',
-    attendance: 75,
-    duesStatus: 'cleared',
-    clearedDate: 'Jul 15',
-    lastActive: '4 days ago',
-    avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=80&h=80&fit=crop&auto=format'
-  },
-  {
-    id: '11',
-    name: 'Maryam Hassan',
-    email: 'm.hassan@rotaract9126.org',
-    role: 'Member',
-    attendance: 58,
-    duesStatus: 'overdue',
-    clearedDate: ' - ',
-    lastActive: '1 week ago',
-    avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=80&h=80&fit=crop&auto=format'
-  }
-];
-
-const INITIAL_PROSPECTS: ProspectLead[] = [
-  {
-    id: 'P1',
-    name: 'Chinedu Eze',
-    email: 'chinedu.eze@gmail.com',
-    phone: '+234 803 456 7890',
-    source: '/join',
-    date: 'Aug 18, 2026',
-    stage: 'intake',
-    notes: 'Interested in Community Health outreaches and youth leadership.'
-  },
-  {
-    id: 'P3',
-    name: 'Emmanuel Okafor',
-    email: 'e.okafor@lawpartners.ng',
-    phone: '+234 812 345 6789',
-    source: '/join',
-    date: 'Aug 10, 2026',
-    stage: 'orientation',
-    notes: 'Attended 2 general fellowship meetings. Orientation scheduled.'
-  },
-  {
-    id: 'P4',
-    name: 'Blessing Adeyemo',
-    email: 'b.adeyemo@biomed.com',
-    phone: '+234 814 555 6677',
-    source: '/clubs',
-    date: 'Aug 04, 2026',
-    stage: 'induction_ready',
-    notes: 'Completed 4-week orientation curriculum. Dues remittance verified.'
-  }
-];
-
-const INITIAL_FINANCES: FinanceTransaction[] = [
-  {
-    id: 'TXN-9126-101',
-    date: 'Aug 17, 2026',
-    description: 'Annual Club Dues (2026/2027 Season)',
-    member: 'Adebayo Sodiq Babatunde',
-    category: 'Annual Dues',
-    amount: 12000,
-    status: 'Completed'
-  },
-  {
-    id: 'TXN-9126-102',
-    date: 'Aug 15, 2026',
-    description: 'Annual Club Dues (2026/2027 Season)',
-    member: 'Sola Adebayo',
-    category: 'Annual Dues',
-    amount: 12000,
-    status: 'Completed'
-  },
-  {
-    id: 'TXN-9126-103',
-    date: 'Aug 12, 2026',
-    description: 'District Health Outreach Project Levy',
-    member: 'Yetunde Balogun',
-    category: 'Project Levy',
-    amount: 5000,
-    status: 'Completed'
-  }
-];
-
 export default function PresidentConsolePage() {
   const router = useRouter();
   const [isAuthorized, setIsAuthorized] = useState<boolean | null>(null);
   const [authChecked, setAuthChecked] = useState(false);
+  const [currentUserId, setCurrentUserId] = useState<string>('');
+  const [currentClubId, setCurrentClubId] = useState<string>('rac-ibadan-ring-road');
 
-  const [members, setMembers] = useState<MemberRecord[]>(INITIAL_MEMBERS);
+  const [members, setMembers] = useState<MemberRecord[]>([]);
+  const [finances, setFinances] = useState<FinanceTransaction[]>([]);
   const [activeTab, setActiveTab] = useState<'roster' | 'attendance' | 'finances' | 'pipeline' | 'settings'>('roster');
   const [searchQuery, setSearchQuery] = useState('');
   const [roleFilter, setRoleFilter] = useState('all');
@@ -284,80 +112,135 @@ export default function PresidentConsolePage() {
     duesStatus: 'cleared' as MemberRecord['duesStatus']
   });
 
-  // Verify President / Admin authorization
+  // Verify President / Admin authorization & load live club data
   useEffect(() => {
     const user = getCurrentUser();
     if (!user) {
-      setIsAuthorized(false);
-      setAuthChecked(true);
+      router.replace('/login?redirect=/portal/president');
       return;
     }
 
-    const hasPresidentAccess = 
-      user.role === 'club_president' || 
-      user.role === 'district_admin' || 
+    const hasPresidentAccess =
+      user.role === 'club_president' ||
+      user.role === 'district_admin' ||
       (user as any).occupation?.toLowerCase().includes('president');
 
     setIsAuthorized(hasPresidentAccess);
     setAuthChecked(true);
-  }, []);
+
+    if (!hasPresidentAccess) {
+      router.replace('/login?error=unauthorized');
+      return;
+    }
+
+    setCurrentUserId(user.uid);
+    const clubId = user.clubId || 'rac-ibadan-ring-road';
+    setCurrentClubId(clubId);
+
+    (async () => {
+      const rosterRecords = await getClubRoster(clubId);
+      const mappedMembers: MemberRecord[] = rosterRecords.map((r) => ({
+        id: r.userId,
+        name: `${r.firstName} ${r.lastName}`.trim() || r.email,
+        email: r.email,
+        role:
+          r.role === 'president'
+            ? 'President'
+            : (['Vice President', 'Secretary', 'Treasurer', 'Director'].includes(
+                r.occupation || ''
+              )
+                ? (r.occupation as MemberRecord['role'])
+                : 'Member'),
+        attendance: r.attendance ?? 100,
+        duesStatus: r.duesStatus === 'cleared' ? 'cleared' : 'pending',
+        clearedDate: r.clearedDate || (r.duesStatus === 'cleared' ? 'Verified' : ' - '),
+        lastActive: r.lastActive || 'Active',
+        avatar: r.avatarUrl || '/images/rotaract-logo.png',
+      }));
+      setMembers(mappedMembers);
+
+      const initialRoll: Record<string, 'present' | 'absent' | 'excused'> = {};
+      mappedMembers.forEach((m) => {
+        initialRoll[m.id] = 'present';
+      });
+      setAttendanceRoll(initialRoll);
+
+      const storedLeads = await getProspectLeads(user.clubName);
+      setProspects(
+        storedLeads.map((l) => ({
+          id: l.id,
+          name: l.name,
+          email: l.email,
+          phone: l.phone,
+          source: l.source || '/join',
+          date: l.date,
+          stage: l.stage,
+          notes: l.notes,
+        }))
+      );
+
+      const storedFinances = await getClubFinanceLedger(user.clubName);
+      setFinances(
+        storedFinances.map((f) => ({
+          id: f.id,
+          date: f.date,
+          description: `${f.category} (${f.period})`,
+          member: f.name,
+          category: f.category,
+          amount: f.amount || DISTRICT_ANNUAL_DUES,
+          status: f.status === 'Cleared' ? 'Completed' : 'Pending',
+        }))
+      );
+    })();
+  }, [router]);
 
   // Attendance Tab State
-  const [attendanceRoll, setAttendanceRoll] = useState<Record<string, 'present' | 'absent' | 'excused'>>({
-    '1': 'present',
-    '2': 'present',
-    '3': 'absent',
-    '4': 'present',
-    '5': 'present',
-    '6': 'present',
-    '7': 'excused',
-    '8': 'present',
-    '9': 'present',
-    '10': 'present',
-    '11': 'absent'
-  });
+  const [attendanceRoll, setAttendanceRoll] = useState<Record<string, 'present' | 'absent' | 'excused'>>({});
 
   // Pipeline State
-  const [prospects, setProspects] = useState<ProspectLead[]>(INITIAL_PROSPECTS);
+  const [prospects, setProspects] = useState<ProspectLead[]>([]);
 
   // Settings State
   const [meetingSchedule, setMeetingSchedule] = useState({
     day: '1st & 3rd Sundays of the month',
-    time: '4:00 PM  -  6:00 PM WAT',
-    venue: 'Kakanfo Inn & Conference Centre, Ring Road, Ibadan',
-    virtualLink: 'https://meet.google.com/rotaract-9126-ibadan-central'
+    time: '4:00 PM - 6:00 PM WAT',
+    venue: 'Club Secretariat, District 9126',
+    virtualLink: 'https://meet.google.com/rotaract-9126'
   });
 
-  const [executives, setExecutives] = useState([
-    { role: 'Vice President', name: 'Sola Adebayo', email: 's.adebayo@rotaract9126.org' },
-    { role: 'Club Secretary', name: 'Kayode Faleye', email: 'k.faleye@rotaract9126.org' },
-    { role: 'Club Treasurer', name: 'Funmi Olatunde', email: 'f.olatunde@rotaract9126.org' },
-    { role: 'Director of Community Service', name: 'Yetunde Balogun', email: 'y.balogun@rotaract9126.org' },
-    { role: 'Director of Club Administration', name: 'Babatunde Olawale', email: 'b.olawale@rotaract9126.org' },
-    { role: 'Director of Membership', name: 'Gbemisola Awoyemi', email: 'g.awoyemi@rotaract9126.org' }
-  ]);
+  const [executives, setExecutives] = useState<Array<{ role: string; name: string; email: string }>>([]);
 
   // Handle Add Member submit
-  const handleAddMember = (e: React.FormEvent) => {
+  const handleAddMember = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!newMemberForm.name || !newMemberForm.email) {
       alert('Please fill in member name and email');
       return;
     }
 
-    const newRecord: MemberRecord = {
-      id: String(members.length + 1),
+    const saved = await addClubMemberRecord({
       name: newMemberForm.name,
       email: newMemberForm.email,
+      phone: newMemberForm.phone,
+      role: newMemberForm.role,
+      duesStatus: newMemberForm.duesStatus === 'cleared' ? 'cleared' : 'pending',
+      clubId: currentClubId,
+    });
+
+    const newRecord: MemberRecord = {
+      id: saved.userId,
+      name: `${saved.firstName} ${saved.lastName}`.trim(),
+      email: saved.email,
       role: newMemberForm.role,
       attendance: 100,
       duesStatus: newMemberForm.duesStatus,
       clearedDate: newMemberForm.duesStatus === 'cleared' ? 'Today' : ' - ',
       lastActive: 'Just registered',
-      avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=80&h=80&fit=crop&auto=format'
+      avatar: '/images/rotaract-logo.png'
     };
 
     setMembers(prev => [newRecord, ...prev]);
+    setAttendanceRoll(prev => ({ ...prev, [newRecord.id]: 'present' }));
     setIsAddMemberModalOpen(false);
     setNewMemberForm({
       name: '',
@@ -384,30 +267,42 @@ export default function PresidentConsolePage() {
     }
   };
 
-  // 1-Click dues clearance toggle
-  const toggleDuesStatus = (id: string) => {
+  // 1-Click dues clearance toggle persisted via dashboard-service
+  const toggleDuesStatus = async (id: string) => {
+    const target = members.find((m) => m.id === id);
+    if (!target) return;
+    const nextStatus = target.duesStatus === 'cleared' ? 'pending' : 'cleared';
+
     setMembers((prev) =>
       prev.map((m) => {
         if (m.id !== id) return m;
-        if (m.duesStatus === 'cleared') {
-          return { ...m, duesStatus: 'pending', clearedDate: ' - ' };
-        } else {
-          return { ...m, duesStatus: 'cleared', clearedDate: 'Just now' };
-        }
+        return {
+          ...m,
+          duesStatus: nextStatus,
+          clearedDate: nextStatus === 'cleared' ? 'Just now' : ' - ',
+        };
       })
     );
+
+    await updateMemberDuesStatus(id, nextStatus, currentUserId || 'club_president');
   };
 
-  // Advance Prospect Lead Stage
-  const advanceProspectStage = (id: string) => {
+  // Advance Prospect Lead Stage persisted via intake-service
+  const advanceProspectStage = async (id: string) => {
+    const target = prospects.find((p) => p.id === id);
+    if (!target) return;
+    const nextStage =
+      target.stage === 'intake'
+        ? 'orientation'
+        : target.stage === 'orientation'
+        ? 'induction_ready'
+        : 'induction_ready';
+
     setProspects((prev) =>
-      prev.map((p) => {
-        if (p.id !== id) return p;
-        if (p.stage === 'intake') return { ...p, stage: 'orientation' };
-        if (p.stage === 'orientation') return { ...p, stage: 'induction_ready' };
-        return p;
-      })
+      prev.map((p) => (p.id === id ? { ...p, stage: nextStage } : p))
     );
+
+    await updateProspectLeadStage(id, nextStage);
   };
 
   // Filtered members list
@@ -420,17 +315,29 @@ export default function PresidentConsolePage() {
     return matchesSearch && matchesRole && matchesDues;
   });
 
-  // Calculate metrics
+  // Calculate metrics safely when roster is empty
   const totalCount = members.length;
   const clearedCount = members.filter((m) => m.duesStatus === 'cleared').length;
-  const duesClearedPercentage = Math.round((clearedCount / totalCount) * 100);
-  const overdueCount = members.filter((m) => m.duesStatus === 'overdue').length;
+  const duesClearedPercentage = totalCount > 0 ? Math.round((clearedCount / totalCount) * 100) : 0;
+  const overdueCount = members.filter((m) => m.duesStatus === 'overdue' || m.duesStatus === 'pending').length;
 
   const presentAttendeesCount = Object.values(attendanceRoll).filter(v => v === 'present').length;
-  const attendanceRatePercentage = Math.round((presentAttendeesCount / totalCount) * 100);
+  const attendanceRatePercentage = totalCount > 0 ? Math.round((presentAttendeesCount / totalCount) * 100) : 0;
+
+  // Loading Screen while verifying session
+  if (!authChecked) {
+    return (
+      <div className="min-h-screen bg-[#F8F5F2] flex items-center justify-center">
+        <div className="flex flex-col items-center gap-3">
+          <div className="w-8 h-8 border-3 border-[#981132] border-t-transparent rounded-full animate-spin" />
+          <p className="text-xs font-semibold text-black/50">Verifying president authorization...</p>
+        </div>
+      </div>
+    );
+  }
 
   // Access Denied Screen for non-presidents
-  if (authChecked && isAuthorized === false) {
+  if (isAuthorized === false) {
     return (
       <div className="min-h-screen bg-[#F8F5F2] text-[#1C1C1E] font-sans flex items-center justify-center p-6">
         <div className="max-w-md w-full p-8 rounded-3xl bg-white border border-black/[0.08] text-center space-y-5 shadow-xl">
@@ -576,7 +483,7 @@ export default function PresidentConsolePage() {
           {[
             { id: 'roster', label: 'Member Roster', badge: totalCount },
             { id: 'attendance', label: 'Attendance' },
-            { id: 'finances', label: 'Finances', badge: INITIAL_FINANCES.length },
+            { id: 'finances', label: 'Finances', badge: finances.length },
             { id: 'pipeline', label: 'Lead Pipeline', badge: prospects.length, dot: true },
             { id: 'settings', label: 'Club Settings' }
           ].map((tab) => (
@@ -1002,10 +909,10 @@ export default function PresidentConsolePage() {
                   Total Dues Collected
                 </div>
                 <div className="text-[26px] font-black text-[#22C55E] leading-none">
-                  ₦81,000
+                  ₦{(clearedCount * DISTRICT_ANNUAL_DUES).toLocaleString()}
                 </div>
                 <div className="text-[10px] text-black/50 mt-2">
-                  11 of 18 members cleared
+                  {clearedCount} of {totalCount} members cleared
                 </div>
               </div>
 
@@ -1014,10 +921,10 @@ export default function PresidentConsolePage() {
                   Outstanding Dues
                 </div>
                 <div className="text-[26px] font-black text-[#EF4444] leading-none">
-                  ₦36,000
+                  ₦{(overdueCount * DISTRICT_ANNUAL_DUES).toLocaleString()}
                 </div>
                 <div className="text-[10px] text-black/50 mt-2">
-                  7 pending/overdue accounts
+                  {overdueCount} pending/overdue accounts
                 </div>
               </div>
 
@@ -1062,35 +969,43 @@ export default function PresidentConsolePage() {
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-black/[0.04] text-xs">
-                    {INITIAL_FINANCES.map((txn, idx) => (
-                      <tr key={txn.id} className={`${idx % 2 === 1 ? 'bg-[#F7F4F3]/40' : 'bg-white'} hover:bg-black/[0.015] transition-colors`}>
-                        <td className="p-3.5 font-mono text-[11px] text-black/50">{txn.id}</td>
-                        <td className="p-3.5 text-black/70 text-[11px]">{txn.date}</td>
-                        <td className="p-3.5">
-                          <div className="font-bold text-[#1C1C1E]">{txn.description}</div>
-                          <div className="text-[10px] text-black/50">{txn.member}</div>
-                        </td>
-                        <td className="p-3.5">
-                          <span className="px-2.5 py-0.5 rounded-full text-[9px] font-bold bg-[#F7F4F3] text-black/70 border border-black/[0.06]">
-                            {txn.category}
-                          </span>
-                        </td>
-                        <td className="p-3.5 font-bold text-[#1C1C1E]">
-                          ₦{txn.amount.toLocaleString()}
-                        </td>
-                        <td className="p-3.5 text-center">
-                          <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold ${
-                            txn.status === 'Completed'
-                              ? 'bg-green-50 text-green-700 border border-green-200'
-                              : txn.status === 'Remitted'
-                              ? 'bg-blue-50 text-blue-700 border border-blue-200'
-                              : 'bg-amber-50 text-amber-700 border border-amber-200'
-                          }`}>
-                            {txn.status}
-                          </span>
+                    {finances.length === 0 ? (
+                      <tr>
+                        <td colSpan={6} className="p-8 text-center text-xs text-black/45">
+                          No financial transactions recorded yet. Online dues payments will appear here automatically.
                         </td>
                       </tr>
-                    ))}
+                    ) : (
+                      finances.map((txn, idx) => (
+                        <tr key={txn.id} className={`${idx % 2 === 1 ? 'bg-[#F7F4F3]/40' : 'bg-white'} hover:bg-black/[0.015] transition-colors`}>
+                          <td className="p-3.5 font-mono text-[11px] text-black/50">{txn.id}</td>
+                          <td className="p-3.5 text-black/70 text-[11px]">{txn.date}</td>
+                          <td className="p-3.5">
+                            <div className="font-bold text-[#1C1C1E]">{txn.description}</div>
+                            <div className="text-[10px] text-black/50">{txn.member}</div>
+                          </td>
+                          <td className="p-3.5">
+                            <span className="px-2.5 py-0.5 rounded-full text-[9px] font-bold bg-[#F7F4F3] text-black/70 border border-black/[0.06]">
+                              {txn.category}
+                            </span>
+                          </td>
+                          <td className="p-3.5 font-bold text-[#1C1C1E]">
+                            ₦{txn.amount.toLocaleString()}
+                          </td>
+                          <td className="p-3.5 text-center">
+                            <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold ${
+                              txn.status === 'Completed'
+                                ? 'bg-green-50 text-green-700 border border-green-200'
+                                : txn.status === 'Remitted'
+                                ? 'bg-blue-50 text-blue-700 border border-blue-200'
+                                : 'bg-amber-50 text-amber-700 border border-amber-200'
+                            }`}>
+                              {txn.status}
+                            </span>
+                          </td>
+                        </tr>
+                      ))
+                    )}
                   </tbody>
                 </table>
               </div>
@@ -1107,22 +1022,35 @@ export default function PresidentConsolePage() {
                 <p className="text-xs text-black/50">Leads captured from the public district portal and referrals</p>
               </div>
               <button
-                onClick={() => {
+                onClick={async () => {
                   const name = prompt('Enter prospect full name:');
-                  if (name) {
-                    setProspects(prev => [
-                      {
-                        id: `P-${Date.now()}`,
-                        name,
-                        email: `${name.toLowerCase().replace(/\s+/g, '.')}@example.com`,
-                        phone: '+234 800 000 0000',
-                        source: 'Direct Referral',
-                        date: 'Today',
-                        stage: 'intake',
-                        notes: 'Manual lead addition.'
-                      },
-                      ...prev
-                    ]);
+                  if (name && name.trim()) {
+                    const cleanName = name.trim();
+                    const email = `${cleanName.toLowerCase().replace(/\s+/g, '.')}@rotaract9126.org`;
+                    const res = await submitProspectLead({
+                      name: cleanName,
+                      email,
+                      phone: '+234 800 000 0000',
+                      state: 'Oyo',
+                      preferredClub: currentClubId,
+                      source: 'President Portal',
+                      notes: 'Added via Club President Console.',
+                    });
+                    if (res.success && res.lead) {
+                      setProspects((prev) => [
+                        {
+                          id: res.lead!.id,
+                          name: res.lead!.name,
+                          email: res.lead!.email,
+                          phone: res.lead!.phone,
+                          source: res.lead!.source,
+                          date: res.lead!.date,
+                          stage: res.lead!.stage,
+                          notes: res.lead!.notes,
+                        },
+                        ...prev,
+                      ]);
+                    }
                   }
                 }}
                 className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-[#981132] hover:bg-[#800E2A] text-white text-xs font-bold transition-all cursor-pointer shadow-[0_2px_14px_rgba(152,17,50,0.25)]"

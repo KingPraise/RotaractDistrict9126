@@ -9,7 +9,7 @@ import { ActionResult, DuesStatus, User } from '@/types';
  *
  * @param targetUserId - ID of the member whose dues are being updated
  * @param newStatus - 'cleared' | 'pending'
- * @param callerToken - Firebase Auth ID token of the user executing the action
+ * @param callerToken - Firebase Auth ID token of the user executing the action (MANDATORY)
  */
 export async function toggleMemberDues(
   targetUserId: string,
@@ -25,40 +25,49 @@ export async function toggleMemberDues(
       return { success: false, error: 'Invalid dues status. Must be "cleared" or "pending".' };
     }
 
-    let callerProfile: User | null = null;
-
-    // Auth & RBAC Check
-    if (callerToken) {
-      const decodedToken = await verifyAuthToken(callerToken);
-      if (!decodedToken) {
-        return { success: false, error: 'Unauthorized: Invalid authentication session.' };
-      }
-
-      callerProfile = await getUserProfile(decodedToken.uid);
-      if (!callerProfile) {
-        return { success: false, error: 'Caller user profile not found.' };
-      }
-
-      const targetProfile = await getUserProfile(targetUserId);
-      if (!targetProfile) {
-        return { success: false, error: 'Target member profile not found.' };
-      }
-
-      const isDistrictAdmin = callerProfile.role === 'district_admin';
-      const isClubPresident = callerProfile.role === 'president' && callerProfile.clubId === targetProfile.clubId;
-
-      if (!isDistrictAdmin && !isClubPresident) {
-        return {
-          success: false,
-          error: 'Forbidden: Only the Club President or a District Admin can modify dues clearance.',
-        };
-      }
+    // 1. Mandatory Token Check
+    if (!callerToken || typeof callerToken !== 'string' || !callerToken.trim()) {
+      return { success: false, error: 'Unauthorized: Authentication required' };
     }
 
+    // 2. Token Verification
+    const decodedToken = await verifyAuthToken(callerToken.trim());
+    if (!decodedToken || !decodedToken.uid) {
+      return { success: false, error: 'Unauthorized: Invalid authentication session.' };
+    }
+
+    // 3. Caller Profile Lookup
+    const callerProfile = await getUserProfile(decodedToken.uid);
+    if (!callerProfile) {
+      return { success: false, error: 'Caller user profile not found.' };
+    }
+
+    // 4. Target Member Lookup
     const targetProfile = await getUserProfile(targetUserId);
+    if (!targetProfile) {
+      return { success: false, error: 'Target member profile not found.' };
+    }
+
+    // 5. RBAC Authorization Check
+    const isDistrictAdmin =
+      callerProfile.role === 'district_admin' ||
+      (decodedToken as any).role === 'district_admin' ||
+      (decodedToken as any).admin === true;
+
+    const isClubPresident =
+      (callerProfile.role === 'president' || callerProfile.role === 'club_president') &&
+      callerProfile.clubId === targetProfile.clubId;
+
+    if (!isDistrictAdmin && !isClubPresident) {
+      return {
+        success: false,
+        error: 'Forbidden: Only the Club President or a District Admin can modify dues clearance.',
+      };
+    }
+
     const updatedAt = new Date().toISOString();
 
-    // 1. Update in Firestore `users` collection
+    // 6. Update in Firestore `users` collection
     await adminDb.collection('users').doc(targetUserId).set({
       duesStatus: newStatus,
       updatedAt,
@@ -74,23 +83,21 @@ export async function toggleMemberDues(
       // Non-critical fallback
     }
 
-    // 2. Append immutable audit log to `dues_audit_log`
+    // 7. Append immutable audit log to `dues_audit_log`
     const targetUserName = targetProfile
       ? `${targetProfile.firstName || ''} ${targetProfile.lastName || ''}`.trim() || 'Rotaract Member'
       : 'Rotaract Member';
 
-    const modifiedBy = callerProfile?.userId || 'system_admin';
-    const modifiedByName = callerProfile
-      ? `${callerProfile.firstName || ''} ${callerProfile.lastName || ''}`.trim() || 'District Officer'
-      : 'District Officer';
-    const modifiedByRole = callerProfile?.role || 'district_admin';
+    const modifiedBy = callerProfile.userId || decodedToken.uid;
+    const modifiedByName = `${callerProfile.firstName || ''} ${callerProfile.lastName || ''}`.trim() || 'District Officer';
+    const modifiedByRole = callerProfile.role || 'district_admin';
 
     const auditDocRef = await adminDb.collection('dues_audit_log').add({
       targetUserId,
       memberId: targetUserId,
       targetUserName,
-      clubId: targetProfile?.clubId || '',
-      previousStatus: targetProfile?.duesStatus || 'pending',
+      clubId: targetProfile.clubId || '',
+      previousStatus: targetProfile.duesStatus || 'pending',
       newStatus,
       modifiedBy,
       clearedBy: modifiedByName,
@@ -122,27 +129,59 @@ export async function toggleMemberDues(
 }
 
 /**
- * Fetch dues roster for a specific club
+ * Fetch dues roster for a specific club.
+ * Security: Caller must be a District Admin OR the President of the specified club.
+ *
+ * @param clubId - ID of the club whose roster is being retrieved
+ * @param callerToken - Firebase Auth ID token of the user executing the action (MANDATORY)
  */
 export async function getClubDuesRoster(
   clubId: string,
   callerToken?: string
 ): Promise<ActionResult<User[]>> {
   try {
-    if (!clubId) {
+    if (!clubId || !clubId.trim()) {
       return { success: false, error: 'Club ID is required.' };
     }
 
-    if (callerToken) {
-      const decodedToken = await verifyAuthToken(callerToken);
-      if (!decodedToken) {
-        return { success: false, error: 'Unauthorized access.' };
-      }
+    // 1. Mandatory Token Check
+    if (!callerToken || typeof callerToken !== 'string' || !callerToken.trim()) {
+      return { success: false, error: 'Unauthorized: Authentication required' };
     }
 
+    // 2. Token Verification
+    const decodedToken = await verifyAuthToken(callerToken.trim());
+    if (!decodedToken || !decodedToken.uid) {
+      return { success: false, error: 'Unauthorized: Invalid authentication session.' };
+    }
+
+    // 3. Caller Profile Lookup
+    const callerProfile = await getUserProfile(decodedToken.uid);
+    if (!callerProfile) {
+      return { success: false, error: 'Caller user profile not found.' };
+    }
+
+    // 4. RBAC Authorization Check
+    const isDistrictAdmin =
+      callerProfile.role === 'district_admin' ||
+      (decodedToken as any).role === 'district_admin' ||
+      (decodedToken as any).admin === true;
+
+    const isClubPresident =
+      (callerProfile.role === 'president' || callerProfile.role === 'club_president') &&
+      callerProfile.clubId === clubId.trim();
+
+    if (!isDistrictAdmin && !isClubPresident) {
+      return {
+        success: false,
+        error: 'Forbidden: Insufficient permissions to view this club’s roster.',
+      };
+    }
+
+    // 5. Query Firestore
     const snapshot = await adminDb
       .collection('users')
-      .where('clubId', '==', clubId)
+      .where('clubId', '==', clubId.trim())
       .get();
 
     const members: User[] = snapshot.docs.map((doc) => ({

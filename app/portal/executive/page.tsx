@@ -1,6 +1,12 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import { getCurrentUser } from '@/lib/services/auth-service';
+import {
+  getExecutiveVerificationQueue,
+  updateMemberVerificationStatus,
+} from '@/lib/services/dashboard-service';
 import Link from 'next/link';
 import { 
   LayoutDashboard, 
@@ -38,7 +44,8 @@ import {
   Printer,
   Eye,
   HeartHandshake,
-  ShieldCheck
+  ShieldCheck,
+  Lock
 } from 'lucide-react';
 import { 
   AreaChart, 
@@ -131,6 +138,36 @@ const LEAD_ACQUISITION_DATA = [
 ];
 
 export default function DistrictExecutiveDashboardPage() {
+  const router = useRouter();
+  const [authChecked, setAuthChecked] = useState(false);
+  const [isAuthorized, setIsAuthorized] = useState<boolean | null>(null);
+
+  useEffect(() => {
+    const user = getCurrentUser();
+    if (!user) {
+      router.replace('/login?redirect=/portal/executive');
+      return;
+    }
+
+    const hasExecutiveAccess = user.role === 'district_admin';
+    setIsAuthorized(hasExecutiveAccess);
+    setAuthChecked(true);
+
+    if (!hasExecutiveAccess) {
+      router.replace('/login?error=unauthorized');
+      return;
+    }
+
+    (async () => {
+      const queue = await getExecutiveVerificationQueue();
+      setPendingMembersList(
+        queue.map((item) => ({
+          ...item,
+          avatar: item.avatar || '/images/rotaract-logo.png',
+        }))
+      );
+    })();
+  }, [router]);
   const [navActive, setNavActive] = useState('Overview');
   const [membershipTab, setMembershipTab] = useState<'Total' | 'Prospective' | 'Engaged'>('Total');
   const [searchQuery, setSearchQuery] = useState('');
@@ -138,29 +175,29 @@ export default function DistrictExecutiveDashboardPage() {
   // Verification Console States & Handlers
   const [verificationTab, setVerificationTab] = useState<'members' | 'clubs'>('members');
   const [selectedQueue, setSelectedQueue] = useState<string[]>([]);
-  const [pendingMembersList, setPendingMembersList] = useState([
-    { id: '1', name: 'Femi Adeleke', email: 'f.adeleke@rotaract9126.org', club: 'Rotaract Club of Ibadan Central', state: 'Oyo', date: 'Jul 21, 2026', status: 'Pending', avatar: 'https://images.unsplash.com/photo-1617440431587-138ca5c563ec?w=80&h=80&fit=crop&auto=format' },
-    { id: '2', name: 'Amina Garba', email: 'a.garba@rotaract9126.org', club: 'Rotaract Club of Minna', state: 'Niger', date: 'Jul 22, 2026', status: 'Pending', avatar: 'https://images.unsplash.com/photo-1747614736574-b1e56e7d7e20?w=80&h=80&fit=crop&auto=format' },
-    { id: '3', name: 'Seun Popoola', email: 's.popoola@rotaract9126.org', club: 'Rotaract Club of LAUTECH', state: 'Oyo', date: 'Jul 23, 2026', status: 'Flagged', avatar: 'https://images.unsplash.com/photo-1646658104783-2eec2433c1d1?w=80&h=80&fit=crop&auto=format' },
-    { id: '4', name: 'Ngozi Okafor', email: 'n.okafor@rotaract9126.org', club: 'Rotaract Club of Lokoja', state: 'Kogi', date: 'Jul 24, 2026', status: 'Pending', avatar: 'https://images.unsplash.com/photo-1598547461182-45d03f6661e4?w=80&h=80&fit=crop&auto=format' },
-    { id: '5', name: 'Taiwo Adesanya', email: 't.adesanya@rotaract9126.org', club: 'RC of University of Ibadan', state: 'Oyo', date: 'Jul 25, 2026', status: 'Pending', avatar: 'https://images.unsplash.com/photo-1659422440915-d516c6dc932e?w=80&h=80&fit=crop&auto=format' },
-    { id: '6', name: 'Kunle Olatunji', email: 'k.olatunji@rotaract9126.org', club: 'Rotaract Club of OAU Ile-Ife', state: 'Osun', date: 'Jul 26, 2026', status: 'Pending', avatar: 'https://images.unsplash.com/photo-1614023342667-6f060e9d1e04?w=80&h=80&fit=crop&auto=format' },
-    { id: '7', name: 'Rashida Musa', email: 'r.musa@rotaract9126.org', club: 'Rotaract Club of Osogbo', state: 'Osun', date: 'Jul 27, 2026', status: 'Flagged', avatar: 'https://images.unsplash.com/photo-1657218380188-40c56bfdf97f?w=80&h=80&fit=crop&auto=format' },
-    { id: '8', name: 'Olabisi Afolabi', email: 'o.afolabi@rotaract9126.org', club: 'Rotaract Club of Ado-Ekiti', state: 'Ekiti', date: 'Jul 28, 2026', status: 'Pending', avatar: 'https://images.unsplash.com/photo-1609371497456-3a55a205d5eb?w=80&h=80&fit=crop&auto=format' },
-    { id: '9', name: 'Emeka Chukwuemeka', email: 'e.chukwuemeka@rotaract9126.org', club: 'Rotaract Club of Minna', state: 'Niger', date: 'Jul 29, 2026', status: 'Pending', avatar: 'https://images.unsplash.com/photo-1631824925667 - 28632e135463?w=80&h=80&fit=crop&auto=format' },
-    { id: '10', name: 'Blessing Adeyinka', email: 'b.adeyinka@rotaract9126.org', club: 'Rotaract Club of Ilorin', state: 'Kwara', date: 'Jul 29, 2026', status: 'Flagged', avatar: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=80&h=80&fit=crop&auto=format' },
-    { id: '11', name: 'Chidinma Okonkwo', email: 'c.okonkwo@rotaract9126.org', club: 'Rotaract Club of Lokoja', state: 'Kogi', date: 'Jul 30, 2026', status: 'Pending', avatar: 'https://images.unsplash.com/photo-1573497491765-dccce02b29df?w=80&h=80&fit=crop&auto=format' },
-    { id: '12', name: 'Adewale Ogunleye', email: 'a.ogunleye@rotaract9126.org', club: 'Rotaract Club of Akure', state: 'Ondo', date: 'Aug 1, 2026', status: 'Pending', avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop&auto=format' }
-  ]);
+  const [pendingMembersList, setPendingMembersList] = useState<
+    Array<{
+      id: string;
+      name: string;
+      email: string;
+      club: string;
+      state: string;
+      date: string;
+      status: string;
+      avatar: string;
+    }>
+  >([]);
 
-  const handleApproveMember = (id: string) => {
+  const handleApproveMember = async (id: string) => {
     setPendingMembersList(prev => prev.filter(m => m.id !== id));
     setSelectedQueue(prev => prev.filter(mId => mId !== id));
+    await updateMemberVerificationStatus([id], 'Verified');
   };
 
-  const handleRejectMember = (id: string) => {
+  const handleRejectMember = async (id: string) => {
     setPendingMembersList(prev => prev.filter(m => m.id !== id));
     setSelectedQueue(prev => prev.filter(mId => mId !== id));
+    await updateMemberVerificationStatus([id], 'Rejected');
   };
 
   const toggleQueueItem = (id: string) => {
@@ -175,15 +212,60 @@ export default function DistrictExecutiveDashboardPage() {
     }
   };
 
-  const handleBatchApprove = () => {
+  const handleBatchApprove = async () => {
+    const ids = [...selectedQueue];
     setPendingMembersList(prev => prev.filter(m => !selectedQueue.includes(m.id)));
     setSelectedQueue([]);
+    await updateMemberVerificationStatus(ids, 'Verified');
   };
 
-  const handleBatchReject = () => {
+  const handleBatchReject = async () => {
+    const ids = [...selectedQueue];
     setPendingMembersList(prev => prev.filter(m => !selectedQueue.includes(m.id)));
     setSelectedQueue([]);
+    await updateMemberVerificationStatus(ids, 'Rejected');
   };
+
+  if (!authChecked) {
+    return (
+      <div className="min-h-screen bg-[#F8F5F2] flex items-center justify-center">
+        <div className="flex flex-col items-center gap-3">
+          <div className="w-8 h-8 border-3 border-[#D91B5C] border-t-transparent rounded-full animate-spin" />
+          <p className="text-xs font-semibold text-black/50">Verifying executive authorization...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (isAuthorized === false) {
+    return (
+      <div className="min-h-screen bg-[#F8F5F2] text-[#1C1C1E] font-sans flex items-center justify-center p-6">
+        <div className="max-w-md w-full p-8 rounded-3xl bg-white border border-black/[0.08] text-center space-y-5 shadow-xl">
+          <div className="w-16 h-16 rounded-2xl bg-[#EF4444]/10 border border-[#EF4444]/25 text-[#EF4444] flex items-center justify-center mx-auto">
+            <Lock size={28} />
+          </div>
+          <h2 className="text-2xl font-black text-[#1C1C1E]">Access Restricted</h2>
+          <p className="text-sm text-black/60 leading-relaxed">
+            The <strong>District Executive HQ</strong> is exclusively accessible to verified <strong>District Executive Administrators</strong>.
+          </p>
+          <div className="pt-2 flex flex-col gap-3">
+            <Link
+              href="/portal/dashboard"
+              className="w-full py-3 rounded-xl bg-[#981132] hover:bg-[#A70C43] text-white text-xs font-bold transition-all shadow-[0_2px_14px_rgba(152,17,50,0.25)]"
+            >
+              Return to Member Dashboard
+            </Link>
+            <Link
+              href="/login"
+              className="w-full py-3 rounded-xl bg-[#F7F4F3] hover:bg-black/[0.06] text-black/70 hover:text-black text-xs font-semibold transition-colors border border-black/[0.08]"
+            >
+              Switch Account
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-white text-[#1C1C1E] font-sans flex relative overflow-x-hidden">

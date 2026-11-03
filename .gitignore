@@ -45,3 +45,11 @@ next-env.d.ts
 
 # Netlify build output
 .netlify
+
+
+# Playwright E2E Artifacts
+/playwright-report/
+/test-results/
+
+# Temporary Agent Scratch Directories
+.agents/teamwork/

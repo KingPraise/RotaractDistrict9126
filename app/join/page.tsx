@@ -21,9 +21,12 @@ import {
   Calendar,
   MessageCircle,
   ExternalLink,
-  Instagram
+  Instagram,
+  CheckCircle2,
+  Send
 } from 'lucide-react';
 import Link from 'next/link';
+import { submitProspectLead } from '@/lib/services/intake-service';
 
 // Official WhatsApp Green Icon SVG
 function WhatsAppIcon({ className = 'w-4 h-4' }: { className?: string }) {
@@ -93,6 +96,59 @@ function JoinClubContent() {
   const { number: phoneDisplay, rawNumber } = getClubPresWhatsapp(selectedClub);
   const presidentName = selectedClub.president || 'Adeyemi Johnson';
   const presidentPhoto = getPresidentPhoto(selectedClub);
+
+  const [leadForm, setLeadForm] = React.useState({
+    name: '',
+    email: '',
+    phone: '',
+    notes: '',
+  });
+  const [isSubmittingLead, setIsSubmittingLead] = React.useState(false);
+  const [leadFeedback, setLeadFeedback] = React.useState<{
+    type: 'success' | 'error';
+    message: string;
+  } | null>(null);
+
+  const handleLeadSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLeadFeedback(null);
+
+    if (!leadForm.name.trim() || !leadForm.email.trim() || !leadForm.phone.trim()) {
+      setLeadFeedback({
+        type: 'error',
+        message: 'Please fill in your full name, email address, and phone/WhatsApp number.',
+      });
+      return;
+    }
+
+    setIsSubmittingLead(true);
+    try {
+      const result = await submitProspectLead({
+        name: leadForm.name,
+        email: leadForm.email,
+        phone: leadForm.phone,
+        state: selectedClub.state,
+        preferredClub: selectedClub.name,
+        notes: leadForm.notes,
+        source: '/join',
+      });
+
+      if (result.success) {
+        setLeadFeedback({
+          type: 'success',
+          message: `Thank you, ${leadForm.name.trim()}! Your interest in ${selectedClub.name} has been logged in the District 9126 Pipeline. You can also message President ${presidentName} directly on WhatsApp below.`,
+        });
+        setLeadForm({ name: '', email: '', phone: '', notes: '' });
+      } else {
+        setLeadFeedback({
+          type: 'error',
+          message: result.error || 'Could not submit your details. Please try again.',
+        });
+      }
+    } finally {
+      setIsSubmittingLead(false);
+    }
+  };
 
   const whatsappMessage = `Hello President ${presidentName},\n\nI am interested in joining *${selectedClub.name}* (Rotaract District 9126). I would love to learn more about your upcoming meeting, fellowship schedule, and membership intake process.\n\nThank you!`;
   const whatsappUrl = `https://wa.me/${rawNumber}?text=${encodeURIComponent(whatsappMessage)}`;
@@ -266,6 +322,79 @@ function JoinClubContent() {
                 </div>
 
               </div>
+
+              {/* QUICK MEMBERSHIP INTEREST FORM (DUAL-MODE INTAKE) */}
+              <form
+                onSubmit={handleLeadSubmit}
+                data-testid="join-interest-form"
+                className="p-4 sm:p-5 rounded-2xl bg-[#F8F5F2] border border-black/[0.08] space-y-3"
+              >
+                <div className="flex items-center justify-between">
+                  <span className="text-[11px] font-black uppercase tracking-wider text-[#981132]">
+                    Register Membership Interest
+                  </span>
+                  <span className="text-[10px] font-semibold text-gray-500">
+                    Synced with Club President Pipeline
+                  </span>
+                </div>
+
+                {leadFeedback && (
+                  <div
+                    role="status"
+                    className={`p-3 rounded-xl text-xs font-semibold flex items-start gap-2 ${
+                      leadFeedback.type === 'success'
+                        ? 'bg-green-50 border border-green-200 text-green-800'
+                        : 'bg-red-50 border border-red-200 text-red-700'
+                    }`}
+                  >
+                    <CheckCircle2 size={15} className="shrink-0 mt-0.5" />
+                    <span>{leadFeedback.message}</span>
+                  </div>
+                )}
+
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+                  <input
+                    type="text"
+                    placeholder="Full Name *"
+                    value={leadForm.name}
+                    onChange={(e) => setLeadForm((p) => ({ ...p, name: e.target.value }))}
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-black/10 text-xs text-[#1C1C1E] outline-none focus:border-[#981132]"
+                  />
+                  <input
+                    type="email"
+                    placeholder="Email Address *"
+                    value={leadForm.email}
+                    onChange={(e) => setLeadForm((p) => ({ ...p, email: e.target.value }))}
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-black/10 text-xs text-[#1C1C1E] outline-none focus:border-[#981132]"
+                  />
+                  <input
+                    type="tel"
+                    placeholder="Phone / WhatsApp *"
+                    value={leadForm.phone}
+                    onChange={(e) => setLeadForm((p) => ({ ...p, phone: e.target.value }))}
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-black/10 text-xs text-[#1C1C1E] outline-none focus:border-[#981132]"
+                  />
+                </div>
+
+                <div className="flex flex-col sm:flex-row gap-2.5">
+                  <input
+                    type="text"
+                    placeholder="Optional note (e.g. profession, campus, or service interest)"
+                    value={leadForm.notes}
+                    onChange={(e) => setLeadForm((p) => ({ ...p, notes: e.target.value }))}
+                    className="flex-1 px-3.5 py-2.5 rounded-xl bg-white border border-black/10 text-xs text-[#1C1C1E] outline-none focus:border-[#981132]"
+                  />
+                  <button
+                    type="submit"
+                    disabled={isSubmittingLead}
+                    data-testid="join-interest-submit"
+                    className="px-5 py-2.5 rounded-xl bg-[#981132] hover:bg-[#A70C43] text-white text-xs font-bold inline-flex items-center justify-center gap-2 shadow-sm transition-all cursor-pointer shrink-0 disabled:opacity-60"
+                  >
+                    <Send size={13} />
+                    <span>{isSubmittingLead ? 'Submitting...' : 'Submit Interest'}</span>
+                  </button>
+                </div>
+              </form>
 
               {/* DIRECT 1-CLICK ACTIONS: WHATSAPP + INSTAGRAM */}
               <div className="pt-2 space-y-3">

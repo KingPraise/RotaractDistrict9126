@@ -25,7 +25,8 @@ export default function AwwwardsPreloader() {
     }
 
     setIsLoading(true);
-    const duration = 2800; // ms for crisp snappy intro
+    const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+    const duration = isMobile ? 1300 : 1700; // ms for crisp snappy intro
     const startTime = performance.now();
 
     // Smooth Eased Counter

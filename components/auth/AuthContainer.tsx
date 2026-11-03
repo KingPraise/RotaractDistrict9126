@@ -86,7 +86,12 @@ function AuthForm({ initialMode = 'login' }: AuthContainerProps) {
 
       if (res.success && res.user) {
         setSuccessMessage('Sign in successful! Redirecting...');
-        if (res.user.role === 'club_president' || res.user.role === 'district_admin') {
+        const redirectParam = searchParams.get('redirect');
+        if (redirectParam && redirectParam.startsWith('/') && !redirectParam.startsWith('//')) {
+          router.push(redirectParam);
+        } else if (res.user.role === 'district_admin') {
+          router.push('/portal/executive');
+        } else if (res.user.role === 'club_president') {
           router.push('/portal/president');
         } else {
           router.push('/portal/dashboard');
@@ -436,9 +441,9 @@ function AuthForm({ initialMode = 'login' }: AuthContainerProps) {
         {/* Legal Notice */}
         <p className="text-center mt-4 text-[10px] text-gray-400 leading-relaxed px-4 font-sans">
           By signing in you agree to the{' '}
-          <Link className="text-[#981132] hover:underline font-semibold" href="#">Terms of Service</Link>{' '}
+          <Link className="text-[#981132] hover:underline font-semibold" href="/terms">Terms of Service</Link>{' '}
           and{' '}
-          <Link className="text-[#981132] hover:underline font-semibold" href="#">Privacy Policy</Link>{' '}
+          <Link className="text-[#981132] hover:underline font-semibold" href="/privacy">Privacy Policy</Link>{' '}
           of Rotaract District 9126.
         </p>
       </div>

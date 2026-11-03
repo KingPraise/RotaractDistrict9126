@@ -20,7 +20,9 @@ import {
   Globe,
   Sparkles,
   ChevronRight,
-  ShieldCheck
+  ShieldCheck,
+  X,
+  Maximize2
 } from 'lucide-react';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
@@ -52,6 +54,26 @@ export default function ProjectDetailPage() {
     }
   };
 
+  // Lightbox keyboard accessibility (Escape to close) and body scroll locking
+  useEffect(() => {
+    if (!selectedImage) return;
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setSelectedImage(null);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = originalOverflow;
+    };
+  }, [selectedImage]);
+
   if (loading) {
     return (
       <div className="min-h-screen bg-[#F8F5F2] flex items-center justify-center font-sans">
@@ -82,16 +104,6 @@ export default function ProjectDetailPage() {
             <ArrowLeft size={14} /> Back to Projects Directory
           </Link>
         </main>
-
-        {/* Lightbox Modal */}
-        {selectedImage && (
-          <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/95 p-4 sm:p-10 backdrop-blur-sm" onClick={() => setSelectedImage(null)}>
-            <button className="absolute top-6 right-6 text-white/70 hover:text-white transition-colors" onClick={(e) => { e.stopPropagation(); setSelectedImage(null); }}>
-              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-            </button>
-            <img src={selectedImage} className="max-w-full max-h-full object-contain rounded-lg shadow-2xl" alt="Fullscreen gallery" onClick={(e) => e.stopPropagation()} />
-          </div>
-        )}
         <Footer />
       </div>
     );
@@ -258,12 +270,32 @@ export default function ProjectDetailPage() {
 
             {project.gallery && project.gallery.length > 0 && (
               <div className="mb-10">
-                <h3 className="text-xl font-black text-[#1C1C1E] mb-4">Project Gallery</h3>
+                <div className="flex items-center justify-between mb-4">
+                  <h3 className="text-xl font-black text-[#1C1C1E]">Project Gallery</h3>
+                  <span className="text-xs text-black/50 font-medium">
+                    {project.gallery.length} photos &bull; Click to enlarge
+                  </span>
+                </div>
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
                   {project.gallery.map((img, idx) => (
-                    <div key={idx} className="aspect-square rounded-2xl overflow-hidden border border-black/[0.08] shadow-sm">
-                      <img src={img} alt={"Project Gallery image "} className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
-                    </div>
+                    <button
+                      key={idx}
+                      type="button"
+                      onClick={() => setSelectedImage(img)}
+                      className="group relative aspect-square rounded-2xl overflow-hidden border border-black/[0.08] shadow-sm cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#981132] focus:ring-offset-2 transition-all hover:shadow-md bg-black/5 text-left"
+                      aria-label={`Enlarge gallery photo ${idx + 1} of ${project.gallery?.length || 0}`}
+                    >
+                      <img 
+                        src={img} 
+                        alt={`${project.title} - photo ${idx + 1}`} 
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
+                      />
+                      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/25 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100">
+                        <span className="p-2.5 rounded-full bg-black/60 text-white backdrop-blur-sm shadow-md">
+                          <Maximize2 size={16} />
+                        </span>
+                      </div>
+                    </button>
                   ))}
                 </div>
               </div>
@@ -343,7 +375,7 @@ export default function ProjectDetailPage() {
                 For partnerships, grants, or media coverage regarding this project, connect directly with the District Directorate.
               </p>
               <Link
-                href="/about#contact"
+                href="/contact"
                 className="w-full inline-flex items-center justify-center gap-2 py-2.5 rounded-xl bg-[#981132] text-white text-xs font-bold shadow-sm hover:bg-[#A70C43] transition-all mt-2"
               >
                 <span>Inquire About Project</span>
@@ -356,6 +388,35 @@ export default function ProjectDetailPage() {
         </div>
 
       </main>
+
+      {/* Lightbox Modal */}
+      {selectedImage && (
+        <div 
+          className="fixed inset-0 z-[3000] flex items-center justify-center bg-black/95 p-4 sm:p-10 pt-[max(1.5rem,env(safe-area-inset-top))] pb-[max(1.5rem,env(safe-area-inset-bottom))] backdrop-blur-md select-none"
+          onClick={() => setSelectedImage(null)}
+          role="dialog"
+          aria-modal="true"
+          aria-label="Enlarged project image viewer"
+        >
+          <button 
+            type="button" 
+            className="absolute top-[max(1.5rem,env(safe-area-inset-top))] right-[max(1.5rem,env(safe-area-inset-right))] z-10 w-11 h-11 sm:w-12 sm:h-12 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 active:bg-white/30 active:scale-95 text-white/90 hover:text-white transition-all duration-150 cursor-pointer border border-white/15 shadow-lg backdrop-blur-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+            onClick={(e) => { 
+              e.stopPropagation(); 
+              setSelectedImage(null); 
+            }}
+            aria-label="Close image lightbox"
+          >
+            <X size={24} className="stroke-[2.25]" />
+          </button>
+          <img 
+            src={selectedImage} 
+            className="max-w-full max-h-[85vh] object-contain rounded-lg shadow-2xl select-none" 
+            alt={project.title ? `${project.title} - Enlarged gallery photo` : "Fullscreen gallery photo"} 
+            onClick={(e) => e.stopPropagation()} 
+          />
+        </div>
+      )}
 
       <Footer />
     </div>

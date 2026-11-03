@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { 
   LayoutGrid, 
   CreditCard, 
@@ -50,6 +51,8 @@ import { getCurrentUser, signOutUser } from '@/lib/services/auth-service';
 import { 
   getMemberDashboardData, 
   getClubRoster, 
+  recordDuesPayment,
+  DISTRICT_ANNUAL_DUES,
   MemberDashboardState, 
   ClubMemberRecord 
 } from '@/lib/services/dashboard-service';
@@ -57,6 +60,8 @@ import { getDistrictEvents, DistrictEvent } from '@/lib/services/events-service'
 import { clubsData } from '@/lib/clubs-data';
 
 export default function MemberDashboardPage() {
+  const router = useRouter();
+  const [isAuthChecking, setIsAuthChecking] = useState(true);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [activeNav, setActiveNav] = useState('Dashboard');
   const [activeChartTab, setActiveChartTab] = useState<'Events' | 'Projects' | 'Volunteering'>('Events');
@@ -157,6 +162,72 @@ export default function MemberDashboardPage() {
 
   const [directoryMembers, setDirectoryMembers] = useState<ClubMemberRecord[]>([]);
   const [districtEvents, setDistrictEvents] = useState<DistrictEvent[]>([]);
+  const [isPayingDues, setIsPayingDues] = useState(false);
+  const [paymentSuccessBanner, setPaymentSuccessBanner] = useState<string | null>(null);
+
+  const handlePayDistrictDues = async () => {
+    if (isPayingDues || currentUser.duesStatus === 'cleared') return;
+    setIsPayingDues(true);
+    setPaymentSuccessBanner(null);
+
+    try {
+      const fullName = `${currentUser.firstName} ${currentUser.lastName}`.trim() || 'Rotaract Member';
+      const refCode = `PSTK-D9126-${Date.now().toString().slice(-6)}`;
+      const res = await recordDuesPayment({
+        memberId: currentUser.userId || 'usr-member',
+        memberName: fullName,
+        email: currentUser.email,
+        clubName: currentUser.clubName || 'Rotaract District 9126',
+        amount: DISTRICT_ANNUAL_DUES,
+        reference: refCode,
+        period: '2026/2027',
+        category: 'Annual Dues',
+        avatar: currentUser.avatarUrl,
+      });
+
+      if (res.success) {
+        setCurrentUser((prev) => ({ ...prev, duesStatus: 'cleared' }));
+        setDuesRecords((prev) => [
+          {
+            id: res.payment.id,
+            name: res.payment.name,
+            club: res.payment.club,
+            status: 'Cleared',
+            period: res.payment.period,
+            amount: res.payment.amount,
+            avatar: res.payment.avatar,
+          },
+          ...prev.filter((r) => r.status === 'Cleared' && r.id !== res.payment.id),
+        ]);
+        const qrData = encodeURIComponent(
+          `ROTARACT-9126:VERIFIED|ID:${currentUser.rotaryId}|USER:${currentUser.firstName.toUpperCase()}-${currentUser.lastName.toUpperCase()}|STATUS:CLEARED|DISTRICT:9126-NIGERIA`
+        );
+        setQrCodeUrl(
+          `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${qrData}&bgcolor=ffffff&color=080c14&margin=1`
+        );
+        setPaymentSuccessBanner(
+          `Payment verified (${res.payment.id})! Your 2026/2027 District Dues (₦${DISTRICT_ANNUAL_DUES.toLocaleString()}) are now Cleared.`
+        );
+      }
+    } finally {
+      setIsPayingDues(false);
+    }
+  };
+
+  const handleExportDuesCsv = () => {
+    const headers = ['Reference,Member,Club,Period,Amount,Status'];
+    const rows = duesRecords.map(
+      (r) => `"${r.id}","${r.name}","${r.club}","${r.period}","${r.amount || DISTRICT_ANNUAL_DUES}","${r.status}"`
+    );
+    const csvContent = 'data:text/csv;charset=utf-8,' + [headers, ...rows].join('\n');
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement('a');
+    link.setAttribute('href', encodedUri);
+    link.setAttribute('download', `D9126-Dues-Receipts-${currentUser.rotaryId || 'Member'}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
 
   // Fetch live user, events, and dashboard data on mount
   useEffect(() => {
@@ -166,20 +237,24 @@ export default function MemberDashboardPage() {
     });
 
     const authUser = getCurrentUser();
-    const targetUid = authUser?.uid || 'usr-default';
-
-    if (authUser) {
-      setCurrentUser(prev => ({
-        ...prev,
-        userId: authUser.uid,
-        firstName: authUser.firstName || prev.firstName,
-        lastName: authUser.lastName || prev.lastName,
-        email: authUser.email || prev.email,
-        role: authUser.role || prev.role,
-        duesStatus: authUser.duesStatus || prev.duesStatus,
-        occupation: authUser.role === 'club_president' ? 'Club President' : authUser.role === 'district_admin' ? 'District Administrator' : 'Active Member'
-      }));
+    if (!authUser) {
+      router.replace('/login?redirect=/portal/dashboard');
+      return;
     }
+
+    setIsAuthChecking(false);
+    const targetUid = authUser.uid;
+
+    setCurrentUser(prev => ({
+      ...prev,
+      userId: authUser.uid,
+      firstName: authUser.firstName || prev.firstName,
+      lastName: authUser.lastName || prev.lastName,
+      email: authUser.email || prev.email,
+      role: authUser.role || prev.role,
+      duesStatus: authUser.duesStatus || prev.duesStatus,
+      occupation: authUser.role === 'club_president' ? 'Club President' : authUser.role === 'district_admin' ? 'District Administrator' : 'Active Member'
+    }));
 
     // Load from Firestore dashboard service
     getMemberDashboardData(targetUid, authUser).then((data) => {
@@ -203,13 +278,22 @@ export default function MemberDashboardPage() {
         }
       }
     });
-  }, []);
+  }, [router]);
 
   const filteredDues = duesRecords.filter(r => 
     r.name.toLowerCase().includes(searchMember.toLowerCase()) ||
     r.club.toLowerCase().includes(searchMember.toLowerCase()) ||
     r.id.toLowerCase().includes(searchMember.toLowerCase())
   );
+
+  if (isAuthChecking) {
+    return (
+      <div className="min-h-screen bg-[#080C14] text-white flex flex-col items-center justify-center p-4">
+        <div className="w-12 h-12 rounded-full border-2 border-[#D91B5C] border-t-transparent animate-spin mb-4" />
+        <p className="text-sm text-gray-400">Verifying Member Session...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="flex h-screen bg-white text-[#1C1C1E] overflow-hidden" style={{ fontFamily: 'Inter, sans-serif' }}>
@@ -756,14 +840,57 @@ export default function MemberDashboardPage() {
             ) : activeNav === 'Dues & Payments' ? (
               /* DEDICATED DUES & PAYMENTS VIEW */
               <div className="space-y-5 font-sans">
-                <div>
-                  <div className="text-[9.5px] font-semibold text-black/40 tracking-[0.14em] uppercase mb-1.5 font-sans">
-                    Financials
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                  <div>
+                    <div className="text-[9.5px] font-semibold text-black/40 tracking-[0.14em] uppercase mb-1.5 font-sans">
+                      Financials
+                    </div>
+                    <h2 className="text-[22px] font-extrabold text-[#1C1C1E] tracking-tight font-sans">
+                      Dues & Payments
+                    </h2>
                   </div>
-                  <h2 className="text-[22px] font-extrabold text-[#1C1C1E] tracking-tight font-sans">
-                    Dues & Payments
-                  </h2>
+
+                  {currentUser.duesStatus !== 'cleared' ? (
+                    <button
+                      type="button"
+                      onClick={handlePayDistrictDues}
+                      disabled={isPayingDues}
+                      data-testid="pay-district-dues-btn"
+                      className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-[#981132] to-[#D91B5C] hover:opacity-95 text-white text-xs font-bold shadow-[0_6px_20px_rgba(152,17,50,0.3)] transition-all cursor-pointer disabled:opacity-60"
+                    >
+                      <CreditCard size={14} />
+                      <span>
+                        {isPayingDues
+                          ? 'Processing Paystack Checkout...'
+                          : `Pay District Dues (₦${DISTRICT_ANNUAL_DUES.toLocaleString()})`}
+                      </span>
+                    </button>
+                  ) : (
+                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-green-500/10 border border-green-500/25 text-green-700 text-xs font-bold">
+                      <CheckCircle2 size={14} />
+                      <span>2026/2027 District Dues Cleared</span>
+                    </div>
+                  )}
                 </div>
+
+                {paymentSuccessBanner && (
+                  <div
+                    role="status"
+                    className="p-3.5 rounded-xl bg-green-50 border border-green-200 text-green-800 text-xs font-semibold flex items-center justify-between gap-2"
+                  >
+                    <div className="flex items-center gap-2">
+                      <CheckCircle2 size={15} className="text-green-600 shrink-0" />
+                      <span>{paymentSuccessBanner}</span>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => setPaymentSuccessBanner(null)}
+                      className="text-green-700 hover:text-green-900 p-1"
+                    >
+                      <X size={13} />
+                    </button>
+                  </div>
+                )}
 
                 {/* 3-Card Financial Summary Matrix */}
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
@@ -823,7 +950,7 @@ export default function MemberDashboardPage() {
                       Payment History
                     </span>
                     <button 
-                      onClick={() => alert('Exporting Payment Receipts...')}
+                      onClick={handleExportDuesCsv}
                       className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-black/[0.04] border border-black/[0.08] text-[11px] text-black/70 hover:bg-black/[0.08] transition-colors cursor-pointer"
                     >
                       <Download size={12}/> Export

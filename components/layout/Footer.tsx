@@ -19,7 +19,7 @@ export default function Footer() {
       {/* Bottom Radial Shadow Glow */}
       <div 
         className="absolute inset-0 pointer-events-none" 
-        style={{ background: 'rgb(152, 17, 50)' }} 
+        style={{ background: 'radial-gradient(ellipse at 50% 120%, rgba(152, 17, 50, 0.45) 0%, transparent 70%)' }} 
       />
 
       <div className="relative max-w-7xl mx-auto px-6 lg:px-10 py-14">
@@ -39,7 +39,7 @@ export default function Footer() {
             <Link href="/" className="transition-colors duration-200 hover:text-white" style={{ fontSize: '0.8rem', color: 'rgba(255, 255, 255, 0.75)' }}>Homepage</Link>
             <Link href="/clubs" className="transition-colors duration-200 hover:text-white" style={{ fontSize: '0.8rem', color: 'rgba(255, 255, 255, 0.75)' }}>Clubs</Link>
             <Link href="/projects" className="transition-colors duration-200 hover:text-white" style={{ fontSize: '0.8rem', color: 'rgba(255, 255, 255, 0.75)' }}>Projects</Link>
-            <Link href="/heritage" className="transition-colors duration-200 hover:text-white" style={{ fontSize: '0.8rem', color: 'rgba(255, 255, 255, 0.75)' }}>Blog</Link>
+            <Link href="/blog" className="transition-colors duration-200 hover:text-white" style={{ fontSize: '0.8rem', color: 'rgba(255, 255, 255, 0.75)' }}>Blog</Link>
             
             {/* Vertical Divider */}
             <div style={{ width: '1px', height: '16px', background: 'rgba(255, 255, 255, 0.25)' }} />
